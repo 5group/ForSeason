@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.CouponMapper">
+
+    <select id="select" parameterType="Integer" resultType="Coupon">
+        SELECT * FROM coupon WHERE cou_no=#{cou_no}
+    </select>
+    <select id="selectall" resultType="Coupon">
+        SELECT * FROM coupon
+    </select>
+    <insert id="insert" parameterType="Coupon">
+        INSERT INTO coupon
+        VALUES (#{cou_no}, #{cou_name}, #{cou_info}, now(), #{user_no})
+    </insert>
+    <update id="update" parameterType="Coupon">
+        UPDATE coupon SET ship_addr=#{ship_addr}, ship_cust=#{ship_cust}, ship_stat=#{ship_stat} WHERE ship_no=#{ship_no}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM coupon WHERE cou_no=#{cou_no}
+    </delete>
+
+</mapper>
