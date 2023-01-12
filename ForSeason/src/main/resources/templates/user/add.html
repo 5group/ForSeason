@@ -1,0 +1,28 @@
+<script>
+  $(document).ready(function (){
+    $('#register_form > a').click(function (){
+      var c = confirm('입력 하시겠습니까?');
+      if(c == true){
+        $('#register_form').attr({
+          'method':'post',
+          'action':'[[@{/user/register}]]'
+        });
+        $('#register_form').submit();
+      };
+    });
+
+  });
+</script>
+
+<h1>CH2</h1>
+
+<form id="register_form">
+  ID<input type="text" name="user_id"><br>
+  PWD<input type="text" name="user_pwd"><br>
+  EMAIL<input type="text" name="user_email"><br>
+  NAME<input type="text" name="user_name"><br>
+  PHONE<input type="text" name="user_phone"><br>
+  ADDRESS<input type="text" name="user_address"><br>
+  GENDER<input type="text" name="user_gender"><br>
+  <a href="#">REGISTER</a>
+</form>
