@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.ShipMapper">
+
+    <select id="select" parameterType="Integer" resultType="Ship">
+        SELECT * FROM ship WHERE ship_no=#{ship_no}
+    </select>
+    <select id="selectall" resultType="Ship">
+        SELECT * FROM ship
+    </select>
+    <insert id="insert" parameterType="Ship">
+        INSERT INTO ship
+        VALUES (#{ship_no}, #{ship_addr}, #{ship_cust}, #{ship_stat})
+    </insert>
+    <update id="update" parameterType="Ship">
+        UPDATE ship SET ship_addr=#{ship_addr}, ship_cust=#{ship_cust}, ship_stat=#{ship_stat} WHERE ship_no=#{ship_no}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM ship WHERE ship_no=#{ship_no}
+    </delete>
+
+</mapper>

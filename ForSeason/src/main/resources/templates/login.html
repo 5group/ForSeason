@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	#container{
+		width: 50%;
+		height: 700px;
+		margin: 0px auto;
+		border: 1px solid gray;
+	}
+	.h2{
+		margin:20px auto;
+		width: 100px;
+	}
+	body, ul, li{
+		margin:0;
+		padding:0;
+		list-style-type:none;
+	}
+	#memul{
+		width: 500px;
+		margin: 0px auto;
+	}
+	a:link, a:visited, a:hover{
+		text-decoration:none;
+		color:#333;
+	}
+</style>
+<script>
+$(document).ready(function(){
+	$('#memForm > a').click(function(){
+		 $('#memForm').attr(
+		         {
+		            'action':'[[@{/loginimpl}]]',
+		            'method':'post'
+		         }
+		      );
+		 $('#memForm').submit(); 
+	});
+});
+</script>
+</head>
+<body>
+	<div id=container>
+		<h2 class="h2">로그인</h2>
+		<form id="memForm">
+		<ul id="memul">
+			<li>아이디</li>
+			<li><input type="text" name="userid" id="userid"/>
+				<input type="button" value="아이디중복검사" id="idChk"/>
+				<input type="hidden" value="N" id="idCheckStatus"/>
+			</li>
+			<li>비밀번호</li>
+			<li><input type="password" name="userpwd" id="userpwd"/></li>
+			<li><a href="#">Login</a></li>
+		</ul>
+	</form>
+	</div>
+</body>
+</html>
