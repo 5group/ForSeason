@@ -25,11 +25,6 @@ public class MainController {
         model.addAttribute("center", "login");
         return "main";
     }
-    @RequestMapping("/oauth")
-    public String oauth_login(){
-        return "oauth/login";
-    }
-
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
         if(session != null){

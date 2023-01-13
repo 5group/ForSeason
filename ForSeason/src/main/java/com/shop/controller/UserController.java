@@ -31,10 +31,15 @@ public class UserController {
     public String register(Model model, User user){
         User c = null;
         try {
-            service.register(user);
-            model.addAttribute("center", dir + "registerok");
-            c = service.get_id(user.getUser_id());
-            model.addAttribute("obj", c);
+            if(service.get_id(user.getUser_id()) == null || service.get_id(user.getUser_id()).equals("")){
+                service.register(user);
+                model.addAttribute("center", dir + "registerok");
+                c = service.get_id(user.getUser_id());
+                model.addAttribute("obj", c);
+            }else {
+                System.out.println("해당 계정은 이미 존재합니다.");
+                model.addAttribute("center", dir + "registerfail");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("center", dir + "registerfail");

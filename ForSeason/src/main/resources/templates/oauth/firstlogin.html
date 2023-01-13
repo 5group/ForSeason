@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+
+<script>
+    var address;
+    var zonecode;
+    window.onload = function () {
+        document.getElementById("address_kakao").addEventListener("click", function () { //주소입력칸을 클릭하면
+            //카카오 지도 발생
+            new daum.Postcode({
+                oncomplete: function (data) { //선택시 입력값 세팅
+                    document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                    document.getElementById('address_post').value = data.zonecode;
+                    document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+                    address = data.address;
+                    zonecode = data.zonecode;
+                }
+            }).open();
+        });
+    }
+    $(document).ready(function () {
+        $('#register_form > button > a').click(function () {
+            var c = confirm("회원등록 하시겠습니까?");
+            if (c == true) {
+                $('#register_form').attr({
+                    'method': 'post',
+                    'action': '[[@{/user/register}]]'
+                });
+                $('#register_form').submit();
+            }
+            ;
+        });
+    });
+</script>
+
+<body>
+<ul th:if="${session.first_login == 1}">
+    <h1>첫 로그인 페이지</h1>
+    <form id="register_form">
+        ID<input type="text" name="user_id" th:value="${userObj[user_id]}"><br>
+        pwd<input type="password" name="user_pwd"><br>
+        EMAIL<input type="text" name="user_email" th:value="${userObj[email]}"><br>
+        NAME<input type="text" name="user_name" th:value="${userObj[nickname]}"><br>
+        phone<input type="text" name="user_phone">
+        address<input type="text" id="address_kakao" name="user_address" readonly/><br>
+
+
+        <legend>Gender
+            <input type="radio" name="user_gender" value="male" id="male">
+            <label for="male">Male</label>
+            <input type="radio" name="user_gender" value="female" id="female">
+            <label for="female">Female</label>
+        </legend>
+        <button><a href="#">회원가입</a></button>
+    </form>
+</ul>
+</body>
+</html>
