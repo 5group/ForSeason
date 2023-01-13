@@ -40,7 +40,6 @@ public class KakaoController {
             session.setAttribute("logincust", user);
             return "main";
         }
-        session.setAttribute("first_login", 1);
         return "oauth/firstlogin";
     }
 }

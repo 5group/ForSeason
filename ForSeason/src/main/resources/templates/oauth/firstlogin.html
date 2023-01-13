@@ -41,7 +41,6 @@
 </script>
 
 <body>
-<ul th:if="${session.first_login == 1}">
     <h1>첫 로그인 페이지</h1>
     <form id="register_form">
         ID<input type="text" name="user_id" th:value="${userObj[user_id]}"><br>
@@ -60,6 +59,5 @@
         </legend>
         <button><a href="#">회원가입</a></button>
     </form>
-</ul>
 </body>
 </html>

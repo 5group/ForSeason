@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
 @Controller
@@ -28,7 +29,7 @@ public class UserController {
     }
 
     @RequestMapping("/register")
-    public String register(Model model, User user){
+    public String register(Model model, User user, HttpSession session){
         User c = null;
         try {
             if(service.get_id(user.getUser_id()) == null || service.get_id(user.getUser_id()).equals("")){
@@ -36,9 +37,7 @@ public class UserController {
                 model.addAttribute("center", dir + "registerok");
                 c = service.get_id(user.getUser_id());
                 model.addAttribute("obj", c);
-            }else {
-                System.out.println("해당 계정은 이미 존재합니다.");
-                model.addAttribute("center", dir + "registerfail");
+                session.setAttribute("logincust", c);
             }
         } catch (Exception e) {
             e.printStackTrace();
