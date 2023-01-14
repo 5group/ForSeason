@@ -38,8 +38,10 @@ public class KakaoController {
         model.addAttribute("userObj", userInfo);
         //유저 회원가입 확인
         User user = userService.get_id(userInfo.get("user_id"));
+        System.out.println(user);
         if(user != null){
             session.setAttribute("loginuser", user);
+            model.addAttribute("is_check", "true");
         }
         return "oauth/firstlogin";
     }
