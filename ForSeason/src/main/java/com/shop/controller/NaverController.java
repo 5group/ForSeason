@@ -32,7 +32,6 @@ public class NaverController {
 			User user = userService.get_id(userInfo.get("user_id"));
 			if(user != null){
 		          session.setAttribute("loginuser", user);
-		          return "main";
 		    }
 		    session.setAttribute("first_login", 1);
 		    return "oauth/firstlogin";

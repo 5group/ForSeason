@@ -17,11 +17,16 @@
                 oncomplete: function (data) { //선택시 입력값 세팅
                     document.getElementById("address_kakao").value = data.address; // 주소 넣기
                     address = data.address;
+
                 }
             }).open();
         });
     }
     $(document).ready(function () {
+        var idSession = "[[${session.loginuser}]]";
+        if(idSession != null || idSession != ""){
+            location.href = '[[@{/}]]';
+        };
         $('#register_form > button > a').click(function () {
             var c = confirm("회원등록 하시겠습니까?");
             if (c == true) {
@@ -33,10 +38,12 @@
             }
             ;
         });
+
     });
 </script>
 
 <body>
+<ul th:if="${session.loginuser == null }">
     <h1>첫 로그인 페이지</h1>
     <form id="register_form">
         ID<input type="text" name="user_id" th:value="${userObj[user_id]}"><br>
@@ -45,7 +52,6 @@
         NAME<input type="text" name="user_name" th:value="${userObj[nickname]}"><br>
         phone<input type="text" name="user_phone">
         address<input type="text" id="address_kakao" name="user_address" readonly/><br>
-
         <legend>Gender
             <input type="radio" name="user_gender" value="male" id="male">
             <label for="male">Male</label>
@@ -54,5 +60,6 @@
         </legend>
         <button><a href="#">회원가입</a></button>
     </form>
+</ul>
 </body>
 </html>
