@@ -31,7 +31,7 @@ public class NaverController {
 			//유저 회원가입 확인
 			User user = userService.get_id(userInfo.get("user_id"));
 			if(user != null){
-		          session.setAttribute("logincust", user);
+		          session.setAttribute("loginuser", user);
 		          return "main";
 		    }
 		    session.setAttribute("first_login", 1);

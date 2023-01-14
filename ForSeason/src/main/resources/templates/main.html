@@ -46,7 +46,7 @@
         <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
       </form>
 
-      <div class="text-end" th:if="${session.logincust == null}">
+      <div class="text-end" th:if="${session.loginuser == null}">
 
         <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/login}">Login</a></button>
         <button type="button" class="btn btn-outline-light me-2"><a href="#">Register</a></button>
@@ -54,14 +54,14 @@
         <button type="button" class="btn btn-warning"><a th:href="@{/oauth/kakaologin}">kakaologin</a></button>
       </div>
 
-      <div class="text-end" th:if="${session.logincust != null}">
+      <div class="text-end" th:if="${session.loginuser != null}">
         <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/logout}">Logout</a></button>
-        <button type="button" class="btn btn-outline-light me-2"><a href="#">My Info</a></button>
+        <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/user/info}">My Info</a></button>
       </div>
     </div>
   </div>
 
-  <ul th:if="${session.logincust != null}">
+  <ul th:if="${session.loginuser != null}">
     <li><a th:href="@{/logout}">Logout</a></li>
     <li><a href="#">My Info</a></li>
   </ul>

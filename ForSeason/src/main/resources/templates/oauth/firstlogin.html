@@ -10,17 +10,13 @@
 
 <script>
     var address;
-    var zonecode;
     window.onload = function () {
         document.getElementById("address_kakao").addEventListener("click", function () { //주소입력칸을 클릭하면
             //카카오 지도 발생
             new daum.Postcode({
                 oncomplete: function (data) { //선택시 입력값 세팅
                     document.getElementById("address_kakao").value = data.address; // 주소 넣기
-                    document.getElementById('address_post').value = data.zonecode;
-                    document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
                     address = data.address;
-                    zonecode = data.zonecode;
                 }
             }).open();
         });
@@ -49,7 +45,6 @@
         NAME<input type="text" name="user_name" th:value="${userObj[nickname]}"><br>
         phone<input type="text" name="user_phone">
         address<input type="text" id="address_kakao" name="user_address" readonly/><br>
-
 
         <legend>Gender
             <input type="radio" name="user_gender" value="male" id="male">

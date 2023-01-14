@@ -42,7 +42,7 @@ public class MainController {
             if (user != null) {
                 if (user.getUser_pwd().equals(pwd)) {
                     result = "loginok";
-                    session.setAttribute("logincust", user);
+                    session.setAttribute("loginuser", user);
                 }
             }
         } catch (Exception e) {

@@ -37,7 +37,7 @@ public class UserController {
                 model.addAttribute("center", dir + "registerok");
                 c = service.get_id(user.getUser_id());
                 model.addAttribute("obj", c);
-                session.setAttribute("logincust", c);
+                session.setAttribute("loginuser", c);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -51,5 +51,10 @@ public class UserController {
     public String html2(Model model){
         model.addAttribute("center", dir + "add");
         return "main";
+    }
+
+    @RequestMapping("/info")
+    public String info(){
+        return "user/info";
     }
 }
