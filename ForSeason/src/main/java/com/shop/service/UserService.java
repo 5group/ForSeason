@@ -33,6 +33,10 @@ public class UserService implements MyService<Integer, User> {
         mapper.update(user);
     }
 
+    public void set_pwd(User user)throws Exception{
+        mapper.pwd_update(user);
+    }
+
     public User get_id(String id) throws Exception {
         return mapper.select_id(id);
     }

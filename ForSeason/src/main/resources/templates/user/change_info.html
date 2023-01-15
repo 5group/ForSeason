@@ -1,0 +1,78 @@
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    var address;
+    window.onload = function () {
+        document.getElementById("address_kakao").addEventListener("click", function () { //주소입력칸을 클릭하면
+            //카카오 지도 발생
+            new daum.Postcode({
+                oncomplete: function (data) { //선택시 입력값 세팅
+                    document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                    address = data.address;
+                }
+            }).open();
+        });
+    }
+    var phone_bol = false;
+    var email_bol = false;
+    $(document).ready(function () {
+        $("input[name='user_phone']").keyup(function () {
+            if (!patternPhone.test($("input[name='user_phone']").val())) {
+                $('#phone_span').text("핸드폰 번호 기입이 틀리셨습니다. EX)010-1234-5678");
+                phone_bol = false;
+            } else {
+                $('#phone_span').text("정상");
+                phone_bol = true;
+            }
+        });
+        $("input[name='user_email']").keyup(function (){
+            if(!regExpEmail.test($("input[name='user_email']").val())){
+                $('#email_span').text("메일형식이 맞지 않습니다.");
+                email_bol = false;
+            }else{
+                $('#email_span').text("정상");
+                email_bol = true;
+            }
+        });
+
+        $('#register_form > a').click(function () {
+            var c = confirm('수정 하시겠습니까?');
+            if (c == true) {
+                if (phone_bol == false || email_bol == false) {
+                    return false;
+                }else{
+                $.ajax({
+                    url: '[[@{/user/info_update}]]',
+                    type: 'post',
+                    data: {
+                        "user_email": $('input[name="user_email"]').val(),
+                        "user_name": $('input[name="user_name"]').val(),
+                        "user_phone": $('input[name="user_phone"]').val(),
+                        "user_address": $('input[name="user_address"]').val()
+                    },
+                    success: function (data) {
+                        location.href = '[[@{/user/info}]]';
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
+            }
+        });
+
+    });
+</script>
+
+<h1>
+    Info Change
+</h1>
+
+
+<form id="register_form">
+    이메일 <input type="text" name="user_email" th:value="${user.user_email}"><span id="email_span"></span><br>
+    이름 <input type="text" name="user_name" th:value="${user.user_name}"><br>
+    휴대폰 <input type="text" name="user_phone" th:value="${user.user_phone}"><span id="phone_span"></span><br>
+    주소 <input type="text" id="address_kakao" name="user_address" readonly/><br>
+    <a href="#">UPDATE</a>
+</form>
