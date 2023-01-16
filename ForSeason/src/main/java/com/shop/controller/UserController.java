@@ -113,4 +113,30 @@ public class UserController {
         System.out.println(user);
         return "main";
     }
+
+    @RequestMapping("delete")
+    public String delete(){
+        return dir + "delete_user";
+    }
+    @RequestMapping("delete_user")
+    public String deleteUser(String user_pwd){
+        System.out.println("test");
+        User user = (User) session.getAttribute("loginuser");
+        String pwd = user.getUser_pwd();
+        if(pwd.equals(user_pwd)){
+            System.out.println("session_user_pwd:" + user.getUser_pwd());
+            System.out.println("user_pwd:"+ user_pwd);
+            System.out.println("비밀번호가 일치");
+            System.out.println(user.getUser_id());
+            try {
+                service.remove(user.getUser_id());
+                session.invalidate();
+                return "main";
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println("test");
+        return dir+"delete_user";
+    }
 }

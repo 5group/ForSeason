@@ -43,6 +43,7 @@ public class MainController {
                 if (user.getUser_pwd().equals(pwd)) {
                     result = "loginok";
                     session.setAttribute("loginuser", user);
+                    System.out.println(session.getAttribute("loginuser"));
                 }
             }
         } catch (Exception e) {

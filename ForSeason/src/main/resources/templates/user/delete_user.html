@@ -1,0 +1,30 @@
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        var user_pwd = "";
+        $("input[type='password']").keyup(function () {
+            user_pwd = $('input[name="user_pwd"]').val();
+
+        });
+        $('#register_form > a').click(function () {
+            var c = confirm('수정 하시겠습니까?');
+            if (c == true) {
+                $('#register_form').attr({
+                   'method':'post',
+                   'action':'[[@{/user/delete_user}]]'
+                });
+                $('#register_form').submit();
+            }
+        });
+
+    });
+</script>
+
+<h1>DELETE Page</h1>
+<form id="register_form">
+    비밀번호 확인<input type="password" name="user_pwd"><br>
+    <a href="#">delete</a>
+</form>
