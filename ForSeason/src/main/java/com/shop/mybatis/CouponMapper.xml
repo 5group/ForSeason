@@ -15,7 +15,7 @@
     </select>
     <insert id="insert" parameterType="Coupon">
         INSERT INTO coupon
-        VALUES (0, #{cou_name}, #{cou_price}, #{user_no}, 1, now(), DATE_ADD(NOW(), INTERVAL 1 MONTH))
+        VALUES (0,  #{user_no}, #{cou_name}, #{cou_price}, 1, now(), DATE_ADD(NOW(), INTERVAL 1 MONTH))
     </insert>
     <update id="update" parameterType="Coupon">
         UPDATE coupon SET cou_status=0 WHERE cou_no=#{cou_no}
