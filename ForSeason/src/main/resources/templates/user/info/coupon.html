@@ -1,0 +1,20 @@
+<h1>Coupon Page</h1>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<div th:each="o:${session.coupon}">
+    <div th:if="${o.cou_status == 1}"> 사용가능한 쿠폰
+        <div th:text="| 쿠폰이름 : ${o.cou_name}|"></div>
+        <div th:text="| 할인금액 : ${o.cou_price}|"></div>
+        <div th:text="| 쿠폰생성날짜 : ${#dates.format(o.cou_udate, 'yyyy-MM-dd')}|"></div>
+        <div th:text="| 쿠폰만료날짜 : ${#dates.format(o.cou_rdate, 'yyyy-MM-dd')}|"></div>
+    </div>
+    <div th:if="${o.cou_status != 1}"> 이미쓴 쿠폰
+        <div th:text="| 쿠폰이름 : ${o.cou_name}|"></div>
+        <div th:text="| 할인금액 : ${o.cou_price}|"></div>
+        <div th:text="| 쿠폰생성날짜 : ${#dates.format(o.cou_udate, 'yyyy-MM-dd')}|"></div>
+        <div th:text="| 쿠폰만료날짜 : ${#dates.format(o.cou_rdate, 'yyyy-MM-dd')}|"></div>
+    </div>
+    </br>
+</div>

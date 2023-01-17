@@ -37,4 +37,8 @@ public class CouponService implements MyService<Integer, Coupon> {
     public List<Coupon> get() throws Exception {
         return mapper.selectall();
     }
+
+    public List<Coupon> getList(int user_no) throws Exception{
+        return mapper.select_list(user_no);
+    }
 }

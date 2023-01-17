@@ -1,21 +1,5 @@
-<style>
-
-</style>
-
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
-    var address;
-    window.onload = function () {
-        document.getElementById("address_kakao").addEventListener("click", function () { //주소입력칸을 클릭하면
-            //카카오 지도 발생
-            new daum.Postcode({
-                oncomplete: function (data) { //선택시 입력값 세팅
-                    document.getElementById("address_kakao").value = data.address; // 주소 넣기
-                    address = data.address;
-
-                }
-            }).open();
-        });
-    }
     // 비밀번호 규칙 정규식
     // : 숫자, 특문 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력
     var regExpPw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/

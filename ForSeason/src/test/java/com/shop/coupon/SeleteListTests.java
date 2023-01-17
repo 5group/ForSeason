@@ -6,18 +6,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 @SpringBootTest
-public class SelectTests {
+public class SeleteListTests {
     @Autowired
     CouponService service;
     @Test
-    void contextLoads() {
-        Coupon coupon = null;
-        try {
-            coupon = service.get(2);
-            System.out.println(coupon);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
+    void contentLoads(){
+        List<Coupon> list = null;
+        try{
+            list = service.getList(2);
+            for(Coupon coupon : list) System.out.println(coupon);
+        }catch (Exception e){
             e.printStackTrace();
         }
     }

@@ -1,19 +1,17 @@
 package com.shop.controller;
 
-import com.google.gson.JsonObject;
+import com.shop.dto.Coupon;
 import com.shop.dto.User;
-import com.shop.service.KakaoService;
+import com.shop.service.CouponService;
 import com.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
-
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -21,7 +19,10 @@ public class UserController {
     String dir = "user/";
 
     @Autowired
-    UserService service;
+    UserService userService;
+    
+    @Autowired
+    CouponService couponService;
 
     @Autowired
     HttpSession session;
@@ -37,12 +38,13 @@ public class UserController {
     public String register(Model model, User user, HttpSession session) {
         User c = null;
         try {
-            if (service.get_id(user.getUser_id()) == null || service.get_id(user.getUser_id()).equals("")) {
-                service.register(user);
+            if (userService.get_id(user.getUser_id()) == null || userService.get_id(user.getUser_id()).equals("")) {
+                userService.register(user);
                 model.addAttribute("center", dir + "registerok");
-                c = service.get_id(user.getUser_id());
+                c = userService.get_id(user.getUser_id());
                 model.addAttribute("obj", c);
                 session.setAttribute("loginuser", c);
+                return "redirect:/";
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,17 +65,17 @@ public class UserController {
         return dir + "info";
     }
 
-    @RequestMapping("/change_pwd")
+    @RequestMapping("/info/change_pwd")
     public String get(@SessionAttribute("loginuser") User user, Model model) {
         model.addAttribute("user", user);
-        return dir + "change_pwd";
+        return dir + "/info/change_pwd";
     }
 
-    @RequestMapping("change_info")
+    @RequestMapping("/info/change_info")
     public String infoUpdate(@SessionAttribute("loginuser") User user, Model model) {
         model.addAttribute("user", user);
 
-        return dir + "change_info";
+        return dir + "info/change_info";
     }
 
     @RequestMapping("/pwd_update")
@@ -82,7 +84,7 @@ public class UserController {
             User u = (User) session.getAttribute("loginuser");
             u.setUser_id(u.getUser_id());
             u.setUser_pwd(user_pwd);
-            service.set_pwd(u);
+            userService.set_pwd(u);
             session.setAttribute("loginuser", u);
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,7 +92,7 @@ public class UserController {
         return "main";
     }
 
-    @RequestMapping("info_update")
+    @RequestMapping("/info_update")
     public String infoUpdate(User info_user) {
         try {
             User u = (User) session.getAttribute("loginuser");
@@ -99,7 +101,7 @@ public class UserController {
             u.setUser_name(info_user.getUser_name());
             u.setUser_phone(info_user.getUser_phone());
             u.setUser_address(info_user.getUser_address());
-            service.modify(u);
+            userService.modify(u);
             session.setAttribute("loginuser", u);
             System.out.println(session.getAttribute("loginuser"));
         } catch (Exception e) {
@@ -114,18 +116,19 @@ public class UserController {
         return "main";
     }
 
-    @RequestMapping("delete")
+    @RequestMapping("/info/delete")
     public String delete(){
-        return dir + "delete_user";
+        return dir + "/info/delete_user";
     }
-    @RequestMapping("delete_user")
+
+    @RequestMapping("/info/delete_user")
     public String deleteUser(String user_pwd){
         System.out.println("test");
         User user = (User) session.getAttribute("loginuser");
         String pwd = user.getUser_pwd();
         if(pwd.equals(user_pwd)){
             try {
-                service.remove(user.getUser_id());
+                userService.remove(user.getUser_id());
                 session.invalidate();
                 return "redirect:/";
             } catch (Exception e) {
@@ -133,6 +136,41 @@ public class UserController {
             }
         }
         System.out.println("test");
-        return dir+"delete_user";
+        return dir+"/info/delete_user";
+    }
+
+    @RequestMapping("/info/coupon")
+    public String selectCoupon(){
+        try {
+            List<Coupon> list = (List<Coupon>) session.getAttribute("coupon");
+            for(Coupon coupon : list) System.out.println(coupon);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return dir + "/info/coupon";
+    }
+
+    @RequestMapping("/info/coupon_insert")
+    public String insertCoupon(){
+        return dir +"/info/coupon_insert";
+    }
+
+    @RequestMapping("/info/createCoupon")
+    public String createCoupon(@RequestParam String cou_name, @RequestParam int cou_price, @RequestParam int user_no){
+        Coupon coupon = new Coupon();
+        User user = new User();
+        System.out.println(coupon);
+        try {
+            coupon.setCou_name(cou_name);
+            coupon.setCou_price(cou_price);
+            coupon.setUser_no(user_no);
+            user.setUser_no(user_no);
+            couponService.register(coupon);
+            List<Coupon> list = couponService.getList(user.getUser_no());
+            session.setAttribute("coupon", list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "main";
     }
 }

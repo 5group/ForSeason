@@ -15,7 +15,7 @@ public class InsertTests {
     @DisplayName("Insert")
     @Test
     void contentLoads(){
-        Coupon coupon = new Coupon(0, "test_coupon_name", "test_info" ,null,1);
+        Coupon coupon = new Coupon("1000원 할인쿠폰", 1000, 2);
         try{
             service.register(coupon);
             System.out.printf("OK");

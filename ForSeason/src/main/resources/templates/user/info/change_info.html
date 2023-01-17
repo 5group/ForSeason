@@ -13,8 +13,10 @@
             }).open();
         });
     }
-    var phone_bol = false;
-    var email_bol = false;
+    var patternPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+    var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    var phone_bol = true;
+    var email_bol = true;
     $(document).ready(function () {
         $("input[name='user_phone']").keyup(function () {
             if (!patternPhone.test($("input[name='user_phone']").val())) {
