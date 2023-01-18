@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+#container {
+	margin: 20px auto;
+	border: 2px solid gray;
+	width: 800px;
+	height: 1500px;
+}
+
+#iimg {
+	width: 800px;
+}
+
+.quantity {
+	width: 64px;
+	height: 28px;
+	padding: 0 0 0 28px;
+	text-align: center;
+	margin: 20px auto;
+	position: relative;
+}
+
+.btn_minus {
+	position: absolute;
+	width: 28px;
+	height: 28px;
+	background: url(/img/btn_minus.png);
+	left: 0;
+	top: 0;
+	background-position: -5px -5px;
+	border: 1px solid gray;
+	border-radius : 10%;
+}
+
+.btn_plus {
+	position: absolute;
+	width: 28px;
+	height: 28px;
+	background: url(/img/btn_plus.png);
+	right: 0;
+	top: 0;
+	vertical-align: top;
+	background-position: -5px -5px;
+	border: 1px solid gray;
+	border-radius : 10%;
+}
+
+#buyQtt {
+	width: 33px;
+	height: 10.5px;
+	font-size: 14px;
+	text-align: center;
+	padding: 7px 0;
+	display: block;
+	outline: none;
+}
+
+#button_wrapper{
+	width: 150px;
+	margin: 20px auto;
+}
+</style>
+<script src="/resources/jquery/jquery-3.3.1.min.js"></script>
+<script>
+
+//수량 옵션
+function btnClick() {
+	
+}
+ 
+</script>
+</head>
+<body>
+	<div id=container>
+		<div>
+			<img id="iimg" th:src="@{/img/}+${cate}+'/'+${item.item_img}">
+		</div>
+		<div th:text="${item.item_name}"
+			style="text-align: center; margin: 50px 0px 0px; font-size: 25px;"></div>
+		<div th:text="${item.item_price}"
+			style="text-align: center; margin: 50px 0px 0px; font-size: 25px;"></div>
+
+		<div class="quantity">
+			<!-- 뉴발란스, 탑텐 참고 -->
+			<button type="button" class="btn_minus"></button>
+			<input type="text" name="buyQtt" id="buyQtt" value="1">
+			<button type="button" class="btn_plus" onclick="btnClick();"></button>
+		</div>
+
+		<div id="button_wrapper">
+			<button id="btn_cart_go">장바구니</button>
+			<button id="btn_order">결제</button>
+		</div>
+
+	</div>
+</body>
+</html>
+
+

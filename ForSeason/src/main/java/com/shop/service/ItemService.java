@@ -39,4 +39,8 @@ public class ItemService implements MyService<Integer, Item> {
     public List<Item> get() throws Exception {
         return mapper.selectall();
     }
+    
+    public List<Item> getCateList(Integer cate_no) throws Exception {
+        return mapper.getCateList(cate_no);
+    }
 }
