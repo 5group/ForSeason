@@ -17,7 +17,7 @@ public class SelectTests {
     void contextLoads() {
         Cart cart = null;
         try {
-            cart = service.get(1);
+            cart = service.get(2);
             System.out.println(cart);
         } catch (Exception e) {
             // TODO Auto-generated catch block

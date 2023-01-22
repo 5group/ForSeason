@@ -20,6 +20,7 @@ public class SeleteAllTests {
         try{
             list = service.get();
             for(Order order : list) System.out.println(order);
+
         }catch (Exception e){
             e.printStackTrace();
         }

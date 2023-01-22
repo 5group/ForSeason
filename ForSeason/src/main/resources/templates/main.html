@@ -49,13 +49,14 @@
       <div class="text-end" th:if="${session.loginuser == null}">
 
         <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/login}">Login</a></button>
-        <button type="button" class="btn btn-outline-light me-2"><a href="#">Register</a></button>
-        <button type="button" class="btn btn-warning"><a th:href="@{/user}">Sign up</a></button>
+        <button type="button" class="btn btn-warning"><a th:href="@{/user/add}">Sign up</a></button>
         <button type="button" class="btn btn-warning"><a th:href="@{/oauth/kakaologin}">kakaologin</a></button>
       </div>
 
       <div class="text-end" th:if="${session.loginuser != null}">
         <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/logout}">Logout</a></button>
+        <button type="button" class="btn btn-warning"><a th:href="@{/order/kakaopay}">Order</a></button>
+        <button type="button" class="btn btn-warning"><a th:href="@{test}">indexPageCoupon</a></button>
         <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/user/info}">My Info</a></button>
       </div>
     </div>

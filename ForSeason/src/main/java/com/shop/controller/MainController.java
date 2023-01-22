@@ -1,9 +1,7 @@
 package com.shop.controller;
 
-import com.shop.dto.Coupon;
-import com.shop.dto.User;
-import com.shop.service.CouponService;
-import com.shop.service.UserService;
+import com.shop.dto.*;
+import com.shop.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +15,15 @@ public class MainController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CartService cartService;
+
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    OrderDetailService orderDetailService;
 
     @Autowired
     CouponService couponService;
@@ -48,9 +55,15 @@ public class MainController {
             if (user != null) {
                 if (user.getUser_pwd().equals(pwd)) {
                     result = "loginok";
+                    List<Coupon> coupon_list = couponService.getList(user.getUser_no());
+                    List<Cart> cart_list = cartService.get_list(user.getUser_no());
+                    List<Order> order_list = orderService.get_list(user.getUser_no());
+                    List<OrderDetail> od_list = orderDetailService.getODList(user.getUser_no());
                     session.setAttribute("loginuser", user);
-                    List<Coupon> list = couponService.getList(user.getUser_no());
-                    session.setAttribute("coupon", list);
+                    session.setAttribute("coupon", coupon_list); //user 즉시 sesstion 넣어주기
+                    session.setAttribute("cart", cart_list); // test를 위한 sesstion 처리
+                    session.setAttribute("order", order_list);
+                    session.setAttribute("od", od_list);
                 }
             }
         } catch (Exception e) {

@@ -15,7 +15,7 @@ public class InsertTests {
     @DisplayName("Insert")
     @Test
     void contentLoads(){
-        Order order = new Order(0, 2, 10000, "카카오페이","서울특별시", "무인", "배송중", null);
+        Order order = new Order(0, 2, 10000, "카카오페이","서울특별시", "무인", "배송중", "결제완료", 1000,null);
         try{
             service.register(order);
             System.out.println("OK");

@@ -7,6 +7,7 @@ import com.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -95,6 +96,7 @@ public class UserController {
     @RequestMapping("/info_update")
     public String infoUpdate(User info_user) {
         try {
+            System.out.println(info_user);
             User u = (User) session.getAttribute("loginuser");
             u.setUser_id(u.getUser_id());
             u.setUser_email(info_user.getUser_email());
@@ -139,17 +141,6 @@ public class UserController {
         return dir+"/info/delete_user";
     }
 
-    @RequestMapping("/info/coupon")
-    public String selectCoupon(){
-        try {
-            List<Coupon> list = (List<Coupon>) session.getAttribute("coupon");
-            for(Coupon coupon : list) System.out.println(coupon);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dir + "/info/coupon";
-    }
-
     @RequestMapping("/info/coupon_insert")
     public String insertCoupon(){
         return dir +"/info/coupon_insert";
@@ -172,5 +163,24 @@ public class UserController {
             e.printStackTrace();
         }
         return "main";
+    }
+    @RequestMapping("/info/coupon")
+    public String coupon(){
+        return dir+"/info/coupon";
+    }
+
+    @RequestMapping("/info/myOrder")
+    public String order(){
+        return dir+"/info/myOrder";
+    }
+    @RequestMapping("/info/myOrderDetail?no={no}")
+    public String orderDetail(@PathVariable("no") int no){
+        System.out.println("test:"+no);
+        return "user/info/myOrderDetail?no="+no;
+    }
+
+    @RequestMapping("/info/myOrderDetail")
+    public String orderDDD(){
+        return "user/info/myOrderDetail";
     }
 }

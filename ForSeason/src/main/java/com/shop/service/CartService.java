@@ -38,4 +38,8 @@ public class CartService implements MyService<Integer, Cart> {
     public List<Cart> get() throws Exception {
         return mapper.selectall();
     }
+
+    public List<Cart> get_list(int user_no) throws Exception{
+        return mapper.select_list(user_no);
+    }
 }

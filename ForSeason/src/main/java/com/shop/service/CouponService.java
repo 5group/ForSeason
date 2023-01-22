@@ -41,4 +41,10 @@ public class CouponService implements MyService<Integer, Coupon> {
     public List<Coupon> getList(int user_no) throws Exception{
         return mapper.select_list(user_no);
     }
+
+    public void useCoupon(int coupon_no) throws Exception {
+        Coupon coupon = new Coupon();
+        coupon.setCou_no(coupon_no);
+        mapper.update(coupon);
+    }
 }
