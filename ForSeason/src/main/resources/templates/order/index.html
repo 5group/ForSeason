@@ -1,0 +1,42 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script>
+    $(document).ready(function () {
+        $(this).$("#couponBtn").on("click", function () {
+            var user_no = $("#user_no").val();
+            window.open("/user/info/coupon?user_no=", user_no, "childForm", "width=800, height=350, resizable = no, scrollbars = no");
+        });
+    });
+</script>
+<li>
+    <div class="rightItem">
+        <input type="button" id="couponBtn" value="쿠폰조회">
+    </div>
+</li>
+<li>
+    <span class="leftItem">쿠폰금액</span>
+    <input type="hidden" name="couponNo" value="0">
+    <input id="useCoupon" type="hidden" name="useCoupon" value="0">
+    <span class="rightItem" id="couponPrice">0</span>
+</li>
+<table>
+    <tr>
+        <td>상품 이름</td>
+        <td>상품 금액</td>
+        <td>상품 갯수</td>
+        <td>쿠폰 금액</td>
+    </tr>
+    <tr th:each="map, stat:${maplist}">
+        <input class="cartSize" th:value="${stat.size}">
+        <td th:text="${map.item_name}"></td>
+        <td th:text="${map.item_price}"></td>
+        <td th:text="${map.cart_cnt}"></td>
+        <td>
+            <span class="leftItem" name="name">쿠폰금액</span>
+        </td>
+    </tr>
+</table>
+
+
+
+
