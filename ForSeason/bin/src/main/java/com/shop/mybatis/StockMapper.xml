@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.StockMapper">
+
+    <select id="select" parameterType="Integer" resultType="Stock">
+        SELECT * FROM stock WHERE stock_no=#{stock_no}
+    </select>
+    <select id="selectall" resultType="Stock">
+        SELECT * FROM stock
+    </select>
+    <insert id="insert" parameterType="Stock">
+        INSERT INTO stock
+        VALUES (0, #{item_no}, #{color_no},#{size_no}, #{amount})
+    </insert>
+    <update id="update" parameterType="Stock">
+        UPDATE stock SET amount=#{amount} WHERE stock_no=#{stock_no}
+    </update>
+    <delete id="delete" parameterType="String">
+        DELETE FROM stock WHERE stock_no=#{stock_no}
+    </delete>
+
+</mapper>

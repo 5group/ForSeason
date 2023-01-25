@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+
+<script>
+    var address;
+    window.onload = function () {
+        document.getElementById("address_kakao").addEventListener("click", function () { //주소입력칸을 클릭하면
+            //카카오 지도 발생
+            new daum.Postcode({
+                oncomplete: function (data) { //선택시 입력값 세팅
+                    document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                    address = data.address;
+
+                }
+            }).open();
+        });
+    }
+    var regExpPw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/
+    var patternPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+    var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    var pwd_bol = false;
+    var phone_bol = false;
+    var email_bol = false;
+
+    $(document).ready(function () {
+        //api 유저일시 자동 등록
+            if ("[[${userObj}]]" != null) {
+                id = $('input[name="id"]').val();
+                email = $('input[name="email"]').val();
+                u_name = $('input[name="u_name"]').val();
+                $("input[name='user_id']").val(id);
+                $("input[name='user_email']").val(email);
+                $("input[name='user_name']").val(u_name);
+                email_bol = true;
+            }
+
+            $("input[name='user_pwd']").keyup(function () {
+                if (!regExpPw.test($("input[name='user_pwd']").val())) {
+                    $('#pwd_span').text("숫자, 특문 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력");
+                } else {
+                    $('#pwd_span').text("사용 가능한 비밀번호입니다.");
+                    pwd_bol = true;
+                }
+            });
+            $("input[name='user_phone']").keyup(function (){
+                if(!patternPhone.test($("input[name='user_phone']").val())){
+                    $('#phone_span').text("핸드폰 번호 기입이 틀리셨습니다. EX)010-1234-5678");
+                    phone_bol = false;
+                }else{
+                    $('#phone_span').text("정상");
+                    phone_bol = true;
+                }
+            });
+        $("input[name='user_email']").keyup(function (){
+            if(!regExpEmail.test($("input[name='user_email']").val())){
+                $('#email_span').text("메일형식이 맞지 않습니다.");
+                email_bol = false;
+            }else{
+                $('#email_span').text("정상");
+                email_bol = true;
+            }
+        });
+
+            if ("[[${is_check}]]" == "true") {
+                location.href = '[[@{/}]]';
+            }
+
+            $('#register_form > button > a').click(function () {
+                var c = confirm("회원등록 하시겠습니까?");
+                if (c == true) {
+                    if (pwd_bol == false || phone_bol == false || email_bol == false) {
+                        return false;
+                    } else {
+                        $('#register_form').attr({
+                            'method': 'post',
+                            'action': '[[@{/user/register}]]'
+                        });
+                        $('#register_form').submit();
+                    }
+                }
+            });
+        }
+    )
+    ;
+</script>
+
+<body>
+<h1>첫 회원가입 페이지</h1>
+<ul id="th_true" th:if="${userObj} != null" style="list-style-type:none">
+    <input type="hidden" name="id" th:value="${userObj[user_id]}">
+    <input type="hidden" name="email" th:value="${userObj[email]}">
+    <input type="hidden" name="u_name" th:value="${userObj[nickname]}">
+</ul>
+<form id="register_form">
+    아이디<input type="text" name="user_id" value=""><br>
+    이메일<input type="text" name="user_email" value=""><span id="email_span"></span><br>
+    이름<input type="text" name="user_name" value=""><br>
+    패스워드<input type="password" name="user_pwd"><span id="pwd_span"></span><br>
+    휴대폰<input type="text" name="user_phone"><span id="phone_span"></span></br>
+    주소<input type="text" id="address_kakao" name="user_address" readonly/><br>
+    <legend>Gender
+        <input type="radio" name="user_gender" value="male" id="male">
+        <label for="male">Male</label>
+        <input type="radio" name="user_gender" value="female" id="female">
+        <label for="female">Female</label>
+    </legend>
+    <button><a href="#">회원가입</a></button>
+</form>
+</body>
+</html>

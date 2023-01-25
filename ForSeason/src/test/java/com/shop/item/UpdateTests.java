@@ -18,9 +18,8 @@ public class UpdateTests {
         Item item = new Item();
         item.setItem_price(40000);
         item.setItem_discnt(20);
-        item.setItem_info("난이제 모르겠다이게맞는지..");
-        item.setItem_img("img");
-        item.setItem_no(8);
+        item.setItem_info("아이템 수정");
+        item.setItem_no(1);
         try {
             service.modify(item);
             System.out.println(item.getItem_no()+"번 제품 수정 성공");

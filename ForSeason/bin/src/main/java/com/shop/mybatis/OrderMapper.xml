@@ -10,10 +10,15 @@
     <select id="selectall" resultType="Order">
         SELECT * FROM `order`
     </select>
+    <select id="select_list" parameterType="Integer" resultType="Order">
+        SELECT * FROM `order` where user_no=#{user_no}
+    </select>
     <insert id="insert" parameterType="Order">
         INSERT INTO `order`
-        VALUES (#{order_no}, #{user_no}, #{order_tot}, #{order_pay}, #{ship_addr}, #{ship_cust}, #{ship_stat}, now())
-
+        VALUES (0, #{user_no}, #{order_tot}, #{order_pay}, #{ship_addr}, #{ship_cust}, #{ship_stat}, #{order_stat}, #{order_cp}, now())
+    <selectKey keyProperty="order_no" resultType="int" order="AFTER">
+        SELECT LAST_INSERT_ID()
+    </selectKey>
     </insert>
     <update id="update" parameterType="Order">
         UPDATE `order` SET rev_title=#{rev_title}, rev_content=#{rev_content}, rev_rdate=now() WHERE rev_no=#{rev_no}

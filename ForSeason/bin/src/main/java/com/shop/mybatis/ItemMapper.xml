@@ -21,4 +21,7 @@
         DELETE FROM item WHERE item_no=#{item_no}
     </delete>
 
+	<select id="getCateList" parameterType="Integer" resultType="Item">
+        SELECT * FROM item WHERE cate_no=#{cate_no}
+    </select>
 </mapper>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+
+</head>
+<body>
+
+<style>
+    input {
+        width: 300px;
+        padding: 10px 20px;
+        margin: 5px 0;
+        box-sizing: border-box;
+    }
+</style>
+<script>
+    var coupon_no = "0";
+    var item_tot = $('input[name="item_price"]').val();
+    var cou_pirce = "0";
+    $(document).ready(function () {
+        item_tot = $("input[name=item_price]").val();
+        cou_pirce = "0";
+        coupon_no = "0";
+        if ($('input[name="ship_cust"]').val() == null && $('input[name="ship_cust"]').val() == "") {
+            $('input[name="ship_cust"]').focus();
+        }
+    });
+    var address;
+    var zonecode;
+    window.onload = function () {
+        document.getElementById("address_kakao").addEventListener("click", function () { //주소입력칸을 클릭하면
+            //카카오 지도 발생
+            new daum.Postcode({
+                oncomplete: function (data) { //선택시 입력값 세팅
+                    document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                    document.getElementById('address_post').value = data.zonecode;
+                    document.querySelector("input[name=address_detail]").focus(); //상세입력 포커싱
+                    address = data.address;
+                    zonecode = data.zonecode;
+                }
+            }).open();
+        });
+    }
+
+    function requestPay() {
+        IMP.init('imp53685653');
+        IMP.request_pay({
+            pg: 'kakaopay',
+            pay_method: 'kakao',
+            merchant_uid: '1' + new Date(),
+            name: '[[${item_name}]]',
+            amount: item_tot,
+            buyer_email: 'test@naver.com',
+            buyer_name: $('input[name="user_name"]').val(),
+            buyer_tel: '010-1234-5678',
+            buyer_addr: address,
+            buyer_postcode: zonecode
+        }, function (rsp) {
+            if (rsp.success) {
+                $.ajax({
+                    url: "[[@{/order/order_detail}]]", // 결제 완료 후 주문테이블에 넣어줄 링크
+                    type: 'post',
+                    data:
+                        JSON.stringify({
+                            "order_tot": rsp.paid_amount,
+                            "order_pay": "카카오페이",
+                            "ship_addr": rsp.buyer_addr,
+                            "ship_cust": $('input[name="ship_cust"]').val(),
+                            "ship_stat": "입고 준비중",
+                            "order_stat": "결제완료",
+                            "coupon_no": coupon_no,
+                            "cou_price":cou_pirce
+                        }),
+                    contentType: 'application/json; charset=utf-8'
+                });
+                var msg = "";
+                msg += '고유ID : ' + rsp.imp_uid;
+                msg += '상점 거래ID : ' + rsp.merchant_uid;
+                msg += '결제 금액 : ' + rsp.paid_amount;
+                msg += '카드 승인번호 : ' + rsp.apply_num;
+                alert(msg);
+                location.href = "[[@{/order/detail/}]]";
+
+            } else {
+                var msg = '결제에 실패하였습니다.';
+                msg += '에러내용 : ' + rsp.error_msg;
+                alert(msg);
+            }
+        });
+    };
+
+    function showCouponList() {
+        $.ajax({
+            type: "get",
+            url: "/couponList",
+            success: function (coulist) {
+                var htmls = ""
+                if (coulist == 0) {
+                    htmls += "보유한 쿠폰이 없습니다."
+                } else {
+                    htmls += "<select class=\"coupon-select\" aria-label=\"Default select example\">"
+                    htmls += "	<option selected disabled>쿠폰을 선택해주세요</option>"
+                    htmls += "	<option value=\"0\">0</option>"
+                    $(coulist).each(function () {
+                        htmls += "<option value=" + this.cou_no + ">" + this.cou_price + "</option>"
+                    })
+                    htmls += "</select>"
+                }
+                $('span[name="coupon"]').html(htmls);
+                $('span[name="coupon"]').change(function () {
+                    item_tot = $("input[name=item_price]").val();
+                    coupon_no = $(".coupon-select option:selected").val();
+                    cou_price = $(".coupon-select option:selected").text();
+                    itemCalculator(coupon_no);
+                    $('input[name="item_price"]').val(item_tot);
+                })
+            }
+        })
+
+    }
+
+    function itemCalculator(index) {
+        item_tot = '[[${item_tot}]]';
+        if(index != 0){
+            return item_tot -= cou_price;
+        }
+        return;
+    }
+</script>
+<h1> kakaoPay api 이용하기 </h1>
+<button onclick="requestPay()">결제하기</button>
+<table>
+    <tr>
+        <th>상품이름</th>
+        <td><input type="text" name="item_name" th:value="${item_name}" readonly="readonly"></td>
+    </tr>
+    <tr>
+        <th>총가격</th>
+        <td><input type="text" name="item_price" th:value="${item_tot}" readonly="readonly"></td>
+    </tr>
+    <tr>
+        <th>주문자 이름</th>
+        <td><input type="text" name="user_name"></td>
+    </tr>
+    <tr>
+        <th>받은사람 이름</th>
+        <td><input type="text" name="ship_cust"></td>
+    </tr>
+    <tr>
+        <th>주소</th>
+        <td><input type="text" id="address_kakao" name="address" readonly/></td>
+    </tr>
+    <tr>
+        <th>우편번호</th>
+        <td><input type="text" id="address_post" placeholder="우편번호"/></td>
+    </tr>
+    <tr>
+        <th>상세 주소</th>
+        <td><input type="text" id="address_detail" name="address_detail"/></td>
+    </tr>
+</table>
+<input type="button" id="showCouponList" value="쿠폰리스트" onclick="showCouponList()">
+<span name="coupon"></span>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</body>
+</html>

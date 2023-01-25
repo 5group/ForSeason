@@ -10,6 +10,9 @@
     <select id="selectall" resultType="Cart">
         SELECT * FROM cart
     </select>
+    <select id="select_list" parameterType="Integer" resultType="Cart">
+        SELECT * FROM cart where user_no=#{user_no}
+    </select>
     <insert id="insert" parameterType="Cart">
         INSERT INTO cart
         VALUES (#{cart_no}, #{item_no}, #{user_no}, #{cart_cnt}, now())

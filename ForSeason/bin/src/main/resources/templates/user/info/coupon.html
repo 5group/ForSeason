@@ -1,0 +1,20 @@
+<h1>Coupon Page</h1>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+<h3>내 쿠폰 목록</h3>
+<table>
+    <tr>
+        <td>쿠폰명</td>
+        <td>쿠폰금액</td>
+        <td>쿠폰 유효기간</td>
+    </tr>
+    <tr th:each="o:${session.coupon}" th:if="${o.cou_status == 1}">
+        <input class="cou_no" type="hidden" name="cou_no" th:value="${o.cou_no}">
+        <input class="cou_price" type="hidden" name="cou_price" th:value="${o.cou_price}">
+        <td th:text="${o.cou_name}"></td>
+        <td th:text="${o.cou_price}"></td>
+        <td th:text="${#dates.format(o.cou_rdate, 'yyyy-MM-dd')}"></td>
+    </tr>
+</table>

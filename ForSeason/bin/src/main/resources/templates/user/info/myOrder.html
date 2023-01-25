@@ -1,0 +1,27 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<h3> 내 주문 목록 </h3>
+<table>
+
+    <tr>
+        <td>결제상태</td>
+        <td>결제수단</td>
+        <td>총액</td>
+        <td>결제날짜</td>
+        <td>쿠폰적용가</td>
+        <td>
+            <a>상세주문내역 보러가기</a>
+        </td>
+    </tr>
+    <tr th:each="order, stat:${session.order}">
+        <td th:text="${order.order_stat}"></td>
+        <td th:text="${order.order_pay}"></td>
+        <td th:text="${order.order_tot}"></td>
+        <td th:text="${order.order_udate}"></td>
+        <td th:text="${order.order_cp}"></td>
+        <td>
+        <a th:href="|/user/info/myOrderDetail?no=${order.order_no}|">test</a>
+        </td>
+    <tr/>
+
+</table>

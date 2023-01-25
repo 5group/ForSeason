@@ -15,10 +15,10 @@ public class InsertTests {
     @DisplayName("Insert")
     @Test
     void contentLoads(){
-        Item item = new Item(30, "청바지", 10000, 100,"청바지 사든가 말든가", 1, "jpg", null);
+        Item item = new Item(0, 31, "청바지", 10000, 10, "청바지 상품 등록", 0, null);
         try{
             service.register(item);
-            System.out.printf("OK");
+            System.out.println("OK");
         }catch (Exception e){
             e.printStackTrace();
             System.out.printf("Fail");
