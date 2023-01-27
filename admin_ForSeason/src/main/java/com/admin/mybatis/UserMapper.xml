@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.UserMapper">
+
+    <select id="select" parameterType="Integer" resultType="User">
+        SELECT * FROM user WHERE user_no=#{user_no}
+    </select>
+    <select id="select_id" parameterType="String" resultType="User">
+        SELECT * FROM user WHERE user_id=#{user_id}
+    </select>
+    <select id="selectall" resultType="User">
+        SELECT * FROM user
+    </select>
+    <insert id="insert" parameterType="User">
+        INSERT INTO user
+        VALUES (user_no, #{user_id}, #{user_pwd},#{user_email}, #{user_name}, #{user_phone}, #{user_address}, #{user_gender}, now(), now())
+    </insert>
+    <update id="update" parameterType="User">
+        UPDATE user SET user_email=#{user_email}, user_name=#{user_name}, user_phone=#{user_phone}, user_address=#{user_address}, user_rdate=now() WHERE user_id=#{user_id}
+    </update>
+    <update id="pwd_update" parameterType="User">
+        UPDATE user SET user_pwd=#{user_pwd} WHERE user_id=#{user_id}
+    </update>
+    <delete id="delete" parameterType="String">
+        DELETE FROM user WHERE user_id=#{user_id}
+    </delete>
+
+</mapper>

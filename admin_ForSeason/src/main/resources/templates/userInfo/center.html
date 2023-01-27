@@ -1,0 +1,105 @@
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <td>
+                    <label class="container">
+                        <input type="checkbox" name="selectAll" value="selectAll" onclick='selectAll(this)'/>
+                        <span class="checkmark"></span>
+                    </label>
+                </td>
+                <td>이름</td>
+                <td>이메일</td>
+                <td>전화번호</td>
+                <td>address</td>
+                <td>gender</td>
+                <td>만든날짜</td>
+                <td>수정날짜</td>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="user:${userList}">
+                <td>
+                    <label class="container">
+                        <input type="checkbox" name="checkbox" th:value="${user.getUser_no}" onclick='checkSelectAll()'>
+                        <span class="checkmark"></span>
+                    </label>
+                </td>
+                <td th:text="${user.getUser_name}"></td>
+                <td th:text="${user.getUser_email}"></td>
+                <td th:text="${user.getUser_phone}"></td>
+                <td th:text="${user.getUser_address}"></td>
+                <td th:text="${user.getUser_gender}"></td>
+                <td th:text="${#dates.format(user.getUser_udate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${#dates.format(user.getUser_rdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <form>
+            쿠폰 이름<input type="text" name="cou_name"><br>
+            쿠폰 할인가격<input type="text" name="cou_price"><br>
+            <button onclick="getCheckboxValue()">쿠폰 발급</button>
+        </form>
+    </div>
+</main>
+
+<script>
+    function selectAll(selectAll) {
+        const checkboxes
+            = document.getElementsByName("checkbox");
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked;
+        })
+    }
+
+    function getCheckboxValue() {
+        // 선택된 목록 가져오기
+        const selectedEls =
+            document.querySelectorAll('input[name="checkbox"]:checked');
+        // 선택된 목록에서 value 찾기
+        var result = [];
+        selectedEls.forEach((el) => {
+            result.push(el.value) ;
+        });
+        var c = confirm('수정 하시겠습니까?');
+        if (c == true) {
+            console.log(result);
+            $.ajax({
+                url: '[[@{/userInfo/createCoupon}]]',
+                type: 'post',
+                data: {
+                    "cou_name":$('input[name="cou_name"]').val(),
+                    "cou_price":$('input[name="cou_price"]').val(),
+                    noList:result
+                },
+                success: function (data) {
+                    location.href="/";
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        }
+    }
+
+    function checkSelectAll() {
+        // 전체 체크박스
+        const checkboxes
+            = document.querySelectorAll('input[name="checkbox"]');
+        // 선택된 체크박스
+        const checked
+            = document.querySelectorAll('input[name="checkbox"]:checked');
+        // select all 체크박스
+        const selectAll
+            = document.querySelector('input[name="selectAll"]');
+        if (checkboxes.length === checked.length) {
+            selectAll.checked = true;
+        } else {
+            selectAll.checked = false;
+        }
+    }
+
+</script>
+

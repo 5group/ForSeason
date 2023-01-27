@@ -21,8 +21,8 @@ public class StockService implements MyService<Integer, Stock> {
     }
 
     @Override
-    public void remove(Integer id) throws Exception {
-        mapper.delete(id);
+    public void remove(Integer no) throws Exception {
+        mapper.delete(no);
     }
 
     @Override
@@ -31,8 +31,8 @@ public class StockService implements MyService<Integer, Stock> {
     }
 
     @Override
-    public Stock get(Integer id) throws Exception {
-        return mapper.select(id);
+    public Stock get(Integer no) throws Exception {
+        return mapper.select(no);
     }
 
     @Override

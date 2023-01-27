@@ -64,6 +64,8 @@ public class MainController {
                     session.setAttribute("cart", cart_list); // test를 위한 sesstion 처리
                     session.setAttribute("order", order_list);
                     session.setAttribute("od", od_list);
+                    //1234567890 cartList -> copy_cartList(javascript) -> new cartList()
+                    // 대권님 -> 장바구니
                 }
             }
         } catch (Exception e) {

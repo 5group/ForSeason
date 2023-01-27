@@ -1,0 +1,75 @@
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+  <div class="position-sticky pt-3 sidebar-sticky">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" th:href="@{/}">
+          <span data-feather="home" class="align-text-bottom"></span>
+          메인페이지
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/orderList}">
+          <span data-feather="file" class="align-text-bottom"></span>
+          주문내역
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/itemList}">
+          <span data-feather="shopping-cart" class="align-text-bottom"></span>
+          상품리스트
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/userInfo}">
+          <span data-feather="users" class="align-text-bottom"></span>
+          유저목록
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/boardList}">
+          <span data-feather="bar-chart-2" class="align-text-bottom"></span>
+          문의게시판
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/templates/chartList}">
+          <span data-feather="layers" class="align-text-bottom"></span>
+          차트 목록
+        </a>
+      </li>
+    </ul>
+
+    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+      <span>저장된 보고서</span>
+      <a class="link-secondary" href="#" aria-label="Add a new report">
+        <span data-feather="plus-circle" class="align-text-bottom"></span>
+      </a>
+    </h6>
+    <ul class="nav flex-column mb-2">
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="file-text" class="align-text-bottom"></span>
+          이번달
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="file-text" class="align-text-bottom"></span>
+          마지막 분기
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="file-text" class="align-text-bottom"></span>
+          Social engagement
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span data-feather="file-text" class="align-text-bottom"></span>
+          세일 품목
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

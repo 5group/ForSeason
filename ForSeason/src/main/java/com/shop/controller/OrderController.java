@@ -44,27 +44,22 @@ public class OrderController {
         int index = 0;
         int item_count = 0;
         String text = "";
-        for (Cart cart : list) {
-            Stock stock = stockService.get(cart.getStock_no());
+        for (Cart cart : list) { //1 2 3 4
+            Stock stock = stockService.get(cart.getStock_no());// cart get.stock ->
             item_count = cart.getCart_cnt();
-            item = itemService.get(stock.getItem_no());
+            item = itemService.get(stock.getItem_no()); // 상품 <- -> 재고
             if (index == 0) text += item.getItem_name();
             tot_price += item.getItem_price() * item_count;
             index += 1;
         }
         if (index == 1) {
-            text = String.format(text + "같은 %d개 제품", item_count);
-            setItemModel(text, tot_price, model);
+            text = String.format(text + "같은 제품%d개", item_count);
         } else {
-            text = String.format(text + "외%d개 제품", item_count - 1);
-            setItemModel(text, tot_price, model);
+            text = String.format(text + "외%d개 제품", item_count - 1);//
         }
-        return dir + "kakaopay";
-    }
-
-    public void setItemModel(String text, int tot_price, Model model) {
         model.addAttribute("item_name", text);
         model.addAttribute("item_tot", tot_price);
+        return dir + "kakaopay";
     }
 
     @RequestMapping("/order/order_detail")
@@ -79,9 +74,9 @@ public class OrderController {
 
     // 서비스에 있어야하나 지금은 애매하여 일단둠
     public void successOrder(int order_no) throws Exception {
-        List<Cart> list = (List<Cart>) session.getAttribute("cart");
+        List<Cart> list = (List<Cart>) session.getAttribute("cart"); // 성공한 카트리스트
         for (Cart cart : list) {
-            OrderDetail od = new OrderDetail();
+            OrderDetail od = new OrderDetail(); // 묶음결제(결제)-> 단건결제(DATABASE)
             Stock stock = stockService.get(cart.getStock_no());
             Item item = itemService.get(stock.getItem_no());
             int stock_no = cart.getStock_no();
@@ -90,6 +85,8 @@ public class OrderController {
             int discnt = item.getItem_discnt();
             orderDetailService.createOrderDetail(order_no, stock_no, cnt, price, discnt);
             stockService.setAmount(stock_no, cnt);
+
         }
+        //cartList 원본 -= copyCartList
     }
 }
