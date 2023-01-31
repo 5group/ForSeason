@@ -28,10 +28,13 @@ public class ItemService implements MyService<Integer, Item> {
     public void modify(Item item) throws Exception {
         mapper.update(item);
     }
-
     @Override
     public Item get(Integer no) throws Exception {
         return mapper.select(no);
+    }
+
+    public Item getName(String name) throws Exception {
+        return mapper.selectName(name);
     }
 
     @Override
@@ -41,5 +44,9 @@ public class ItemService implements MyService<Integer, Item> {
     
     public List<Item> getCateList(Integer cate_no) throws Exception {
         return mapper.getCateList(cate_no);
+    }
+
+    public List<Item> getItemList() throws Exception{
+        return mapper.selectItemList();
     }
 }

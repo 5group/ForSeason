@@ -1,29 +1,66 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-  <div class="table-responsive">
-    <table class="table table-striped table-sm">
-      <thead>
-      <tr>
-        <td>이름</td>
-        <td>이메일</td>
-        <td>전화번호</td>
-        <td>address</td>
-        <td>gender</td>
-        <td>만든날짜</td>
-        <td>수정날짜</td>
-      </tr>
-      </thead>
+    <div class="table-responsive">
+        <form id="register_form">
+            카테고리 번호<input type="text" name="cateNo" value=""></br>
+            상품이름<input type="text" name="itemName" value=""></br>
+            상품가격<input type="text" name="itemPrice" value=""></br>
+            상품설명<input type="text" name="itemInfo" value=""></br>
+            IMG<input type="file" class="img" name="img" webkitdirectory>
+            <p></p>
+            <a href="#">REGISTER</a>
+        </form>
+<!--        <table class="table table-striped table-sm">-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <td>상품이름</td>-->
+<!--                <td>가격</td>-->
+<!--                <td>할인율</td>-->
+<!--                <td>상세설명</td>-->
+<!--                <td>조회수</td>-->
+<!--                <td>만든날짜</td>-->
+<!--                <td>카테고리 이름</td>-->
+<!--            </tr>-->
+<!--            </thead>-->
 
-      <tbody>
-      <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+<!--            <tbody>-->
+<!--            <tr th:each="item:${itemList}">-->
+<!--                <td th:text="${item.getItem_name}"></td>-->
+<!--                <td th:text="${item.getItem_price}"></td>-->
+<!--                <td th:text="${item.getItem_discnt}"></td>-->
+<!--                <td th:text="${item.getItem_info}"></td>-->
+<!--                <td th:text="${item.getItem_hit}"></td>-->
+<!--                <td th:text="${#dates.format(item.getItem_udate, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
+<!--                <td th:text="${item.getCate_name}"></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+    </div>
 </main>
+
+<script>
+    const input = document.querySelector('#register_form > .img');
+    input.addEventListener('change', showTextFile);
+
+    function showTextFile() {
+        const selectedFiles = input.files;
+        var file_name = "";
+
+        for (const file of selectedFiles) {
+            console.log("test");
+            file_name += '<input type="hidden" value="' + file.name.substring(0, 2)+  '"name="colorValue">';
+        }
+        $('#register_form > p').html(file_name);
+    }
+
+    $(document).ready(function () {
+        $('#register_form  > a').click(function () {
+            $('#register_form').attr({
+                'enctype': 'multipart/form-data',
+                'method' : 'post',
+                'action' : '[[@{itemList/register}]]'
+            });
+            $('#register_form').submit();
+        });
+    });
+</script>
+

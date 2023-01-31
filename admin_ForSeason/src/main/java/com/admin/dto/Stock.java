@@ -27,6 +27,14 @@ public class Stock {
         this.size_no = size_no;
         this.amount = amount;
     }
+
+    public Stock(int item_no, int color_no, int size_no, int amount) {
+        this.item_no = item_no;
+        this.color_no = color_no;
+        this.size_no = size_no;
+        this.amount = amount;
+    }
+
     private Date order_udate;
     private int cate_no;
     private int order_tot;
