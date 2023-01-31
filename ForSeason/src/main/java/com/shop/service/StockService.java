@@ -1,13 +1,16 @@
 package com.shop.service;
 
-import com.shop.dto.Stock;
-import com.shop.frame.MyService;
-import com.shop.mapper.StockMapper;
+import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import com.shop.dto.Color;
+import com.shop.dto.Size;
+import com.shop.dto.Stock;
+import com.shop.frame.MyService;
+import com.shop.mapper.StockMapper;
 
 @Service
 public class StockService implements MyService<Integer, Stock> {
@@ -45,4 +48,16 @@ public class StockService implements MyService<Integer, Stock> {
         stock.setAmount(stock.getAmount() - cnt);
         mapper.update(stock);
     }
+    
+    public List<Color> getStockColor(Integer item_no) throws Exception{
+    	return mapper.getStockColor(item_no);
+    }
+    
+    public List<Size> getStockSize(Integer item_no) throws Exception{
+    	return mapper.getStockSize(item_no);
+    }
+    
+    public int getstockno(HashMap<String, Integer> map) throws Exception{
+		return mapper.getstockno(map);
+	}
 }

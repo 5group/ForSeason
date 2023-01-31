@@ -12,10 +12,10 @@
     </select>
     <insert id="insert" parameterType="Item">
         INSERT INTO item
-        VALUES (null, #{cate_no}, #{item_name},#{item_price}, #{item_discnt}, #{item_info}, #{item_hit}, #{item_img}, now())
+        VALUES (item_no, #{cate_no}, #{item_name},#{item_price}, #{item_discnt}, #{item_info}, #{item_hit}, now())
     </insert>
     <update id="update" parameterType="Item">
-        UPDATE item SET item_price=#{item_price}, item_discnt=#{item_discnt}, item_info=#{item_info}, item_img=#{item_img} WHERE item_no=#{item_no}
+        UPDATE item SET item_price=#{item_price}, item_discnt=#{item_discnt}, item_info=#{item_info} WHERE item_no=#{item_no}
     </update>
     <delete id="delete" parameterType="Integer">
         DELETE FROM item WHERE item_no=#{item_no}

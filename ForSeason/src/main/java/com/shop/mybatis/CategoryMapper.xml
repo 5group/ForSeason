@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.CategoryMapper">
+
+    <select id="select" parameterType="Integer" resultType="Category">
+        SELECT * FROM category WHERE item_no=#{item_no}
+    </select>
+    <select id="selectall" resultType="Category">
+        SELECT * FROM category
+    </select>
+    <insert id="insert" parameterType="Category">
+        INSERT INTO category
+        VALUES (#{cate_no}, #{cate_name},#{cate_no2})
+    </insert>
+    <update id="update" parameterType="Category">
+        UPDATE category SET cate_name=#{cate_name}, cate_no2=#{cate_no2} WHERE cate_no=#{cate_no}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM category WHERE item_no=#{item_no}
+    </delete>
+    
+    <select id="getTopCategory" resultType="Integer">
+        SELECT cate_no2 FROM category WHERE cate_no2 IS NOT NULL GROUP BY cate_no2
+    </select>
+    <select id="getSubCategory" parameterType="Integer" resultType="Integer">
+        select cate_no from category where cate_no2=#{cate_no2}
+    </select>
+</mapper>

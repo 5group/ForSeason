@@ -1,0 +1,166 @@
+<style>
+	.site-top-icons > ul > li:first-child{
+		margin-right:13px;
+		font-size:19.4px;
+	}
+</style>
+
+<header class="site-navbar" role="banner">
+      <div class="site-navbar-top">
+        <div class="container">
+          <div class="row align-items-center">
+
+            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+              <form th:action="@{/searchItem}" class="site-block-top-search">
+                <span class="icon icon-search2"></span>
+                <input type="text" id="searchitem" name="searchitem" class="form-control border-0" placeholder="Search">
+              </form>
+            </div>
+
+            <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+              <div class="site-logo">
+                <a th:href="@{/}" class="js-logo-clone">ForSeason</a>
+              </div>
+            </div>
+
+            <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+              <div class="site-top-icons">	
+                <ul>
+                  <li th:if="${session.loginuser!=null}" th:text="${session.loginuser.user_name}+'님'"></li>
+                  <!-- <li><a href="#"><span class="icon icon-exit_to_app"></span></a></li> -->
+                  <li th:if="${session.loginuser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
+                  <li th:if="${session.loginuser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
+                  <li th:if="${session.loginuser!=null}"><a th:href="@{/info}"><span class="icon icon-person"></span></a></li>  
+                  <li>
+                    <a th:href="@{/cart}" class="site-cart">
+                      <span class="icon icon-shopping_cart"></span>
+                      <span class="count">2</span>
+                    </a>
+                  </li> 
+                  <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+                </ul>
+              </div> 
+            </div>
+
+          </div>
+        </div>
+      </div> 
+      <nav class="site-navigation text-right text-md-center" role="navigation">
+        <div class="container">
+          <ul class="site-menu js-clone-nav d-none d-md-block" style="padding-left:0px;">
+          	<li><a href="#">BEST</a></li>
+          <!-- 아이템 카테고리 -->
+            <li class="has-children active">
+              <a th:href="@{#none}">WOMEN</a>
+              <ul class="dropdown">
+                <li class="has-children">
+                  <a th:href="@{/getAllItemList?cate_no=10}">OUTER 아우터</a>  
+                  <ul class="dropdown">
+                    <li><a th:href="@{/getItemList?cate_no=11}">경량패딩(재킷ㆍ베스트ㆍ코트)</a></li>
+                    <li><a th:href="@{/getItemList?cate_no=12}">캐주얼아우터</a></li>
+                    <li><a href="#">다운</a></li>
+                    <li><a href="#">셋업 수트(정장)ㆍ코트</a></li>
+                    <li><a href="#">후리스</a></li>
+                  </ul>
+                </li>
+                <li class="has-children">
+                  <a th:href="@{/getAllItemList?cate_no=20}">TOPS 상의</a>
+                  <ul class="dropdown">
+                    <li><a href="#">니트ㆍ가디건</a></li>
+                    <li><a href="#">캐시미어</a></li>
+                    <li><a href="#">스웨트</a></li>
+                    <li><a href="#">후리스</a></li>
+                    <li><a href="#">셔츠ㆍ블라우스</a></li>
+                  </ul>
+                </li>
+                <li class="has-children">
+                  <a th:href="@{/getAllItemList?cate_no=30}">BOTTOMS 하의</a>
+                  <ul class="dropdown">
+                    <li><a href="#">슬랙스</a></li>
+                    <li><a href="#">캐주얼팬츠</a></li>
+                    <li><a href="#">진</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="has-children active">
+              <a th:href="@{#none}">MEN</a>
+              <ul class="dropdown">
+                <li class="has-children">
+                  <a href="#">OUTER 아우터</a>
+                  <ul class="dropdown">
+                    <li><a href="#">경량패딩(재킷ㆍ베스트ㆍ코트)</a></li>
+                    <li><a href="#">캐주얼아우터</a></li>
+                    <li><a href="#">다운</a></li>
+                    <li><a href="#">셋업 수트(정장)ㆍ코트</a></li>
+                    <li><a href="#">후리스</a></li>
+                  </ul>
+                </li>
+                <li class="has-children">
+                  <a href="#">TOPS 상의</a>
+                  <ul class="dropdown">
+                    <li><a href="#">니트ㆍ가디건</a></li>
+                    <li><a href="#">캐시미어</a></li>
+                    <li><a href="#">스웨트</a></li>
+                    <li><a href="#">후리스</a></li>
+                    <li><a href="#">셔츠ㆍ블라우스</a></li>
+                  </ul>
+                </li>
+                <li class="has-children">
+                  <a href="#">BOTTOMS 하의</a>
+                  <ul class="dropdown">
+                    <li><a href="#">슬랙스</a></li>
+                    <li><a href="#">캐주얼팬츠</a></li>
+                    <li><a href="#">감탄팬츠</a></li>
+                    <li><a href="#">스웨트팬츠</a></li>
+                    <li><a href="#">히트텍팬츠</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li class="has-children active">
+              <a th:href="@{#none}">KIDS</a>
+              <ul class="dropdown">
+                <li class="has-children">
+                  <a href="#">OUTER 아우터</a>
+                  <ul class="dropdown">
+                    <li><a href="#">캐주얼아우터</a></li>
+                    <li><a href="#">경량패딩ㆍ다운</a></li>
+                    <li><a href="#">후리스</a></li>
+                  </ul>
+                </li>
+                <li class="has-children">
+                  <a href="#">TOPS 상의</a>
+                  <ul class="dropdown">
+                    <li><a href="#">스웨트</a></li>
+                    <li><a href="#">티셔츠ㆍ니트</a></li>
+                    <li><a href="#">UT(그래픽티셔츠)</a></li>
+                  </ul>
+                </li>
+                <li class="has-children">
+                  <a href="#">BOTTOMS 하의</a>
+                  <ul class="dropdown">
+                    <li><a href="#">슬랙스</a></li>
+                    <li><a href="#">캐주얼팬츠</a></li>
+                    <li><a href="#">진</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <!-- 아이템 카테고리 end -->
+            
+            
+            <li class="has-children">
+              <a th:href="@{/about}">About</a>
+              <ul class="dropdown">
+                <li><a th:href="@{/contact}">문의</a></li>
+                <li><a href="#">FAQ</a></li>
+                <!-- <li><a href="#">Menu Three</a></li> -->
+              </ul>
+            </li>
+            <li><a th:href="@{/}">HOME</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    

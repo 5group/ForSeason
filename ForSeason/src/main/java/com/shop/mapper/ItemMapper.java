@@ -11,5 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface ItemMapper extends MyMapper<Integer, Item> {
-	public List<Item> getCateList(Integer cate_no) throws Exception;
+	public List<Item> getItemList(Integer cate_no) throws Exception;
+	public List<Item> getAllItemList(Integer cate_no) throws Exception;
+	public List<Item> searchItemList(String search) throws Exception;
+	public void updateItemhit(Integer item_no) throws Exception;
 }

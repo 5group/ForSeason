@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+
+.OFFWHITE{
+	background-color: whitesmoke;
+}
+.LIGHTGRAY{ 
+	background-color: lightgray;
+} 
+.GRAY{
+	background-color: gray;
+}
+.DARKGRAY{ 
+	background-color: darkgray;
+}
+.BLACK{
+	background-color: black;
+}
+.RED{
+	background-color: red;
+}
+.WINE{
+	background-color: #881824;
+}
+.ORANGE{
+	background-color: orange;
+}
+.NATURAL{
+	background-color: 462625;
+}
+.BEIGE{
+	background-color: beige;
+}
+.BROWN{
+	background-color: brown;
+}
+.DARK BROWN{
+	background-color: 291c13;
+}
+.YELLOW{
+	background-color: yellow;
+}
+.GREEN{
+	background-color: green;
+}
+.OLIVE{
+	background-color: olive;
+}
+.dark green{
+	background-color: darkgreen;
+}
+.lightblue{
+	background-color: lightblue;
+}
+.blue{
+	background-color: blue;
+}
+.navy{
+	background-color: navy;
+}
+.purple{
+	background-color: purple;
+}
+.other{
+	background-color: #F7F7F7;
+}

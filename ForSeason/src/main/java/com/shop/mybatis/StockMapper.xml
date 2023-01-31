@@ -20,5 +20,18 @@
     <delete id="delete" parameterType="String">
         DELETE FROM stock WHERE stock_no=#{stock_no}
     </delete>
-
+    
+	<select id="getStockColor" parameterType="Integer" resultType="Color">
+		SELECT c.color_no, c.color_name FROM stock s 
+		INNER JOIN color c
+		WHERE c.color_no=s.color_no AND item_no=#{item_no} GROUP BY c.color_no
+	</select>
+	<select id="getStockSize" parameterType="Integer" resultType="Size">
+		SELECT si.size_no, si.size_name FROM stock s 
+		INNER JOIN size si
+		WHERE si.size_no=s.size_no AND item_no=#{item_no} GROUP BY si.size_no
+	</select>
+	<select id="getstockno" parameterType="hashMap" resultType="Integer">
+    	select stock_no from stock where item_no=#{item_no} AND size_no=#{size_no} AND color_no=#{color_no}; 
+    </select>
 </mapper>

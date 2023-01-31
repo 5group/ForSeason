@@ -1,2 +1,9 @@
-<h1>Register Ok</h1>
-<h1 th:text="${obj.user_name}+'님 환영합니다.'"></h1>
+<script>
+
+/*<![CDATA[*/
+	var username = "[[${obj.user_name}]]";
+/*]]*/
+
+alert(username+"님 환영합니다.");
+location.href='[[@{/}]]';
+</script>

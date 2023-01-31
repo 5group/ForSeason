@@ -37,7 +37,7 @@ public class NaverService {
 			sb.append("grant_type=authorization_code");
 			sb.append("&client_id=i2iAIOgbmOWXyr_C5kek");
 			sb.append("&client_secret=dJ6ieSBcG3");
-			sb.append("&redirect_uri=http://localhost:8181/callback");
+			sb.append("&redirect_uri=http://localhost:80/oauth/login");
 			sb.append("&code="+authorize_code);
 			sb.append("&state=STATE");
 			bw.write(sb.toString());

@@ -21,7 +21,19 @@
         DELETE FROM item WHERE item_no=#{item_no}
     </delete>
 
-	<select id="getCateList" parameterType="Integer" resultType="Item">
+
+	<select id="getItemList" parameterType="Integer" resultType="Item">
         SELECT * FROM item WHERE cate_no=#{cate_no}
     </select>
+    <select id="getAllItemList" parameterType="Integer" resultType="Item">
+		SELECT i.item_no, i.item_name, i.item_price, i.item_discnt, i.item_info, i.item_hit, i.item_udate, c.cate_no, c.cate_no2 FROM item i 
+		INNER JOIN category c
+		WHERE i.cate_no=c.cate_no AND cate_no2=#{cate_no};
+    </select>
+    <select id="searchItemList" parameterType="String" resultType="Item">
+    	SELECT * FROM item WHERE item_name LIKE CONCAT('%',#{search},'%')
+    </select> 
+    <update id="updateItemhit" parameterType="Integer">
+        UPDATE item SET item_hit=item_hit+1 WHERE item_no=#{item_no}; 
+    </update>
 </mapper>

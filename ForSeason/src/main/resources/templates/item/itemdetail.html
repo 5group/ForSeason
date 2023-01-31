@@ -1,103 +1,217 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" href="css/colorlist.css">
 <style>
-#container {
-	margin: 20px auto;
-	border: 2px solid gray;
-	width: 800px;
-	height: 1500px;
-}
-
-#iimg {
-	width: 800px;
-}
-
-.quantity {
-	width: 64px;
-	height: 28px;
-	padding: 0 0 0 28px;
-	text-align: center;
-	margin: 20px auto;
-	position: relative;
-}
-
-.btn_minus {
-	position: absolute;
-	width: 28px;
-	height: 28px;
-	background: url(/img/btn_minus.png);
-	left: 0;
-	top: 0;
-	background-position: -5px -5px;
-	border: 1px solid gray;
-	border-radius : 10%;
-}
-
-.btn_plus {
-	position: absolute;
-	width: 28px;
-	height: 28px;
-	background: url(/img/btn_plus.png);
-	right: 0;
-	top: 0;
-	vertical-align: top;
-	background-position: -5px -5px;
-	border: 1px solid gray;
-	border-radius : 10%;
-}
-
-#buyQtt {
-	width: 33px;
-	height: 10.5px;
-	font-size: 14px;
-	text-align: center;
-	padding: 7px 0;
-	display: block;
-	outline: none;
-}
-
-#button_wrapper{
-	width: 150px;
-	margin: 20px auto;
-}
+	#colorui{
+		overflow: hidden;
+		padding: 0px;
+	}
+	.colorli{
+		float:left;
+		list-style:none;
+		margin-right: 10px;
+		height:37px;
+	}
+	.colorli > a{
+		display:inline-block;
+		width:30px;
+		height:30px;
+		border:1px solid #cccccc;
+	}
 </style>
-<script src="/resources/jquery/jquery-3.3.1.min.js"></script>
 <script>
-
-//수량 옵션
-function btnClick() {
+	var item_no,color_no,size_no,cart_cnt;
 	
-}
- 
-</script>
-</head>
-<body>
-	<div id=container>
-		<div>
-			<img id="iimg" th:src="@{/img/}+${cate}+'/'+${item.item_img}">
-		</div>
-		<div th:text="${item.item_name}"
-			style="text-align: center; margin: 50px 0px 0px; font-size: 25px;"></div>
-		<div th:text="${item.item_price}"
-			style="text-align: center; margin: 50px 0px 0px; font-size: 25px;"></div>
+	function plusClick(){
+		var curqtt = parseInt($("#buyQtt").val());
+		if(curqtt+1 == 11){
+			alert("최대 주문수량은 10개입니다.")
+			$("#buyQtt").val(curqtt-1);
+			return;
+		}
+	}	
+	function minusClick(){
+		var curqtt = parseInt($("#buyQtt").val());
+		if(curqtt-1 == 0){
+			alert("최소 주문수량은 1개입니다.")
+			$("#buyQtt").val(curqtt+1);
+			return;
+		}
+	}
+	$(document).ready(function(){
+		$('.colorli').click(function(){
+			var color_no=this.getAttribute("value");
+			$("#color_no").val(color_no);
+			$(".colorli").css('border', '0px');
+			$(this).css('border-bottom', '3px solid black');
+		})
+		$("input:radio[name=shop-sizes]").click(function(){
+			if($("#color_no").val()==0){
+				alert("색상을 먼저 선택해주세요.");
+				$("input:radio[name=shop-sizes]").prop('checked', false);
+				return;
+			}
+			var size_no=this.getAttribute("value");
+			$("#size_no").val(size_no);
+		})
+		
+		$('#btn_cart').click(function(){   //장바구니 담기 버튼
+			if($("#color_no").val()==0 || $("#size_no").val()==0){
+				alert("필수옵션을 선택해주세요.");
+				return;
+			}
+			item_no=$("#item_no").val();
+			color_no=$("#color_no").val();
+			size_no=$("#size_no").val();
+			cart_cnt=$("#buyQtt").val();
+			$.ajax({
+				url:'[[@{/cartinsert}]]',
+				data: {"item_no":item_no, "color_no":color_no, "size_no":size_no, "cart_cnt":cart_cnt}, //서버 컨트롤러에 데이터 전송
+				success:function(data){
+					if(data == 0){
+						alert("장바구니에 담겼습니다.");
+					}else{
+						alert("문제발생");
+					}
+				}
+			});	  //Restcontroller로 받으면 오류 안남
+		});	  
+	
 
-		<div class="quantity">
-			<!-- 뉴발란스, 탑텐 참고 -->
-			<button type="button" class="btn_minus"></button>
-			<input type="text" name="buyQtt" id="buyQtt" value="1">
-			<button type="button" class="btn_plus" onclick="btnClick();"></button>
-		</div>
+	});
+</script>    
+    
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Tank Top T-Shirt</strong></div>
+        </div>
+      </div>
+    </div>  
 
-		<div id="button_wrapper">
-			<button id="btn_cart_go">장바구니</button>
-			<button id="btn_order">결제</button>
-		</div>
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <img src="images/item/title.jpg" alt="Image" class="img-fluid">
+            <input type="hidden" id="item_no" name="item_no" th:value="${item.item_no}">
+          </div>
+          <div class="col-md-6">
+            <h2 class="text-black" th:text=${item.item_name}></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, vitae, explicabo? Incidunt facere, natus soluta dolores iusto! Molestiae expedita veritatis nesciunt doloremque sint asperiores fuga voluptas, distinctio, aperiam, ratione dolore.</p>
+            <p class="mb-4">Ex numquam veritatis debitis minima quo error quam eos dolorum quidem perferendis. Quos repellat dignissimos minus, eveniet nam voluptatibus molestias omnis reiciendis perspiciatis illum hic magni iste, velit aperiam quis.</p>
+            <p><strong class="text-primary h4" th:text="${#numbers.formatInteger(item.item_price, 0, 'COMMA')}+'원'"></strong></p>
+            
+            <!-- 색상 선택 -->
+            <div class="mb-1 d-flex">
+            <span style="font-size: 22px; line-height:30px; color:black; margin-right:16px;">Color:</span>
+              <ul id="colorui">
+              	<li class="colorli" th:each="o:${colorlist}" th:value="${o.color_no}"><a href="#none" th:class="${o.color_name}"></a>
+              </ul>
+              <input type="hidden" id="color_no" name="color_no" value="0">
+            </div>
+            
+            <!-- 사이즈 선택 -->
+            <div class="mb-1 d-flex">
+              <span style="font-size: 22px; line-height:23px; color:black; margin-right:15px;">Size:</span>
+              <label for="option-sm" class="d-flex mr-3 mb-3" th:each="o:${sizelist}">
+                <span class="d-inline-block mr-2" style="top:-2px; position: relative;">
+                	<input type="radio" id="option-s" name="shop-sizes" th:value="${o.size_no}"></span> <span class="d-inline-block text-black" th:text="${o.size_name}"></span>
+              </label>
+     		  <input type="hidden" id="size_no" name="size_no" value="0">
+            </div>
+            
+            <!-- 수량 선택 -->
+            <div class="mb-5">
+              <div class="input-group mb-3" style="max-width: 120px;">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-primary js-btn-minus" type="button" onclick="minusClick();">&minus;</button>
+              </div>
+              <input type="text" class="form-control text-center" id="buyQtt" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+              <div class="input-group-append">
+                <button class="btn btn-outline-primary js-btn-plus" type="button" onclick="plusClick();">&plus;</button>
+              </div>
+            </div>
 
-	</div>
-</body>
-</html>
+            </div>
+            <p><a href="#none" id="btn_cart" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
 
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section block-3 site-blocks-2 bg-light">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-7 site-section-heading text-center pt-4">
+            <h2>Featured Products</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="nonloop-block-3 owl-carousel">
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Tank Top</a></h3>
+                    <p class="mb-0">Finding perfect t-shirt</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Corater</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Polo Shirt</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">T-Shirt Mockup</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="block-4 text-center">
+                  <figure class="block-4-image">
+                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="#">Corater</a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p class="text-primary font-weight-bold">$50</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 

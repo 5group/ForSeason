@@ -22,9 +22,8 @@ public class NaverController {
     @Autowired
     UserService userService;
 
-    @RequestMapping("/naverlogin")
-    public String callback(Model model, String code, HttpSession session) throws Exception {
-        System.out.println("callback 호출");
+    @RequestMapping("/naverLogin")
+    public String naverLogin(Model model, String code, HttpSession session) throws Exception {
         String access_Token = naverService.getAccessToken(code);  //토큰 가져오기
         HashMap<String, String> userInfo = naverService.getUserInfo(access_Token);
         model.addAttribute("userObj", userInfo);
@@ -33,6 +32,8 @@ public class NaverController {
             session.setAttribute("loginuser", user);
             model.addAttribute("is_check", "true");
         }
-        return "oauth/firstlogin";
+        model.addAttribute("center", "user/register");
+        return "main";
     }
+    
 }

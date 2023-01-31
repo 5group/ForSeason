@@ -1,47 +1,139 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-li, ul{
-	list-style:none;
-	margin: 0px;
-	padding: 0px;
-}
-#result{
-	width:1000px;
-	margin: 0px auto;
-	border:3px solid blue;
-	overflow:hidden;
-}
-#iimg{
-	width:248px;
-}
-.wrap_ul{
-	border:1px solid red;
-	width: 250px;
-	float:left;
-	margin: 0px 50px 100px 0px;
-}
-.p1{
-	border: 1px solid green;
-	height:250px;
-}
-</style>
-</head>
-<body>
-<h1 style="width: 100px; margin: 0px auto;">Itemlist</h1>   <!--   -->
-<ul id="result">
-	<li class="wrap_ul" th:each="o:${itemlist}">
-		<ul>
-			<li class="p1"><a th:href="@{/itemdetail/(cate=${cate},item_no=${o.item_no})}"><img id="iimg" th:src="@{/img/}+${cate}+'/'+${o.item_img}"></a></li>
-			<li th:text="${o.item_name}"></li>
-			<li th:text="${o.item_price}"></li>
-		</ul>
-	</li>
-</ul>
 
-</body>
-</html>
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Shop</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section">
+      <div class="container">
+
+
+        <div class="row mb-5">
+          <div class="col-md-9 order-2">
+
+            <div class="row">
+              <div class="col-md-12 mb-5">
+                <div class="float-md-left mb-4"><h2 class="text-black h5">Shop All</h2></div>
+                <div class="d-flex">
+                  <!-- <div class="dropdown mr-1 ml-md-auto">
+                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Latest
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+                      <a class="dropdown-item" href="#">정렬</a>
+                      <a class="dropdown-item" href="#">정렬</a>
+                      <a class="dropdown-item" href="#">정렬</a>
+                    </div>
+                  </div> -->
+                  <div class="dropdown mr-1 ml-md-auto">
+                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">상품정렬</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                      <a class="dropdown-item" href="#">상품명</a>
+                      <a class="dropdown-item" href="#">낮은가격</a>
+                      <a class="dropdown-item" href="#">높은가격</a>
+                      <div class="dropdown-divider"></div> 
+                      <a class="dropdown-item" href="#">조회수</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+            <!-- 상품리스트 -->
+            <div class="row mb-5">
+           
+              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" th:each="o:${itemlist}">
+                <div class="block-4 text-center border">
+                  <figure class="block-4-image">
+                    <a th:href="|@{/itemdetail?item_no=}${o.item_no}|"><img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid"></a>
+                  </figure>
+                  <div class="block-4-text p-4">
+                    <h3><a href="shop-single.html" th:text=${o.item_name}></a></h3>
+                    <p class="mb-0">Finding perfect products</p>
+                    <p style="margin-bottom:0px; font-size:22px;"class="text-primary font-weight-bold" th:text="${#numbers.formatInteger(o.item_price, 0, 'COMMA')}"></p>
+                  </div>
+                </div>
+              </div>
+      
+            </div>
+            <!-- 상품리스트 end -->
+            
+            
+            <!-- 페이징 -->
+            <div class="row" data-aos="fade-up">
+              <div class="col-md-12 text-center">
+                <div class="site-block-27">
+                  <ul>
+                    <li><a href="#">&lt;</a></li>
+                    <li class="active"><span>1</span></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">&gt;</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- 페이징end -->
+            
+            
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="site-section site-blocks-2">
+                <div class="row justify-content-center text-center mb-5">
+                  <div class="col-md-7 site-section-heading pt-4">
+                    <h2>Categories</h2>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="">
+                    <a class="block-2-item" href="#">
+                      <figure class="image">
+                        <img src="images/women.jpg" alt="" class="img-fluid">
+                      </figure>
+                      <div class="text">
+                        <span class="text-uppercase">Collections</span>
+                        <h3>Women</h3>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="200">
+                    <a class="block-2-item" href="#">
+                      <figure class="image">
+                        <img src="images/men.jpg" alt="" class="img-fluid">
+                      </figure>
+                      <div class="text">
+                        <span class="text-uppercase">Collections</span>
+                        <h3>Men</h3>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="col-sm-6 col-md-6 col-lg-4 mb-5 mb-lg-0" data-aos="fade" data-aos-delay="100">
+                    <a class="block-2-item" href="#">
+                      <figure class="image">
+                        <img src="images/children.jpg" alt="" class="img-fluid">
+                      </figure>
+                      <div class="text">
+                        <span class="text-uppercase">Collections</span>
+                        <h3>Children</h3>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>

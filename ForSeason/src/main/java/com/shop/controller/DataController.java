@@ -1,21 +1,24 @@
 package com.shop.controller;
 
-import com.shop.dto.Cart;
-import com.shop.dto.Coupon;
-import com.shop.dto.Item;
-import com.shop.dto.Stock;
-import com.shop.service.ItemService;
-import com.shop.service.StockService;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import com.shop.dto.Cart;
+import com.shop.dto.Coupon;
+import com.shop.dto.Item;
+import com.shop.dto.Stock;
+import com.shop.service.CartService;
+import com.shop.service.ItemService;
+import com.shop.service.StockService;
 
 @RestController
 public class DataController {
@@ -28,6 +31,9 @@ public class DataController {
 
     @Autowired
     ItemService itemService;
+    
+    @Autowired
+    CartService cartService;
 
     @RequestMapping(value = "/couponList", method = RequestMethod.GET)
     public List<Coupon> coupon_list() {
@@ -64,4 +70,31 @@ public class DataController {
         modelAndView.addObject("maplist", requiredOrderMap(list));
         return modelAndView;
     }
+    
+    @RequestMapping("/cartinsert")
+   	public Object cartinsert(int item_no, int color_no, int size_no, int cart_cnt) {
+   		int result=0;
+   		//System.out.println("cartinsert");
+   		System.out.println(item_no+", "+color_no+", "+size_no+", "+cart_cnt);
+   		//장바구니 DB 넣기
+   		int user_no=1;
+   		
+   		
+   		//(item객체랑 사이즈객체랑 색상객체를 넣어줘서 한꺼번에) 
+   		HashMap<String, Integer> map = new HashMap<String, Integer>(); 
+   		map.put("item_no", item_no);
+   		map.put("color_no", color_no);
+   		map.put("size_no", size_no);
+   		try {
+   			int stock_no=stockService.getstockno(map);
+   			Cart cart = new Cart(0, stock_no, user_no, cart_cnt, null);
+   			//System.out.println(stock_no);
+   			cartService.register(cart);
+   		} catch (Exception e) {
+   			// TODO Auto-generated catch block
+   			e.printStackTrace();
+   		}
+   				
+   		return result;
+   	}
 }

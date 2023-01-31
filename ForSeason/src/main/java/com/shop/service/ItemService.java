@@ -40,7 +40,20 @@ public class ItemService implements MyService<Integer, Item> {
         return mapper.selectall();
     }
     
-    public List<Item> getCateList(Integer cate_no) throws Exception {
-        return mapper.getCateList(cate_no);
+    public List<Item> getItemList(Integer cate_no) throws Exception{	
+    	return mapper.getItemList(cate_no);
     }
+    
+    public List<Item> getAllItemList(Integer cate_no) throws Exception {
+        return mapper.getAllItemList(cate_no);
+    }  
+    
+    public List<Item> searchItemList(String search) throws Exception{	
+    	return mapper.searchItemList(search);
+    }
+    
+    public void updateItemhit(Integer item_no) throws Exception{
+    	mapper.updateItemhit(item_no);
+    }
+    
 }
