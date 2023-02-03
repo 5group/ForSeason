@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.shop.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,9 @@ public class ItemController {
 
     @Autowired
     CategoryService categoryservice;
+
+    @Autowired
+    FileService fileService;
 
 
     // !!여기만 쓸거임(대,중,소는 if문으로)
@@ -73,21 +77,17 @@ public class ItemController {
         }
         // 카테고리 확인
 
-
         for (Item i : list) {
             Category category = itemservice.getCategorys(i.getItem_no());
             allCateList.put(i.getItem_no(), category);
-
-            System.out.println("getItemList : " + category.getTop_cate_name() + "," + category.getMid_cate_name() + "," + category.getCate_name() + "," + i.getItem_name());
             // 타이틀 이미지
-            String src = category.getTop_cate_name() + "/" + category.getMid_cate_name() + "/" + category.getCate_name() + "/" + i.getItem_name();
-            File dir = new File(custdir + src);
-            String imgnames[] = dir.list(); //아이템 이미지파일들의 이름 리스트로 저장
-            titleImg = imgnames[0];
-            titleImgList.put(i.getItem_no(), titleImg);
+            String[] imgnames = fileService.getFileList(custdir,  category.getTop_cate_name(), category.getMid_cate_name(),  category.getCate_name(),  i.getItem_name());
+            if(imgnames != null){
+                titleImg = imgnames[0];
+                System.out.println(imgnames[0]);
+                titleImgList.put(i.getItem_no(), titleImg);
+            }
         }
-
-
         model.addAttribute("curCate", cate_no);  //현재 카테고리
         model.addAttribute("titleImgList", titleImgList);
         model.addAttribute("allCateList", allCateList);
@@ -103,22 +103,16 @@ public class ItemController {
         Item item = itemservice.get(item_no);
         List<Color> colorlist = stockservice.getStockColor(item_no);  //컬러  현재 재고에 있는 컬러
         List<Size> sizelist = stockservice.getStockSize(item_no);  //재고  현재 재고에 있는 사이즈
-
-
-        String itemname;
-        itemname = item.getItem_name();
-
         Category category = itemservice.getCategorys(item_no); // 해당 아이템에 대중소 카테고리 이름불러옴 //item_no로 카테고리 다 알 수 있음
+
         String[] cateName = {category.getTop_cate_name(), category.getMid_cate_name(), category.getCate_name()};
+
         System.out.println("itemdetail : " + category.getTop_cate_name() + "," + category.getMid_cate_name() + "," + category.getCate_name());
 
-        String src = category.getTop_cate_name() + "/" + category.getMid_cate_name() + "/" + category.getCate_name() + "/" + itemname;
-        File dir = new File(custdir + src);
-
-        String imgnames[] = dir.list(); // 아이템 이미지파일들의 이름 리스트로 저장
-//		for (int i = 0; i < imgnames.length; i++) {
-//			System.out.println("imgnames : " + imgnames[i]);
-//		}
+        String[] imgnames = fileService.getFileList(custdir,  category.getTop_cate_name(), category.getMid_cate_name(),  category.getCate_name(), item.getItem_name());
+        if(imgnames != null){
+            System.out.println(imgnames[0]);
+        }
 
         // 아이템 조회수 +1
         itemservice.updateItemhit(item.getItem_no());
@@ -130,37 +124,6 @@ public class ItemController {
         model.addAttribute("cateName", cateName); // 카테고리 번호들
 
         model.addAttribute("center", "item/itemdetail");
-        return "main";
-    }
-
-    // 아이템 검색기능
-    @RequestMapping(value = "/searchItem", method = RequestMethod.GET)
-    public String searchItem(Model model, @RequestParam("searchitem") String searchitem) throws Exception { // 상위리스트
-        System.out.println(searchitem);
-        List<Item> list = null;
-        Map<Integer, Category> allCateList = new HashMap<Integer, Category>();
-        String titleImg = null;
-        Map<Integer, String> titleImgList = new HashMap<Integer, String>();
-
-        list = itemservice.searchItemList(searchitem); // 소분류 카테고리 아이템 리스트 가져오기
-
-        for (Item i : list) {
-            Category category = itemservice.getCategorys(i.getItem_no());
-            allCateList.put(i.getItem_no(), category);
-
-            System.out.println("searchItemList : " + category.getTop_cate_name() + "," + category.getMid_cate_name() + "," + category.getCate_name() + "," + i.getItem_name());
-            // 타이틀 이미지
-            String src = category.getTop_cate_name() + "/" + category.getMid_cate_name() + "/" + category.getCate_name() + "/" + i.getItem_name();
-            File dir = new File(custdir + src);
-            String imgnames[] = dir.list(); //아이템 이미지파일들의 이름 리스트로 저장
-            titleImg = imgnames[0];
-            titleImgList.put(i.getItem_no(), titleImg);
-        }
-
-        model.addAttribute("titleImgList", titleImgList);
-        model.addAttribute("allCateList", allCateList);
-        model.addAttribute("itemlist", list);
-        model.addAttribute("center", "item/itemlist");
         return "main";
     }
 
@@ -184,27 +147,6 @@ public class ItemController {
         } else { //중분류 아니면 소분류
             System.out.println("소븐류");
         }
-
-
-//		for (Item i : list) {
-//			Category category = itemservice.getCategorys(i.getItem_no());
-//			allCateList.put(i.getItem_no(), category);
-//
-//			System.out.println("getItemList : "+category.getTop_cate_name()+","+category.getMid_cate_name()+","+category.getCate_name()+","+i.getItem_name());
-//			// 타이틀 이미지
-//			String src = category.getTop_cate_name()+"/"+category.getMid_cate_name()+"/"+category.getCate_name()+"/"+i.getItem_name();
-//			File dir = new File(custdir+src);
-//			String imgnames[] = dir.list(); //아이템 이미지파일들의 이름 리스트로 저장
-//			titleImg = imgnames[0];
-//			titleImgList.put(i.getItem_no(), titleImg);
-//		}
-//
-//		model.addAttribute("curCate", cate_no);  //현재 카테고리
-//		model.addAttribute("titleImgList", titleImgList);
-//		model.addAttribute("allCateList", allCateList);
-//		model.addAttribute("itemlist", list);
-//		model.addAttribute("center", "item/itemlist");
-
         return "main";
     }
 
