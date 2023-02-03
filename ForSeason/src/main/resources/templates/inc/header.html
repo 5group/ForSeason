@@ -32,7 +32,7 @@
                   <li th:if="${session.loginUser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
                   <li th:if="${session.loginUser!=null}"><a th:href="@{/info}"><span class="icon icon-person"></span></a></li>
                   <li>
-                    <a th:href="@{/cart}" class="site-cart">
+                    <a th:if="${session.cartList!=null}" th:href="@{/cart}" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
                       <span class="count">2</span>
                     </a>
