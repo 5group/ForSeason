@@ -37,6 +37,6 @@ public class AdminService implements MyService<String, Admin> {
 
     @Override
     public List<Admin> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
 }

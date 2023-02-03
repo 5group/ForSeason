@@ -36,7 +36,7 @@ public class StockService implements MyService<Integer, Stock> {
 
     @Override
     public List<Stock> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
 
     public List<Stock> getItemTotal(String item_name){

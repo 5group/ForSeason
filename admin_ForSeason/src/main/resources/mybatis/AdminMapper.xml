@@ -7,7 +7,7 @@
     <select id="select" parameterType="String" resultType="Admin">
         SELECT * FROM admin WHERE admin_id=#{admin_id}
     </select>
-    <select id="selectall" resultType="Admin">
+    <select id="selectAll" resultType="Admin">
         SELECT * FROM admin
     </select>
     <insert id="insert" parameterType="Admin">

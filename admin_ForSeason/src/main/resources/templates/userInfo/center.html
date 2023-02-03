@@ -22,7 +22,7 @@
             <tr th:each="user:${userList}">
                 <td>
                     <label class="container">
-                        <input type="checkbox" name="checkbox" th:value="${user.getUser_no}" onclick='checkSelectAll()'>
+                        <input type="checkbox" name="checkbox" th:value="${user.getUser_no}" onclick='checkselectAll()'>
                         <span class="checkmark"></span>
                     </label>
                 </td>
@@ -83,7 +83,7 @@
         }
     }
 
-    function checkSelectAll() {
+    function checkselectAll() {
         // 전체 체크박스
         const checkboxes
             = document.querySelectorAll('input[name="checkbox"]');

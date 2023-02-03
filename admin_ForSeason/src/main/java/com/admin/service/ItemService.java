@@ -39,7 +39,7 @@ public class ItemService implements MyService<Integer, Item> {
 
     @Override
     public List<Item> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
     
     public List<Item> getCateList(Integer cate_no) throws Exception {

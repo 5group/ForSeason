@@ -35,6 +35,6 @@ public class ReviewService implements MyService<Integer, Review> {
 
     @Override
     public List<Review> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
 }

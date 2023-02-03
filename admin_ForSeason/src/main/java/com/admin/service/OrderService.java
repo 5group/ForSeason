@@ -36,7 +36,7 @@ public class OrderService implements MyService<Integer, Order> {
 
     @Override
     public List<Order> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
 
     public List<Order> getDateByList(String dateFormat) throws Exception{
@@ -58,6 +58,6 @@ public class OrderService implements MyService<Integer, Order> {
     }
 
     public List<Order> get_list(int user_no) throws Exception{
-        return mapper.select_list(user_no);
+        return mapper.selectList(user_no);
     }
 }

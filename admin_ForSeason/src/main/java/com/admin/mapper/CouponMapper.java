@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface CouponMapper extends MyMapper<Integer, Coupon> {
 
-    public List<Coupon> select_list(int user_no);
+    public List<Coupon> selectList(int user_no);
 }
