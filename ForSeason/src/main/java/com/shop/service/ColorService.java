@@ -37,7 +37,7 @@ public class ColorService implements MyService<Integer, Color> {
 
     @Override
     public List<Color> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
    
 }

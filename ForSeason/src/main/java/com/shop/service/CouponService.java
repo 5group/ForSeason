@@ -35,11 +35,11 @@ public class CouponService implements MyService<Integer, Coupon> {
 
     @Override
     public List<Coupon> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
 
     public List<Coupon> getList(int user_no) throws Exception{
-        return mapper.select_list(user_no);
+        return mapper.selectList(user_no);
     }
 
     public void useCoupon(int coupon_no) throws Exception {

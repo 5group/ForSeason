@@ -36,11 +36,11 @@ public class OrderDetailService implements MyService<Integer, OrderDetail> {
 
     @Override
     public List<OrderDetail> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
 
     public List<OrderDetail> get_list(int user_no) throws Exception{
-        return mapper.select_list(user_no);
+        return mapper.selectList(user_no);
     }
 
     public List<OrderDetail> getODList(int user_no) throws Exception{

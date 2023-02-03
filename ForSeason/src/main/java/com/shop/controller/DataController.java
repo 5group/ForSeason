@@ -95,7 +95,7 @@ public class DataController {
         session.setAttribute("orderCartList", orderCartList);
     }
 
-    @RequestMapping("/cartinsert")
+    @RequestMapping("/cartInsert")
     public Object cartinsert(int item_no, int color_no, int size_no, int cart_cnt) {
         int result = 0;
         //System.out.println("cartinsert");

@@ -10,6 +10,6 @@ import java.util.List;
 @Mapper
 @Repository
 public interface OrderDetailMapper extends MyMapper<Integer, OrderDetail> {
-    public List<OrderDetail> select_list(int user_no);
+    public List<OrderDetail> selectList(int user_no);
     public List<OrderDetail> select_userODList(int user_no);
 }

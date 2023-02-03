@@ -36,11 +36,11 @@ public class CartService implements MyService<Integer, Cart> {
 
     @Override
     public List<Cart> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
 
     public List<Cart> get_list(int user_no) throws Exception{
-        return mapper.select_list(user_no);
+        return mapper.selectList(user_no);
     }
 
     public List<Cart> setCartList(int user_no, List<Cart> orderCartList) throws Exception {

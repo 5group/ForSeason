@@ -7,7 +7,7 @@
     <select id="select" parameterType="Integer" resultType="Stock">
         SELECT * FROM stock WHERE stock_no=#{stock_no}
     </select>
-    <select id="selectall" resultType="Stock">
+    <select id="selectAll" resultType="Stock">
         SELECT * FROM stock
     </select>
     <insert id="insert" parameterType="Stock">

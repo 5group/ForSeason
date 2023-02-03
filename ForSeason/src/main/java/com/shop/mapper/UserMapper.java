@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface UserMapper extends MyMapper<Integer, User> {
-    public User select_id(String id) throws Exception;
+    public User selectId(String id) throws Exception;
     public void delete(String id) throws Exception;
     public void pwd_update(User user) throws Exception;
 }

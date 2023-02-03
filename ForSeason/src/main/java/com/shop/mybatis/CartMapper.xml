@@ -7,10 +7,10 @@
     <select id="select" parameterType="Integer" resultType="Cart">
         SELECT * FROM cart WHERE cart_no=#{cart_no}
     </select>
-    <select id="selectall" resultType="Cart">
+    <select id="selectAll" resultType="Cart">
         SELECT * FROM cart
     </select>
-    <select id="select_list" parameterType="Integer" resultType="Cart">
+    <select id="selectList" parameterType="Integer" resultType="Cart">
         SELECT * FROM cart where user_no=#{user_no}
     </select>
     <insert id="insert" parameterType="Cart">

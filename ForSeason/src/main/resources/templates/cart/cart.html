@@ -37,7 +37,7 @@
                             <td>
                                 <label>
                                     <input type="checkbox" name="checkbox" th:value="${cart.cart_no}"
-                                           onclick='checkSelectAll()'>
+                                           onclick='checkselectAll()'>
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
@@ -197,7 +197,7 @@
         }
     }
 
-    function checkSelectAll() {
+    function checkselectAll() {
         // 전체 체크박스
         const checkboxes
             = document.querySelectorAll('input[name="checkbox"]');

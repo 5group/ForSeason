@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 @Mapper
 public interface CartMapper extends MyMapper<Integer, Cart> {
-    public List<Cart> select_list(int user_no);
+    public List<Cart> selectList(int user_no);
 }

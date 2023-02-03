@@ -40,7 +40,7 @@ public class StockService implements MyService<Integer, Stock> {
 
     @Override
     public List<Stock> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
 
     public void setAmount(int no, int cnt) throws Exception{

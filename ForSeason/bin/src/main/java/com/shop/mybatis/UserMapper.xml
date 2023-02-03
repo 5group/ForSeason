@@ -7,10 +7,10 @@
     <select id="select" parameterType="Integer" resultType="User">
         SELECT * FROM user WHERE user_no=#{user_no}
     </select>
-    <select id="select_id" parameterType="String" resultType="User">
+    <select id="selectId" parameterType="String" resultType="User">
         SELECT * FROM user WHERE user_id=#{user_id}
     </select>
-    <select id="selectall" resultType="User">
+    <select id="selectAll" resultType="User">
         SELECT * FROM user
     </select>
     <insert id="insert" parameterType="User">

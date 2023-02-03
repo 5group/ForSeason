@@ -7,7 +7,7 @@
     <select id="select" parameterType="Integer" resultType="Category">
         SELECT * FROM category WHERE cate_no=#{cate_no}
     </select>
-    <select id="selectall" resultType="Category">
+    <select id="selectAll" resultType="Category">
         SELECT * FROM category
     </select>
     <insert id="insert" parameterType="Category">

@@ -38,7 +38,7 @@ public class UserService implements MyService<Integer, User> {
     }
 
     public User get_id(String id) throws Exception {
-        return mapper.select_id(id);
+        return mapper.selectId(id);
     }
 
     @Override
@@ -48,6 +48,6 @@ public class UserService implements MyService<Integer, User> {
 
     @Override
     public List<User> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
 }

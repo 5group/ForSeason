@@ -7,7 +7,7 @@
     <select id="select" parameterType="Integer" resultType="Review">
         SELECT * FROM review WHERE rev_no=#{rev_no}
     </select>
-    <select id="selectall" resultType="Review">
+    <select id="selectAll" resultType="Review">
         SELECT * FROM review
     </select>
     <insert id="insert" parameterType="Review">

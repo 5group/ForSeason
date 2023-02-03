@@ -35,6 +35,6 @@ mapper.update(wishList);
 
     @Override
     public List<WishList> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
 }

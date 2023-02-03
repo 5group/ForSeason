@@ -38,7 +38,7 @@ public class CategoryService implements MyService<Integer, Category> {
 
     @Override
     public List<Category> get() throws Exception {
-        return mapper.selectall();
+        return mapper.selectAll();
     }
     
     

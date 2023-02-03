@@ -7,7 +7,7 @@
     <select id="select" parameterType="Integer" resultType="Color">
         SELECT * FROM color WHERE color_no=#{color_no}
     </select>
-    <select id="selectall" resultType="Color">
+    <select id="selectAll" resultType="Color">
         SELECT * FROM color
     </select>
     <insert id="insert" parameterType="Color">

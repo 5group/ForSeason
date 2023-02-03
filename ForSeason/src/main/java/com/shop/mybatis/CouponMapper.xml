@@ -7,7 +7,7 @@
     <select id="select" parameterType="Integer" resultType="Coupon">
         SELECT * FROM coupon WHERE cou_no=#{cou_no}
     </select>
-    <select id="selectall" resultType="Coupon">
+    <select id="selectAll" resultType="Coupon">
         SELECT * FROM coupon
     </select>
     <select id="select_list" parameterType="Integer" resultType="Coupon">
