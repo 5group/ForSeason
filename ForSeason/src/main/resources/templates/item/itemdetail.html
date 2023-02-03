@@ -123,7 +123,15 @@
 			$("#size_no").val(size_no);
 		})
 		
+	   
 		$('#btn_cart').click(function(){   //장바구니 담기 버튼
+			 /*<![CDATA[*/
+	    		var uid = "[[${session.loginUser}]]";
+	    	/*]]>*/
+			if(uid==""){
+				alert("로그인이 필요합니다.");
+				return;
+			}
 			if($("#color_no").val()==0 || $("#size_no").val()==0){
 				alert("필수옵션을 선택해주세요.");
 				return;

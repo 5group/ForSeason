@@ -96,28 +96,28 @@ public class DataController {
     }
 
     @RequestMapping("/cartInsert")
-    public Object cartinsert(int item_no, int color_no, int size_no, int cart_cnt) {
+    public Object cartinsert(int item_no, int color_no, int size_no, int cart_cnt) throws Exception {
         int result = 0;
-        //System.out.println("cartinsert");
         System.out.println(item_no + ", " + color_no + ", " + size_no + ", " + cart_cnt);
         //장바구니 DB 넣기
-        int user_no = 1;
-
+        
+        User user = (User)session.getAttribute("loginUser");
 
         //(item객체랑 사이즈객체랑 색상객체를 넣어줘서 한꺼번에)
         HashMap<String, Integer> map = new HashMap<String, Integer>();
         map.put("item_no", item_no);
         map.put("color_no", color_no);
         map.put("size_no", size_no);
-        try {
-            int stock_no = stockService.getStockNo(map);
-            Cart cart = new Cart(0, stock_no, user_no, cart_cnt, null);
-            //System.out.println(stock_no);
-            cartService.register(cart);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+
+        int stock_no = stockService.getStockNo(map);
+        Cart cart = new Cart(0, stock_no, user.getUser_no(), cart_cnt, null);
+        System.out.println(stock_no);
+        cartService.register(cart);
+
+        
+        List<Cart> cart_list = cartService.get_list(user.getUser_no());
+        session.setAttribute("cartList", cart_list); // test를 위한 sesstion 처리
+        System.out.println(user.getUser_no());
 
         return result;
     }
