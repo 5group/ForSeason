@@ -42,4 +42,11 @@ public class CartService implements MyService<Integer, Cart> {
     public List<Cart> get_list(int user_no) throws Exception{
         return mapper.select_list(user_no);
     }
+
+    public List<Cart> setCartList(int user_no, List<Cart> orderCartList) throws Exception {
+        for (Cart copyCart : orderCartList) {
+            remove(copyCart.getCart_no());
+        }
+        return get_list(user_no);
+    }
 }

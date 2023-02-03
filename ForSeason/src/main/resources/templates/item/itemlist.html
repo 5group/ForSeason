@@ -59,7 +59,7 @@
             <div class="row mb-5">
            
            <!-- 반복문 시작 -->
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" th:each="o:${itemlist}">
+              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" th:each="o:${itemList}">
                 <div class="block-4 text-center border">
                   <figure class="block-4-image" style="margin:0px;">  <!-- allCateList.get(item_no).top_cate_no -->
                     <a th:href="|@{/itemdetail?item_no=}${o.item_no}|">

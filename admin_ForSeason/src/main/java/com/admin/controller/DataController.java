@@ -1,6 +1,5 @@
 package com.admin.controller;
 
-import com.admin.dto.Order;
 import com.admin.dto.Stock;
 import com.admin.service.OrderService;
 import com.admin.service.StockService;
@@ -8,13 +7,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -44,5 +40,11 @@ public class DataController {
         jObject.put("dayTotal", totalList);
         System.out.println(jObject);
         return jObject;
+    }
+
+    @RequestMapping("/itemPiChart")
+    public Object itemPiChart(){
+
+        return null;
     }
 }

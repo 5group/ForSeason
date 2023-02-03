@@ -28,56 +28,46 @@ public class MainController {
 
     @Autowired
     CouponService couponService;
-    
+
     // http://127.0.0.1/
     @RequestMapping("/")
     public String main() {
         return "main";
     }
+
     @RequestMapping("/about")
     public String about(Model model) {
-		model.addAttribute("center", "about");
+        model.addAttribute("center", "about");
         return "main";
-    }
-	@RequestMapping("/contact")
-    public String contact(Model model) {
-		model.addAttribute("center", "contact");
-        return "main";
-    }
-	/////////////////////////////
-	
-	@RequestMapping("/cart")
-    public String cart(Model model) {
-		model.addAttribute("center", "cart/cart");
-		return "main";
-    }
-	
-	@RequestMapping("/order")
-    public String order(Model model) {
-		model.addAttribute("center", "order/checkout");
-		return "main";
-    }
-	
-	@RequestMapping("/ordercomplete")
-    public String ordercomplete(Model model) {
-		model.addAttribute("center", "order/detail/mydetail");
-		return "main";
     }
 
-	
-	///////////////////////////////////////////////
+    @RequestMapping("/contact")
+    public String contact(Model model) {
+        model.addAttribute("center", "contact");
+        return "main";
+    }
+    /////////////////////////////
+
+    @RequestMapping("/ordercomplete")
+    public String ordercomplete(Model model) {
+        model.addAttribute("center", "order/detail/mydetail");
+        return "main";
+    }
+
+    ///////////////////////////////////////////////
     @RequestMapping("/register")
     public String register(Model model) {
-		model.addAttribute("center", "user/register");
+        model.addAttribute("center", "user/register");
         return "main";
-	}
-    
+    }
+
     @RequestMapping("/info")
     public String info(Model model) {
-		model.addAttribute("center", "user/info");
+        model.addAttribute("center", "user/info");
         return "main";
-	}
-	////////////////////  로그인 /////////////////////
+    }
+
+    ////////////////////  로그인 /////////////////////
     @RequestMapping("/login")
     public String login(Model model) {
         model.addAttribute("center", "oauth/login");
@@ -87,7 +77,7 @@ public class MainController {
     //@RequestMapping("/loginimpl")
     @RequestMapping(value = "/loginimpl", method = RequestMethod.POST)  //이거 고치니깐 오류 안남
     public String loginimpl(HttpSession session, String id, String pwd, Model model) {
-    	System.out.println("haha");
+        System.out.println("haha");
         User user = null;
         String result = "user/loginfail";
         try {
@@ -99,13 +89,11 @@ public class MainController {
                     List<Cart> cart_list = cartService.get_list(user.getUser_no());
                     List<Order> order_list = orderService.get_list(user.getUser_no());
                     List<OrderDetail> od_list = orderDetailService.getODList(user.getUser_no());
-                    session.setAttribute("loginuser", user);
+                    session.setAttribute("loginUser", user);
                     session.setAttribute("coupon", coupon_list); //user 즉시 sesstion 넣어주기
-                    session.setAttribute("cart", cart_list); // test를 위한 sesstion 처리
+                    session.setAttribute("cartList", cart_list); // test를 위한 sesstion 처리
                     session.setAttribute("order", order_list);
                     session.setAttribute("od", od_list);
-                    //1234567890 cartList -> copy_cartList(javascript) -> new cartList()
-
                 }
             }
         } catch (Exception e) {
@@ -114,10 +102,10 @@ public class MainController {
         model.addAttribute("center", result);
         return "main";
     }
-    
+
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
-        if(session != null){
+        if (session != null) {
             session.invalidate();
         }
         return "main";

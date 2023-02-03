@@ -25,17 +25,17 @@ public class KakaoController {
     UserService userService;
 
 
-    @RequestMapping(value="/kakaoLogin", method= RequestMethod.GET)
+    @RequestMapping(value = "/kakaoLogin", method = RequestMethod.GET)
     public Object kakaoLogin(@RequestParam(value = "code", required = false) String code, Model model, HttpSession session) throws Exception {
         String access_Token = kakaoService.getAccessToken(code);
         HashMap<String, String> userInfo = kakaoService.getUserInfo(access_Token);
         model.addAttribute("userObj", userInfo);
         User user = userService.get_id(userInfo.get("user_id"));
-        if(user != null){
-            session.setAttribute("loginuser", user);
+        if (user != null) {
+            session.setAttribute("loginUser", user);
             //model.addAttribute("is_check", "true");
-        }else {
-        	model.addAttribute("center", "user/register");
+        } else {
+            model.addAttribute("center", "user/register");
         }
         return "main";
     }

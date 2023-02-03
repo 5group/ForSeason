@@ -29,11 +29,11 @@ public class NaverController {
         model.addAttribute("userObj", userInfo);
         User user = userService.get_id(userInfo.get("user_id"));
         if (user != null) {
-            session.setAttribute("loginuser", user);
+            session.setAttribute("loginUser", user);
             model.addAttribute("is_check", "true");
         }
         model.addAttribute("center", "user/register");
         return "main";
     }
-    
+
 }

@@ -15,33 +15,33 @@ import com.shop.service.CategoryService;
 
 @ControllerAdvice
 public class BaseController {
-	@Autowired
-	CategoryService categoryservice;
-	
-	@ModelAttribute
-	public void categories(Model model){
-		//Map<Integer, List<Category>> subCateMap = new TreeMap<Integer, List<Category>>();
-		List<Category> topCategory=null;
-		List<Category> middleCategory=null;
-		List<Category> subCategory=null;
-		
-		try {
-			topCategory = categoryservice.getTopCategory();  //대분류 1,2,3
-			middleCategory = categoryservice.getMiddleCategory();  //중분류 10,20,30 ....
-			subCategory = categoryservice.getSubCategory();  //소분류 11,12  21,22 ....
-			
+    @Autowired
+    CategoryService categoryservice;
+
+    @ModelAttribute
+    public void categories(Model model) {
+        //Map<Integer, List<Category>> subCateMap = new TreeMap<Integer, List<Category>>();
+        List<Category> topCategory = null;
+        List<Category> middleCategory = null;
+        List<Category> subCategory = null;
+
+        try {
+            topCategory = categoryservice.getTopCategory();  //대분류 1,2,3
+            middleCategory = categoryservice.getMiddleCategory();  //중분류 10,20,30 ....
+            subCategory = categoryservice.getSubCategory();  //소분류 11,12  21,22 ....
+
 //			for(Category c: middleCategory) {
 //				List<Category> subCategory = categoryservice.getSubCategory(c.getCate_no());  //중분류에 따른 소분류 map에 넣기
 //				subCateMap.put(c.getCate_no(), subCategory);
 //			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		model.addAttribute("topCategory", topCategory); 
-		model.addAttribute("middleCategory", middleCategory);
-		model.addAttribute("subCategory", subCategory);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        model.addAttribute("topCategory", topCategory);
+        model.addAttribute("middleCategory", middleCategory);
+        model.addAttribute("subCategory", subCategory);
 //		System.out.println(topCategory);
 //		System.out.println(middleCategory);
 //		System.out.println(cateSubMap);

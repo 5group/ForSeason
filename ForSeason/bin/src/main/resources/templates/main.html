@@ -46,14 +46,14 @@
         <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
       </form>
 
-      <div class="text-end" th:if="${session.loginuser == null}">
+      <div class="text-end" th:if="${session.loginUser == null}">
 
         <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/login}">Login</a></button>
         <button type="button" class="btn btn-warning"><a th:href="@{/user/add}">Sign up</a></button>
         <button type="button" class="btn btn-warning"><a th:href="@{/oauth/kakaologin}">kakaologin</a></button>
       </div>
 
-      <div class="text-end" th:if="${session.loginuser != null}">
+      <div class="text-end" th:if="${session.loginUser != null}">
         <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/logout}">Logout</a></button>
         <button type="button" class="btn btn-warning"><a th:href="@{/order/kakaopay}">Order</a></button>
         <button type="button" class="btn btn-warning"><a th:href="@{test}">indexPageCoupon</a></button>
@@ -62,7 +62,7 @@
     </div>
   </div>
 
-  <ul th:if="${session.loginuser != null}">
+  <ul th:if="${session.loginUser != null}">
     <li><a th:href="@{/logout}">Logout</a></li>
     <li><a href="#">My Info</a></li>
   </ul>

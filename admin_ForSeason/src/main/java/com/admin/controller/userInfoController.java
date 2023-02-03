@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,6 +23,9 @@ public class userInfoController {
 
     @Autowired
     CouponService couponService;
+
+    @Autowired
+    HttpSession session;
 
     String dir = "userInfo/";
 
@@ -37,6 +39,7 @@ public class userInfoController {
 
     @RequestMapping(value = "/createCoupon" ,method = RequestMethod.POST)
     public String createCoupon(@RequestParam String cou_name, @RequestParam int cou_price, @RequestParam(value = "noList[]") List<Integer> noList) throws Exception {
+        session.setAttribute("test", noList);
         Coupon coupon = new Coupon();
         for(Integer no : noList){
             coupon.setCou_name(cou_name);

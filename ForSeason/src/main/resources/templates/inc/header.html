@@ -26,12 +26,12 @@
             <div class="col-6 col-md-4 order-3 order-md-3 text-right">
               <div class="site-top-icons">	
                 <ul>
-                  <li th:if="${session.loginuser!=null}" th:text="${session.loginuser.user_name}+'님'"></li>
+                  <li th:if="${session.loginUser!=null}" th:text="${session.loginUser.user_name}+'님'"></li>
                   <!-- <li><a href="#"><span class="icon icon-exit_to_app"></span></a></li> -->
-                  <li th:if="${session.loginuser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
-                  <li th:if="${session.loginuser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
-                  <li th:if="${session.loginuser!=null}"><a th:href="@{/info}"><span class="icon icon-person"></span></a></li>  
-                  <li th:if="${session.loginuser!=null}">
+                  <li th:if="${session.loginUser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
+                  <li th:if="${session.loginUser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
+                  <li th:if="${session.loginUser!=null}"><a th:href="@{/info}"><span class="icon icon-person"></span></a></li>
+                  <li>
                     <a th:href="@{/cart}" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
                       <span class="count">2</span>
@@ -54,12 +54,12 @@
           		<a th:href="|@{/getItemList?cate_no=}${top.cate_no}|" th:text="${top.cate_name}"></a>
           		<ul class="dropdown">
           			<li class="has-children" th:each="middle:${middleCategory}" th:if="${middle.cate_no2==top.cate_no}">
-	                  <a th:href="|@{/getItemList?cate_no=}${middle.cate_no}|" th:text="${middle.cate_name}"></a>  
+	                  <a th:href="|@{/getItemList?cate_no=}${middle.cate_no}|" th:text="${middle.cate_name}"></a>
 	                  <ul class="dropdown">
-	                    <li th:each="sub:${subCategory}" th:if="${sub.cate_no2==middle.cate_no}">  
+	                    <li th:each="sub:${subCategory}" th:if="${sub.cate_no2==middle.cate_no}">
 	                    	<a a th:href="|@{/getItemList?cate_no=}${sub.cate_no}" th:text="${sub.cate_name}"></a>
 	                    </li>
-	                  </ul> 
+	                  </ul>
 	                </li>
           		</ul>
           	</li>

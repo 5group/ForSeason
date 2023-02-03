@@ -133,7 +133,7 @@
 			size_no=$("#size_no").val();
 			cart_cnt=$("#buyQtt").val();
 			$.ajax({
-				url:'[[@{/cartinsert}]]',
+				url:'[[@{/cartInsert}]]',
 				data: {"item_no":item_no, "color_no":color_no, "size_no":size_no, "cart_cnt":cart_cnt}, //서버 컨트롤러에 데이터 전송
 				success:function(data){
 					if(data == 0){

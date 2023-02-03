@@ -26,18 +26,18 @@
         SELECT * FROM item WHERE cate_no=#{cate_no}
     </select>
     <select id="selectMidItemList" parameterType="Integer" resultType="Item">
-		SELECT i.item_no, c.cate_no, i.item_name, i.item_price, i.item_discnt, i.item_info, i.item_hit, i.item_udate FROM item i 
+		SELECT i.item_no, c.cate_no, i.item_name, i.item_price, i.item_discnt, i.item_info, i.item_hit, i.item_udate FROM item i
 		INNER JOIN category c
 		WHERE i.cate_no=c.cate_no AND cate_no2=#{cate_no}
     </select>
     <select id="selectTopItemList" parameterType="Integer" resultType="Item">
-    	SELECT i.item_no, c.cate_no, i.item_name, i.item_price, i.item_discnt, i.item_info, i.item_hit, i.item_udate FROM item i 
+    	SELECT i.item_no, c.cate_no, i.item_name, i.item_price, i.item_discnt, i.item_info, i.item_hit, i.item_udate FROM item i
 		INNER JOIN category c
 		INNER JOIN category c2
 		WHERE i.cate_no=c.cate_no AND c.cate_no2=c2.cate_no AND c2.cate_no2=#{cate_no}
     </select>
-    
-    
+
+
     <select id="searchItemList" parameterType="String" resultType="Item">
     	SELECT * FROM item WHERE item_name LIKE CONCAT('%',#{search},'%')
     </select> 

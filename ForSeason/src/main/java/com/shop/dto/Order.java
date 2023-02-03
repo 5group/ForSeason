@@ -18,6 +18,7 @@ public class Order {
     private String ship_cust;
     private String ship_stat;
     private String order_stat;
+
     private int order_cp;
     private Date order_udate;
 
@@ -31,4 +32,6 @@ public class Order {
         this.order_stat = order_stat;
         this.order_cp = order_cp;
     }
+
+
 }

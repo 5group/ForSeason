@@ -57,11 +57,15 @@ public class StockService implements MyService<Integer, Stock> {
     	return mapper.getStockSize(item_no);
     }
     
-    public int getstockno(HashMap<String, Integer> map) throws Exception{
-		return mapper.getstockno(map);
+    public int getStockNo(HashMap<String, Integer> map) throws Exception{
+		return mapper.getStockNo(map);
 	}
-    
+
     public List<Size> getStock(Integer item_no, Integer color_no) throws Exception{  //현재 재고 리스트로 보내기
     	return mapper.selectStock(item_no, color_no);
+    }
+
+    public Stock getColorSizeName(Integer stock_no) throws Exception {
+        return mapper.selectSizeColor(stock_no);
     }
 }

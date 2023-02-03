@@ -9,31 +9,31 @@
             <p></p>
             <a href="#">REGISTER</a>
         </form>
-<!--        <table class="table table-striped table-sm">-->
-<!--            <thead>-->
-<!--            <tr>-->
-<!--                <td>상품이름</td>-->
-<!--                <td>가격</td>-->
-<!--                <td>할인율</td>-->
-<!--                <td>상세설명</td>-->
-<!--                <td>조회수</td>-->
-<!--                <td>만든날짜</td>-->
-<!--                <td>카테고리 이름</td>-->
-<!--            </tr>-->
-<!--            </thead>-->
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <td>상품이름</td>
+                <td>가격</td>
+                <td>할인율</td>
+                <td>상세설명</td>
+                <td>조회수</td>
+                <td>만든날짜</td>
+                <td>카테고리 이름</td>
+            </tr>
+            </thead>
 
-<!--            <tbody>-->
-<!--            <tr th:each="item:${itemList}">-->
-<!--                <td th:text="${item.getItem_name}"></td>-->
-<!--                <td th:text="${item.getItem_price}"></td>-->
-<!--                <td th:text="${item.getItem_discnt}"></td>-->
-<!--                <td th:text="${item.getItem_info}"></td>-->
-<!--                <td th:text="${item.getItem_hit}"></td>-->
-<!--                <td th:text="${#dates.format(item.getItem_udate, 'yyyy-MM-dd HH:mm:ss')}"></td>-->
-<!--                <td th:text="${item.getCate_name}"></td>-->
-<!--            </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
+            <tbody>
+            <tr th:each="item:${itemList}">
+                <td th:text="${item.getItem_name}"></td>
+                <td th:text="${item.getItem_price}"></td>
+                <td th:text="${item.getItem_discnt}"></td>
+                <td th:text="${item.getItem_info}"></td>
+                <td th:text="${item.getItem_hit}"></td>
+                <td th:text="${#dates.format(item.getItem_udate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${item.getCate_name}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </main>
 

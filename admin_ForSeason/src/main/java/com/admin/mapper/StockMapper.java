@@ -17,6 +17,4 @@ public interface StockMapper extends MyMapper<Integer, Stock> {
     public List<Stock> selectItemChart(String item_name);
     public List<Stock> selectCateChart(String cate_name);
 
-
-
 }

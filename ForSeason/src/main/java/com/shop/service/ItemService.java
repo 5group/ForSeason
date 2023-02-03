@@ -41,9 +41,9 @@ public class ItemService implements MyService<Integer, Item> {
         return mapper.selectall();
     }
     
-    
-    
-    public List<Item> getSubItemList(Integer cate_no) throws Exception{	
+
+
+    public List<Item> getSubItemList(Integer cate_no) throws Exception{
     	return mapper.selectSubItemList(cate_no);
     }
     public List<Item> getMidItemList(Integer cate_no) throws Exception {
@@ -51,9 +51,9 @@ public class ItemService implements MyService<Integer, Item> {
     }
     public List<Item> getTopItemList(Integer cate_no) throws Exception {
         return mapper.selectTopItemList(cate_no);
-    } 
-    
-    
+    }
+
+
     
     public List<Item> searchItemList(String search) throws Exception{	
     	return mapper.searchItemList(search);
@@ -66,5 +66,5 @@ public class ItemService implements MyService<Integer, Item> {
     public Category getCategorys(Integer item_no) throws Exception{
     	return mapper.selectCategorys(item_no);
     }
-    
+
 }

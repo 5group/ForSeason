@@ -15,7 +15,7 @@ public interface ItemMapper extends MyMapper<Integer, Item> {
 	public List<Item> selectSubItemList(Integer cate_no) throws Exception;
 	public List<Item> selectMidItemList(Integer cate_no) throws Exception;
 	public List<Item> selectTopItemList(Integer cate_no) throws Exception;
-	
+
 	public List<Item> searchItemList(String search) throws Exception;
 	public void updateItemhit(Integer item_no) throws Exception;
 	public Category selectCategorys(Integer item_no) throws Exception;

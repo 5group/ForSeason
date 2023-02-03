@@ -32,7 +32,7 @@
           <div class="col-md-3">
             <h1>My Page</h1>
             <div class="myinfo">
-            	<div class="myinfo_name"><p class="myname" th:text="${session.loginuser.user_name}"></p>님</div>
+            	<div class="myinfo_name"><p class="myname" th:text="${session.loginUser.user_name}"></p>님</div>
 				<a th:href="@{/user/info/change_pwd}">패스워드 변경</a><br>
 				<a th:href="@{/user/info/change_info}">내정보 수정</a><br>
 				<a th:href="@{/user/info/delete}">회원탈퇴</a><br>

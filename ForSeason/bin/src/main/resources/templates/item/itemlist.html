@@ -32,9 +32,9 @@ li, ul{
 </style>
 </head>
 <body>
-<h1 style="width: 100px; margin: 0px auto;">Itemlist</h1>   <!--   -->
+<h1 style="width: 100px; margin: 0px auto;">itemList</h1>   <!--   -->
 <ul id="result">
-	<li class="wrap_ul" th:each="o:${itemlist}">
+	<li class="wrap_ul" th:each="o:${itemList}">
 		<ul>
 			<li class="p1"><a th:href="@{/itemdetail/(cate=${cate},item_no=${o.item_no})}"><img id="iimg" th:src="@{/img/}+${cate}+'/'+${o.item_img}"></a></li>
 			<li th:text="${o.item_name}"></li>

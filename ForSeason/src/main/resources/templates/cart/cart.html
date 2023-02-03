@@ -1,142 +1,217 @@
-<script>
-	function cartbtn(){
-		location.href='[[@{/order}]]';
-	}
-</script>
-    <div class="bg-light py-3">
-      <div class="container">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<div class="bg-light py-3">
+    <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a th:href="@{/}">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Cart</strong></div>
+            <div class="col-md-12 mb-0"><a th:href="@{/}">Home</a> <span class="mx-2 mb-0">/</span> <strong
+                    class="text-black">Cart</strong></div>
         </div>
-      </div>
     </div>
-
-    <div class="site-section">
-      <div class="container">
+</div>
+<div class="site-section">
+    <div class="container">
         <div class="row mb-5">
-          <form class="col-md-12" method="post">
-            <div class="site-blocks-table">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th class="product-thumbnail">Image</th>
-                    <th class="product-name">Product</th>
-                    <th class="product-price">Price</th>
-                    <th class="product-quantity">Quantity</th>
-                    <th class="product-total">Total</th>
-                    <th class="product-remove">Remove</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="product-thumbnail">
-                      <img src="images/cloth_1.jpg" alt="Image" class="img-fluid">
-                    </td>
-                    <td class="product-name">
-                      <h2 class="h5 text-black">Top Up T-Shirt</h2>
-                    </td>
-                    <td>$49.00</td>
-                    <td>
-                      <div class="input-group mb-3" style="max-width: 120px;">
-                        <div class="input-group-prepend">
-                          <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                        </div>
-                        <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                        </div>
-                      </div>
+            <form class="col-md-12" method="post">
+                <div class="site-blocks-table">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <td>
+                                <label>
+                                    <input type="checkbox" name="selectAll" value="selectAll"
+                                           onclick='window.selectAll(this)'/>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                            <th class="cart-name">장바구니 번호</th>
+                            <th class="product-name">상품 이름</th>
+                            <th class="product-size&color">사이즈/색상</th>
+                            <th class="product-price">상품가격</th>
+                            <th class="product-quantity">상품수량</th>
+                            <th class="product-total">총액</th>
+                            <th class="product-remove">장바구니 삭제</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="cart, stat:${cart}">
+                            <td>
+                                <label>
+                                    <input type="checkbox" name="checkbox" th:value="${cart.cart_no}"
+                                           onclick='checkSelectAll()'>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </td>
+                            <td class="cart-name"><h2 class="h5 text-black" th:text="${stat.count}"></h2></td>
+                            <td class="product-name" th:text="${item[stat.index].item_name}"></td>
+                            <td class="product-size&color" th:text="|${stock[stat.index].size_name}&${stock[stat.index].color_name}|"></td>
+                            <td class="product-price" th:value="${item[stat.index].item_price}"
+                                th:text="${item[stat.index].item_price}"></td>
+                            <td class="product-quantity">
+                                <div class="input-group mb-3" style="max-width: 200px;">
+                                    <input type="text" class="form-control text-center"
+                                           th:value="${cart.cart_cnt}">
+                                    <button class="quantity-minus" type="button">&minus;</button>
+                                    <button class="quantity-plus" type="button">&plus;</button>
+                                </div>
+                            </td>
+                            <td class="product-total" id="totalPrice">
+                                <input type="hidden" th:value="${item[stat.index].item_price}">
+                                <h3 th:text="${cart.cart_cnt * item[stat.index].item_price}"></h3>
+                            </td>
+                            <td>
+                                <button class="product-remove" type="button" th:id="${cart.cart_no}">장바구니 삭제</button>
+                            </td>
+                            <td>
 
-                    </td>
-                    <td>$49.00</td>
-                    <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
-                  </tr>
-
-                  <tr>
-                    <td class="product-thumbnail">
-                      <img src="images/cloth_2.jpg" alt="Image" class="img-fluid">
-                    </td>
-                    <td class="product-name">
-                      <h2 class="h5 text-black">Polo Shirt</h2>
-                    </td>
-                    <td>$49.00</td>
-                    <td>
-                      <div class="input-group mb-3" style="max-width: 120px;">
-                        <div class="input-group-prepend">
-                          <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
-                        </div>
-                        <input type="text" class="form-control text-center" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                        </div>
-                      </div>
-
-                    </td>
-                    <td>$49.00</td>
-                    <td><a href="#" class="btn btn-primary btn-sm">X</a></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
         </div>
-
         <div class="row">
-          <div class="col-md-6">
-            <div class="row mb-5">
-              <div class="col-md-6 mb-3 mb-md-0">
-                <button class="btn btn-primary btn-sm btn-block">Update Cart</button>
-              </div>
-              <div class="col-md-6">
-                <button class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</button>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label class="text-black h4" for="coupon">Coupon</label>
-                <p>Enter your coupon code if you have one.</p>
-              </div>
-              <div class="col-md-8 mb-3 mb-md-0">
-                <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">
-              </div>
-              <div class="col-md-4">
-                <button class="btn btn-primary btn-sm">Apply Coupon</button>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 pl-5">
-            <div class="row justify-content-end">
-              <div class="col-md-7">
-                <div class="row">
-                  <div class="col-md-12 text-right border-bottom mb-5">
-                    <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <span class="text-black">Subtotal</span>
-                  </div>
-                  <div class="col-md-6 text-right">
-                    <strong class="text-black">$230.00</strong>
-                  </div>
-                </div>
+            <div class="col-md-6">
                 <div class="row mb-5">
-                  <div class="col-md-6">
-                    <span class="text-black">Total</span>
-                  </div>
-                  <div class="col-md-6 text-right">
-                    <strong class="text-black">$230.00</strong>
-                  </div>
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <button class="btn btn-primary btn-sm btn-block">Update Cart</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</button>
+                    </div>
                 </div>
-
-                <div class="row">
-                  <div class="col-md-12">
-                    <button class="btn btn-primary btn-lg py-3 btn-block" onclick="cartbtn();">Proceed To Checkout</button>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
+            <div class="col-md-6 pl-5">
+                <div class="row justify-content-end">
+                    <div class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-12 text-right border-bottom mb-5">
+                                <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <span class="text-black">선택한 상품 총액</span>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <strong class="text-black">여기다가 선택한 상품들 가격넣어</strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary btn-lg py-3 btn-block" onclick="getCheckboxValue();">
+                                    Proceed To
+                                    Checkout
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
+</div>
+
+<script>
+    $(".quantity-plus").on("click", function(){
+        let quantity = $(this).parent("div").find("input").val();
+        let item_price = $(this).parents("tr").find(".product-total").find("input").val();
+        $(this).parent("div").find("input").val(++quantity);
+        $(this).parents("tr").find(".product-total").find("h3").html(item_price * quantity);
+
+    });
+    $(".quantity-minus").on("click", function(){
+        let quantity = $(this).parent("div").find("input").val();
+        let item_price = $(this).parents("tr").find(".product-total").find("input").val();
+        if(quantity > 1){
+            $(this).parent("div").find("input").val(--quantity);
+            $(this).parents("tr").find(".product-total").find("h3").html(item_price * quantity);
+        }
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // 개별 상품 'X' 버튼 (삭제)
+        let removeBtns = document.querySelectorAll('.product-remove');
+        removeBtns.forEach((button) => {
+            button.addEventListener('click', (e) => {
+                // 해당 cartProductId를 데이터베이스에서 삭제하고 cart 페이지로 이동
+                let cartProductId = e.target.id;
+                console.log(cartProductId);
+                $.ajax({
+                    url: '[[@{/cart/deleteCart/}]]',
+                    data: {
+                        "cart_no": cartProductId
+                    },
+                    success: function () {
+                        location.href = "[[@{/cart}]]"
+                        console.log("success")
+                    },
+                    error: function () {
+                        console.log("error")
+                        alert("error")
+                    }
+                })
+            })
+        });
+    });
+
+    function selectAll(selectAll) {
+        const checkboxes
+            = document.getElementsByName("checkbox");
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked;
+        })
+    }
+
+    function getCheckboxValue() {
+        // 선택된 목록 가져오기
+        const selectedEls =
+            document.querySelectorAll('input[name="checkbox"]:checked');
+        // 선택된 목록에서 value 찾기
+        var result = [];
+        var cart_cnt = []
+        selectedEls.forEach((el) => {
+            cart_cnt.push($(el).parents("tr").find(".product-quantity").find("div").find("input").val());
+            result.push(el.value);
+        });
+        console.log("result:" + result);
+        var c = confirm('수정 하시겠습니까?');
+        if (c == true) {
+            $.ajax({
+                url: '[[@{/orderByCartList}]]',
+                type: 'post',
+                data: {
+                    cartList: result,
+                    cartCntList:cart_cnt
+                },
+                success: function () {
+                    location.href = "/order";
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        }
+    }
+
+    function checkSelectAll() {
+        // 전체 체크박스
+        const checkboxes
+            = document.querySelectorAll('input[name="checkbox"]');
+        // 선택된 체크박스
+        const checked
+            = document.querySelectorAll('input[name="checkbox"]:checked');
+        // select all 체크박스
+        const selectAll
+            = document.querySelector('input[name="selectAll"]');
+        if (checkboxes.length === checked.length) {
+            selectAll.checked = true;
+        } else {
+            selectAll.checked = false;
+        }
+    }
+
+</script>
