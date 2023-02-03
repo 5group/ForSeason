@@ -17,7 +17,7 @@
     <update id="update" parameterType="Stock">
         UPDATE stock SET amount=#{amount} WHERE stock_no=#{stock_no}
     </update>
-    <delete id="delete" parameterType="String">
+    <delete id="delete" parameterType="Integer">
         DELETE FROM stock WHERE stock_no=#{stock_no}
     </delete>
     
@@ -33,5 +33,10 @@
 	</select>
 	<select id="getstockno" parameterType="hashMap" resultType="Integer">
     	select stock_no from stock where item_no=#{item_no} AND size_no=#{size_no} AND color_no=#{color_no}; 
+    </select>
+    <select id="selectStock" parameterType="Integer" resultType="Size">
+    	select si.size_no, si.size_name from stock s
+		inner join size si
+		where si.size_no=s.size_no AND item_no=#{item_no} AND color_no=#{color_no} AND s.amount>0
     </select>
 </mapper>

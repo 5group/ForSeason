@@ -1,27 +1,37 @@
 package com.shop.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.shop.dto.Cart;
+import com.shop.dto.Color;
 import com.shop.dto.Coupon;
 import com.shop.dto.Item;
+import com.shop.dto.Size;
 import com.shop.dto.Stock;
 import com.shop.service.CartService;
+import com.shop.service.ColorService;
 import com.shop.service.ItemService;
 import com.shop.service.StockService;
 
 @RestController
 public class DataController {
+	
+	@Value("${custdir}")
+	String custdir;
 
     @Autowired
     HttpSession session;
@@ -34,6 +44,11 @@ public class DataController {
     
     @Autowired
     CartService cartService;
+    
+    @Autowired
+    ColorService colorService;
+    
+
 
     @RequestMapping(value = "/couponList", method = RequestMethod.GET)
     public List<Coupon> coupon_list() {
@@ -97,4 +112,29 @@ public class DataController {
    				
    		return result;
    	}
+    
+    @RequestMapping("/getStock")
+   	public Object getStock(int item_no, int color_no, int color_index, @RequestParam(value="CateArr[]") String[] CateArr) throws Exception{  //현재 선택한 컬러의 이미지파일 가져가면 되지 않나..?
+    	JSONObject jo = new JSONObject();
+		
+    	List<Size> colorStock=stockService.getStock(item_no, color_no);   //현재 존재하는 재고만(사이즈) 리스트 불러오기 ex) 노랑색은 xs,s 분홍색은 xs만 있을 수 있으니깐
+    	
+    	Item item = itemService.get(item_no); //해당 아이템 이름
+    	String item_name=item.getItem_name();
+    	
+    	Color color = colorService.get(color_no);
+    	
+    	String src= CateArr[0]+"/"+CateArr[1]+"/"+CateArr[2]+"/"+item_name;
+		File dir = new File(custdir+src);	
+		String imgnames[] = dir.list();   //아이템 이미지파일들의 이름 리스트로 저장
+		
+//		for (int i = 0; i < imgnames.length; i++) {
+//		    System.out.println("imgnames : "+imgnames[i]);
+//		}
+//    	System.out.println("최종:"+imgnames[color_index]);
+    	jo.put("imgsrc", imgnames[color_index]);
+    	jo.put("colorStock", colorStock);
+    		
+    	return jo;
+    }
 }

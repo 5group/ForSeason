@@ -10,12 +10,46 @@
 		margin-right: 10px;
 		height:37px;
 	}
-	.colorli > a{
+	.colorli > span{
 		display:inline-block;
 		width:30px;
 		height:30px;
 		border:1px solid #cccccc;
+		cursor: pointer;
 	}
+	
+	.right_area .icon{
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    width: calc(100vw * (45 / 1920));
+	    height: calc(100vw * (45 / 1920));
+	
+	    border-radius: 50%;
+	    border: solid 2px #eaeaea;
+	    background-color: #fff;
+	}
+	
+	.icon.heart img{
+	    width: calc(100vw * (24 / 1920));
+	    height: calc(100vw * (24 / 1920));
+	}
+	
+	.icon.heart.fas{
+	  color:red
+	}
+	.heart{
+	    transform-origin: center;
+	}
+	.heart.active img{
+	    animation: animateHeart .3s linear forwards;
+	}
+	
+	@keyframes animateHeart{
+	    0%{transform:scale(.2);}
+	    40%{transform:scale(1.2);}
+	    100%{transform:scale(1);}
+	 }
 </style>
 <script>
 	var item_no,color_no,size_no,cart_cnt;
@@ -36,12 +70,48 @@
 			return;
 		}
 	}
+	
+
 	$(document).ready(function(){
-		$('.colorli').click(function(){
-			var color_no=this.getAttribute("value");
+		 /*<![CDATA[*/
+	    var info = "[[${item.item_info}]]";
+	    console.log(info);
+	    info = info.replaceAll('※', '<br>※');
+	    const el = document.querySelector("#itemInfo")
+	    el.insertAdjacentHTML('afterbegin', '<p>'+info+'</p>'); 
+	    // 타켓 요소 다음(자식요소)에 생성 - 시작 태그의 뒤(자식 요소로) 
+	    /*]]>*/
+	    
+		$('.colorli').click(function(){    //컬러 클릭했을 때 이미지 바뀌어야 함, 재고(사이즈) 어떤거 있는지 확인해야 함
+			color_no=this.getAttribute("value");  //클릭한 컬러의 넘버
+			item_no=$("#item_no").val();  //현재 아이템 넘버
+			var color_index=$(this).children('input').val();
+
+		    /*<![CDATA[*/
+		    var CateArr = ["[[${cateName[0]}]]","[[${cateName[1]}]]","[[${cateName[2]}]]"];
+		    /*]]>*/
+			
+			$.ajax({
+				url:'[[@{/getStock}]]',
+				data: {"item_no":item_no, "color_no":color_no, "color_index":color_index, "CateArr":CateArr}, //서버 컨트롤러에 데이터 전송
+				success:function(data){
+					var imgsrc=$("img[name='titleImg']").attr('src');
+					imgsrc=imgsrc.substring(0, imgsrc.lastIndexOf('/')+1);
+					imgsrc=imgsrc+data.imgsrc;
+					$("img[name='titleImg']").attr('src', imgsrc);  //이미지 바꾸기
+					$("input[name='shop-sizes']").attr('disabled', true); //재고 없는건 비활성화
+					$.each(data.colorStock,function(key,value) {  //재고에 있는 사이즈 불러오기
+						$("input[class='"+value.size_name+"Input']").attr('disabled', false); //재고 있는건 활성화
+					});			
+				},error: function () {
+					alert("상품 이미지를 불러오는데 실패했습니다.");
+			    }
+			});	
+			
 			$("#color_no").val(color_no);
 			$(".colorli").css('border', '0px');
 			$(this).css('border-bottom', '3px solid black');
+			$("input:radio[name=shop-sizes]").prop('checked', false);
 		})
 		$("input:radio[name=shop-sizes]").click(function(){
 			if($("#color_no").val()==0){
@@ -49,7 +119,7 @@
 				$("input:radio[name=shop-sizes]").prop('checked', false);
 				return;
 			}
-			var size_no=this.getAttribute("value");
+			size_no=this.getAttribute("value");
 			$("#size_no").val(size_no);
 		})
 		
@@ -77,6 +147,31 @@
 	
 
 	});
+	
+	//heart 좋아요 클릭시 하트색 변경
+	$(function(){
+	    var $likeBtn =$('.icon.heart');
+
+	        $likeBtn.click(function(){
+	        $likeBtn.toggleClass('active');
+
+	        if($likeBtn.hasClass('active')){          
+	           $(this).find('img').attr({
+	              'src': 'https://cdn-icons-png.flaticon.com/512/803/803087.png',
+	               alt:'찜하기 완료'
+	                });
+	          
+	          
+	         }else{
+	            $(this).find('i').removeClass('fas').addClass('far')
+	           $(this).find('img').attr({
+	              'src': 'https://cdn-icons-png.flaticon.com/512/812/812327.png',
+	              alt:"찜하기"
+	           })
+	         }
+	     })
+	})
+
 </script>    
     
     <div class="bg-light py-3">
@@ -89,22 +184,26 @@
 
     <div class="site-section">
       <div class="container">
+      <h1 style="color: black;margin-bottom:40px;border-bottom:1px solid #cccccc;" th:text=${item.item_name}></h1>
         <div class="row">
+        
           <div class="col-md-6">
-            <img src="images/item/title.jpg" alt="Image" class="img-fluid">
+            <img name="titleImg" th:src="|@{img/}${cateName[0]}/${cateName[1]}/${cateName[2]}/${item.item_name}/${imgnames[0]}|" alt="Image" class="img-fluid"> <!-- 처음이미지는 첫번째 이미지 -->
             <input type="hidden" id="item_no" name="item_no" th:value="${item.item_no}">
           </div>
           <div class="col-md-6">
-            <h2 class="text-black" th:text=${item.item_name}></h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur, vitae, explicabo? Incidunt facere, natus soluta dolores iusto! Molestiae expedita veritatis nesciunt doloremque sint asperiores fuga voluptas, distinctio, aperiam, ratione dolore.</p>
-            <p class="mb-4">Ex numquam veritatis debitis minima quo error quam eos dolorum quidem perferendis. Quos repellat dignissimos minus, eveniet nam voluptatibus molestias omnis reiciendis perspiciatis illum hic magni iste, velit aperiam quis.</p>
-            <p><strong class="text-primary h4" th:text="${#numbers.formatInteger(item.item_price, 0, 'COMMA')}+'원'"></strong></p>
-            
+           <!--  <h2 class="text-black" th:text=${item.item_name}></h2> -->
+           	<p id="itemInfo"></p>     <!-- 이 태그 뒤에 설명 추가 -->
+           	<p><strong class="text-primary h4" th:text="${#numbers.formatInteger(item.item_price, 0, 'COMMA')}+'원'"></strong></p>
+         
             <!-- 색상 선택 -->
-            <div class="mb-1 d-flex">
+            <div class="mb-1 d-flex" >
             <span style="font-size: 22px; line-height:30px; color:black; margin-right:16px;">Color:</span>
               <ul id="colorui">
-              	<li class="colorli" th:each="o:${colorlist}" th:value="${o.color_no}"><a href="#none" th:class="${o.color_name}"></a>
+              	<li class="colorli" th:each="o, stat:${colorlist}" th:value="${o.color_no}">
+              		<span th:class="${o.color_name}"></span>
+              		<input type="hidden" th:class="|color_index_${stat.index}|" th:value="${stat.index}">
+              	</li>  	
               </ul>
               <input type="hidden" id="color_no" name="color_no" value="0">
             </div>
@@ -114,25 +213,31 @@
               <span style="font-size: 22px; line-height:23px; color:black; margin-right:15px;">Size:</span>
               <label for="option-sm" class="d-flex mr-3 mb-3" th:each="o:${sizelist}">
                 <span class="d-inline-block mr-2" style="top:-2px; position: relative;">
-                	<input type="radio" id="option-s" name="shop-sizes" th:value="${o.size_no}"></span> <span class="d-inline-block text-black" th:text="${o.size_name}"></span>
+                	<input type="radio" id="option-s" name="shop-sizes" th:value="${o.size_no}" th:class="${o.size_name}+'Input'"></span> <span class="d-inline-block text-black" th:text="${o.size_name}"></span>
               </label>
      		  <input type="hidden" id="size_no" name="size_no" value="0">
             </div>
             
             <!-- 수량 선택 -->
-            <div class="mb-5">
+            <div class="mb-5" style="margin-bottom: 1.3rem!important;">
               <div class="input-group mb-3" style="max-width: 120px;">
-              <div class="input-group-prepend">
-                <button class="btn btn-outline-primary js-btn-minus" type="button" onclick="minusClick();">&minus;</button>
+	              <div class="input-group-prepend">
+	                <button class="btn btn-outline-primary js-btn-minus" type="button" onclick="minusClick();">&minus;</button>
+	              </div>
+	              <input type="text" class="form-control text-center" id="buyQtt" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+	              <div class="input-group-append">
+	                <button class="btn btn-outline-primary js-btn-plus" type="button" onclick="plusClick();">&plus;</button>
+	              </div>
               </div>
-              <input type="text" class="form-control text-center" id="buyQtt" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-              <div class="input-group-append">
-                <button class="btn btn-outline-primary js-btn-plus" type="button" onclick="plusClick();">&plus;</button>
-              </div>
-            </div>
 
             </div>
-            <p><a href="#none" id="btn_cart" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+            
+            <div class="right_area" style="height:45px; width:210px;">
+				<a href="javascript:;" class="icon heart" style="height:45px; width:45px; float:left;">
+					<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
+				</a>
+				<p style="float:right;"><a href="#none" id="btn_cart" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
+			</div>	
 
           </div>
         </div>

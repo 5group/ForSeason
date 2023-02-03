@@ -17,4 +17,5 @@ public interface StockMapper extends MyMapper<Integer, Stock> {
 	public List<Color> getStockColor(Integer item_no) throws Exception;
 	public List<Size> getStockSize(Integer item_no) throws Exception;
 	public int getstockno(HashMap<String, Integer> map) throws Exception;
+	public List<Size> selectStock(Integer item_no, Integer color_no) throws Exception;
 }

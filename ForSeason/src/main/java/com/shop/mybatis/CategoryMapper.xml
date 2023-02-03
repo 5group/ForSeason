@@ -5,7 +5,7 @@
 <mapper namespace="com.shop.mapper.CategoryMapper">
 
     <select id="select" parameterType="Integer" resultType="Category">
-        SELECT * FROM category WHERE item_no=#{item_no}
+        SELECT * FROM category WHERE cate_no=#{cate_no}
     </select>
     <select id="selectall" resultType="Category">
         SELECT * FROM category
@@ -18,13 +18,23 @@
         UPDATE category SET cate_name=#{cate_name}, cate_no2=#{cate_no2} WHERE cate_no=#{cate_no}
     </update>
     <delete id="delete" parameterType="Integer">
-        DELETE FROM category WHERE item_no=#{item_no}
+        DELETE FROM category WHERE cate_no=#{cate_no}
     </delete>
     
-    <select id="getTopCategory" resultType="Integer">
-        SELECT cate_no2 FROM category WHERE cate_no2 IS NOT NULL GROUP BY cate_no2
+    
+    <select id="getTopCategory" resultType="Category">
+        SELECT * FROM category WHERE cate_no2 IS NULL
     </select>
-    <select id="getSubCategory" parameterType="Integer" resultType="Integer">
-        select cate_no from category where cate_no2=#{cate_no2}
+    <select id="getMiddleCategory" resultType="Category">
+        SELECT * FROM category WHERE cate_no2 IN (SELECT cate_no FROM category WHERE cate_no2 IS NULL)
+    </select>
+    <select id="getSubCategory" parameterType="Integer" resultType="Category">
+        SELECT * FROM category WHERE cate_no NOT IN (SELECT cate_no2 FROM category WHERE cate_no2 IS NOT NULL)
+    </select>
+    <select id="selectCurCategory" parameterType="map" resultType="Category">
+    	select c3.cate_name as 'top_cate_name' from category c3
+		<if test="top != null">
+			where c3.cate_no=#{top};
+		</if>
     </select>
 </mapper>

@@ -31,7 +31,7 @@
                   <li th:if="${session.loginuser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
                   <li th:if="${session.loginuser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
                   <li th:if="${session.loginuser!=null}"><a th:href="@{/info}"><span class="icon icon-person"></span></a></li>  
-                  <li>
+                  <li th:if="${session.loginuser!=null}">
                     <a th:href="@{/cart}" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
                       <span class="count">2</span>
@@ -49,104 +49,20 @@
         <div class="container">
           <ul class="site-menu js-clone-nav d-none d-md-block" style="padding-left:0px;">
           	<li><a href="#">BEST</a></li>
-          <!-- 아이템 카테고리 -->
-            <li class="has-children active">
-              <a th:href="@{#none}">WOMEN</a>
-              <ul class="dropdown">
-                <li class="has-children">
-                  <a th:href="@{/getAllItemList?cate_no=10}">OUTER 아우터</a>  
-                  <ul class="dropdown">
-                    <li><a th:href="@{/getItemList?cate_no=11}">경량패딩(재킷ㆍ베스트ㆍ코트)</a></li>
-                    <li><a th:href="@{/getItemList?cate_no=12}">캐주얼아우터</a></li>
-                    <li><a href="#">다운</a></li>
-                    <li><a href="#">셋업 수트(정장)ㆍ코트</a></li>
-                    <li><a href="#">후리스</a></li>
-                  </ul>
-                </li>
-                <li class="has-children">
-                  <a th:href="@{/getAllItemList?cate_no=20}">TOPS 상의</a>
-                  <ul class="dropdown">
-                    <li><a href="#">니트ㆍ가디건</a></li>
-                    <li><a href="#">캐시미어</a></li>
-                    <li><a href="#">스웨트</a></li>
-                    <li><a href="#">후리스</a></li>
-                    <li><a href="#">셔츠ㆍ블라우스</a></li>
-                  </ul>
-                </li>
-                <li class="has-children">
-                  <a th:href="@{/getAllItemList?cate_no=30}">BOTTOMS 하의</a>
-                  <ul class="dropdown">
-                    <li><a href="#">슬랙스</a></li>
-                    <li><a href="#">캐주얼팬츠</a></li>
-                    <li><a href="#">진</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="has-children active">
-              <a th:href="@{#none}">MEN</a>
-              <ul class="dropdown">
-                <li class="has-children">
-                  <a href="#">OUTER 아우터</a>
-                  <ul class="dropdown">
-                    <li><a href="#">경량패딩(재킷ㆍ베스트ㆍ코트)</a></li>
-                    <li><a href="#">캐주얼아우터</a></li>
-                    <li><a href="#">다운</a></li>
-                    <li><a href="#">셋업 수트(정장)ㆍ코트</a></li>
-                    <li><a href="#">후리스</a></li>
-                  </ul>
-                </li>
-                <li class="has-children">
-                  <a href="#">TOPS 상의</a>
-                  <ul class="dropdown">
-                    <li><a href="#">니트ㆍ가디건</a></li>
-                    <li><a href="#">캐시미어</a></li>
-                    <li><a href="#">스웨트</a></li>
-                    <li><a href="#">후리스</a></li>
-                    <li><a href="#">셔츠ㆍ블라우스</a></li>
-                  </ul>
-                </li>
-                <li class="has-children">
-                  <a href="#">BOTTOMS 하의</a>
-                  <ul class="dropdown">
-                    <li><a href="#">슬랙스</a></li>
-                    <li><a href="#">캐주얼팬츠</a></li>
-                    <li><a href="#">감탄팬츠</a></li>
-                    <li><a href="#">스웨트팬츠</a></li>
-                    <li><a href="#">히트텍팬츠</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li class="has-children active">
-              <a th:href="@{#none}">KIDS</a>
-              <ul class="dropdown">
-                <li class="has-children">
-                  <a href="#">OUTER 아우터</a>
-                  <ul class="dropdown">
-                    <li><a href="#">캐주얼아우터</a></li>
-                    <li><a href="#">경량패딩ㆍ다운</a></li>
-                    <li><a href="#">후리스</a></li>
-                  </ul>
-                </li>
-                <li class="has-children">
-                  <a href="#">TOPS 상의</a>
-                  <ul class="dropdown">
-                    <li><a href="#">스웨트</a></li>
-                    <li><a href="#">티셔츠ㆍ니트</a></li>
-                    <li><a href="#">UT(그래픽티셔츠)</a></li>
-                  </ul>
-                </li>
-                <li class="has-children">
-                  <a href="#">BOTTOMS 하의</a>
-                  <ul class="dropdown">
-                    <li><a href="#">슬랙스</a></li>
-                    <li><a href="#">캐주얼팬츠</a></li>
-                    <li><a href="#">진</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
+          	<!-- 아이템 카테고리 -->
+          	<li class="has-children active" th:each="top:${topCategory}">
+          		<a th:href="|@{/getItemList?cate_no=}${top.cate_no}|" th:text="${top.cate_name}"></a>
+          		<ul class="dropdown">
+          			<li class="has-children" th:each="middle:${middleCategory}" th:if="${middle.cate_no2==top.cate_no}">
+	                  <a th:href="|@{/getItemList?cate_no=}${middle.cate_no}|" th:text="${middle.cate_name}"></a>  
+	                  <ul class="dropdown">
+	                    <li th:each="sub:${subCategory}" th:if="${sub.cate_no2==middle.cate_no}">  
+	                    	<a a th:href="|@{/getItemList?cate_no=}${sub.cate_no}" th:text="${sub.cate_name}"></a>
+	                    </li>
+	                  </ul> 
+	                </li>
+          		</ul>
+          	</li>
             <!-- 아이템 카테고리 end -->
             
             

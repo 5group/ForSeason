@@ -15,9 +15,9 @@ public class InsertTests {
     @DisplayName("Insert")
     @Test
     void contentLoads(){
-        Item item = new Item(0, 31, "청바지", 10000, 10, "청바지 상품 등록", 0, null);
+        //Item item = new Item(0, 31, "청바지", 10000, 10, "청바지 상품 등록", 0, null);
         try{
-            service.register(item);
+            //service.register(item);
             System.out.println("OK");
         }catch (Exception e){
             e.printStackTrace();

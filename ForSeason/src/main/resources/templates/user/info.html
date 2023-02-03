@@ -1,4 +1,17 @@
-
+<style>
+	.myinfo{
+		border: 1px solid #cccccc;
+		margin-top: 30px;
+	}
+	.myinfo_name{
+		border: 1px solid #cccccc;
+		font-size:20px;
+	}
+	.myname{
+		font-size:25px;
+		color: #5D5D5D;
+	}
+</style>
 
     <div class="bg-light py-3">
       <div class="container">
@@ -17,18 +30,21 @@
           
           
           <div class="col-md-3">
-            <h1>Test Page</h1>
-			<a th:href="@{/user/info/change_pwd}">패스워드 변경</a><br>
-			<a th:href="@{/user/info/change_info}">내정보 수정</a><br>
-			<a th:href="@{/user/info/delete}">회원탈퇴</a><br>
-			<a th:href="@{/user/info/coupon}">쿠폰</a><br>
-			<a th:href="@{/user/info/myOrder}">주문내역</a><br>
-			<a th:href="@{/user/info/myOrderDetail}">주문상세내역</a><br>
-			<a th:href="@{/user/info/coupon_insert}">쿠폰생성</a><br>
+            <h1>My Page</h1>
+            <div class="myinfo">
+            	<div class="myinfo_name"><p class="myname" th:text="${session.loginuser.user_name}"></p>님</div>
+				<a th:href="@{/user/info/change_pwd}">패스워드 변경</a><br>
+				<a th:href="@{/user/info/change_info}">내정보 수정</a><br>
+				<a th:href="@{/user/info/delete}">회원탈퇴</a><br>
+				<a th:href="@{/user/info/coupon}">쿠폰</a><br>
+				<a th:href="@{/user/info/myOrder}">주문내역</a><br>
+				<a th:href="@{/user/info/myOrderDetail}">주문상세내역</a><br>
+				<a th:href="@{/user/info/coupon_insert}">쿠폰생성</a><br>
+			</div>
           </div>
           
           
-          <div class="col-md-8" style="margin-left:50px; border:1px solid black;">
+          <div class="col-md-8" style="margin:10px 0px 0px 50px; border:1px solid black;">
             <div class="p-4 border mb-3">
               <span class="d-block text-primary h6 text-uppercase">New York</span>
               <p class="mb-0">203 Fake St. Mountain View, San Francisco, California, USA</p>

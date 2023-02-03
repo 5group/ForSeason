@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -83,8 +84,10 @@ public class MainController {
         return "main";
     }
 
-    @RequestMapping("/loginimpl")
+    //@RequestMapping("/loginimpl")
+    @RequestMapping(value = "/loginimpl", method = RequestMethod.POST)  //이거 고치니깐 오류 안남
     public String loginimpl(HttpSession session, String id, String pwd, Model model) {
+    	System.out.println("haha");
         User user = null;
         String result = "user/loginfail";
         try {
@@ -102,7 +105,7 @@ public class MainController {
                     session.setAttribute("order", order_list);
                     session.setAttribute("od", od_list);
                     //1234567890 cartList -> copy_cartList(javascript) -> new cartList()
-                    // 대권님 -> 장바구니
+
                 }
             }
         } catch (Exception e) {

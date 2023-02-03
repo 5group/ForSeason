@@ -1,13 +1,14 @@
 package com.shop.service;
 
-import com.shop.dto.Item;
-import com.shop.frame.MyService;
-import com.shop.mapper.ItemMapper;
-import com.shop.mapper.UserMapper;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.shop.dto.Category;
+import com.shop.dto.Item;
+import com.shop.frame.MyService;
+import com.shop.mapper.ItemMapper;
 
 @Service
 public class ItemService implements MyService<Integer, Item> {
@@ -40,13 +41,19 @@ public class ItemService implements MyService<Integer, Item> {
         return mapper.selectall();
     }
     
-    public List<Item> getItemList(Integer cate_no) throws Exception{	
-    	return mapper.getItemList(cate_no);
-    }
     
-    public List<Item> getAllItemList(Integer cate_no) throws Exception {
-        return mapper.getAllItemList(cate_no);
-    }  
+    
+    public List<Item> getSubItemList(Integer cate_no) throws Exception{	
+    	return mapper.selectSubItemList(cate_no);
+    }
+    public List<Item> getMidItemList(Integer cate_no) throws Exception {
+        return mapper.selectMidItemList(cate_no);
+    }
+    public List<Item> getTopItemList(Integer cate_no) throws Exception {
+        return mapper.selectTopItemList(cate_no);
+    } 
+    
+    
     
     public List<Item> searchItemList(String search) throws Exception{	
     	return mapper.searchItemList(search);
@@ -54,6 +61,10 @@ public class ItemService implements MyService<Integer, Item> {
     
     public void updateItemhit(Integer item_no) throws Exception{
     	mapper.updateItemhit(item_no);
+    }
+    
+    public Category getCategorys(Integer item_no) throws Exception{
+    	return mapper.selectCategorys(item_no);
     }
     
 }

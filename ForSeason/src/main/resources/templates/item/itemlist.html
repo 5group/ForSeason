@@ -1,9 +1,21 @@
-
+<style>
+	.listItemName{
+		/*범위 넘어가면 말줄임표로 표현*/
+		display:block; 
+		overflow:hidden; 
+		text-overflow:ellipsis;
+		white-space:nowrap;  
+	}
+</style>
 
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Shop</strong></div>
+          <div class="col-md-12 mb-0">
+          	<a th:href="@{/}">Home</a> 
+          	<span class="mx-2 mb-0">/</span> 
+          	<strong class="text-black">Shop</strong>
+          </div>
         </div>
       </div>
     </div>
@@ -32,11 +44,10 @@
                   <div class="dropdown mr-1 ml-md-auto">
                     <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">상품정렬</button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                      <a class="dropdown-item" href="#">상품명</a>
-                      <a class="dropdown-item" href="#">낮은가격</a>
-                      <a class="dropdown-item" href="#">높은가격</a>
-                      <div class="dropdown-divider"></div> 
-                      <a class="dropdown-item" href="#">조회수</a>
+                      <a class="dropdown-item" th:href="|@{/sortItemList?search_no=1}&cate_no=${curCate}|">최신순</a>
+                      <a class="dropdown-item" th:href="|@{/sortItemList?search_no=2}&cate_no=${curCate}|">낮은 가격순</a>
+                      <a class="dropdown-item" th:href="|@{/sortItemList?search_no=3}&cate_no=${curCate}|">높은 가격순</a>
+                      <a class="dropdown-item" th:href="|@{/sortItemList?search_no=4}&cate_no=${curCate}|">조회순</a>
                     </div>
                   </div>
                 </div>
@@ -47,18 +58,22 @@
             <!-- 상품리스트 -->
             <div class="row mb-5">
            
+           <!-- 반복문 시작 -->
               <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" th:each="o:${itemlist}">
                 <div class="block-4 text-center border">
-                  <figure class="block-4-image">
-                    <a th:href="|@{/itemdetail?item_no=}${o.item_no}|"><img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid"></a>
+                  <figure class="block-4-image" style="margin:0px;">  <!-- allCateList.get(item_no).top_cate_no -->
+                    <a th:href="|@{/itemdetail?item_no=}${o.item_no}|">
+                    	<img th:src="|@{img/}${allCateList.get(o.item_no).top_cate_name}/${allCateList.get(o.item_no).mid_cate_name}/${allCateList.get(o.item_no).cate_name}/${o.item_name}/${titleImgList.get(o.item_no)}|" alt="Image placeholder" class="img-fluid">
+                    </a>
                   </figure>
                   <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html" th:text=${o.item_name}></a></h3>
-                    <p class="mb-0">Finding perfect products</p>
+                    <h3><a href="shop-single.html" th:text=${o.item_name} class="listItemName"></a></h3>
+                    <!-- <p class="mb-0">Finding perfect products</p> -->
                     <p style="margin-bottom:0px; font-size:22px;"class="text-primary font-weight-bold" th:text="${#numbers.formatInteger(o.item_price, 0, 'COMMA')}"></p>
                   </div>
                 </div>
               </div>
+           <!-- 반복문 끝  -->
       
             </div>
             <!-- 상품리스트 end -->

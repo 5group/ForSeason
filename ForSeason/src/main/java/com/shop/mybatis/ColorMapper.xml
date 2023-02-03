@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.ColorMapper">
+
+    <select id="select" parameterType="Integer" resultType="Color">
+        SELECT * FROM color WHERE color_no=#{color_no}
+    </select>
+    <select id="selectall" resultType="Color">
+        SELECT * FROM color
+    </select>
+    <insert id="insert" parameterType="Color">
+        INSERT INTO color
+        VALUES (#{color_no}, #{color_name})
+    </insert>
+    <update id="update" parameterType="Color">
+        UPDATE color SET color_name=#{color_name} WHERE color_no=#{color_no}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM color WHERE color_no=#{color_no}
+    </delete>
+ 
+</mapper>

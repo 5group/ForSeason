@@ -562,6 +562,7 @@ a {
       opacity: .2; }
 
 .block-4 {
+	height: 450px;  /*제목길이때문에 높이 일정x 고침 (change)*/
   -webkit-box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.1);
   background: #fff; }

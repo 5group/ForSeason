@@ -1,5 +1,6 @@
 package com.shop.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,21 @@ public class CategoryService implements MyService<Integer, Category> {
         return mapper.selectall();
     }
     
-    public List<Integer> getTopCategory() throws Exception{
+    
+    
+    public List<Category> getTopCategory() throws Exception{
     	return mapper.getTopCategory();
     }
     
-    public List<Integer> getSubCategory(Integer cate_no2) throws Exception{
-    	return mapper.getSubCategory(cate_no2);
+    public List<Category> getMiddleCategory() throws Exception{
+    	return mapper.getMiddleCategory();
+    }
+    
+    public List<Category> getSubCategory() throws Exception{
+    	return mapper.getSubCategory();
+    }
+    
+    public Category getCurCategory(HashMap<String, Integer> curCateMap) throws Exception{
+    	return mapper.selectCurCategory(curCateMap);
     }
 }
