@@ -51,7 +51,6 @@ public class ItemController {
         String titleImg = null;
         Map<Integer, String> titleImgList = new HashMap<Integer, String>();
 
-
         // 카테고리 확인
         //카테고리가 어떤 분류인지 확인 (대,중,소)
         List<Category> topList = (List) model.getAttribute("topCategory");
@@ -63,19 +62,22 @@ public class ItemController {
         //카테고리별로 위에 경로 보여지게 (현재카테고리경로)
         HashMap<String, Integer> curCateMap = new HashMap<String, Integer>();
 
-        if (topList.toString().contains(c.toString())) {  //만약 대분류에 포함된다면
+        if (topList.toString().contains(c.toString())) {  //대분류 클릭시
             list = itemservice.getTopItemList(cate_no);
             curCateMap.put("top", cate_no);
-            Category cate = categoryservice.getCurCategory(curCateMap);
-            System.out.println(cate);
-        } else if (midList.toString().contains(c.toString())) {  //만약 중분류에 포함된다면
+            
+        } else if (midList.toString().contains(c.toString())) {  //중분류 클릭시
             list = itemservice.getMidItemList(cate_no); // 중분류 카테코리 아이템 전부 가져오기
             curCateMap.put("mid", cate_no);
-        } else { //중분류 아니면 소분류
-            list = itemservice.getSubItemList(cate_no); // 소분류 카테고리 아이템 리스트 가져오기
+            
+        } else { //소분류 클릭시
+            list = itemservice.getSubItemList(cate_no); 
             curCateMap.put("sub", cate_no);
         }
-        // 카테고리 확인
+        
+        
+        // 카테고리 경로
+        Category curCatePath = categoryservice.getCurCategory(curCateMap);
 
         for (Item i : list) {
             Category category = itemservice.getCategorys(i.getItem_no());
@@ -84,10 +86,11 @@ public class ItemController {
             String[] imgnames = fileService.getFileList(custdir,  category.getTop_cate_name(), category.getMid_cate_name(),  category.getCate_name(),  i.getItem_name());
             if(imgnames != null){
                 titleImg = imgnames[0];
-                System.out.println(imgnames[0]);
                 titleImgList.put(i.getItem_no(), titleImg);
             }
         }
+        
+        model.addAttribute("curCatePath", curCatePath);
         model.addAttribute("curCate", cate_no);  //현재 카테고리
         model.addAttribute("titleImgList", titleImgList);
         model.addAttribute("allCateList", allCateList);
@@ -127,6 +130,8 @@ public class ItemController {
         return "main";
     }
 
+    //아이템 검색기능
+    
     //아이템 정렬기능
     @RequestMapping(value = "/sortItemList", method = RequestMethod.GET)
     public String sortItemList(Model model, @RequestParam("search_no") int search_no, @RequestParam("cate_no") int cate_no) throws Exception { // 상위리스트

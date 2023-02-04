@@ -26,14 +26,9 @@ public class BaseController {
         List<Category> subCategory = null;
 
         try {
-            topCategory = categoryservice.getTopCategory();  //대분류 1,2,3
-            middleCategory = categoryservice.getMiddleCategory();  //중분류 10,20,30 ....
-            subCategory = categoryservice.getSubCategory();  //소분류 11,12  21,22 ....
-
-//			for(Category c: middleCategory) {
-//				List<Category> subCategory = categoryservice.getSubCategory(c.getCate_no());  //중분류에 따른 소분류 map에 넣기
-//				subCateMap.put(c.getCate_no(), subCategory);
-//			}
+            topCategory = categoryservice.getTopCategory();  // 1,2,3
+            middleCategory = categoryservice.getMiddleCategory();  // 10,20,30 ....
+            subCategory = categoryservice.getSubCategory();  // 11,12  21,22 ....
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -42,35 +37,6 @@ public class BaseController {
         model.addAttribute("topCategory", topCategory);
         model.addAttribute("middleCategory", middleCategory);
         model.addAttribute("subCategory", subCategory);
-//		System.out.println(topCategory);
-//		System.out.println(middleCategory);
-//		System.out.println(cateSubMap);
     }
 }
-
-//Map<Integer, List<Integer>> cateMap = new TreeMap<Integer, List<Integer>>();
-//Map<Integer, String> cateNameMap = new HashMap<Integer, String>();
-//
-//try {
-//	List<Category> cate = categoryservice.get();  //모든 카테고리 불러오기 1,2,3,10,11 ....
-//	for(Category c: cate) {
-//		cateNameMap.put(c.getCate_no(), c.getCate_name());
-//	}
-//	
-//	List<Integer> top_catelist = categoryservice.getTopCategory(); //대분류카테고리 불러오기(man, woman, kids)
-//	for(Integer i: top_catelist) {
-//		List<Integer> sub_catelist = categoryservice.getSubCategory(i); //중분류카테고리 불러오기
-//		cateMap.put(i,sub_catelist);
-//	}
-//	
-//	
-//
-//} catch (Exception e) {
-//	e.printStackTrace();
-//}
-//model.addAttribute("cateNameMap", cateNameMap); 
-//model.addAttribute("cateMap", cateMap);
-//model.addAttribute("cateMap", cateMap);
-//
-
 

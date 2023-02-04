@@ -58,4 +58,5 @@ public class CategoryService implements MyService<Integer, Category> {
     public Category getCurCategory(HashMap<String, Integer> curCateMap) throws Exception{
     	return mapper.selectCurCategory(curCateMap);
     }
+    
 }

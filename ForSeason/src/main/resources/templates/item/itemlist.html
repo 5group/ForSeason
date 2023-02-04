@@ -13,8 +13,9 @@
         <div class="row">
           <div class="col-md-12 mb-0">
           	<a th:href="@{/}">Home</a> 
-          	<span class="mx-2 mb-0">/</span> 
-          	<strong class="text-black">Shop</strong>
+          	<strong th:if="${curCatePath.top_cate_name!=null}" th:text="${'/ '+curCatePath.top_cate_name}" class="text-black"></strong>
+          	<strong th:if="${curCatePath.mid_cate_name!=null}" th:text="${'/ '+curCatePath.mid_cate_name}" class="text-black"></strong>
+          	<strong th:if="${curCatePath.cate_name!=null}" th:text="${'/ '+curCatePath.cate_name}" class="text-black"></strong>
           </div>
         </div>
       </div>
@@ -28,8 +29,7 @@
           <div class="col-md-9 order-2">
 
             <div class="row">
-              <div class="col-md-12 mb-5">
-                <div class="float-md-left mb-4"><h2 class="text-black h5">Shop All</h2></div>
+              <div class="col-md-12 mb-5" style="margin-bottom:2rem!important;">
                 <div class="d-flex">
                   <div class="dropdown mr-1 ml-md-auto">
                     <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">상품정렬</button>
@@ -68,6 +68,8 @@
             <!-- 상품리스트 end -->
             
             
+            
+            
             <!-- 페이징 -->
             <div class="row" data-aos="fade-up">
               <div class="col-md-12 text-center">
@@ -87,8 +89,8 @@
             <!-- 페이징end -->
             
             
+            
           </div>
-
         </div>
 
         <div class="row">
