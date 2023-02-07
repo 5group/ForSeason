@@ -7,10 +7,10 @@
     <select id="select" parameterType="Integer" resultType="Coupon">
         SELECT * FROM coupon WHERE cou_no=#{cou_no}
     </select>
-    <select id="selectall" resultType="Coupon">
+    <select id="selectAll" resultType="Coupon">
         SELECT * FROM coupon
     </select>
-    <select id="select_list" parameterType="Integer" resultType="Coupon">
+    <select id="selectList" parameterType="Integer" resultType="Coupon">
         SELECT * FROM coupon where user_no=#{user_no} and cou_status=1 order by cou_status desc, cou_name, cou_rdate
     </select>
     <insert id="insert" parameterType="Coupon">

@@ -20,7 +20,6 @@
     <update id="update" parameterType="User">
         UPDATE user SET user_email=#{user_email}, user_name=#{user_name}, user_phone=#{user_phone}, user_address=#{user_address}, user_rdate=now() WHERE user_id=#{user_id}
     </update>
-
     <update id="pwd_update" parameterType="User">
         UPDATE user SET user_pwd=#{user_pwd} WHERE user_id=#{user_id}
     </update>

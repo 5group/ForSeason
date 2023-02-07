@@ -7,7 +7,7 @@
     <select id="select" parameterType="Integer" resultType="Stock">
         SELECT * FROM stock WHERE stock_no=#{stock_no}
     </select>
-    <select id="selectall" resultType="Stock">
+    <select id="selectAll" resultType="Stock">
         SELECT * FROM stock
     </select>
     <insert id="insert" parameterType="Stock">
@@ -77,21 +77,20 @@
           and i.item_name = #{item_name};
     </select>
 
-    <select id="selectCateTotal"  parameterType="String" resultType="Stock">
-        select ct.cate_no, i.item_name, st.amount, o.order_tot, si.size_name, co.color_name, ct.cate_name
-        from item i
-                 inner join stock st
-                 inner join order_detail od
-                 inner join `order` o
-                 inner join size si
-                 inner join color co
-                 inner join category ct
-        where st.item_no = i.item_no
-          and st.stock_no = od.stock_no
-          and od.order_no = o.order_no
-          and st.size_no = si.size_no
-          and st.color_no = co.color_no
-          and ct.cate_no = i.cate_no
-          and ct.cate_no2 = (select cate_no from category where cate_name = #{cate_name});
+    <select id="selectCateTotal" parameterType="map" resultType="Stock">
+        select SUM(order_tot) order_tot, DATE(order_udate) order_udate
+        from stock st
+        inner join order_detail od
+        inner join `order` o
+        where st.stock_no = od.stock_no
+        and o.order_no = od.order_no
+        and st.item_no in
+        <foreach collection="itemNoList" item="item_no" index="index" open="(" separator="," close=")">
+            #{item_no}
+        </foreach>
+        and DATE_FORMAT(o.order_udate, '%Y-%m-%d') BETWEEN #{sm}
+        and #{em}
+        group by DATE(o.order_udate)
+        order by order_udate asc
     </select>
 </mapper>

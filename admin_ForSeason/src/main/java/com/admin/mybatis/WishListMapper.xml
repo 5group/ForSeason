@@ -7,7 +7,7 @@
     <select id="select" parameterType="Integer" resultType="WishList">
         SELECT * FROM wishlist WHERE wish_no=#{wish_no}
     </select>
-    <select id="selectall" resultType="WishList">
+    <select id="selectAll" resultType="WishList">
         SELECT * FROM wishlist
     </select>
     <insert id="insert" parameterType="WishList">
