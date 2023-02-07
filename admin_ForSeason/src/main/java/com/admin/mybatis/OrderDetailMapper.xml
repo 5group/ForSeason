@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.OrderDetailMapper">
+
+    <select id="select" parameterType="Integer" resultType="OrderDetail">
+        SELECT * FROM order_detail WHERE od_no=#{od_no}
+    </select>
+    <select id="selectAll" resultType="OrderDetail">
+        SELECT * FROM order_detail
+    </select>
+    <select id="selectList" parameterType="Integer" resultType="OrderDetail">
+        SELECT * FROM order_detail where user_no=#{user_no}
+    </select>
+    <select id="select_userODList" parameterType="Integer" resultType="OrderDetail">
+        select o.order_udate,
+               o.order_stat,
+               o.order_tot,
+               i.item_name,
+               c.color_name,
+               si.size_name,
+               od.od_no,
+               od.od_price,
+               od.od_cnt,
+               o.order_cp,
+               o.order_no
+        from stock s
+                 inner join color c
+                 inner join size si
+                 inner join item i
+                 inner join order_detail od
+                 inner join `order` o
+        where o.order_no = od.order_no
+          AND od.stock_no = s.stock_no
+          AND s.item_no = i.item_no
+          AND s.color_no = c.color_no
+          AND s.size_no = si.size_no
+          AND user_no = #{user_no};
+    </select>
+    <insert id="insert" parameterType="OrderDetail">
+        INSERT INTO order_detail
+        VALUES (0, #{order_no}, #{stock_no}, #{od_cnt}, #{od_price}, #{od_dicnt})
+    </insert>
+    <update id="update" parameterType="OrderDetail">
+        UPDATE order_detail SET rev_title=#{rev_title}, rev_content=#{rev_content}, rev_rdate=now() WHERE rev_no=#{rev_no}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM order_detail WHERE od_no=#{od_no}
+    </delete>
+
+</mapper>
