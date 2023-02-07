@@ -61,7 +61,7 @@ public class MainController {
         return "main";
     }
 
-    @RequestMapping("/info")
+    @RequestMapping("/myPage")
     public String info(Model model) {
         model.addAttribute("center", "user/info");
         return "main";

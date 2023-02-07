@@ -7,15 +7,26 @@
 		white-space:nowrap;  
 	}
 </style>
+<script>
+	$(document).ready(function(){	
+		/*<![CDATA[*/
+		var uid="[[${paging.nowPage}]]";
+		var className='.paging_'+uid;
+		var nowPage=document.querySelector(className);
+		nowPage.classList.add('active');
+	/*]]>*/
+	});
+</script>
 
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
           <div class="col-md-12 mb-0">
           	<a th:href="@{/}">Home</a> 
-          	<strong th:if="${curCatePath.top_cate_name!=null}" th:text="${'/ '+curCatePath.top_cate_name}" class="text-black"></strong>
-          	<strong th:if="${curCatePath.mid_cate_name!=null}" th:text="${'/ '+curCatePath.mid_cate_name}" class="text-black"></strong>
-          	<strong th:if="${curCatePath.cate_name!=null}" th:text="${'/ '+curCatePath.cate_name}" class="text-black"></strong>
+          	<strong th:if="${curCatePath!=null} and ${curCatePath.top_cate_name!=null}" th:text="${'/ '+curCatePath.top_cate_name}" class="text-black"></strong>
+          	<strong th:if="${curCatePath!=null} and ${curCatePath.mid_cate_name!=null}" th:text="${'/ '+curCatePath.mid_cate_name}" class="text-black"></strong>
+          	<strong th:if="${curCatePath!=null} and ${curCatePath.cate_name!=null}" th:text="${'/ '+curCatePath.cate_name}" class="text-black"></strong>
+          	<strong th:if="${curCatePath==null}" class="text-black">/ 검색결과</strong>
           </div>
         </div>
       </div>
@@ -34,10 +45,10 @@
                   <div class="dropdown mr-1 ml-md-auto">
                     <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">상품정렬</button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                      <a class="dropdown-item" th:href="|@{/sortItemList?search_no=1}&cate_no=${curCate}|">최신순</a>
-                      <a class="dropdown-item" th:href="|@{/sortItemList?search_no=2}&cate_no=${curCate}|">낮은 가격순</a>
-                      <a class="dropdown-item" th:href="|@{/sortItemList?search_no=3}&cate_no=${curCate}|">높은 가격순</a>
-                      <a class="dropdown-item" th:href="|@{/sortItemList?search_no=4}&cate_no=${curCate}|">조회순</a>
+                      <a class="dropdown-item" th:href="|@{/getItemList?cate_no=}${cate_no}&orderBy=new&searchWord=${paging.searchWord}|">최신순</a>
+                      <a class="dropdown-item" th:href="|@{/getItemList?cate_no=}${cate_no}&orderBy=lowPrice&searchWord=${paging.searchWord}|">낮은 가격순</a>
+                      <a class="dropdown-item" th:href="|@{/getItemList?cate_no=}${cate_no}&orderBy=highPrice&searchWord=${paging.searchWord}|">높은 가격순</a>
+                      <a class="dropdown-item" th:href="|@{/getItemList?cate_no=}${cate_no}&orderBy=itemHit&searchWord=${paging.searchWord}|">조회순</a>
                     </div>
                   </div>
                 </div>
@@ -48,8 +59,8 @@
             <!-- 상품리스트 -->
             <div class="row mb-5">
            
-           <!-- 반복문 시작 -->
-              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" th:each="o:${itemlist}">
+             <!-- 반복문 시작 -->
+              <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" th:each="o:${itemList}">
                 <div class="block-4 text-center border">
                   <figure class="block-4-image" style="margin:0px;">  <!-- allCateList.get(item_no).top_cate_no -->
                     <a th:href="|@{/itemdetail?item_no=}${o.item_no}|">
@@ -62,7 +73,7 @@
                   </div>
                 </div>
               </div>
-           <!-- 반복문 끝  -->
+             <!-- 반복문 끝  -->
       
             </div>
             <!-- 상품리스트 end -->
@@ -74,18 +85,31 @@
             <div class="row" data-aos="fade-up">
               <div class="col-md-12 text-center">
                 <div class="site-block-27">
-                  <ul>
-                    <li><a href="#">&lt;</a></li>
+                  <ul id="paging">
+                  	<!-- 이전페이지 버튼 -->
+                    <li th:if="${paging.nowPage}==1"><a href="#none">&lt;</a></li>
+                    <li th:if="${paging.nowPage}>1"><a th:href="|@{/getItemList?cate_no=}${cate_no}&nowPage=${paging.nowPage-1}&orderBy=${paging.orderBy}&searchWord=${paging.searchWord}|">&lt;</a></li>
+                    
+                    <!-- 페이지번호 버튼 -->
+                    <li th:each="i : ${#numbers.sequence(paging.startPage, paging.startPage+paging.onePageCount-1)}" th:if="${paging.totalPage >= i}" th:class="'paging_'+${i}">          
+                       <a th:href="|@{/getItemList?cate_no=}${cate_no}&nowPage=${i}&orderBy=${paging.orderBy}&searchWord=${paging.searchWord}|" th:text="${i}"></a>
+                    </li>
+
+                    <!-- 다음페이지 버튼 -->
+                    <li th:if="${paging.nowPage}>=${paging.totalPage}"><a href="#none">&gt;</a></li>
+                    <li th:if="${paging.nowPage}<${paging.totalPage}"><a th:href="|@{/getItemList?cate_no=}${cate_no}&nowPage=${paging.nowPage+1}&orderBy=${paging.orderBy}&searchWord=${paging.searchWord}|">&gt;</a></li>          
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <!-- <li><a href="#">&lt;</a></li>
                     <li class="active"><span>1</span></li>
                     <li><a href="#">2</a></li>
                     <li><a href="#">3</a></li>
                     <li><a href="#">4</a></li>
                     <li><a href="#">5</a></li>
-                    <li><a href="#">&gt;</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+                    <li><a href="#">&gt;</a></li> -->
             <!-- 페이징end -->
             
             
@@ -143,3 +167,4 @@
         
       </div>
     </div>
+   

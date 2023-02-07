@@ -55,7 +55,7 @@ public class CategoryService implements MyService<Integer, Category> {
     	return mapper.getSubCategory();
     }
     
-    public Category getCurCategory(HashMap<String, Integer> curCateMap) throws Exception{
+    public Category getCurCategory(HashMap<String, Object> curCateMap) throws Exception{
     	return mapper.selectCurCategory(curCateMap);
     }
     

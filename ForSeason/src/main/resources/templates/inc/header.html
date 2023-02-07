@@ -4,6 +4,18 @@
 		font-size:19.4px;
 	}
 </style>
+<script>
+	function itemSearch(){
+		var searchWord = $('#searchWord').val();
+		searchWord=searchWord.trim();  //공백제거
+		$('#searchWord').val(searchWord);
+		if(searchWord.length==0){
+			alert("검색어를 입력하세요.");
+			return false;
+		}
+		return true;
+	}
+</script>
 
 <header class="site-navbar" role="banner">
       <div class="site-navbar-top">
@@ -11,9 +23,10 @@
           <div class="row align-items-center">
 
             <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-              <form th:action="@{/searchItem}" class="site-block-top-search">
+              <form th:action="|@{/getItemList?cate_no=}${cate_no}&searchWord=${searchWord}|" class="site-block-top-search" onsubmit="return itemSearch()">
                 <span class="icon icon-search2"></span>
-                <input type="text" id="searchitem" name="searchitem" class="form-control border-0" placeholder="Search">
+                <input type="hidden" id="cate_no" name="cate_no" th:value="${cate_no}">
+                <input type="text" id="searchWord" name="searchWord" class="form-control border-0" placeholder="Search"> 
               </form>
             </div>
 
@@ -30,11 +43,13 @@
                   <!-- <li><a href="#"><span class="icon icon-exit_to_app"></span></a></li> -->
                   <li th:if="${session.loginUser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
                   <li th:if="${session.loginUser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
-                  <li th:if="${session.loginUser!=null}"><a th:href="@{/info}"><span class="icon icon-person"></span></a></li>
+                  <li th:if="${session.loginUser!=null}"><a th:href="@{/myPage}"><span class="icon icon-person"></span></a></li>
+                  <li th:if="${session.loginUser!=null}"><a th:href="@{/}"><span class="icon icon-heart"></span></a></li>
                   <li>
                     <a th:if="${session.cartList!=null}" th:href="@{/cart}" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
-                      <span class="count">2</span>
+                      <span class="count" th:if="${#lists.size(session.cartList)==0}">0</span>
+                      <span class="count" th:if="${#lists.size(session.cartList)!=0}" th:text="${#lists.size(session.cartList)}">0</span>
                     </a>
                   </li> 
                   <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
@@ -50,13 +65,13 @@
           <ul class="site-menu js-clone-nav d-none d-md-block" style="padding-left:0px;">
           	<li><a href="#">BEST</a></li>
           	<!-- 아이템 카테고리 -->
-          	<li class="has-children active" th:each="top:${topCategory}">
+          	<li class="has-children active" th:each="top:${mapCateList.get('top')}">
           		<a th:href="|@{/getItemList?cate_no=}${top.cate_no}|" th:text="${top.cate_name}"></a>
           		<ul class="dropdown">
-          			<li class="has-children" th:each="middle:${middleCategory}" th:if="${middle.cate_no2==top.cate_no}">
+          			<li class="has-children" th:each="middle:${mapCateList.get('middle')}" th:if="${middle.cate_no2==top.cate_no}">
 	                  <a th:href="|@{/getItemList?cate_no=}${middle.cate_no}|" th:text="${middle.cate_name}"></a>
 	                  <ul class="dropdown">
-	                    <li th:each="sub:${subCategory}" th:if="${sub.cate_no2==middle.cate_no}">
+	                    <li th:each="sub:${mapCateList.get('sub')}" th:if="${sub.cate_no2==middle.cate_no}">
 	                    	<a a th:href="|@{/getItemList?cate_no=}${sub.cate_no}" th:text="${sub.cate_name}"></a>
 	                    </li>
 	                  </ul>

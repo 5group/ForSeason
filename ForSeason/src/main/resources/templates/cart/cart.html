@@ -1,5 +1,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<style>
+	#cartTableHeader > th{
+		font-size:17px;
+		padding: 10px;
+	}
+	
+	#cartTableHeader > th:nth-child(7){
+		width: 125px;
+	}
+	
+	
+</style>
 <div class="bg-light py-3">
     <div class="container">
         <div class="row">
@@ -15,7 +27,7 @@
                 <div class="site-blocks-table">
                     <table class="table table-bordered">
                         <thead>
-                        <tr>
+                        <tr id="cartTableHeader">
                             <td>
                                 <label>
                                     <input type="checkbox" name="selectAll" value="selectAll"
@@ -23,13 +35,13 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </td>
-                            <th class="cart-name">장바구니 번호</th>
+                            <th class="cart-name">번호</th>
                             <th class="product-name">상품 이름</th>
                             <th class="product-size&color">사이즈/색상</th>
                             <th class="product-price">상품가격</th>
                             <th class="product-quantity">상품수량</th>
                             <th class="product-total">총액</th>
-                            <th class="product-remove">장바구니 삭제</th>
+                            <th class="product-remove">삭제</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -46,23 +58,19 @@
                             <td class="product-size&color" th:text="|${stock[stat.index].size_name}&${stock[stat.index].color_name}|"></td>
                             <td class="product-price" th:value="${item[stat.index].item_price}"
                                 th:text="${item[stat.index].item_price}"></td>
-                            <td class="product-quantity">
-                                <div class="input-group mb-3" style="max-width: 200px;">
-                                    <input type="text" class="form-control text-center"
-                                           th:value="${cart.cart_cnt}">
-                                    <button class="quantity-minus" type="button">&minus;</button>
-                                    <button class="quantity-plus" type="button">&plus;</button>
+                            <td class="product-quantity" style="max-width: 140px; padding-top:30px; padding-bottom:10px;">
+                                <div class="input-group mb-3" style="max-width: 120px;">
+                                	<button class="quantity-minus btn btn-outline-primary" type="button">&minus;</button>
+                                    <input type="text" class="form-control text-center" th:value="${cart.cart_cnt}">                                  
+                                    <button class="quantity-plus btn btn-outline-primary" type="button">&plus;</button>
                                 </div>
                             </td>
                             <td class="product-total" id="totalPrice">
                                 <input type="hidden" th:value="${item[stat.index].item_price}">
-                                <h3 th:text="${cart.cart_cnt * item[stat.index].item_price}"></h3>
+                                <h4 th:text="${cart.cart_cnt * item[stat.index].item_price}"></h4>
                             </td>
                             <td>
-                                <button class="product-remove" type="button" th:id="${cart.cart_no}">장바구니 삭제</button>
-                            </td>
-                            <td>
-
+                                <button class="product-remove btn-primary btn-sm" type="button" th:id="${cart.cart_no}" style="border: 0px;">삭제</button>
                             </td>
                         </tr>
                         </tbody>
@@ -77,7 +85,7 @@
                         <button class="btn btn-primary btn-sm btn-block">Update Cart</button>
                     </div>
                     <div class="col-md-6">
-                        <button class="btn btn-outline-primary btn-sm btn-block">Continue Shopping</button>
+                        <button class="btn btn-outline-primary btn-sm btn-block" th:onclick="|location.href='@{/}'|">Continue Shopping</button>
                     </div>
                 </div>
             </div>
@@ -89,12 +97,12 @@
                                 <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
                             </div>
                         </div>
-                        <div class="row mb-3">
+                        <div class="row mb-3" style="font-size:20px;">
                             <div class="col-md-6">
-                                <span class="text-black">선택한 상품 총액</span>
+                                <span class="text-black">총액</span>
                             </div>
                             <div class="col-md-6 text-right">
-                                <strong class="text-black">여기다가 선택한 상품들 가격넣어</strong>
+                                <strong id="itemTotalPrice" class="text-black itemtotal">0</strong>
                             </div>
                         </div>
                         <div class="row">
@@ -117,7 +125,8 @@
         let quantity = $(this).parent("div").find("input").val();
         let item_price = $(this).parents("tr").find(".product-total").find("input").val();
         $(this).parent("div").find("input").val(++quantity);
-        $(this).parents("tr").find(".product-total").find("h3").html(item_price * quantity);
+        $(this).parents("tr").find(".product-total").find("h4").html(item_price * quantity);
+        getItemTotalPrice();
 
     });
     $(".quantity-minus").on("click", function(){
@@ -125,10 +134,10 @@
         let item_price = $(this).parents("tr").find(".product-total").find("input").val();
         if(quantity > 1){
             $(this).parent("div").find("input").val(--quantity);
-            $(this).parents("tr").find(".product-total").find("h3").html(item_price * quantity);
+            $(this).parents("tr").find(".product-total").find("h4").html(item_price * quantity);
         }
+        getItemTotalPrice();
     });
-
 
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -164,6 +173,11 @@
         checkboxes.forEach((checkbox) => {
             checkbox.checked = selectAll.checked;
         })
+        
+        var totalPrice=0;
+        
+        getItemTotalPrice();
+        
     }
 
     function getCheckboxValue() {
@@ -178,7 +192,7 @@
             result.push(el.value);
         });
         console.log("result:" + result);
-        var c = confirm('수정 하시겠습니까?');
+        var c = confirm('결제 하시겠습니까?');
         if (c == true) {
             $.ajax({
                 url: '[[@{/orderByCartList}]]',
@@ -191,7 +205,7 @@
                     location.href = "/order";
                 },
                 error: function () {
-                    alert("error");
+                    alert("상품을 선택해주세요.");
                 }
             });
         }
@@ -212,6 +226,22 @@
         } else {
             selectAll.checked = false;
         }
+        
+        getItemTotalPrice();
+		
+    }
+    
+    function getItemTotalPrice(){
+		var totalPrice=0;
+        
+        // 체크된 것들의 총액 가져와서 표시
+        const selectedEls = document.querySelectorAll('input[name="checkbox"]:checked');
+        selectedEls.forEach((el) => {
+            var tmp=Number($(el).parents("tr").find(".product-total").find("h4").text());
+            totalPrice=totalPrice+tmp;
+        })
+        
+        $("#itemTotalPrice").text(totalPrice);
     }
 
 </script>

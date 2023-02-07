@@ -11,54 +11,47 @@
 
 <div class="site-section">
     <div class="container">
-        <div class="row mb-5">
-            <div class="col-md-12">
-                <div class="border p-4 rounded" role="alert">
-                    Returning customer? <a href="#">Click here</a> to login
-                </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-6 mb-5 mb-md-0">
-                <h2 class="h3 mb-3 text-black">Billing Details</h2>
+                <h2 class="h3 mb-3 text-black">주문 정보</h2>
                 <div class="p-3 p-lg-5 border">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="text-black">주문자명<span class="text-danger">*</span></label></br>
-                            <input type="text" name="user_name">
+                            <input type="text" name="user_name" class="form-control">
                         </div>
                         <div class="col-md-6">
                             <label class="text-black">수령인명<span class="text-danger">*</span></label></br>
-                            <input type="text" name="ship_cust">
+                            <input type="text" name="ship_cust" class="form-control">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-md-12">
                             <label class="text-black">주소<span class="text-danger">*</span></label></br>
-                            <input type="text" id="address_kakao" name="address" readonly placeholder="검색"/>
+                            <input type="text" id="address_kakao" name="address" class="form-control" readonly placeholder="검색"/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="text-black">우편번호<span class="text-danger">*</span></label></br>
-                        <input type="text" id="address_post" placeholder="ex)12345"/>
+                        <input type="text" id="address_post" class="form-control" placeholder="ex)12345"/>
                     </div>
 
                     <div class="form-group">
                         <label class="text-black">상세주소<span class="text-danger">*</span></label></br>
-                        <input type="text" id="address_detail" name="address_detail" placeholder="ex)4조타운 404동 404호"/>
+                        <input type="text" id="address_detail" name="address_detail" class="form-control" placeholder="ex)4조타운 404동 404호"/>
                     </div>
 
                     <div class="form-group row mb-5">
                         <div class="col-md-6">
-                            <label for="c_email_address" class="text-black">Email Address <span
+                            <label for="c_email_address" class="text-black">이메일 <span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="c_email_address" name="c_email_address"
                                    placeholder="ex)4jomail@google.com">
                         </div>
                         <div class="col-md-6">
-                            <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+                            <label for="c_phone" class="text-black">휴대폰번호 <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="c_phone" name="c_phone"
                                    placeholder="Phone Number">
                         </div>
@@ -73,7 +66,7 @@
                         <div class="p-3 p-lg-5 border">
                             <div class="input-group w-75">
                                 <div class="input-group-append">
-                                    <input type="button" id="showCouponList" onclick="showCouponList()" value="쿠폰리스트">
+                                    <input type="button" id="showCouponList" onclick="showCouponList()" class="btn btn-primary" value="쿠폰리스트" style="height: 31px; line-height:20px;">
                                     <span name="coupon"></span>
                                 </div>
                             </div>
@@ -83,21 +76,24 @@
 
                 <div class="row mb-5">
                     <div class="col-md-12">
-                        <h2 class="h3 mb-3 text-black">Your Order</h2>
+                        <h2 class="h3 mb-3 text-black">최종 결제 금액</h2>
                         <div class="p-3 p-lg-5 border">
                             <table class="table site-block-order-table mb-5">
                                 <thead>
-                                <th>Product</th>
-                                <th>Total</th>
+                                <th>상품</th>
+                                <th>수량</th>
+                                <th>총액</th>
                                 </thead>
                                 <tbody>
                                 <tr th:each="item, stat:${itemList}">
-                                    <td th:text="|${item.item_name} x ${cartList[stat.index].cart_cnt} ${stockList[stat.index].size_name}&${stockList[stat.index].color_name}|"><strong class="mx-2"></strong></td>
+                                    <td th:text="|${item.item_name} ${stockList[stat.index].size_name}&${stockList[stat.index].color_name}|"><strong class="mx-2"></strong></td>
+                                    <td th:text="${cartList[stat.index].cart_cnt}"><strong class="mx-2"></strong></td>
                                     <td th:text="${item.item_price * cartList[stat.index].cart_cnt}"></td>
                                 </tr>
                                 <tr>
-                                    <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                                    <td class="text-black font-weight-bold"><input name="item_price" th:value="${item_tot}" readonly style="outline:none"></td>
+                                    <td class="text-black font-weight-bold" style="width:280px; line-height:35px;"><strong>주문 총액</strong></td>
+                                    <td></td>
+                                    <td class="text-black font-weight-bold" ><input name="item_price" th:value="${item_tot}" readonly style="outline:none; width:80px;" ></td>
                                 </tr>
 
                                 </tbody>

@@ -3,7 +3,6 @@ package com.shop.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -19,24 +18,20 @@ public class BaseController {
     CategoryService categoryservice;
 
     @ModelAttribute
-    public void categories(Model model) {
-        //Map<Integer, List<Category>> subCateMap = new TreeMap<Integer, List<Category>>();
+    public void categories(Model model) throws Exception{
+        Map<String, List<Category>> mapCateList = new HashMap<String, List<Category>>();
         List<Category> topCategory = null;
         List<Category> middleCategory = null;
         List<Category> subCategory = null;
 
-        try {
-            topCategory = categoryservice.getTopCategory();  // 1,2,3
-            middleCategory = categoryservice.getMiddleCategory();  // 10,20,30 ....
-            subCategory = categoryservice.getSubCategory();  // 11,12  21,22 ....
+        topCategory = categoryservice.getTopCategory();  // 1,2,3
+        mapCateList.put("top", topCategory);
+        middleCategory = categoryservice.getMiddleCategory();  // 10,20,30 ....
+        mapCateList.put("middle", middleCategory);
+        subCategory = categoryservice.getSubCategory();  // 11,12 21,22 ....
+        mapCateList.put("sub", subCategory);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        model.addAttribute("topCategory", topCategory);
-        model.addAttribute("middleCategory", middleCategory);
-        model.addAttribute("subCategory", subCategory);
+        model.addAttribute("mapCateList", mapCateList);
     }
 }
 

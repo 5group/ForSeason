@@ -1,5 +1,6 @@
 package com.shop.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,30 +42,18 @@ public class ItemService implements MyService<Integer, Item> {
         return mapper.selectAll();
     }
     
-
-
-    public List<Item> getSubItemList(Integer cate_no) throws Exception{
-    	return mapper.selectSubItemList(cate_no);
+   
+    public List<Item> getItemList(HashMap<String, Object> curCateMap) throws Exception {
+        return mapper.selectItemList(curCateMap);
+    } 
+    public Category getCategorys(Integer item_no) throws Exception{
+    	return mapper.selectCategorys(item_no);
     }
-    public List<Item> getMidItemList(Integer cate_no) throws Exception {
-        return mapper.selectMidItemList(cate_no);
-    }
-    public List<Item> getTopItemList(Integer cate_no) throws Exception {
-        return mapper.selectTopItemList(cate_no);
-    }
-
-
-    
-    public List<Item> searchItemList(String search) throws Exception{	
-    	return mapper.searchItemList(search);
-    }
-    
     public void updateItemhit(Integer item_no) throws Exception{
     	mapper.updateItemhit(item_no);
     }
-    
-    public Category getCategorys(Integer item_no) throws Exception{
-    	return mapper.selectCategorys(item_no);
+    public Integer totalRecord(HashMap<String, Object> curCateMap) throws Exception{
+    	return mapper.totalRecord(curCateMap);
     }
 
 }

@@ -150,7 +150,7 @@
 						alert("문제발생");
 					}
 				}
-			});	  //Restcontroller로 받으면 오류 안남
+			});	 
 		});	  
 	
 
@@ -160,24 +160,29 @@
 	$(function(){
 	    var $likeBtn =$('.icon.heart');
 
-	        $likeBtn.click(function(){
-	        $likeBtn.toggleClass('active');
+	    $likeBtn.click(function(){
+        	/*<![CDATA[*/
+    		var uid = "[[${session.loginUser}]]";
+    		/*]]>*/
+			if(uid==""){
+				alert("로그인이 필요합니다.");
+				return;
+			}
+        	$likeBtn.toggleClass('active');
 
-	        if($likeBtn.hasClass('active')){          
-	           $(this).find('img').attr({
-	              'src': 'https://cdn-icons-png.flaticon.com/512/803/803087.png',
-	               alt:'찜하기 완료'
-	                });
-	          
-	          
-	         }else{
-	            $(this).find('i').removeClass('fas').addClass('far')
-	           $(this).find('img').attr({
-	              'src': 'https://cdn-icons-png.flaticon.com/512/812/812327.png',
-	              alt:"찜하기"
-	           })
-	         }
-	     })
+        	if($likeBtn.hasClass('active')){          
+          	 	$(this).find('img').attr({
+              		'src': 'https://cdn-icons-png.flaticon.com/512/803/803087.png',
+               		alt:'찜하기 완료'
+           		});
+        	}else{
+            	$(this).find('i').removeClass('fas').addClass('far')
+           		$(this).find('img').attr({
+              		'src': 'https://cdn-icons-png.flaticon.com/512/812/812327.png',
+              		alt:"찜하기"
+           		})
+        	}	
+	    })
 	})
 
 </script>    

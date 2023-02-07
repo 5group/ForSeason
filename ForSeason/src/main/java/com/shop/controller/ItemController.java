@@ -1,13 +1,9 @@
 package com.shop.controller;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.shop.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.shop.dto.Category;
 import com.shop.dto.Color;
 import com.shop.dto.Item;
+import com.shop.dto.Paging;
 import com.shop.dto.Size;
 import com.shop.service.CategoryService;
+import com.shop.service.FileService;
 import com.shop.service.ItemService;
 import com.shop.service.StockService;
 
@@ -43,44 +41,60 @@ public class ItemController {
     FileService fileService;
 
 
-    // !!여기만 쓸거임(대,중,소는 if문으로)
+    // 대,중,소는 if문으로 확인, 검색&정렬, 페이징도 여기서
     @RequestMapping(value = "/getItemList", method = RequestMethod.GET)
-    public String getitemlist(Model model, @RequestParam("cate_no") int cate_no) throws Exception { // 소분류 리스트
-        List<Item> list = null;
+    public String getitemlist(Model model, @RequestParam(value="cate_no", defaultValue="0") int cate_no, Paging paging) throws Exception { // 소분류 리스트 // @RequestParam(value="searchWord", defaultValue="") String searchWord, @RequestParam(value="orderBy", defaultValue="new") String orderBy, 
         Map<Integer, Category> allCateList = new HashMap<Integer, Category>();
-        String titleImg = null;
         Map<Integer, String> titleImgList = new HashMap<Integer, String>();
-
-        // 카테고리 확인
-        //카테고리가 어떤 분류인지 확인 (대,중,소)
-        List<Category> topList = (List) model.getAttribute("topCategory");
-        List<Category> midList = (List) model.getAttribute("middleCategory");
-        List<Category> subList = (List) model.getAttribute("subCategory");
-
-        Category c = categoryservice.get(cate_no);
-
-        //카테고리별로 위에 경로 보여지게 (현재카테고리경로)
-        HashMap<String, Integer> curCateMap = new HashMap<String, Integer>();
-
-        if (topList.toString().contains(c.toString())) {  //대분류 클릭시
-            list = itemservice.getTopItemList(cate_no);
-            curCateMap.put("top", cate_no);
+        String titleImg = null;
+        List<Item> itemList = null;
+        Category curCatePath = null;
+    
             
-        } else if (midList.toString().contains(c.toString())) {  //중분류 클릭시
-            list = itemservice.getMidItemList(cate_no); // 중분류 카테코리 아이템 전부 가져오기
-            curCateMap.put("mid", cate_no);
-            
-        } else { //소분류 클릭시
-            list = itemservice.getSubItemList(cate_no); 
-            curCateMap.put("sub", cate_no);
+        // 현재 카테고리가 어떤 분류인지 확인 (대,중,소)
+        Map<String, List<Category>> mapCateList = (Map)model.getAttribute("mapCateList");
+
+        Category c = categoryservice.get(cate_no);  //현재 카테고리정보를 담은 객체
+
+        //카테고리별로 위에 경로 보여지게(메인페이지에서 검색, 정렬은 카테고리 존재 x) & 현재 아이템 리스트에 따른 페이징 & 정렬, 검색
+        HashMap<String, Object> curItemInfoMap = new HashMap<String, Object>();
+        
+        if(c!=null) {   //카테고리정보가 존재할 때 (메인페이지에서 검색 제외)
+	        if (mapCateList.get("top").toString().contains(c.toString())) {  //대분류일때
+	        	curItemInfoMap.put("top", cate_no);
+	            
+	        } else if (mapCateList.get("middle").toString().contains(c.toString())) {  //중분류일때
+	        	curItemInfoMap.put("middle", cate_no);
+	            
+	        } else { //소분류일때
+	        	curItemInfoMap.put("sub", cate_no);
+	        }   
+	        curCatePath = categoryservice.getCurCategory(curItemInfoMap);	
         }
+       
         
+        //초기화 값은 ("") 공백
+        System.out.println("searchWord= "+paging.getSearchWord());
+        //curItemInfoMap.put("searchWord", searchWord);
         
-        // 카테고리 경로
-        Category curCatePath = categoryservice.getCurCategory(curCateMap);
+        //정렬은 항상 적용(초기화 값은 최신순)
+        System.out.println("orderBy= "+paging.getOrderBy()); 
+    	curItemInfoMap.put("paging", paging);
+    	
+    	System.out.println("pagingDTO:" + paging);
+    	paging.setTotalRecord(itemservice.totalRecord(curItemInfoMap));  //totalRecord set
+    	paging.setLimitStart(paging.getNowPage());
+    	System.out.println("chage_pagingDTO:" + paging);
+    	curItemInfoMap.put("paging", paging);
+    	
+        System.out.println(curItemInfoMap);
+       
+        
+        itemList = itemservice.getItemList(curItemInfoMap);   //조건에 해당하는 아이템리스트 뽑아오기
+        
 
-        for (Item i : list) {
-            Category category = itemservice.getCategorys(i.getItem_no());
+        for (Item i : itemList) {
+            Category category = itemservice.getCategorys(i.getItem_no());  //현재 아이템의 대,중,소 카테고리 모두 불러오기(이미지경로를 알기 위해)
             allCateList.put(i.getItem_no(), category);
             // 타이틀 이미지
             String[] imgnames = fileService.getFileList(custdir,  category.getTop_cate_name(), category.getMid_cate_name(),  category.getCate_name(),  i.getItem_name());
@@ -90,11 +104,16 @@ public class ItemController {
             }
         }
         
-        model.addAttribute("curCatePath", curCatePath);
-        model.addAttribute("curCate", cate_no);  //현재 카테고리
-        model.addAttribute("titleImgList", titleImgList);
-        model.addAttribute("allCateList", allCateList);
-        model.addAttribute("itemlist", list);
+        System.out.println();
+        
+        
+        model.addAttribute("paging", paging);
+        model.addAttribute("curItemInfoMap", curItemInfoMap); //현재 아이템이 검색된 결과인지, 어떤 정렬인지의 정보인지, 어느 카테고리번호에 있는지
+        model.addAttribute("curCatePath", curCatePath);  //현재 카테고리 경로 표시
+        model.addAttribute("cate_no", cate_no);  //현재 카테고리 번호(cate_no)
+        model.addAttribute("titleImgList", titleImgList);  //타이틀 이미지 리스트(.jpg)
+        model.addAttribute("allCateList", allCateList);  //아이템 하나의 대,중,소 카테고리(이미지 경로)
+        model.addAttribute("itemList", itemList);  
         model.addAttribute("center", "item/itemlist");
         return "main";
     }
@@ -123,36 +142,17 @@ public class ItemController {
         model.addAttribute("item", item);
         model.addAttribute("colorlist", colorlist); // 아이템이 가지고 있는 컬러
         model.addAttribute("sizelist", sizelist); // 아이템이 가지고 있는 사이즈
-        model.addAttribute("imgnames", imgnames); // 아이템이 가지고 있는 사진이름 //이렇게 넘기면 안되나...?
+        model.addAttribute("imgnames", imgnames); // 아이템이 가지고 있는 사진이름들을 배열로
         model.addAttribute("cateName", cateName); // 카테고리 번호들
 
         model.addAttribute("center", "item/itemdetail");
         return "main";
     }
-
-    //아이템 검색기능
     
-    //아이템 정렬기능
-    @RequestMapping(value = "/sortItemList", method = RequestMethod.GET)
-    public String sortItemList(Model model, @RequestParam("search_no") int search_no, @RequestParam("cate_no") int cate_no) throws Exception { // 상위리스트
-        List<Item> list = null;
-        Map<Integer, Category> allCateList = new HashMap<Integer, Category>();
-        String titleImg = null;
-        Map<Integer, String> titleImgList = new HashMap<Integer, String>();
-
-        //카테고리가 어떤 분류인지 확인 (대,중,소)
-        //List<Category> topList = (List)model.getAttribute("topCategory");
-        List<Category> midList = (List) model.getAttribute("middleCategory");
-        List<Category> subList = (List) model.getAttribute("subCategory");
-
-        Category c = categoryservice.get(cate_no);
-
-        if (midList.toString().contains(c.toString())) {  //만약 중분류에 포함된다면
-            System.out.println("중분류");
-        } else { //중분류 아니면 소분류
-            System.out.println("소븐류");
-        }
-        return "main";
+    @RequestMapping("/cartui")
+    public String cartui(Model model){    	
+    	model.addAttribute("center", "cartui");
+    	return "main";
     }
 
 }

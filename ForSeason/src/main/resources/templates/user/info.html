@@ -1,16 +1,39 @@
 <style>
+	#infocenter{
+		margin:10px 0px 0px 50px; 
+		border:1px solid black; 
+		width: 900px;
+	}
 	.myinfo{
-		border: 1px solid #cccccc;
+		/*border: 1px solid #cccccc;*/
 		margin-top: 30px;
 	}
 	.myinfo_name{
-		border: 1px solid #cccccc;
+		border-bottom: 1px solid #cccccc;
 		font-size:20px;
+		padding-bottom: 25px;
 	}
 	.myname{
-		font-size:25px;
+		font-size:30px;
 		color: #5D5D5D;
 	}
+	.myinfo ul, .myinfo li{
+		margin:0px;
+		padding:0px;
+		list-style:none;
+	}
+	.myinfo ul{
+		margin-top: 20px;
+	}
+	.myinfo li:nth-child(1){
+		font-size:18px;
+		color: #5D5D5D;
+		font-weight: 500;
+	}
+	.myinfo a{
+		color: #999999;
+	}
+	
 </style>
 
     <div class="bg-light py-3">
@@ -24,42 +47,54 @@
     <div class="site-section">
       <div class="container">
         <div class="row">
-          <!-- <div class="col-md-12">
-            <h2 class="h3 mb-3 text-black">Get In Touch</h2>
-          </div> -->
           
           
-          <div class="col-md-3">
+          <div class="col-md-2">
             <h1>My Page</h1>
             <div class="myinfo">
-            	<div class="myinfo_name"><p class="myname" th:text="${session.loginUser.user_name}"></p>님</div>
-				<a th:href="@{/user/info/change_pwd}">패스워드 변경</a><br>
+            	<div class="myinfo_name">
+            		<span class="myname" th:text="${session.loginUser.user_name}"></span>님</br>
+            		<button class="btn btn-primary btn-sm" style="width:135px; height:30px; line-height:10px;"><a>회원정보수정</a></button>
+            	</div>
+            	<nav>
+            		<ul class="myinfo_shopping">
+            			<li>나의 쇼핑</li>
+            			<li><a th:href="@{/user/info/myOrder}">주문내역</a></li>
+            			<li><a th:href="@{/user/info/coupon}">나의 쿠폰</a><br></li>
+            		</ul>
+            		<ul class="myinfo_shopping">
+            			<li>나의 관심상품</li>
+            			<li><a th:href="@{/}">관심상품</a></li>
+            		</ul>
+            		<ul class="myinfo_review">
+            			<li>나의 활동</li>
+            			<li><a th:href="@{/}">나의 리뷰</a></li>
+            			<li><a th:href="@{/}">1:1 문의</a></li>
+            		</ul>
+            		<ul class="myinfo_myinfo">
+            			<li>나의 정보</li>
+            			<li><a th:href="@{/}">개인정보 수정</a></li>
+            			<li><a th:href="@{/}">회원탈퇴</a></li>
+            		</ul>
+            	</nav>
+			</div>
+          </div>
+               
+          <div id="infocenter">
+          	<div th:include="${infocenter} ? ${infocenter} : '/user/info/infocenter'"></div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    
+    
+    <!-- <a th:href="@{/user/info/change_pwd}">패스워드 변경</a><br>
 				<a th:href="@{/user/info/change_info}">내정보 수정</a><br>
 				<a th:href="@{/user/info/delete}">회원탈퇴</a><br>
 				<a th:href="@{/user/info/coupon}">쿠폰</a><br>
 				<a th:href="@{/user/info/myOrder}">주문내역</a><br>
 				<a th:href="@{/user/info/myOrderDetail}">주문상세내역</a><br>
-				<a th:href="@{/user/info/coupon_insert}">쿠폰생성</a><br>
-			</div>
-          </div>
-          
-          
-          <div class="col-md-8" style="margin:10px 0px 0px 50px; border:1px solid black;">
-            <div class="p-4 border mb-3">
-              <span class="d-block text-primary h6 text-uppercase">New York</span>
-              <p class="mb-0">203 Fake St. Mountain View, San Francisco, California, USA</p>
-            </div>
-            <div class="p-4 border mb-3">
-              <span class="d-block text-primary h6 text-uppercase">London</span>
-              <p class="mb-0">203 Fake St. Mountain View, San Francisco, California, USA</p>
-            </div>
-            <div class="p-4 border mb-3">
-              <span class="d-block text-primary h6 text-uppercase">Canada</span>
-              <p class="mb-0">203 Fake St. Mountain View, San Francisco, California, USA</p>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
+				<a th:href="@{/user/info/coupon_insert}">쿠폰생성</a><br> -->
 
