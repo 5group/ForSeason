@@ -1,19 +1,15 @@
 package com.shop.controller;
 
-import com.shop.dto.Coupon;
 import com.shop.dto.User;
 import com.shop.service.CouponService;
+import com.shop.service.MailService;
 import com.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -28,6 +24,9 @@ public class UserController {
 
     @Autowired
     HttpSession session;
+
+    @Autowired
+    MailService mailService;
 
     @RequestMapping("")
     public String main(Model model) {
@@ -166,4 +165,6 @@ public class UserController {
     public String orderDDD() {
         return "user/info/myOrderDetail";
     }
+
+
 }

@@ -2,8 +2,10 @@ package com.admin.controller;
 
 import com.admin.dto.Admin;
 import com.admin.dto.Stock;
+import com.admin.dto.User;
 import com.admin.service.AdminService;
 import com.admin.service.StockService;
+import com.admin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,9 @@ public class MainController {
 
     @Autowired
     AdminService adminService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     HttpSession session;
@@ -55,6 +60,7 @@ public class MainController {
             return "redirect:/";
         }
         return "redirect:/login";
-
     }
+
+
 }
