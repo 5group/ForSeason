@@ -8,7 +8,6 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         crossorigin="anonymous"></script>
 <link rel="canonical" href="https://getbootstrap.kr/docs/5.2/examples/dashboard/">
-<link rel="stylesheet" href="/css/chart.css">
 <meta name="theme-color" content="#712cf9">
 
 <style>
@@ -92,13 +91,14 @@
 </div>
 <section>
     <aside id="left_aside" th:include="${left} ? ${left} : left"></aside>
+    <aside id="center2_aside" th:include="${center2} ? ${center2} : center2"></aside>
     <aside id="center_aside" th:include="${center} ? ${center} : center"></aside>
+
 </section>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/highcharts-3d.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-<script src="/js/chart.js"></script>
 </body>
 </html>

@@ -52,18 +52,8 @@
 		inner join size si
 		where si.size_no=s.size_no AND item_no=#{item_no} AND color_no=#{color_no} AND s.amount>0
     </select>
-    
-    <select id="getStockColor" parameterType="Integer" resultType="Color">
-        SELECT c.color_no, c.color_name FROM stock s 
-        INNER JOIN color c
-        WHERE c.color_no=s.color_no AND item_no=#{item_no} GROUP BY c.color_no
-    </select>
-    <select id="getStockSize" parameterType="Integer" resultType="Size">
-        SELECT si.size_no, si.size_name FROM stock s 
-        INNER JOIN size si
-        WHERE si.size_no=s.size_no AND item_no=#{item_no} GROUP BY si.size_no
-    </select>
-    <select id="getStockNo" parameterType="hashMap" resultType="Integer">
-        select stock_no from stock where item_no=#{item_no} AND size_no=#{size_no} AND color_no=#{color_no}; 
+
+    <select id="selectItemByStock" parameterType="Integer" resultType="Stock">
+        SELECT * FROM stock WHERE item_no=#{item_no}
     </select>
 </mapper>

@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface OrderMapper extends MyMapper<Integer, Order> {
     public List<Order> selectList(int user_no);
+
+//    public void insertTest(Order order) throws Exception;
 }

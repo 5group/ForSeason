@@ -12,6 +12,6 @@ import java.util.List;
 public interface ItemMapper extends MyMapper<Integer, Item> {
 	public List<Item> getCateList(Integer cate_no) throws Exception;
 	public List<Item> selectItemList() throws Exception;
-
     public Item selectName(String name) throws Exception;
+    public void updateDiscnt(Item item) throws Exception;
 }

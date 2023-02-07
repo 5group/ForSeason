@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -16,5 +17,7 @@ public interface StockMapper extends MyMapper<Integer, Stock> {
     public List<Stock> selectChart(@Param("start_date") String sm, @Param("end_date") String em);
     public List<Stock> selectItemChart(String item_name);
     public List<Stock> selectCateChart(String cate_name);
+
+    public List<Stock> selectCateTotal(HashMap<String, Object> map);
 
 }

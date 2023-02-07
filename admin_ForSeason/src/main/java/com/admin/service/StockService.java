@@ -6,6 +6,7 @@ import com.admin.mapper.StockMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -60,5 +61,8 @@ public class StockService implements MyService<Integer, Stock> {
 
     public List<Stock> getAdminMainList(){
         return mapper.selectAdminMain();
+    }
+    public List<Stock> getCateTotal(HashMap<String, Object> map){
+        return mapper.selectCateTotal(map);
     }
 }

@@ -1,71 +1,107 @@
-<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-  <div class="position-sticky pt-3 sidebar-sticky">
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link active" aria-current="page" th:href="@{/}">
-          <span data-feather="home" class="align-text-bottom"></span>
-          메인페이지
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/orderList}">
-          <span data-feather="file" class="align-text-bottom"></span>
-          주문내역
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/itemList}">
-          <span data-feather="shopping-cart" class="align-text-bottom"></span>
-          상품리스트
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/userInfo}">
-          <span data-feather="users" class="align-text-bottom"></span>
-          유저목록
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/boardList}">
-          <span data-feather="bar-chart-2" class="align-text-bottom"></span>
-          문의게시판
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" th:href="@{/templates/chartList}">
-          <span data-feather="layers" class="align-text-bottom"></span>
-          차트 목록
-        </a>
-      </li>
-    </ul>
+<style>
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        z-index: 1;
+        background-color: #f9f9f9;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+</style>
 
-    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-    </h6>
-    <ul class="nav flex-column mb-2">
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="file-text" class="align-text-bottom"></span>
-          이번달
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="file-text" class="align-text-bottom"></span>
-          마지막 분기
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="file-text" class="align-text-bottom"></span>
-          Social engagement
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="file-text" class="align-text-bottom"></span>
-          세일 품목
-        </a>
-      </li>
-    </ul>
-  </div>
+
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <div class="position-sticky pt-3 sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" th:href="@{/}">
+                    <span data-feather="home" class="align-text-bottom"></span>
+                    메인페이지
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/orderList}">
+                    <span data-feather="file" class="align-text-bottom"></span>
+                    주문내역
+                </a>
+            </li>
+            <!-- 메뉴 리스트 -->
+            <ul class="menu" style="padding-left:0px;">
+                <li class="dropdown" th:each="top:${topCategory}">
+                    <a th:href="|@{/itemList/cate_no=}${top.cate_no}|" th:text="${top.cate_name}" class="menu-item"></a>
+                    <ul class="dropdown-content">
+                        <li class="dropdown2" th:each="middle:${middleCategory}" th:if="${middle.cate_no2==top.cate_no}">
+                            <a th:href="|@{/itemList/midCate_no=}${middle.cate_no}|" th:text="${middle.cate_name}"></a>
+                            <ul class="dropdown-content2">
+                                <li th:each="sub:${subCategory}" th:if="${sub.cate_no2==middle.cate_no}">
+                                    <a th:href="|@{/itemList/itemCate_no=}${sub.cate_no}|" th:text="${sub.cate_name}"></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/userInfo}">
+                    <span data-feather="users" class="align-text-bottom"></span>
+                    유저목록
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/boardList}">
+                    <span data-feather="bar-chart-2" class="align-text-bottom"></span>
+                    문의게시판
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/templates/chartList}">
+                    <span data-feather="layers" class="align-text-bottom"></span>
+                    차트 목록
+                </a>
+            </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+        </h6>
+        <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text" class="align-text-bottom"></span>
+                    이번달
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text" class="align-text-bottom"></span>
+                    마지막 분기
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text" class="align-text-bottom"></span>
+                    Social engagement
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text" class="align-text-bottom"></span>
+                    세일 품목
+                </a>
+            </li>
+        </ul>
+    </div>
 </nav>
+

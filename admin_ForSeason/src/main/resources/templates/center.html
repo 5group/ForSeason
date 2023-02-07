@@ -11,11 +11,7 @@
                 이번주
             </button>
         </div>
-    </div>
-    Start<input type="date" name="startDay">
-    ~End<input type="date" name="endDay">
-    <button id="btn">데이터 보기</button>
-    <div id="myChart">
+
 
     </div>
 
@@ -48,26 +44,4 @@
     </div>
 </main>
 <script>
-    $(document).ready(function () {
-        $('#btn').click(function () {
-            var sm = $('input[name="startDay"]').val();
-            var em = $('input[name="endDay"]').val();
-            if (sm >= em) {
-                alert('다시 입력 하세요');
-                return;
-            }
-            getdata(sm, em);
-        });
-    });
-
-    function getdata(sm, em) {
-        console.log("test");
-        $.ajax({
-            url: "[[@{/stockList}]]",
-            data: {'sm': sm, 'em': em, 'index': 0, 'name': "null"},
-            success: function (data) {
-                displaychart(data);
-            }
-        });
-    };
 </script>

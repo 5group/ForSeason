@@ -68,4 +68,8 @@ public class StockService implements MyService<Integer, Stock> {
     public Stock getColorSizeName(Integer stock_no) throws Exception {
         return mapper.selectSizeColor(stock_no);
     }
+
+//    public List<Stock> getItemByStock(Integer item_no) throws Exception {
+//        return mapper.selectItemByStock(item_no);
+//    }
 }

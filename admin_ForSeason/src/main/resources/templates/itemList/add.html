@@ -1,0 +1,39 @@
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="table-responsive">
+        <form id="register_form">
+            카테고리 번호<input type="text" name="cateNo" value=""></br>
+            상품이름<input type="text" name="itemName" value=""></br>
+            상품가격<input type="text" name="itemPrice" value=""></br>
+            상품설명<input type="text" name="itemInfo" value=""></br>
+            IMG<input type="file" class="img" name="img" webkitdirectory>
+            <a href="#">REGISTER</a>
+        </form>
+    </div>
+</main>
+
+<script>
+    const input = document.querySelector('#register_form > .img');
+    input.addEventListener('change', showTextFile);
+
+    function showTextFile() {
+        const selectedFiles = input.files;
+        var file_name = "";
+
+        for (const file of selectedFiles) {
+            console.log("test");
+            file_name += '<input type="hidden" value="' + file.name.substring(0, 2) + '"name="colorValue">';
+        }
+        $('#register_form > p').html(file_name);
+    }
+
+    $(document).ready(function () {
+        $('#register_form  > a').click(function () {
+            $('#register_form').attr({
+                'enctype': 'multipart/form-data',
+                'method': 'post',
+                'action': '[[@{itemList/register}]]'
+            });
+            $('#register_form').submit();
+        });
+    });
+</script>

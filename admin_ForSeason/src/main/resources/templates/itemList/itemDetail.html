@@ -1,0 +1,51 @@
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+            <form id="register_form">
+                <input type="hidden" th:value="${item.getItem_no}" name="item_no" id="item_no">
+                <label for="item_name">상품이름</label>
+                <input type="text" class="form-control" name="item_name" id="item_name"
+                       th:value="${item.getItem_name}" readonly>
+                <label for="item_price">가격</label>
+                <input type="text" class="form-control" name="item_price" id="item_price"
+                       th:value="${item.getItem_price}">
+                <label for="item_discnt">할인가격</label>
+                <input type="text" class="form-control" name="item_discnt" id="item_discnt"
+                       th:value="${item.getItem_discnt}">
+                <label for="item_info">상세설명</label>
+                <textarea class="form-control" rows="9" name="item_info" id="item_info"
+                          th:text="${item.getItem_info}"></textarea>
+                <input type="button" value="수정" name="btn3" id="btn3">
+            </form>
+            </thead>
+        </table>
+    </div>
+</main>
+
+<script>
+    function checkValue() {
+        if ($('#item_price').val() == "" || $('#item_discnt').val() == "" || $('#item_info').val() == "") {
+            return false;
+        } else if ($('#item_price').val() - $('#item_price') *(0.01 * $('#item_discnt').val()) >= 0) {
+            alert("아이템 가격, 할인율이 비정상적입니다.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    $('#btn3').click(function () {
+        is_value = checkValue();
+        if (is_value == true) {
+            $('#register_form').attr({
+                "action": "[[@{/itemList/itemUpdate}]]",
+                "method": "post"
+            })
+            $('#register_form').submit();
+            alert("상품이 성공적으로 바뀌었습니다.")
+        } else {
+            alert("조건이 만족하지 않습니다.")
+        }
+    })
+</script>

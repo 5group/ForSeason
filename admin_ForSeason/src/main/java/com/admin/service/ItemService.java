@@ -1,11 +1,13 @@
 package com.admin.service;
 
+import com.admin.dto.Category;
 import com.admin.dto.Item;
 import com.admin.frame.MyService;
 import com.admin.mapper.ItemMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,5 +50,17 @@ public class ItemService implements MyService<Integer, Item> {
 
     public List<Item> getItemList() throws Exception{
         return mapper.selectItemList();
+    }
+
+    public void modifyDiscnt(Item item) throws Exception{
+        mapper.updateDiscnt(item);
+    }
+
+    public List<Item> cateListByItemList(List<Category> categories) throws Exception {
+        List<Item> itemList = new ArrayList<Item>();
+        for (Category category :categories){
+            itemList.addAll(getCateList(category.getCate_no()));
+        }
+        return itemList;
     }
 }

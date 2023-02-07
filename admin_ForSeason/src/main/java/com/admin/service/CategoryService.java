@@ -1,14 +1,13 @@
-package com.shop.service;
+package com.admin.service;
 
-import java.util.HashMap;
-import java.util.List;
-
+import com.admin.dto.Category;
+import com.admin.frame.MyService;
+import com.admin.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shop.dto.Category;
-import com.shop.frame.MyService;
-import com.shop.mapper.CategoryMapper;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class CategoryService implements MyService<Integer, Category> {
@@ -41,6 +40,8 @@ public class CategoryService implements MyService<Integer, Category> {
         return mapper.selectAll();
     }
     
+    
+    
     public List<Category> getTopCategory() throws Exception{
     	return mapper.getTopCategory();
     }
@@ -53,8 +54,15 @@ public class CategoryService implements MyService<Integer, Category> {
     	return mapper.getSubCategory();
     }
     
-    public Category getCurCategory(HashMap<String, Object> curCateMap) throws Exception{
+    public Category getCurCategory(HashMap<String, Integer> curCateMap) throws Exception{
     	return mapper.selectCurCategory(curCateMap);
     }
-    
+
+    public List<Category> getTopBySubCategory(int cate_no) throws Exception {
+        return mapper.selectTopBySubCate(cate_no);
+    }
+
+    public List<Category> getMidBySubCategory(int cate_no) throws Exception{
+        return mapper.selectMidBySubCate(cate_no);
+    }
 }

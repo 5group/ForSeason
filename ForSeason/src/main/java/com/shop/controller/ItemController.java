@@ -35,7 +35,7 @@ public class ItemController {
     StockService stockservice;
 
     @Autowired
-    CategoryService categoryservice;
+    CategoryService categoryService;
 
     @Autowired
     FileService fileService;
@@ -54,7 +54,7 @@ public class ItemController {
         // 현재 카테고리가 어떤 분류인지 확인 (대,중,소)
         Map<String, List<Category>> mapCateList = (Map)model.getAttribute("mapCateList");
 
-        Category c = categoryservice.get(cate_no);  //현재 카테고리정보를 담은 객체
+        Category c = categoryService.get(cate_no);  //현재 카테고리정보를 담은 객체
 
         //카테고리별로 위에 경로 보여지게(메인페이지에서 검색, 정렬은 카테고리 존재 x) & 현재 아이템 리스트에 따른 페이징 & 정렬, 검색
         HashMap<String, Object> curItemInfoMap = new HashMap<String, Object>();
@@ -69,7 +69,7 @@ public class ItemController {
 	        } else { //소분류일때
 	        	curItemInfoMap.put("sub", cate_no);
 	        }   
-	        curCatePath = categoryservice.getCurCategory(curItemInfoMap);	
+	        curCatePath = categoryService.getCurCategory(curItemInfoMap);
         }
        
         

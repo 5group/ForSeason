@@ -57,17 +57,21 @@
                             <td class="product-name" th:text="${item[stat.index].item_name}"></td>
                             <td class="product-size&color" th:text="|${stock[stat.index].size_name}&${stock[stat.index].color_name}|"></td>
                             <td class="product-price" th:value="${item[stat.index].item_price}"
-                                th:text="${item[stat.index].item_price}"></td>
+                                th:text="|원가:${item[stat.index].item_price} 할인율:${item[stat.index].item_discnt}%|"></td>
                             <td class="product-quantity" style="max-width: 140px; padding-top:30px; padding-bottom:10px;">
                                 <div class="input-group mb-3" style="max-width: 120px;">
                                 	<button class="quantity-minus btn btn-outline-primary" type="button">&minus;</button>
-                                    <input type="text" class="form-control text-center" th:value="${cart.cart_cnt}">                                  
+                                    <input type="text" class="form-control text-center" th:value="${cart.cart_cnt}">
                                     <button class="quantity-plus btn btn-outline-primary" type="button">&plus;</button>
                                 </div>
                             </td>
-                            <td class="product-total" id="totalPrice">
-                                <input type="hidden" th:value="${item[stat.index].item_price}">
+                            <td class="product-total" id="totalPrice" th:if="${item[stat.index].item_discnt} == 0">
+                                <input type="hidden" th:value="${item[stat.index].item_price}"> // 여기 알려주세요
                                 <h4 th:text="${cart.cart_cnt * item[stat.index].item_price}"></h4>
+                            </td>
+                            <td class="product-total" id="totalPrice" th:if="${item[stat.index].item_discnt} > 0">
+                                <input type="hidden" th:value="${item[stat.index].item_price - item[stat.index].item_price * item[stat.index].item_discnt / 100}">
+                                <h4 th:text="${(item[stat.index].item_price - item[stat.index].item_price * item[stat.index].item_discnt / 100)* cart.cart_cnt}"></h4>
                             </td>
                             <td>
                                 <button class="product-remove btn-primary btn-sm" type="button" th:id="${cart.cart_no}" style="border: 0px;">삭제</button>

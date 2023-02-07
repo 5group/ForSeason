@@ -56,4 +56,8 @@ public class OrderService implements MyService<Integer, Order> {
     public List<Order> get_list(int user_no) throws Exception{
         return mapper.selectList(user_no);
     }
+
+//    public void TestRegister(Order order) throws Exception{
+//        mapper.insertTest(order);
+//    }
 }

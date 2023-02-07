@@ -15,7 +15,7 @@ import com.shop.service.CategoryService;
 @ControllerAdvice
 public class BaseController {
     @Autowired
-    CategoryService categoryservice;
+    CategoryService categoryService;
 
     @ModelAttribute
     public void categories(Model model) throws Exception{
@@ -24,11 +24,11 @@ public class BaseController {
         List<Category> middleCategory = null;
         List<Category> subCategory = null;
 
-        topCategory = categoryservice.getTopCategory();  // 1,2,3
+        topCategory = categoryService.getTopCategory();  // 1,2,3
         mapCateList.put("top", topCategory);
-        middleCategory = categoryservice.getMiddleCategory();  // 10,20,30 ....
+        middleCategory = categoryService.getMiddleCategory();  // 10,20,30 ....
         mapCateList.put("middle", middleCategory);
-        subCategory = categoryservice.getSubCategory();  // 11,12 21,22 ....
+        subCategory = categoryService.getSubCategory();  // 11,12 21,22 ....
         mapCateList.put("sub", subCategory);
 
         model.addAttribute("mapCateList", mapCateList);

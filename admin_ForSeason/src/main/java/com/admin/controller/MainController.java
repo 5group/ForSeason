@@ -29,6 +29,7 @@ public class MainController {
         if(session.getAttribute("adminLogin") == null){
             return "redirect:/login";
         }
+        model.addAttribute("center2", "/chartList/center");
         List<Stock> stockList = stockService.getAdminMainList();
         model.addAttribute("stockList", stockList);
         return "main";
