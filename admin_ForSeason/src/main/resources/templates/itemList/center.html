@@ -13,14 +13,14 @@
                 <td>상품이름</td>
                 <td>가격</td>
                 <td>할인율</td>
-                <td>상세설명</td>
+                <td>사이즈/색상별 재고</td>
                 <td>조회수</td>
                 <td>만든날짜</td>
                 <td>업데이트 및 삭제</td>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item:${itemList}">
+            <tr th:each="item, stat:${itemList}">
                 <td>
                     <label class="container">
                         <input type="checkbox" name="checkbox" th:value="${item.getItem_no}" onclick='checkselectAll()'>
@@ -30,7 +30,11 @@
                 <td th:text="${item.getItem_name}"></td>
                 <td th:text="${item.getItem_price}"></td>
                 <td th:text="${item.getItem_discnt}"></td>
-                <td style="font-size: 3px" th:text="${item.getItem_info}"></td>
+                <td>
+                    <span th:each="stock:${stockList}" th:if="${stock.getItem_name == item.getItem_name}">
+                        <a  th:href="|javascript:window.open('/stock_no=${stock.getStock_no}', '', 'width=400, height=400, left=600')|" th:text="|컬러:${stock.getColor_name} 사이즈:${stock.getSize_name} 재고:${stock.getAmount}|" class="stock_amount"></a></br>
+                    </span>
+                </td>
                 <td th:text="${item.getItem_hit}"></td>
                 <td th:text="${#dates.format(item.getItem_udate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td><a th:href="|/itemList/itemNo=${item.getItem_no}|">수정</a></td>
@@ -45,6 +49,7 @@
 </main>
 
 <script>
+
     function selectAll(selectAll) {
         const checkboxes
             = document.getElementsByName("checkbox");
