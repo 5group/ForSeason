@@ -18,6 +18,10 @@ public class Item {
     private String item_info;
     private int item_hit;
     private Date item_udate;
+
+    private int rcnt;  //설재경 추가
+    private double revavg_score; //설재경 추가
+
     
     //private int cate_no2;
 

@@ -1,5 +1,176 @@
 <link rel="stylesheet" href="css/colorlist.css">
 <style>
+/* 설재경 */
+/* 설재경 */
+/* 설재경 */
+	  .star {
+    position: relative;
+    font-size: 2rem;
+    color: #ddd;
+  }
+  
+  .star input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .star span {
+    width: 0;
+    position: absolute; 
+    left: 0;
+    color: red;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  	  .star2 {
+    position: relative;
+    font-size: 2rem;
+    color: #ddd;
+  }
+  
+  .star2 input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .star2 span {
+    width: 0;
+    position: absolute; 
+    left: 0;
+    color: red;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+.review-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-left {
+  font-weight: bold;
+}
+
+.review-right button {
+  background-color: white;
+  border: 1px solid red;
+  color: black;
+}
+.semireview-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.semireview-left {
+  font-weight: bold;
+}
+
+.semireview-right button {
+  background-color: white;
+  border: 1px solid red;
+  color: black;
+}
+
+a, a:hover, a:visited, a:active{
+    text-decoration: none;
+    color: #000;
+}
+a:hover{
+    color: #a00;
+}
+h1{
+    text-align: center;
+    background-color: #fff;
+    padding: 5px;
+    margin: 0;
+}
+
+/* 레이아웃 외곽 너비 400px 제한*/
+.wrap{
+    max-width: 1000px;
+    margin: 0 auto; /* 화면 가운데로 */
+    background-color: #fff;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+
+}
+.reviewform textarea{
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.rating .rate_radio {
+    position: relative;
+    display: inline-block;
+    z-index: 20;
+    opacity: 0.001;
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    cursor: pointer;
+    vertical-align: top;
+    display: none;
+}
+.rating .rate_radio + label {
+    position: relative;
+    display: block;
+    float: left;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    background-image: url(./images/starrate.png);
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    cursor: pointer;
+}
+.rating .ratefill {
+    background-color: #ff8;
+    width: 0;
+    height: 60px;
+    position: absolute;
+}
+
+.cmd{
+    margin-top: 20px;
+    text-align: right;
+}
+.cmd input[type="button"]{
+    padding: 10px 20px;
+    border: 1px solid #e8e8e8;
+    background-color: #fff;
+    background-color: #000;  
+    color: #fff;
+}
+
+.warning_msg {
+    display: none;
+    position: relative;
+    text-align: center;
+    background: #ffffff;
+    line-height: 26px;
+    width: 100%;
+    color: red;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #e0e0e0;
+}
+
+/* 설재경 */
+/* 설재경 */
+/* 설재경 */
+
 	#colorui{
 		overflow: hidden;
 		padding: 0px;
@@ -52,7 +223,16 @@
 	 }
 </style>
 <script>
-	var item_no,color_no,size_no,cart_cnt;
+let drawStar = (target) => {
+    document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+    let selectedValue = target.value / 2 ; 
+    console.log(`Selected Value: ${selectedValue }`);
+    document.querySelector('.selected-value').innerHTML = selectedValue;
+
+  }
+  
+var item_no,color_no,size_no,cart_cnt,rev_score;
+var user_no,rev_title,rev_title,rev_content;
 	
 	function plusClick(){
 		var curqtt = parseInt($("#buyQtt").val());
@@ -72,6 +252,11 @@
 	}	
 
 	$(document).ready(function(){
+
+		
+		
+		
+		
 		item_no=$("#item_no").val();
 		
 		/*<![CDATA[*/
@@ -171,7 +356,37 @@
                 }
 			});	 
 		});	  
-	
+
+		$('#revbtn').click(function(){   //리뷰 글쓰기 버튼
+			item_no=$("#item_no").val();
+			item_no=$("#item_no").val();
+			rev_title=$("#rev_title").val();
+			rev_content=$("#rev_content").val();
+	        rev_score = document.querySelector("input[type=range]").value * 0.5;
+
+ 			let alertMessage = 
+	            "item_no: " + item_no + "\n" +
+	            "rev_title: " + rev_title + "\n" +
+	            "rev_content: " + rev_content + "\n" +
+		        "rev_score: " + rev_score;
+
+				alert(alertMessage);
+			
+ 			$.ajax({
+				url:'[[@{/reviewInsert}]]',
+				data: {"item_no":item_no, "rev_title":rev_title, "rev_content":rev_content, "rev_score":rev_score}, //서버 컨트롤러에 데이터 전송
+				success:function(data){
+					if(data == 0){
+						alert("리뷰작성완료.");
+                        location.reload(); // refresh the page
+
+					}else{
+						alert("문제발생");
+					}
+				}
+			});	  //Restcontroller로 받으면 오류 안남
+		});	 
+		
 
 	});
 	
@@ -299,6 +514,194 @@
         </div>
       </div>
     </div>
+			<!-- 상품평 영역 시작 -->
+			<!-- 상품평 영역 시작 -->
+			<!-- 상품평 영역 시작 -->
+
+
+
+<div class="wrap">
+			<!-- 상품평 헤드 -->
+
+<div class="review-container">
+  <h4><div class="review-left">고객 상품평</div></h4>
+  <div class="review-right">
+
+
+<!-- 
+    <li th:if="${session.loginuser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
+    <li th:if="${session.loginuser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
+ -->
+    <div th:if="${session.loginUser!=null}">
+    <button type="button" class="btn btn-danger" style="color: red;" data-toggle="modal" data-target="#reviewModal">
+      글쓰기
+    </button>
+    </div>
+
+
+
+  </div>
+</div>
+
+
+<hr style="width: 100%; height: 1px; border: 1; background-color: black;">
+
+<div class="semireview-container">
+	<div class="semireview-left">
+
+		<span class="star2">
+		★★★★★ 	
+		<span th:style="'width: ' + (${item.revavg_score} * 20) + '%'">★★★★★</span>
+		</span>	
+ 
+
+<a th:text="${item.revavg_score} + ' / 5.0'" style="font-size: larger; color: gray;">2.5 / 5.0</a>
+
+	</div>
+	
+	
+<!-- 	<div class="semireview-right">최근 리뷰 : <a href="#" class="comment-link" th:text="${movie.rcnt}">15</a></div> -->
+    <div class="semireview-right">최근 리뷰 : <a href="#" class="comment-link" th:text="${item.rcnt}"></a></div>
+</div>
+
+
+
+<hr style="width: 100%; height: 0.5px; border: 0; background-color: gray; clear: both;">
+
+<!-- 상품의 리뷰게시판 시작 -->
+<!-- 상품의 리뷰게시판 시작 -->
+<!-- 상품의 리뷰게시판 시작 -->
+
+
+<div class="customer_review_list" th:each="r:${reviewlist}"> 
+  
+<!-- 왼쪽 제목 -->    
+    <strong class="cr_tit" th:text="${r.rev_title}">TEST1</strong>
+<!-- 왼쪽 제목 -->    
+    
+<!-- 오른쪽 ID | 날짜 -->
+<!--     <span class="info_user" th:text="${user.no} + '|' +${#dates.format(r.udate,'yyyy-MM-dd')} " style="float:right;">id01 - 2023.01.12</span> -->
+    <span class="info_user" th:text="${r.user_id} + '  |  ' +${#dates.format(r.rev_udate,'yyyy-MM-dd')}" style="float:right;">TEST2-3</span>
+
+
+<!-- 오른쪽 ID | 날짜 -->
+
+<!-- 별점  -->
+<div></div>
+<span class="star2">
+★★★★★	
+<span th:style="'width: ' + (${r.rev_score} * 20) + '%'">★★★★★</span>
+</span>
+<!-- 별점 -->
+
+<!-- 리뷰내용 -->
+    <div class="review_cont" th:text="${r.rev_content}">
+	TEST4
+    </div>
+<!-- 리뷰내용 -->
+
+<!-- 선 -->
+<hr style="width: 100%; height: 0.5px; border: 0; background-color: lightgray; clear: both;">
+<!-- 선 -->
+
+</div>
+
+<!-- 상품의 리뷰게시판 끝 -->
+<!-- 상품의 리뷰게시판 끝 -->
+<!-- 상품의 리뷰게시판 끝 -->
+
+
+<!-- 더보기 버튼 -->
+<center>
+<a th:href="|@{/reviewdetail?item_no=}${item.item_no}|" style="background-color: black; color: white; padding: 0.75mm 2.25mm;">더보기</a>
+</center>
+
+<br>
+<br>
+<!-- 더보기 버튼 -->
+
+
+
+  <!-- 글쓰기 Modal -->
+  <!-- 글쓰기 Modal -->
+  <!-- 글쓰기 Modal -->
+  
+   
+  <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reviewModalLabel">리뷰 작성</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+
+
+
+  
+        
+        <form name="reviewform" class="reviewform" method="post">
+  <!-- 글쓰기 Modal 시작폼 -->
+  <!-- 글쓰기 Modal 시작폼 -->
+
+          <div class="modal-body">
+        <!-- 리뷰폼 시작-->
+            <div class="review-form" id="review-form">
+  	        <!-- <input name="item_no" th:value="${item_no}" type="hidden"> -->
+<!--  			  <input name="user_no" th:value="${session.loginUser.user_no}" type="hidden"> -->
+
+			  <input type="hidden" id="item_no" name="item_no" th:value="${item.item_no}">
+		<!-- 별점 영역 -->
+		<!-- 별점 영역 -->
+		<!-- 별점 영역 -->
+                <span class="star">
+                  ★★★★★
+                  <span>★★★★★</span>
+                  <input type="range" oninput="drawStar(this)" value="" step="1" min="0" max="10">
+                </span>
+			  <div class="selected-value" name="rev_score" id="rev_score">1</div>
+
+		<!-- 별점 영역 -->
+		<!-- 제목 영역 -->
+              <label for="reviewTitle">제목(필수)</label>
+              <textarea rows="1" class="form-control" name="rev_title" id="rev_title"></textarea>
+		<!-- 제목 영역 -->
+		<!-- 내용 영역 -->
+              <label for="reviewContent">내용(필수)</label>
+              <div class="warning_msg">Please enter a review with at least 5 characters.</div>
+              <textarea rows="10" class="form-control"  name="rev_content" id="rev_content"></textarea>
+		<!-- 내용 영역 -->
+            </div> 
+        <!-- review-form 마무리 -->
+
+
+
+          </div>
+  <!-- 글쓰기 Modal 끝폼 -->
+  <!-- 글쓰기 Modal 끝폼 -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <!-- Submit -->
+            <button type="submit" id="revbtn" class="btn btn-primary">전송</button>
+<!-- 			<input type="submit" id="rbtn" value="전송" class="btn btn-primary"> -->
+  <!-- Submit -->
+			    
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+ 
+			<!-- 상품평 영역 마침 -->
+			<!-- 상품평 영역 마침 -->
+			<!-- 상품평 영역 마침 -->
+
+</div>
+
+
+
 
     <div class="site-section block-3 site-blocks-2 bg-light">
       <div class="container">

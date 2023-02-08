@@ -37,4 +37,21 @@ public class ReviewService implements MyService<Integer, Review> {
     public List<Review> get() throws Exception {
         return mapper.selectAll();
     }
+    
+    public List<Review> SelectSortUdateTests(int id) throws Exception {
+		return mapper.SelectSortUdateTests(id);
+	}
+    
+    public List<Review> SelectallSortUdateTests(int id) throws Exception {
+		return mapper.SelectallSortUdateTests(id);
+	}
+    
+    public List<Review> SelectallSortScoreDescTests(int id) throws Exception {
+		return mapper.SelectallSortScoreDescTests(id);
+	}
+    public List<Review> SelectallSortScoreAscTests(int id) throws Exception {
+		return mapper.SelectallSortScoreAscTests(id);
+	}
+    
+    
 }

@@ -21,4 +21,49 @@
         DELETE FROM review WHERE rev_no=#{rev_no}
     </delete>
 
+
+	<select id="SelectSortUdateTests" parameterType="Integer" resultType="Review">
+	  SELECT rev_no, item_no, user.user_no, user.user_id, 
+	         rev_title, rev_content, rev_score, rev_udate
+	  FROM review
+	  JOIN user ON review.user_no = user.user_no
+	  WHERE item_no = #{item_no}
+	  ORDER BY rev_udate DESC
+	  LIMIT 3
+	</select>
+
+	<select id="SelectallSortUdateTests" parameterType="Integer" resultType="Review">
+	  SELECT rev_no, item_no, user.user_no, user.user_id, 
+	         rev_title, rev_content, rev_score, rev_udate
+	  FROM review
+	  JOIN user ON review.user_no = user.user_no
+	  WHERE item_no = #{item_no}
+	  ORDER BY rev_udate DESC
+	  
+	</select>
+
+	<select id="SelectallSortScoreDescTests" parameterType="Integer" resultType="Review">
+	  SELECT rev_no, item_no, user.user_no, user.user_id, 
+	         rev_title, rev_content, rev_score, rev_udate
+	  FROM review
+	  JOIN user ON review.user_no = user.user_no
+	  WHERE item_no = #{item_no}
+	  ORDER BY rev_score DESC
+	  
+	</select>
+
+	<select id="SelectallSortScoreAscTests" parameterType="Integer" resultType="Review">
+	  SELECT rev_no, item_no, user.user_no, user.user_id, 
+	         rev_title, rev_content, rev_score, rev_udate
+	  FROM review
+	  JOIN user ON review.user_no = user.user_no
+	  WHERE item_no = #{item_no}
+	  ORDER BY rev_score ASC
+	  
+	</select>
+
+
+
+
+
 </mapper>

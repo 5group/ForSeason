@@ -5,7 +5,13 @@
 <mapper namespace="com.shop.mapper.ItemMapper">
 
     <select id="select" parameterType="Integer" resultType="Item">
-        SELECT * FROM item WHERE item_no=#{item_no}
+	    SELECT i.*, 
+	    COUNT(r.rev_no) AS rcnt, 
+	    CEIL(AVG(r.rev_score) * 2) / 2 AS revavg_score 
+	    FROM item i
+	    LEFT JOIN review r ON i.item_no = r.item_no
+	    WHERE i.item_no = #{item_no}
+	    GROUP BY i.item_no;
     </select>
     <select id="selectAll" resultType="Item">
         SELECT * FROM item

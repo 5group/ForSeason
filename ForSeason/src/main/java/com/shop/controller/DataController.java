@@ -21,6 +21,7 @@ import com.shop.dto.Cart;
 import com.shop.dto.Color;
 import com.shop.dto.Coupon;
 import com.shop.dto.Item;
+import com.shop.dto.Review;
 import com.shop.dto.Size;
 import com.shop.dto.Stock;
 import com.shop.dto.User;
@@ -28,6 +29,7 @@ import com.shop.dto.WishList;
 import com.shop.service.CartService;
 import com.shop.service.ColorService;
 import com.shop.service.ItemService;
+import com.shop.service.ReviewService;
 import com.shop.service.StockService;
 import com.shop.service.UserService;
 import com.shop.service.WishListService;
@@ -59,7 +61,9 @@ public class DataController {
     @Autowired
     WishListService wishListService;
 
-
+    @Autowired
+    ReviewService reviewService;
+    
     @RequestMapping(value = "/couponList", method = RequestMethod.GET)
     public List<Coupon> coupon_list() {
         List<Coupon> list = (List<Coupon>) session.getAttribute("coupon");
@@ -195,6 +199,19 @@ public class DataController {
         }
     	
     	return result;
+    }
+    @RequestMapping("/reviewInsert")
+    public Object reviewInsert(int item_no, String rev_title, String rev_content, double rev_score) throws Exception {
+        int result = 0;
+//      System.out.println(item_no + ", " + rev_title + ", " + rev_content + ", " + rev_score);
+
+        User user = (User)session.getAttribute("loginUser");
+     
+        Review review = new Review(0, item_no, user.getUser_no(), rev_title, rev_content, rev_score, null, null);
+        System.out.println(review);
+        reviewService.register(review);
+                
+        return result;
     }
     
     @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)

@@ -18,12 +18,14 @@ import com.shop.dto.Category;
 import com.shop.dto.Color;
 import com.shop.dto.Item;
 import com.shop.dto.Paging;
+import com.shop.dto.Review;
 import com.shop.dto.Size;
 import com.shop.dto.User;
 import com.shop.dto.WishList;
 import com.shop.service.CategoryService;
 import com.shop.service.FileService;
 import com.shop.service.ItemService;
+import com.shop.service.ReviewService;
 import com.shop.service.StockService;
 import com.shop.service.WishListService;
 
@@ -48,6 +50,9 @@ public class ItemController {
     @Autowired
     FileService fileService;
 
+    @Autowired
+    ReviewService reviewservice;
+    
 
     // 대,중,소는 if문으로 확인, 검색&정렬, 페이징도 여기서
     @RequestMapping(value = "/getItemList", method = RequestMethod.GET)
@@ -115,6 +120,7 @@ public class ItemController {
     @RequestMapping(value = "/itemdetail", method = RequestMethod.GET)
     public String itemdetail(Model model, @RequestParam("item_no") int item_no, HttpSession session) throws Exception {
         Item item = itemservice.get(item_no);
+        List<Review> reviewlist = reviewservice.SelectSortUdateTests(item_no); // 설재경 추가 : 리뷰 데이터
         List<Color> colorlist = stockservice.getStockColor(item_no);  //컬러  현재 재고에 있는 컬러
         List<Size> sizelist = stockservice.getStockSize(item_no);  //재고  현재 재고에 있는 사이즈
         Category category = itemservice.getCategorys(item_no); // 해당 아이템에 대중소 카테고리 이름불러옴 //item_no로 카테고리 다 알 수 있음
@@ -148,7 +154,52 @@ public class ItemController {
         model.addAttribute("imgnames", imgnames); // 아이템이 가지고 있는 사진이름들을 배열로
         model.addAttribute("cateName", cateName); // 카테고리 번호들
         model.addAttribute("center", "item/itemdetail");
+		model.addAttribute("reviewlist", reviewlist); // 리뷰를 집어넣었다.
+
+        
         return "main";
     }
+
+    @RequestMapping(value = "/reviewdetail", method = RequestMethod.GET)
+    public String reviewdetail(Model model, @RequestParam("item_no") int item_no) throws Exception {
+        // System.out.println(top_no+","+mid_no+","+sub_no);
+        Item item = itemservice.get(item_no);
+		List<Review> reviewlist2 = reviewservice.SelectallSortUdateTests(item_no); // 설재경 추가 : 리뷰 데이터
+		List<Review> reviewlist3 = reviewservice.SelectallSortScoreDescTests(item_no); // 설재경 추가 : 리뷰 데이터
+		List<Review> reviewlist4 = reviewservice.SelectallSortScoreAscTests(item_no); // 설재경 추가 : 리뷰 데이터
+
+		
+		List<Color> colorlist = stockservice.getStockColor(item_no);  //컬러  현재 재고에 있는 컬러
+        List<Size> sizelist = stockservice.getStockSize(item_no);  //재고  현재 재고에 있는 사이즈
+        Category category = itemservice.getCategorys(item_no); // 해당 아이템에 대중소 카테고리 이름불러옴 //item_no로 카테고리 다 알 수 있음
+
+        
+        String[] cateName = {category.getTop_cate_name(), category.getMid_cate_name(), category.getCate_name()};
+
+        System.out.println("itemdetail : " + category.getTop_cate_name() + "," + category.getMid_cate_name() + "," + category.getCate_name());
+
+        String[] imgnames = fileService.getFileList(custdir,  category.getTop_cate_name(), category.getMid_cate_name(),  category.getCate_name(), item.getItem_name());
+        if(imgnames != null){
+            System.out.println(imgnames[0]);
+        }
+
+        // 아이템 조회수 +1
+        itemservice.updateItemhit(item.getItem_no());
+
+        model.addAttribute("item", item);
+        model.addAttribute("colorlist", colorlist); // 아이템이 가지고 있는 컬러
+        model.addAttribute("sizelist", sizelist); // 아이템이 가지고 있는 사이즈
+        model.addAttribute("imgnames", imgnames); // 아이템이 가지고 있는 사진이름 //이렇게 넘기면 안되나...?
+        model.addAttribute("cateName", cateName); // 카테고리 번호들
+		model.addAttribute("reviewlist2", reviewlist2); // 리뷰를 집어넣었다.
+		model.addAttribute("reviewlist3", reviewlist3); // 리뷰를 집어넣었다.
+		model.addAttribute("reviewlist4", reviewlist4); // 리뷰를 집어넣었다.
+        
+        model.addAttribute("center", "item/reviewdetail");
+        return "main";
+    }
+
+ 
+ 
 
 }

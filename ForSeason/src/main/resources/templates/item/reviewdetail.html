@@ -1,0 +1,628 @@
+<style>
+
+	  .star {
+    position: relative;
+    font-size: 2rem;
+    color: #ddd;
+  }
+  
+  .star input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .star span {
+    width: 0;
+    position: absolute; 
+    left: 0;
+    color: red;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  	  .star2 {
+    position: relative;
+    font-size: 2rem;
+    color: #ddd;
+  }
+  
+  .star2 input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .star2 span {
+    width: 0;
+    position: absolute; 
+    left: 0;
+    color: red;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  
+  
+.review-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-left {
+  font-weight: bold;
+}
+
+.review-right button {
+  background-color: white;
+  border: 1px solid red;
+  color: black;
+}
+.semireview-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.semireview-left {
+  font-weight: bold;
+}
+
+.semireview-right button {
+  background-color: white;
+  border: 1px solid red;
+  color: black;
+}
+
+
+
+	
+a, a:hover, a:visited, a:active{
+    text-decoration: none;
+    color: #000;
+}
+a:hover{
+    color: #a00;
+}
+h1{
+    
+    background-color: #fff;
+    padding: 5px;
+    margin: 0;
+}
+
+/* 레이아웃 외곽 너비 400px 제한*/
+.wrap{
+    max-width: 1000px;
+    margin: 0 auto; /* 화면 가운데로 */
+    background-color: #fff;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+
+}
+.reviewform textarea{
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.rating .rate_radio {
+    position: relative;
+    display: inline-block;
+    z-index: 20;
+    opacity: 0.001;
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    cursor: pointer;
+    vertical-align: top;
+    display: none;
+}
+.rating .rate_radio + label {
+    position: relative;
+    display: block;
+    float: left;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    background-image: url(./images/starrate.png);
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    cursor: pointer;
+}
+.rating .ratefill {
+    background-color: #ff8;
+    width: 0;
+    height: 60px;
+    position: absolute;
+}
+
+.cmd{
+    margin-top: 20px;
+    text-align: right;
+}
+.cmd input[type="button"]{
+    padding: 10px 20px;
+    border: 1px solid #e8e8e8;
+    background-color: #fff;
+    background-color: #000;  
+    color: #fff;
+}
+
+.warning_msg {
+    display: none;
+    position: relative;
+    text-align: center;
+    background: #ffffff;
+    line-height: 26px;
+    width: 100%;
+    color: red;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #e0e0e0;
+}
+
+
+
+</style>
+
+<script>
+/* 글쓰기 */
+let drawStar = (target) => {
+    document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+    let selectedValue = target.value / 2 ; 
+    console.log(`Selected Value: ${selectedValue }`);
+    document.querySelector('.selected-value').innerHTML = selectedValue;
+  }
+
+var item_no,color_no,size_no,cart_cnt,rev_score;
+var user_no,rev_title,rev_title,rev_content;
+$(document).ready(function(){
+
+	$('#revbtn').click(function(){   //리뷰 글쓰기 버튼
+		item_no=$("#item_no").val();
+		item_no=$("#item_no").val();
+		rev_title=$("#rev_title").val();
+		rev_content=$("#rev_content").val();
+	    rev_score = document.querySelector("input[type=range]").value * 0.5;
+	
+			let alertMessage = 
+	        "item_no: " + item_no + "\n" +
+	        "rev_title: " + rev_title + "\n" +
+	        "rev_content: " + rev_content + "\n" +
+	        "rev_score: " + rev_score;
+	
+			alert(alertMessage);
+		
+			$.ajax({
+			url:'[[@{/reviewInsert}]]',
+			data: {"item_no":item_no, "rev_title":rev_title, "rev_content":rev_content, "rev_score":rev_score}, //서버 컨트롤러에 데이터 전송
+			success:function(data){
+				if(data == 0){
+					alert("리뷰작성완료.");
+	                location.reload(); // refresh the page
+	
+				}else{
+					alert("문제발생");
+				}
+			}
+		});	 
+	});	
+
+});
+
+/* 글쓰기 */
+
+
+</script>
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a href="index.html">Home</a> 
+          <span class="mx-2 mb-0">/</span>
+<!--       	<strong th:if="${curCatePath.mid_cate_name!=null}" th:text="${'/ '+curCatePath.mid_cate_name}" class="text-black"></strong>
+          	<strong th:if="${curCatePath.cate_name!=null}" th:text="${'/ '+curCatePath.cate_name}" class="text-black"></strong> -->
+          <strong class="text-black" th:text="${item.item_name} + ' Review List'" ></strong></div>
+        </div>
+      </div>
+    </div>  
+
+
+<br>
+<br>
+
+<form>
+
+<div class="semireview-container">
+	<div class="semireview-left">
+    <h1 style="color: black;margin-bottom:40px;" th:text="${item.item_name}"></h1>
+	</div>
+	
+	<div class="semireview-right">
+    <img name="titleImg" th:src="|@{img/}${cateName[0]}/${cateName[1]}/${cateName[2]}/${item.item_name}/${imgnames[0]}|" alt="Image" style="width: 200px; height: 200px;">
+	</div>
+</div>
+<br>
+<body style="margin: 0 100px;"></body>
+
+
+<div class="review-container">
+
+
+	<div class="review-left">	
+	
+	<div th:if="${session.loginUser!=null}">
+		<button type="button" class="btn btn-danger" style="background-color: white; color: red; border-color: red;" data-toggle="modal" data-target="#reviewModal">
+	      글쓰기
+	    </button>
+    </div>
+</div>
+
+<div class="review-right">
+	<select id="sort-options">
+	  <option value="list1">최근 날짜순</option>
+	  <option value="list2">별점 높은순</option>
+	  <option value="list3">별점 낮은순</option>
+	</select>
+  </div>
+</div>
+
+
+
+
+
+<hr style="width: 100%; height: 1px; border: 1; background-color: black; ">
+
+<div class="semireview-container">
+	<div class="semireview-left">
+		    <span class="star2">
+		    ★★★★★ 	
+		    	<span th:style="'width: ' + (${item.revavg_score} * 20) + '%'">★★★★★</span>
+		    </span>	
+		    <a th:text="${item.revavg_score} + ' / 5.0'" style="font-size: larger; color: gray;">2.5 / 5.0</a>
+	</div>
+	
+	
+
+    <div class="semireview-right">최근 리뷰 : <a href="#" class="comment-link" th:text="${item.rcnt}"></a></div>
+</div>
+
+<hr style="width: 100%; height: 0.5px; border: 0; background-color: gray; clear: both;">
+
+
+<!-- 리뷰글 -->
+<!-- 리뷰글 -->
+<!-- 리뷰글 -->
+<div id="reviewsContainer">
+
+<div class="customer_review_list">
+
+	<div class="list1" style="display: block;">
+		<div class="customer_review_list2" th:each="r:${reviewlist2}"> 
+    		<strong class="cr_tit" th:text="${r.rev_title}"></strong>
+    		<span class="info_user" th:text="${r.user_id} + '  |  ' +${#dates.format(r.rev_udate,'yyyy-MM-dd')}" style="float:right;">TEST2-3</span>
+    		<div></div>
+    		<span class="star2">
+      		★★★★★	
+      		<span th:style="'width: ' + (${r.rev_score} * 20) + '%'">★★★★★</span>
+    		</span>
+   		    <div class="review_cont" th:text="${r.rev_content}"></div>
+            <hr style="width: 100%; height: 0.5px; border: 0; background-color: lightgray; clear: both;">
+  		</div>
+	</div>
+
+<div class="list2" style="display: none;">
+  <div class="customer_review_list2" th:each="r:${reviewlist3}"> 
+    <strong class="cr_tit" th:text="${r.rev_title}"></strong>
+    <span class="info_user" th:text="${r.user_id} + '  |  ' +${#dates.format(r.rev_udate,'yyyy-MM-dd')}" style="float:right;">TEST2-3</span>
+    <div></div>
+    <span class="star2">
+      ★★★★★	
+      <span th:style="'width: ' + (${r.rev_score} * 20) + '%'">★★★★★</span>
+    </span>
+    <div class="review_cont" th:text="${r.rev_content}">
+    </div>
+    <hr style="width: 100%; height: 0.5px; border: 0; background-color: lightgray; clear: both;">
+  </div>
+</div> 
+
+<div class="list3" style="display: none;">
+<div>
+  <div class="customer_review_list2" th:each="r:${reviewlist4}"> 
+    <strong class="cr_tit" th:text="${r.rev_title}"></strong>
+    <span class="info_user" th:text="${r.user_id} + '  |  ' +${#dates.format(r.rev_udate,'yyyy-MM-dd')}" style="float:right;">TEST2-3</span>
+    <div></div>
+    <span class="star2">
+      ★★★★★	
+      <span th:style="'width: ' + (${r.rev_score} * 20) + '%'">★★★★★</span>
+    </span>
+    <div class="review_cont" th:text="${r.rev_content}">
+    </div>
+    <hr style="width: 100%; height: 0.5px; border: 0; background-color: lightgray; clear: both;">
+  </div>
+</div>
+</div> 
+
+<!-- 
+<div class="list4" style="display: block;">
+  <div class="customer_review_list2" th:each="r:${reviewlist2}"> 
+    <strong class="cr_tit" th:text="${r.rev_title}"></strong>
+    <span class="info_user" th:text="${r.user_id} + '  |  ' +${#dates.format(r.rev_udate,'yyyy-MM-dd')}" style="float:right;">TEST2-3</span>
+    <div></div>
+    <span class="star2">
+      ★★★★★	
+      <span th:style="'width: ' + (${r.rev_score} * 20) + '%'">★★★★★</span>
+    </span>
+    <div class="review_cont" th:text="${r.rev_content}">
+    </div>
+    <hr style="width: 100%; height: 0.5px; border: 0; background-color: lightgray; clear: both;">
+  </div>
+</div>
+ -->
+
+</div>
+
+
+ </div>
+</form>
+
+<!-- 리뷰글 -->
+<!-- 리뷰글 -->
+<!-- 리뷰글 -->
+
+  <center><button id="loadMoreBtn">리뷰 더보기</button></center>
+
+
+
+  <!-- 글쓰기 Modal -->
+  <!-- 글쓰기 Modal -->
+  <!-- 글쓰기 Modal -->
+  
+   
+  <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reviewModalLabel">리뷰 작성</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+
+
+
+  
+        
+        <form name="reviewform" class="reviewform" method="post">
+  <!-- 글쓰기 Modal 시작폼 -->
+  <!-- 글쓰기 Modal 시작폼 -->
+
+          <div class="modal-body">
+        <!-- 리뷰폼 시작-->
+            <div class="review-form" id="review-form">
+  	        <!-- <input name="item_no" th:value="${item_no}" type="hidden"> -->
+<!--  			  <input name="user_no" th:value="${session.loginUser.user_no}" type="hidden"> -->
+
+			  <input type="hidden" id="item_no" name="item_no" th:value="${item.item_no}">
+		<!-- 별점 영역 -->
+		<!-- 별점 영역 -->
+		<!-- 별점 영역 -->
+                <span class="star">
+                  ★★★★★
+                  <span>★★★★★</span>
+                  <input type="range" oninput="drawStar(this)" value="" step="1" min="0" max="10">
+                </span>
+			  <div class="selected-value" name="rev_score" id="rev_score">1</div>
+
+		<!-- 별점 영역 -->
+		<!-- 제목 영역 -->
+              <label for="reviewTitle">제목(필수)</label>
+              <textarea rows="1" class="form-control" name="rev_title" id="rev_title"></textarea>
+		<!-- 제목 영역 -->
+		<!-- 내용 영역 -->
+              <label for="reviewContent">내용(필수)</label>
+              <div class="warning_msg">Please enter a review with at least 5 characters.</div>
+              <textarea rows="10" class="form-control"  name="rev_content" id="rev_content"></textarea>
+		<!-- 내용 영역 -->
+            </div> 
+        <!-- review-form 마무리 -->
+
+
+
+          </div>
+  <!-- 글쓰기 Modal 끝폼 -->
+  <!-- 글쓰기 Modal 끝폼 -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <!-- Submit -->
+            <button type="submit" id="revbtn" class="btn btn-primary">전송</button>
+<!-- 			<input type="submit" id="rbtn" value="전송" class="btn btn-primary"> -->
+  <!-- Submit -->
+			    
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+ 
+			<!-- 상품평 영역 마침 -->
+			<!-- 상품평 영역 마침 -->
+			<!-- 상품평 영역 마침 -->
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	  var reviewsContainer = document.getElementById("reviewsContainer");
+	  var customerReviewList = reviewsContainer.getElementsByClassName("customer_review_list2") ;
+	  var loadMoreBtn = document.getElementById("loadMoreBtn");
+	 
+	  alert(customerReviewList.length);
+	  var currentIndex = 0;
+	  var step = 5;
+
+	  // Show a maximum of 5 reviews initially
+	  for (let i = 0; i < customerReviewList.length; i++) {
+	    if (i < step) {
+	      customerReviewList[i].style.display = "block";
+	      currentIndex = i + 1;
+	    } else {
+	      customerReviewList[i].style.display = "none";
+	    }
+	  }
+	  loadMoreBtn.addEventListener("click", function() {
+		    for (let i = currentIndex; i < currentIndex + step; i++) {
+		      if (i < customerReviewList.length) {
+		        customerReviewList[i].style.display = "block";
+		      } else {
+		    	  
+//		    	 alert("추가적인 리스트가 없습니다.");
+		    	 break;
+
+		      }
+		    }
+		    currentIndex += step;
+		  });
+	  
+
+	});
+
+
+
+  document.getElementById("sort-options").addEventListener("change", function() {
+    var list1 = document.querySelector(".list1");
+    var list2 = document.querySelector(".list2");
+    var list3 = document.querySelector(".list3");
+
+    
+    list1.style.display = "none";
+    list2.style.display = "none";
+    list3.style.display = "none";
+
+    var selected = document.getElementById("sort-options").value;
+    
+    if (selected === "list1") {
+      list1.style.display = "block";
+      
+      let reviewsContainer = document.getElementById("reviewsContainer");
+	  let customerReviewList = reviewsContainer.getElementsByClassName("customer_review_list2") ;
+	  let loadMoreBtn = document.getElementById("loadMoreBtn");
+	 
+	  alert(customerReviewList.length);
+	  let currentIndex = 0;
+	  let step = 5;
+
+	  for (let i = 0 ; i < customerReviewList.length; i++) {
+	    if (i < step) {
+	      customerReviewList[i].style.display = "block";
+	      currentIndex = i + 1;
+	    } else {
+	      customerReviewList[i].style.display = "none";
+	    }
+	  }
+      
+	  loadMoreBtn.addEventListener("click", function() {
+		    for (let i = currentIndex; i < currentIndex + step; i++) {
+		      if (i < customerReviewList.length) {
+		        customerReviewList[i].style.display = "block";
+		      } else {
+		    	  
+//		    	 alert("추가적인 리스트가 없습니다.");
+		    	 break;
+
+		      }
+		    }
+		    currentIndex += step;
+		  });
+      
+    } else if (selected === "list2") {
+      list2.style.display = "block";
+      list1.style.display = "none";
+
+      let reviewsContainer = document.getElementById("reviewsContainer");
+	  let customerReviewList = reviewsContainer.getElementsByClassName("customer_review_list2") ;
+	  let loadMoreBtn = document.getElementById("loadMoreBtn");
+	 
+	  alert(customerReviewList.length);
+	  let currentIndex = 0;
+	  let step = (5+ (customerReviewList.length / 3));
+
+	  for (let i = 0 ; i < customerReviewList.length; i++) {
+	    if (i < step) {
+	      customerReviewList[i].style.display = "block";
+	      currentIndex = i + 1;
+	    } else {
+	      customerReviewList[i].style.display = "none";
+	    }
+	  }
+	  step = 5
+	  loadMoreBtn.addEventListener("click", function() {
+		    for (let i = currentIndex; i < currentIndex + step; i++) {
+		      if (i < customerReviewList.length) {
+		        customerReviewList[i].style.display = "block";
+		      } else {
+		    	  
+//		    	 alert("추가적인 리스트가 없습니다.");
+		    	 break;
+	           /*loadMoreBtn.style.display = "none";
+		        break; */
+		      }
+		    }
+		    currentIndex += step;
+		  });
+    
+
+      
+    } else if (selected === "list3") {
+      list3.style.display = "block";
+      list1.style.display = "none";
+     
+      let reviewsContainer = document.getElementById("reviewsContainer");
+	  let customerReviewList = reviewsContainer.getElementsByClassName("customer_review_list2") ;
+	  let loadMoreBtn = document.getElementById("loadMoreBtn");
+	 
+	  alert(customerReviewList.length);
+	  let currentIndex = 0;
+	  let step = (5+ (customerReviewList.length / 1.5));
+
+	  for (let i = 0 ; i < customerReviewList.length; i++) {
+	    if (i < step) {
+	      customerReviewList[i].style.display = "block";
+	      currentIndex = i + 1;
+	    } else {
+	      customerReviewList[i].style.display = "none";
+	    }
+	  }
+
+	  step = 5
+	  loadMoreBtn.addEventListener("click", function() {
+		    for (let i = currentIndex; i < currentIndex + step; i++) {
+		      if (i < customerReviewList.length) {
+		        customerReviewList[i].style.display = "block";
+		      } else {
+		    	  
+//		    	 alert("추가적인 리스트가 없습니다.");
+		    	 break;
+	           /*loadMoreBtn.style.display = "none";
+		        break; */
+		      }
+		    }
+		    currentIndex += step;
+		  });
+	  
+      
+    }
+  });
+  
+
+  
+</script>

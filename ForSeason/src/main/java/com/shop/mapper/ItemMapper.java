@@ -18,4 +18,7 @@ public interface ItemMapper extends MyMapper<Integer, Item> {
 	public void updateItemhit(Integer item_no) throws Exception;
 	public Integer totalRecord(HashMap<String, Object> curCateMap) throws Exception;
 	
+
+
+
 }
