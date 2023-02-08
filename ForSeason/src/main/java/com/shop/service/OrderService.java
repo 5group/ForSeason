@@ -48,7 +48,7 @@ public class OrderService implements MyService<Integer, Order> {
         order.setShip_cust((String) params.get("ship_cust")); // 받는이 고정 ex) 조민수
         order.setShip_stat((String) params.get("ship_stat")); // 배송 상태 고정 ex) 입고 준비중
         order.setOrder_stat((String) params.get("order_stat")); // 결제 상태 고정 ex) 결제 완료
-        order.setOrder_cp(Integer.parseInt((String) params.get("cou_price")));
+        order.setOrder_cp(Integer.parseInt((String) params.get("cou_price")));//
         mapper.insert(order); // 새로운 오더 테이블 만들어주기
         return order;
     }

@@ -143,8 +143,6 @@
             }).open();
         });
     }
-    alert()
-    alert()
     function requestPay() {
         IMP.init('imp53685653');
         IMP.request_pay({
@@ -172,7 +170,7 @@
                             "ship_stat": "입고 준비중",
                             "order_stat": "결제완료",
                             "coupon_no": coupon_no,
-                            "cou_price": cou_pirce
+                            "cou_price": $(".coupon-select option:selected").text()
                         }),
                     contentType: 'application/json; charset=utf-8'
                 });
