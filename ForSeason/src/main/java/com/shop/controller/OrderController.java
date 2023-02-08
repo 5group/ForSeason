@@ -55,7 +55,11 @@ public class OrderController {
             item_count = cart.getCart_cnt();// cart_no -> stock_no -> color name, size_name
             item = itemService.get(stock.getItem_no()); // 상품 <- -> 재고
             if (index == 0) text += item.getItem_name();
-            tot_price += item.getItem_price() * item_count;
+            if (item.getItem_discnt() == 0){
+                tot_price += item.getItem_price() * item_count;
+            }else {
+                tot_price += (item.getItem_price() - item.getItem_price() * item.getItem_discnt() / 100) * item_count;
+            }
             index += 1;
             itemList.add(item);
             stockList.add(stock);

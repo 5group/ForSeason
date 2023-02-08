@@ -41,7 +41,7 @@ public class StockService implements MyService<Integer, Stock> {
     }
 
     public List<Stock> getItemTotal(String item_name){
-        return mapper.selectItemChart(item_name);
+        return mapper.selectItemTotal(item_name);
     }
 
     public List<Stock> getCateTotal(String cate_name){

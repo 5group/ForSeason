@@ -54,8 +54,10 @@ public class ItemController {
         List<Category> categoryList = categoryService.getTopBySubCategory(cate_no);
         List<Item> itemList = itemService.cateListByItemList(categoryList);
         model.addAttribute("itemList", itemList);
-        for(Item item :itemList) stockService.get();
+        List<Stock> stockList = new ArrayList<Stock>();
+        for(Item item :itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
         session.setAttribute("itemList", itemList);
+        model.addAttribute("stockList", stockList);
         model.addAttribute("center", dir + "center");
         model.addAttribute("center2", "/chartList/cateCenter");
         return "main";
@@ -66,7 +68,11 @@ public class ItemController {
     public String midCateItem(Model model, @PathVariable("midCate_no") int midCate_no) throws Exception{
         List<Category> categoryList = categoryService.getMidBySubCategory(midCate_no);
         List<Item> itemList = itemService.cateListByItemList(categoryList);
+        List<Stock> stockList = new ArrayList<Stock>();
         session.setAttribute("itemList", itemList);
+        for(Item item :itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
+        System.out.println("stockList"+stockList);
+        model.addAttribute("stockList", stockList);
         model.addAttribute("itemList", itemList);
         model.addAttribute("center", dir + "center");
         model.addAttribute("center2", "/chartList/cateCenter");
@@ -76,7 +82,10 @@ public class ItemController {
     @RequestMapping("/itemCate_no={itemCate_no}")
     public String botItem(Model model, @PathVariable("itemCate_no") int cate_no) throws Exception {
         List<Item> itemList = itemService.getCateList(cate_no);
+        List<Stock> stockList = new ArrayList<Stock>();
         session.setAttribute("itemList", itemList);
+        for(Item item :itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
+        model.addAttribute("stockList", stockList);
         model.addAttribute("itemList", itemList);
         model.addAttribute("center", dir + "center");
         model.addAttribute("center2", "/chartList/cateCenter");

@@ -88,7 +88,12 @@
                                 <tr th:each="item, stat:${itemList}">
                                     <td th:text="|${item.item_name} ${stockList[stat.index].size_name}&${stockList[stat.index].color_name}|"><strong class="mx-2"></strong></td>
                                     <td th:text="${cartList[stat.index].cart_cnt}"><strong class="mx-2"></strong></td>
-                                    <td th:text="${item.item_price * cartList[stat.index].cart_cnt}"></td>
+                                    <td th:if="${item.item_discnt == 0}">
+                                        <ta th:text="${item.item_price * cartList[stat.index].cart_cnt}"></ta>
+                                    </td>
+                                    <td th:if="${item.item_discnt != 0}">
+                                        <ta th:text="${(item.item_price - item.item_price*item.item_discnt/100)* cartList[stat.index].cart_cnt}"></ta>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="text-black font-weight-bold" style="width:280px; line-height:35px;"><strong>주문 총액</strong></td>
@@ -138,7 +143,8 @@
             }).open();
         });
     }
-
+    alert()
+    alert()
     function requestPay() {
         IMP.init('imp53685653');
         IMP.request_pay({
@@ -147,9 +153,9 @@
             merchant_uid: '1' + new Date(),
             name: '[[${item_name}]]',
             amount: item_tot,
-            buyer_email: 'test@naver.com',
+            buyer_email: $("#c_email_address").val(),
             buyer_name: $('input[name="user_name"]').val(),
-            buyer_tel: '010-1234-5678',
+            buyer_tel: $("#c_phone").val(),
             buyer_addr: address,
             buyer_postcode: zonecode
         }, function (rsp) {
@@ -160,7 +166,7 @@
                     data:
                         JSON.stringify({
                             "order_tot": rsp.paid_amount,
-                            "order_pay": "카카오페이",
+                            "order_pay": rsp.pay_method,
                             "ship_addr": rsp.buyer_addr,
                             "ship_cust": $('input[name="ship_cust"]').val(),
                             "ship_stat": "입고 준비중",
@@ -191,6 +197,7 @@
             type: "get",
             url: "/couponList",
             success: function (coulist) {
+
                 var htmls = ""
                 if (coulist == 0) {
                     htmls += "보유한 쿠폰이 없습니다."

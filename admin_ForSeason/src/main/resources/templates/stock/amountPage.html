@@ -1,0 +1,42 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<table>
+    <thead>
+    <tr>
+        <form id="register_form">
+            <input type="hidden" name="stock_no" th:value="${stock.stock_no}"/>
+            <input type="hidden" name="item_no" th:value="${stock.item_no}"/>
+            <input type="hidden" name="size_no" th:value="${stock.size_no}"/>
+            <input type="hidden" name="color_no" th:value="${stock.color_no}"/>
+            <td th:text="|아이템 번호: ${stock.item_no}|"></td>
+            <td th:text="|사이즈 번호: ${stock.size_no}|"></td>
+            <td th:text="|컬러 번호: ${stock.color_no}|"></td>
+            <td>
+                재고 : <input type="text" id="stock_amount" name="amount" th:value="${stock.amount}">
+                <a href="#" onclick="testSend()">수정하기</a>
+            </td>
+        </form>
+    </tr>
+    </thead>
+</table>
+<script>
+    function testSend() {
+        var c = confirm('수정 하시겠습니까?');
+        if (c == true) {
+            $.ajax({
+                url: '[[@{/updateAmount}]]',
+                type: 'post',
+                data: {
+                    "stock_no": $('input[name="stock_no"]').val(),
+                    "item_no": $('input[name="item_no"]').val(),
+                    "size_no": $('input[name="size_no"]').val(),
+                    "color_no": $('input[name="color_no"]').val(),
+                    "amount": $('input[name="amount"]').val()
+                },
+                success: function () {
+                    window.close();
+                }
+            });
+        }
+    }
+</script>
