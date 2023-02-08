@@ -64,7 +64,7 @@
         console.log("test");
         $.ajax({
             url: "[[@{/stockList}]]",
-            data: {'sm': sm, 'em': em, 'index': 0, 'name': "null"},
+            data: {'sm': sm, 'em': em},
             success: function (data) {
                 displaychart(data);
             }

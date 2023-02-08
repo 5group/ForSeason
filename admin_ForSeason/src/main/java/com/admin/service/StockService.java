@@ -48,16 +48,9 @@ public class StockService implements MyService<Integer, Stock> {
         return mapper.selectCateChart(cate_name);
     }
 
-    public List<Stock> getChartList(int index, String name, String sm, String em) throws Exception {
-        switch (index){
-            case 1:
-                return getItemTotal(name);
-            case 2:
-                return getCateTotal(name);
-            default:
-                return mapper.selectChart(sm, em);
+    public List<Stock> getChartList(String sm, String em) throws Exception {
+            return mapper.selectChart(sm, em);
         }
-    }
 
     public List<Stock> getAdminMainList(){
         return mapper.selectAdminMain();

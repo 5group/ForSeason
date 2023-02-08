@@ -30,8 +30,8 @@ public class DataController {
     DateFormat sbFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @RequestMapping("/stockList")
-    public Object stockList(String sm, String em, int index, String name) throws Exception {
-        List<Stock> stockList = stockService.getChartList(index, name, sm, em);
+    public Object stockList(String sm, String em) throws Exception {
+        List<Stock> stockList = stockService.getChartList(sm, em);
         JSONObject jObject = new JSONObject();
         List<Integer> totalList = new ArrayList<Integer>();
         JSONArray dateList = new JSONArray();
@@ -69,12 +69,5 @@ public class DataController {
         jObject.put("dayTotal", totalList);
         System.out.println(jObject);
         return jObject;
-    }
-
-
-    @RequestMapping("/itemPiChart")
-    public Object itemPiChart() {
-
-        return null;
     }
 }

@@ -54,8 +54,8 @@ public class ItemController {
         List<Category> categoryList = categoryService.getTopBySubCategory(cate_no);
         List<Item> itemList = itemService.cateListByItemList(categoryList);
         model.addAttribute("itemList", itemList);
+        for(Item item :itemList) stockService.get();
         session.setAttribute("itemList", itemList);
-        System.out.println(itemList);
         model.addAttribute("center", dir + "center");
         model.addAttribute("center2", "/chartList/cateCenter");
         return "main";
