@@ -19,11 +19,10 @@ public class Paging {
 		
 		@Override
 		public String toString() {
-			return "PagingVO [nowPage=" + nowPage + ", onePageRecord=" + onePageRecord + ", totalRecord=" + totalRecord
+			return "PagingDTO [nowPage=" + nowPage + ", onePageRecord=" + onePageRecord + ", totalRecord=" + totalRecord
 					+ ", totalPage=" + totalPage + ", limitStart=" + limitStart + ", onePageCount=" + onePageCount + ", startPage=" + startPage
 					+ ", selectRecord=" + selectRecord + ", searchWord=" + searchWord + ", orderBy=" + orderBy + "]";
-		}
-		
+		}		
 		
 		
 		public int getLimitStart() {
@@ -32,7 +31,6 @@ public class Paging {
 		public void setLimitStart(int nowPage) {
 			this.limitStart = (nowPage-1)*onePageRecord;
 		}
-
 
 
 		public int getNowPage() {
@@ -59,10 +57,6 @@ public class Paging {
 			//총페이지수 구하기	    //무조건 올림    //4.1->5.0->5
 			totalPage=(int)Math.ceil((double)totalRecord/onePageRecord); 
 			
-			//마지막페이지에 남아 있는 레코드 수
-			// 한페이지에 5개의 레코드를 선택시 남아 있는 레코드 수는  1,2,3,4,5
-			
-			// 총 레코드수 % 한페이지당 표시할 레코드 수 = 0(->5),1,2,3,4
 			selectRecord=totalRecord%onePageRecord;
 			if(selectRecord==0) {
 				selectRecord=onePageRecord;

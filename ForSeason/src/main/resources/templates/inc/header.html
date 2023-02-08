@@ -40,13 +40,12 @@
               <div class="site-top-icons">	
                 <ul>
                   <li th:if="${session.loginUser!=null}" th:text="${session.loginUser.user_name}+'님'"></li>
-                  <!-- <li><a href="#"><span class="icon icon-exit_to_app"></span></a></li> -->
                   <li th:if="${session.loginUser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
                   <li th:if="${session.loginUser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
                   <li th:if="${session.loginUser!=null}"><a th:href="@{/myPage}"><span class="icon icon-person"></span></a></li>
-                  <li th:if="${session.loginUser!=null}"><a th:href="@{/}"><span class="icon icon-heart"></span></a></li>
+                  <li th:if="${session.loginUser!=null}"><a th:href="@{/myWishList}"><span class="icon icon-heart"></span></a></li>
                   <li>
-                    <a th:if="${session.cartList!=null}" th:href="@{/cart}" class="site-cart">
+                    <a th:if="${session.loginUser!=null}" th:href="@{/cart}" class="site-cart">
                       <span class="icon icon-shopping_cart"></span>
                       <span class="count" th:if="${#lists.size(session.cartList)==0}">0</span>
                       <span class="count" th:if="${#lists.size(session.cartList)!=0}" th:text="${#lists.size(session.cartList)}">0</span>

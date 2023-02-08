@@ -1,0 +1,43 @@
+<style>
+	.myInfoLabel{
+		border-bottom: 2px solid black;
+		padding-bottom: 10px;
+		margin-bottom:30px;
+		color:#5D5D5D;
+	}
+	.myOrderTable{
+		border: 1px solid #cccccc;
+	}
+	#cartTableHeader > th{
+		font-size:16px;
+	}
+	#myOrderBody td{
+		font-size:14.5px;
+	}
+	#myOrderBody a{
+		text-decoration: underline;
+	}
+</style>
+<div class="col-md-9">
+<h1 class="myInfoLabel">나의 쿠폰</h1>
+<div class="site-blocks-table">
+<table class="table table-bordered">
+	<thead>
+   	 	<tr id="cartTableHeader"> 
+        	<th>쿠폰명</th>
+        	<th>쿠폰금액</th>
+        	<th>유효기간</th>
+    	</tr>
+	</thead>
+<tbody id="myOrderBody">
+    <tr th:each="o:${session.coupon}" th:if="${o.cou_status == 1}">
+     	<input class="cou_no" type="hidden" name="cou_no" th:value="${o.cou_no}">
+        <input class="cou_price" type="hidden" name="cou_price" th:value="${o.cou_price}">
+        <td th:text="${o.cou_name}"></td>
+        <td th:text="${o.cou_price}"></td>
+        <td th:text="${#dates.format(o.cou_rdate, 'yyyy-MM-dd')}"></td>
+    <tr/>
+</tbody>
+</table>
+</div>
+</div>

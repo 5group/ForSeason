@@ -15,10 +15,20 @@
         VALUES (#{wish_no}, #{user_no}, #{item_no})
     </insert>
     <update id="update" parameterType="WishList">
-        UPDATE wishlist SET item_price=#{item_price}, item_discnt=#{item_discnt}, item_info=#{item_info}, item_img=#{item_img} WHERE item_no=#{item_no}
+        UPDATE wishlist SET user_no=#{user_no}, item_no=#{item_no} WHERE wish_no=#{wish_no}
     </update>
     <delete id="delete" parameterType="Integer">
         DELETE FROM wishlist WHERE wish_no=#{wish_no}
     </delete>
+    
+    <delete id="deleteUserWish" parameterType="WishList">
+        DELETE FROM wishlist WHERE user_no=#{user_no} AND item_no=#{item_no}
+    </delete>
+    <select id="checkUserWish" parameterType="WishList" resultType="WishList">
+    	SELECT * FROM wishlist WHERE user_no=#{user_no} AND item_no=#{item_no}
+    </select>
+    <select id="selectList" parameterType="Integer" resultType="WishList">
+        SELECT * FROM wishlist where user_no=#{user_no}
+    </select>
 
 </mapper>

@@ -23,5 +23,9 @@
     <delete id="delete" parameterType="Integer">
         DELETE FROM cart WHERE cart_no=#{cart_no}
     </delete>
+    
+    <select id="checkCartList" parameterType="Cart" resultType="Cart">
+    	SELECT * FROM cart WHERE user_no=#{user_no} AND stock_no=#{stock_no}
+    </select>
 
 </mapper>

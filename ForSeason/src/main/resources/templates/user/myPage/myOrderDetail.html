@@ -1,0 +1,51 @@
+<!-- 초기화화면은 주문내역 -->
+<style>
+	.myInfoLabel{
+		border-bottom: 2px solid black;
+		padding-bottom: 10px;
+		margin-bottom:30px;
+		color:#5D5D5D;
+	}
+	.myOrderTable{
+		border: 1px solid #cccccc;
+	}
+	#cartTableHeader > th{
+		font-size:16px;
+	}
+	#myOrderBody td{
+		font-size:14.5px;
+	}
+</style>
+<div class="col-md-9">
+<h1 class="myInfoLabel">주문상세내역</h1>
+<div class="site-blocks-table">
+<a th:href="@{/myOrder}" style="display: block; margin-bottom:10px; text-decoration:underline;">뒤로가기</a>
+<table class="table table-bordered">
+	<thead>
+   	 	<tr id="cartTableHeader"> 
+        	<th>주문번호</th>
+        	<th>갯수</th>
+        	<th>가격</th>
+        	<th>할인율</th>
+        	<th>상품명</th>
+        	<th>색상</th>
+        	<th>사이즈</th>
+    	</tr>
+	</thead>
+<tbody id="myOrderBody">
+	<tr th:each="od:${session.od}" th:if="${order_no == od.order_no}">
+	   <td th:text="${od.order_no}"></td>
+	   <td th:text="${od.od_cnt}"></td>
+	   <td th:text="${od.od_price}"></td>
+	   <td th:text="${od.od_dicnt}"></td>
+	   <td th:text="${od.item_name}"></td>
+	   <td th:text="${od.color_name}"></td>
+	   <td th:text="${od.size_name}"></td>
+	</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+  

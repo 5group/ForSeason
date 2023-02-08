@@ -69,22 +69,35 @@
 			$("#buyQtt").val(curqtt+1);
 			return;
 		}
-	}
-	
+	}	
 
 	$(document).ready(function(){
+		item_no=$("#item_no").val();
+		
+		/*<![CDATA[*/
+		var checkWish = "[[${checkWish}]]";	
+		/*]]>*/
+		if(checkWish=='Yes'){
+			var $likeBtn =$('.icon.heart');
+			$likeBtn.toggleClass('active');
+        	if($likeBtn.hasClass('active')){          
+          	 	$('.icon.heart').find('img').attr({
+              	   'src': 'https://cdn-icons-png.flaticon.com/512/803/803087.png',
+               		alt:'찜하기 완료'
+           		}); 
+        	}
+		}
+		
 		 /*<![CDATA[*/
 	    var info = "[[${item.item_info}]]";
+	    /*]]>*/
 	    console.log(info);
 	    info = info.replaceAll('※', '<br>※');
 	    const el = document.querySelector("#itemInfo")
 	    el.insertAdjacentHTML('afterbegin', '<p>'+info+'</p>'); 
-	    // 타켓 요소 다음(자식요소)에 생성 - 시작 태그의 뒤(자식 요소로) 
-	    /*]]>*/
 	    
-		$('.colorli').click(function(){    //컬러 클릭했을 때 이미지 바뀌어야 함, 재고(사이즈) 어떤거 있는지 확인해야 함
+		$('.colorli').click(function(){    //컬러 클릭했을 때 이미지 바뀌기, 재고(사이즈) 어떤거 있는지 확인
 			color_no=this.getAttribute("value");  //클릭한 컬러의 넘버
-			item_no=$("#item_no").val();  //현재 아이템 넘버
 			var color_index=$(this).children('input').val();
 
 		    /*<![CDATA[*/
@@ -113,12 +126,14 @@
 			$(this).css('border-bottom', '3px solid black');
 			$("input:radio[name=shop-sizes]").prop('checked', false);
 		})
+		
 		$("input:radio[name=shop-sizes]").click(function(){
 			if($("#color_no").val()==0){
 				alert("색상을 먼저 선택해주세요.");
 				$("input:radio[name=shop-sizes]").prop('checked', false);
 				return;
 			}
+			
 			size_no=this.getAttribute("value");
 			$("#size_no").val(size_no);
 		})
@@ -136,10 +151,11 @@
 				alert("필수옵션을 선택해주세요.");
 				return;
 			}
-			item_no=$("#item_no").val();
+	
 			color_no=$("#color_no").val();
 			size_no=$("#size_no").val();
 			cart_cnt=$("#buyQtt").val();
+			
 			$.ajax({
 				url:'[[@{/cartInsert}]]',
 				data: {"item_no":item_no, "color_no":color_no, "size_no":size_no, "cart_cnt":cart_cnt}, //서버 컨트롤러에 데이터 전송
@@ -147,9 +163,12 @@
 					if(data == 0){
 						alert("장바구니에 담겼습니다.");
 					}else{
-						alert("문제발생");
+						alert("이미 장바구니에 담긴 상품입니다.");
 					}
-				}
+				},
+                error: function () {
+                    alert("error");
+                }
 			});	 
 		});	  
 	
@@ -168,6 +187,7 @@
 				alert("로그인이 필요합니다.");
 				return;
 			}
+    		
         	$likeBtn.toggleClass('active');
 
         	if($likeBtn.hasClass('active')){          
@@ -175,12 +195,35 @@
               		'src': 'https://cdn-icons-png.flaticon.com/512/803/803087.png',
                		alt:'찜하기 완료'
            		});
+          	 	
+          	 	$.ajax({
+    				url:'[[@{/insertWish}]]',
+    				data: {"item_no":item_no}, //서버 컨트롤러에 데이터 전송
+    				success: function () {
+   	                    alert("관심상품에 등록했습니다.");
+   	                },
+   	                error: function () {
+   	                    alert("error");
+   	                }
+    			});	 
+          	 	
         	}else{
             	$(this).find('i').removeClass('fas').addClass('far')
            		$(this).find('img').attr({
               		'src': 'https://cdn-icons-png.flaticon.com/512/812/812327.png',
               		alt:"찜하기"
            		})
+           		
+           		$.ajax({
+    				url:'[[@{/deleteWish}]]',
+    				data: {"item_no":item_no}, //서버 컨트롤러에 데이터 전송
+    				success: function () {
+   	                    alert("관심상품 등록을 해제했습니다.");
+   	                },
+   	                error: function () {
+   	                    alert("error");
+   	                }
+    			});	 
         	}	
 	    })
 	})

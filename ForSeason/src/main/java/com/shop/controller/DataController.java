@@ -7,20 +7,30 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.shop.dto.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.shop.dto.Cart;
+import com.shop.dto.Color;
+import com.shop.dto.Coupon;
+import com.shop.dto.Item;
+import com.shop.dto.Size;
+import com.shop.dto.Stock;
+import com.shop.dto.User;
+import com.shop.dto.WishList;
 import com.shop.service.CartService;
 import com.shop.service.ColorService;
 import com.shop.service.ItemService;
 import com.shop.service.StockService;
+import com.shop.service.UserService;
+import com.shop.service.WishListService;
 
 @RestController
 public class DataController {
@@ -42,6 +52,12 @@ public class DataController {
 
     @Autowired
     ColorService colorService;
+    
+    @Autowired
+    UserService userService;
+    
+    @Autowired
+    WishListService wishListService;
 
 
     @RequestMapping(value = "/couponList", method = RequestMethod.GET)
@@ -94,16 +110,29 @@ public class DataController {
         System.out.println(orderCartList);
         session.setAttribute("orderCartList", orderCartList);
     }
+    
+    @RequestMapping(value = "/insertWish", method = RequestMethod.GET)
+    public void insertWish(int item_no) throws Exception {
+    	System.out.println(item_no);
+    	User u = (User) session.getAttribute("loginUser");
+    	WishList wishList = new WishList(0, u.getUser_no(), item_no);
+    	wishListService.register(wishList);
+    }
+    
+    @RequestMapping(value = "/deleteWish", method = RequestMethod.GET)
+    public void deleteWish(int item_no) throws Exception {
+    	System.out.println("deleteWish:"+item_no);
+    	User u = (User) session.getAttribute("loginUser");
+    	WishList wishList = new WishList(0, u.getUser_no(), item_no);
+    	wishListService.deleteUserWish(wishList);
+    }
 
     @RequestMapping("/cartInsert")
     public Object cartinsert(int item_no, int color_no, int size_no, int cart_cnt) throws Exception {
         int result = 0;
-        System.out.println(item_no + ", " + color_no + ", " + size_no + ", " + cart_cnt);
-        //장바구니 DB 넣기
         
         User user = (User)session.getAttribute("loginUser");
 
-        //(item객체랑 사이즈객체랑 색상객체를 넣어줘서 한꺼번에)
         HashMap<String, Integer> map = new HashMap<String, Integer>();
         map.put("item_no", item_no);
         map.put("color_no", color_no);
@@ -111,9 +140,14 @@ public class DataController {
 
         int stock_no = stockService.getStockNo(map);
         Cart cart = new Cart(0, stock_no, user.getUser_no(), cart_cnt, null);
-        System.out.println(stock_no);
-        cartService.register(cart);
 
+        Cart checkCart = cartService.checkCartList(cart);
+        if(checkCart != null) { //카트에 이미 담겨있으면 카트DB에 넣지 말고 return하기
+        	result=1;
+        	return result;
+        }
+        
+        cartService.register(cart);
         
         List<Cart> cart_list = cartService.get_list(user.getUser_no());
         session.setAttribute("cartList", cart_list); // test를 위한 sesstion 처리
@@ -145,5 +179,39 @@ public class DataController {
         jo.put("colorStock", colorStock);
 
         return jo;
+    }
+    
+    @RequestMapping("/checkUserPwd")
+    public Object checkPwd(String user_pwd, Model model) throws Exception {
+    	int result=0;
+    	
+    	User user = (User) session.getAttribute("loginUser");
+        String pwd = user.getUser_pwd();
+        if (pwd.equals(user_pwd)) {
+        	System.out.println("성공...checkPwd");
+        	result=1;
+        }else {
+        	System.out.println("실패...checkPwd");
+        }
+    	
+    	return result;
+    }
+    
+    @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
+    public void infoUpdate(User info_user) throws Exception{
+        System.out.println("dc_updateInfo:"+info_user);
+        
+        User u = (User) session.getAttribute("loginUser");
+        
+        u.setUser_id(u.getUser_id());
+        u.setUser_email(info_user.getUser_email());
+        u.setUser_name(info_user.getUser_name());
+        u.setUser_phone(info_user.getUser_phone());
+        u.setUser_address(info_user.getUser_address());
+        userService.modify(u);
+        
+        session.setAttribute("loginUser", u);
+        
+        System.out.println(session.getAttribute("loginUser"));
     }
 }

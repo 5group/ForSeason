@@ -1,0 +1,133 @@
+<style>
+.loginsection{
+	padding-top: 70px;
+	border-top: 1px solid #f3f3f4;
+}
+.logincontainer{
+	width:400px;
+	padding-bottom: 20px;
+}
+
+.loginh2{
+	margin: 30px auto;
+	text-align: center;
+	color: #6B6B6B;
+	border-bottom: 2px solid black;
+	padding-bottom: 20px;
+}
+.inputdiv, .genderdiv{
+	width: 360px;
+	margin:0px auto;
+}
+.inputdiv > input{
+	width: 360px;
+	height: 40px;
+	margin: 8px auto;
+}
+.genderdiv > input{
+	margin: 15px 0px 0px 20px;
+}
+.buttondiv{
+	text-align:center;
+	margin-top: 30px;
+}
+.buttondiv > button{
+	background: black;
+	color: white;
+	width: 100px;
+	height: 40px;
+}
+
+#email_span, #pwd_span, #phone_span{
+	font-size: 12px;
+}
+</style>
+
+<script>
+    var address;
+    window.onload = function () {
+        document.getElementById("address_kakao").addEventListener("click", function () { //주소입력칸을 클릭하면
+            //카카오 지도 발생
+            new daum.Postcode({
+                oncomplete: function (data) { //선택시 입력값 세팅
+                    document.getElementById("address_kakao").value = data.address; // 주소 넣기
+                    address = data.address;
+                }
+            }).open();
+        });
+    }
+    var patternPhone = /01[016789]-[^0][0-9]{2,3}-[0-9]{3,4}/;
+    var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    var phone_bol = true;
+    var email_bol = true;
+    $(document).ready(function () {
+        $("input[name='user_phone']").keyup(function () {
+            if (!patternPhone.test($("input[name='user_phone']").val())) {
+            	$('#phone_span').text("번호 형식이 맞지 않습니다. EX) 010-1234-5678");
+                $('#phone_span').css("color", "red");
+                phone_bol = false;
+            } else {
+            	$('#phone_span').text("");
+                phone_bol = true;
+            }
+        });
+        $("input[name='user_email']").keyup(function (){
+            if(!regExpEmail.test($("input[name='user_email']").val())){
+            	$('#email_span').text("메일형식이 맞지 않습니다.");
+                $('#email_span').css("color", "red");
+                email_bol = false;
+            }else{
+            	$('#email_span').text("");
+                email_bol = true;
+            }
+        });
+
+        $('#register_form > .buttondiv > button').click(function () {
+            var c = confirm('회원정보를 변경하시겠습니까?');
+            if (c == true) {
+                if (phone_bol == false || email_bol == false) {
+                	alert("회원정보를 다시 확인해주세요.");
+                    return false;
+                }else{
+                $.ajax({
+                    url: '[[@{/updateInfo}]]',
+                    type: 'post',
+                    data: {
+                        "user_email": $('input[name="user_email"]').val(),
+                        "user_name": $('input[name="user_name"]').val(),
+                        "user_phone": $('input[name="user_phone"]').val(),
+                        "user_address": $('input[name="user_address"]').val()
+                    },
+                    success: function () {
+                    	alert("회원정보가 변경되었습니다.");
+                    	location.replace('/myPage'); 
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
+            }
+        });
+
+    });
+</script>
+
+<div class="site-section site-blocks-2 loginsection">
+	<div class="container logincontainer">
+          <h2 class="loginh2">개인정보변경</h2>
+          <form id="register_form">
+          	<div class="inputdiv"><input type="text" name="user_email" th:value="${user.user_email}" placeholder="E-mail"><span id="email_span"></span></div>
+          	<div class="inputdiv"><input type="text" name="user_name" th:value="${user.user_name}" placeholder="Name"></div>
+          	<div class="inputdiv"><input type="text" name="user_phone" th:value="${user.user_phone}" placeholder="Phone"><span id="phone_span"></span></div>
+          	<div class="inputdiv"><input type="text" id="address_kakao" name="user_address" th:value="${user.user_address}" placeholder="Address" readonly></div>
+          	<div class="buttondiv"><button>확인</button></div>
+          </form>
+	</div>
+</div>
+
+
+	
+	
+
+

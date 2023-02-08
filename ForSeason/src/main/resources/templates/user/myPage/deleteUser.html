@@ -1,0 +1,73 @@
+<style>
+.loginsection{
+	padding-top: 70px;
+	border-top: 1px solid #f3f3f4;
+}
+.logincontainer{
+	width:610px;
+	/* height:400px;  */
+	border-top:1px solid #cccccc;
+	padding-bottom: 20px;
+	text-align: center;
+}
+.loginh2{
+	margin: 30px auto;
+	color: #6B6B6B;
+	text-weight:bold;
+}
+.logincontainer > h5{
+	color: black;
+	margin-bottom: 20px;
+}
+.buttonspan1 > button{
+	background: white;
+	color: black;
+	width: 150px;
+	height: 40px;
+	cursor:pointer;
+}
+.buttonspan2 > button{
+	background: black;
+	color: white;
+	width: 150px;
+	height: 40px;
+	cursor:pointer;
+}
+</style>
+<script>
+
+$(document).ready(function () { 
+    var user_pwd = "";
+    
+    $("input[type='password']").keyup(function () {
+        user_pwd = $('input[name="user_pwd"]').val();
+    });
+    
+    /*<![CDATA[*/
+		var loc="[[${loc}]]";
+    /*]]>*/ 
+    
+    $("input[type='password']").keyup(function () {
+        user_pwd = $('input[name="user_pwd"]').val();
+    });
+    $('.buttonspan1 > button').click(function () {          
+    	location.href='/myPage';
+    });
+    $('.buttonspan2 > button').click(function () {          
+    	location.href='/user/deleteUser';
+    });
+});
+</script>
+
+<div class="site-section site-blocks-2 loginsection">
+	<div class="container logincontainer">
+          <h2 class="loginh2">회원탈퇴</h2>
+          <h5>그동안 이용해주셔서 감사합니다.</h5>
+          <span class="buttonspan1"><button>취소</button></span>
+          <span class="buttonspan2"><button>확인</button></span>
+	</div>
+</div>
+
+
+	
+	

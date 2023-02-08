@@ -49,4 +49,8 @@ public class CartService implements MyService<Integer, Cart> {
         }
         return get_list(user_no);
     }
+    
+    public Cart checkCartList(Cart cart) throws Exception{
+    	return mapper.checkCartList(cart);
+    }
 }

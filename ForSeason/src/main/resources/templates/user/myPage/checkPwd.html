@@ -1,0 +1,90 @@
+<style>
+.loginsection{
+	padding-top: 70px;
+	border-top: 1px solid #f3f3f4;
+}
+.logincontainer{
+	width:610px;
+	/* height:400px;  */
+	/*border-top:1px solid #cccccc;*/
+	padding-bottom: 20px;
+}
+#register_form{
+	border:1px solid #cccccc;
+	padding: 50px 0px 50px;
+}
+.loginh2{
+	margin: 30px auto;
+	text-align: center;
+	color: #6B6B6B;
+	text-weight:bold;
+}
+.inputdiv{
+	width: 360px;
+	margin:0px auto;
+}
+.inputdiv > input{
+	width: 360px;
+	height: 40px;
+	margin: 5px auto;
+}
+.buttondiv{
+	text-align:center;
+	margin-top: 20px;
+}
+.buttondiv > button{
+	background: black;
+	color: white;
+	width: 150px;
+	height: 40px;
+}
+</style>
+<script>
+
+$(document).ready(function () { 
+    var user_pwd = "";
+    
+    $("input[type='password']").keyup(function () {
+        user_pwd = $('input[name="user_pwd"]').val();
+    });
+    
+    /*<![CDATA[*/
+		var loc="[[${loc}]]";
+    /*]]>*/ 
+    
+    $("input[type='password']").keyup(function () {
+        user_pwd = $('input[name="user_pwd"]').val();
+    });
+    $('.buttondiv > button').click(function () {          
+          $.ajax({
+      		url:'[[@{/checkUserPwd}]]',
+      		data: {"user_pwd": user_pwd}, //서버 컨트롤러에 데이터 전송
+      		success:function(data){
+      			if(data==1){
+      				location.replace('/'+loc+'View'); 
+      			}else{
+      				alert("비밀번호를 다시 확인해주세요.");
+      				location.replace('/checkPwd?loc='+loc); 
+      			}
+      		},error: function () {
+      			alert("error");
+      	    }
+      	});	
+    });
+});
+</script>
+
+<div class="site-section site-blocks-2 loginsection">
+	<div class="container logincontainer">
+          <h2 class="loginh2">비밀번호 확인</h2>
+          <p>고객님의 개인정보를 안전하게 보호하기 위해 다시 한번 비밀번호를 입력해주세요.</p>
+          <form id="register_form">
+          	<div class="inputdiv"><input type="password" name="user_pwd" placeholder="Password"></div>
+          	<div class="buttondiv"><button>확인</button></div>
+          </form>
+	</div>
+</div>
+
+
+	
+	

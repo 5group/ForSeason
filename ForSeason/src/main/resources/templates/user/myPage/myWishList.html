@@ -1,0 +1,74 @@
+<style>
+	.myInfoLabel{
+		border-bottom: 2px solid black;
+		padding-bottom: 10px;
+		margin-bottom:30px;
+		color:#5D5D5D;
+	}
+	.myOrderTable{
+		border: 1px solid #cccccc;
+	}
+	#cartTableHeader > th{
+		font-size:16px;
+		padding: 10px 10px 10px;
+	}
+	#myOrderBody td{
+		font-size:14.5px;
+	}
+	#myOrderBody a{
+		text-decoration: underline;
+	}
+</style>
+<div class="col-md-9">
+<h1 class="myInfoLabel">관심상품</h1>
+<div class="site-blocks-table">
+<table class="table table-bordered">
+	<thead>
+   	 	<tr id="cartTableHeader"> 
+        	<th class="cart-name">번호</th>
+	        <th class="product-name">상품 이름</th>
+	        <th class="product-price">상품가격</th>
+	        <th class="product-remove">선택</th>
+    	</tr>
+	</thead>
+	<tbody id="myOrderBody">
+		<tr th:each="wish, stat:${wish}">
+	        <td class="cart-name" style="padding:0px; width:80px;"><h2 class="h5 text-black" th:text="${stat.count}"></h2></td>
+	        <td class="product-name" th:text="${item[stat.index].item_name}"></td>
+	        <td class="product-price" th:value="${item[stat.index].item_price}" th:text="${item[stat.index].item_price}"></td>
+	        <td style="padding:0px; width:130px;">
+	        	<button class="product-detailPage btn-primary btn-sm" type="button" th:id="${wish.wish_no}" style="border: 0px;" th:onclick="|location.href='@{/itemdetail?item_no=}${item[stat.index].item_no}'|">이동</button>
+	            <button class="product-remove btn-primary btn-sm" type="button" th:id="${wish.wish_no}" style="border: 0px;">삭제</button>
+	        </td>
+	    </tr>
+	</tbody>
+</table>
+</div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {   //나중에 전체 삭제 추가할 수도 있음
+        // 개별 상품 'X' 버튼 (삭제)
+        let removeBtns = document.querySelectorAll('.product-remove');
+        removeBtns.forEach((button) => {
+            button.addEventListener('click', (e) => {
+                // 해당 wishProductId를 데이터베이스에서 삭제하고 wishList 페이지로 이동
+                let wishProductId = e.target.id;
+                console.log(wishProductId);
+                $.ajax({
+                    url: '[[@{/deleteWish}]]',
+    				data: {
+    					"item_no":wishProductId
+    				}, //서버 컨트롤러에 데이터 전송
+    				success: function () {
+    					location.href = "[[@{/myWishList}]]"
+                        console.log("success")
+   	                },
+   	                error: function () {
+   	                 	console.log("error")
+                     	alert("error")
+   	                }
+                })
+            })
+        });
+    });
+</script>

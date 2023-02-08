@@ -82,6 +82,11 @@ public class OrderController {
             couponService.useCoupon(Integer.parseInt(coupon_no));//쿠폰 상태 변환
         List<Cart> cartList = cartService.setCartList(user.getUser_no(), list);
         session.setAttribute("cartList", cartList);
+        System.out.println(cartList);
+        
+        List<Order> order_list = orderService.get_list(user.getUser_no());
+        session.setAttribute("order", order_list);
+        
         return "main";
     }
 

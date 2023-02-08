@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -17,10 +19,13 @@ import com.shop.dto.Color;
 import com.shop.dto.Item;
 import com.shop.dto.Paging;
 import com.shop.dto.Size;
+import com.shop.dto.User;
+import com.shop.dto.WishList;
 import com.shop.service.CategoryService;
 import com.shop.service.FileService;
 import com.shop.service.ItemService;
 import com.shop.service.StockService;
+import com.shop.service.WishListService;
 
 @Controller
 public class ItemController {
@@ -36,6 +41,9 @@ public class ItemController {
 
     @Autowired
     CategoryService categoryService;
+    
+    @Autowired
+    WishListService wishListService;
 
     @Autowired
     FileService fileService;
@@ -72,24 +80,13 @@ public class ItemController {
 	        curCatePath = categoryService.getCurCategory(curItemInfoMap);
         }
        
-        
-        //초기화 값은 ("") 공백
-        System.out.println("searchWord= "+paging.getSearchWord());
-        //curItemInfoMap.put("searchWord", searchWord);
-        
-        //정렬은 항상 적용(초기화 값은 최신순)
-        System.out.println("orderBy= "+paging.getOrderBy()); 
-    	curItemInfoMap.put("paging", paging);
-    	
-    	System.out.println("pagingDTO:" + paging);
-    	paging.setTotalRecord(itemservice.totalRecord(curItemInfoMap));  //totalRecord set
+        System.out.println("pagingDTO:" + paging);
+        curItemInfoMap.put("paging", paging); 
+    	paging.setTotalRecord(itemservice.totalRecord(curItemInfoMap));
     	paging.setLimitStart(paging.getNowPage());
-    	System.out.println("chage_pagingDTO:" + paging);
     	curItemInfoMap.put("paging", paging);
-    	
-        System.out.println(curItemInfoMap);
-       
-        
+    	System.out.println("chage_pagingDTO:" + paging);
+    	       
         itemList = itemservice.getItemList(curItemInfoMap);   //조건에 해당하는 아이템리스트 뽑아오기
         
 
@@ -103,12 +100,8 @@ public class ItemController {
                 titleImgList.put(i.getItem_no(), titleImg);
             }
         }
-        
-        System.out.println();
-        
-        
+ 
         model.addAttribute("paging", paging);
-        model.addAttribute("curItemInfoMap", curItemInfoMap); //현재 아이템이 검색된 결과인지, 어떤 정렬인지의 정보인지, 어느 카테고리번호에 있는지
         model.addAttribute("curCatePath", curCatePath);  //현재 카테고리 경로 표시
         model.addAttribute("cate_no", cate_no);  //현재 카테고리 번호(cate_no)
         model.addAttribute("titleImgList", titleImgList);  //타이틀 이미지 리스트(.jpg)
@@ -120,39 +113,42 @@ public class ItemController {
 
 
     @RequestMapping(value = "/itemdetail", method = RequestMethod.GET)
-    public String itemdetail(Model model, @RequestParam("item_no") int item_no) throws Exception {
-        // System.out.println(top_no+","+mid_no+","+sub_no);
+    public String itemdetail(Model model, @RequestParam("item_no") int item_no, HttpSession session) throws Exception {
         Item item = itemservice.get(item_no);
         List<Color> colorlist = stockservice.getStockColor(item_no);  //컬러  현재 재고에 있는 컬러
         List<Size> sizelist = stockservice.getStockSize(item_no);  //재고  현재 재고에 있는 사이즈
         Category category = itemservice.getCategorys(item_no); // 해당 아이템에 대중소 카테고리 이름불러옴 //item_no로 카테고리 다 알 수 있음
 
         String[] cateName = {category.getTop_cate_name(), category.getMid_cate_name(), category.getCate_name()};
-
-        System.out.println("itemdetail : " + category.getTop_cate_name() + "," + category.getMid_cate_name() + "," + category.getCate_name());
-
         String[] imgnames = fileService.getFileList(custdir,  category.getTop_cate_name(), category.getMid_cate_name(),  category.getCate_name(), item.getItem_name());
         if(imgnames != null){
+        	System.out.println("itemdetail : " + category.getTop_cate_name() + "," + category.getMid_cate_name() + "," + category.getCate_name());
             System.out.println(imgnames[0]);
         }
 
         // 아이템 조회수 +1
         itemservice.updateItemhit(item.getItem_no());
+        
+        User user = (User) session.getAttribute("loginUser");
+        if(user!=null) {  // 로그인 했을 때만 위시리스트 정보 모델에 넣기
+        	WishList wishList = new WishList();
+            wishList.setUser_no(user.getUser_no());
+            wishList.setItem_no(item_no);
+            WishList checkWish = wishListService.checkUserWish(wishList);
+            if(checkWish!=null) {
+            	model.addAttribute("checkWish", "Yes");
+            }else {
+            	model.addAttribute("checkWish", "No");
+            }
+        }  
 
         model.addAttribute("item", item);
         model.addAttribute("colorlist", colorlist); // 아이템이 가지고 있는 컬러
         model.addAttribute("sizelist", sizelist); // 아이템이 가지고 있는 사이즈
         model.addAttribute("imgnames", imgnames); // 아이템이 가지고 있는 사진이름들을 배열로
         model.addAttribute("cateName", cateName); // 카테고리 번호들
-
         model.addAttribute("center", "item/itemdetail");
         return "main";
-    }
-    
-    @RequestMapping("/cartui")
-    public String cartui(Model model){    	
-    	model.addAttribute("center", "cartui");
-    	return "main";
     }
 
 }

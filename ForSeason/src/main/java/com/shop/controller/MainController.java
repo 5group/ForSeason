@@ -66,7 +66,7 @@ public class MainController {
 
     @RequestMapping("/myPage")
     public String info(Model model) {
-        model.addAttribute("center", "user/info");
+        model.addAttribute("center", "user/myPage");
         return "main";
     }
 
@@ -78,7 +78,7 @@ public class MainController {
     }
 
     //@RequestMapping("/loginimpl")
-    @RequestMapping(value = "/loginimpl", method = RequestMethod.POST)  //이거 고치니깐 오류 안남
+    @RequestMapping(value = "/loginimpl", method = RequestMethod.POST)
     public String loginimpl(HttpSession session, String id, String pwd, Model model) {
         System.out.println("haha");
         User user = null;

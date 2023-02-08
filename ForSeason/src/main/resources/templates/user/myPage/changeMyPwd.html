@@ -1,0 +1,139 @@
+<style>
+.loginsection{
+	padding-top: 70px;
+	border-top: 1px solid #f3f3f4;
+}
+.logincontainer{
+	width: 610px;
+	border-top:1px solid #cccccc;
+	padding-bottom: 20px;
+}
+#register_form{
+	padding: 10px 0px 50px 135px;
+}
+.loginh2{
+	margin: 30px auto;
+	text-align: center;
+	color: #6B6B6B;
+	text-weight:bold;
+}
+.inputdiv{
+	width: 600px;
+}
+.inputdiv > input{
+	width: 300px;
+	height: 40px;
+	margin: 5px auto;
+}
+.buttonspan > button{
+	background: black;
+	color: white;
+	width: 150px;
+	height: 40px;
+	cursor:pointer;
+	margin: 20px 0px 0px 75px;
+}
+#get_pwd_span, #new_pwd_span, #pwd_span{
+	font-size: 12px;
+}
+</style>
+
+<script>
+    // 비밀번호 규칙 정규식
+    // : 숫자, 특문 각 1회 이상, 영문은 2개 이상 사용하여 8자리 이상 입력
+    var regExpPw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/
+    var pwd_bol = false;
+    var password = "";
+
+    $(document).ready(function () {
+        $("input[type='password']").keyup(function () {
+            var get_user_pwd = $('input[name="get_user_pwd"]').val();
+            var new_user_pwd = $('input[name="new_user_pwd"]').val();
+            var user_pwd = $('input[name="user_pwd"]').val();
+            
+            if(get_user_pwd.length==0){
+            	$('#get_pwd_span').empty();
+            }
+            if(new_user_pwd.length==0){
+            	$('#new_pwd_span').empty();
+            }
+            if(user_pwd.length==0){
+            	$('#pwd_span').empty();
+            }
+            
+
+            if ("[[${user.user_pwd}]]" != get_user_pwd && get_user_pwd!=0) {
+                $('#get_pwd_span').text("기존 비밀번호와 일치하지 않습니다.");
+                $('#get_pwd_span').css("color", "red");
+                pwd_bol = false;
+            }
+            if ("[[${user.user_pwd}]]" == get_user_pwd) {
+                $('#get_pwd_span').text("정상");
+                $('#get_pwd_span').css("color", "green");
+            }
+            
+            if (!regExpPw.test(new_user_pwd) && new_user_pwd.length!=0) {
+                $('#new_pwd_span').text("8자리 이상 입력하세요.(숫자,특문 1회 이상,영문 2개 이상)");
+                $('#new_pwd_span').css("color", "red");
+                pwd_bol = false;
+            }
+            if (new_user_pwd == get_user_pwd && new_user_pwd.length!=0) {
+                $('#new_pwd_span').text("기존과 같은 비밀번호는 사용 불가합니다.");
+                $('#new_pwd_span').css("color", "red");
+                pwd_bol = false;
+            }
+            if (regExpPw.test(new_user_pwd) && new_user_pwd!=get_user_pwd) {
+                $('#new_pwd_span').text("정상");
+                $('#new_pwd_span').css("color", "green");
+            }
+            
+            if (new_user_pwd != user_pwd && user_pwd.length!=0){
+                $('#pwd_span').text("새 비밀번호와 일치하지 않습니다.");
+                $('#pwd_span').css("color", "red");
+                pwd_bol = false;
+            }else if (new_user_pwd == user_pwd && regExpPw.test(new_user_pwd)) {
+                $('#pwd_span').text("사용 가능한 비밀번호입니다.");
+                $('#pwd_span').css("color", "green");
+                pwd_bol = true;
+                password = new_user_pwd;
+            }
+        });
+        
+        $('.buttonspan > button').click(function () {          
+        	var c = confirm('수정 하시겠습니까?');
+            if (c == true) {
+                if (pwd_bol == false) {
+                    return false;
+                } else {
+                    $.ajax({
+                        url: '[[@{/user/pwd_update}]]',
+                        type: 'post',
+                        data: {
+                            "user_pwd": password
+                        },
+                        success: function (data) {
+                        	alert("비밀번호가 변경되었습니다.");
+                        	location.replace('/myPage'); 
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
+
+<div class="site-section site-blocks-2 loginsection">
+	<div class="container logincontainer">
+          <h2 class="loginh2">비밀번호 변경</h2>
+          <form id="register_form">
+          	<div class="inputdiv"><input type="password" name="get_user_pwd" placeholder="현재 비밀번호"><span id="get_pwd_span"></span></div>
+          	<div class="inputdiv"><input type="password" name="new_user_pwd" placeholder="새 비밀번호"><span id="new_pwd_span"></span></div>
+          	<div class="inputdiv"><input type="password" name="user_pwd" placeholder="새 비밀번호 확인"><span id="pwd_span"></span></div>
+          	<span class="buttonspan"><button>확인</button></span>
+          </form>
+	</div>
+</div>
+

@@ -20,6 +20,13 @@
         SELECT LAST_INSERT_ID()
     </selectKey>
     </insert>
+    <insert id="insertTest" parameterType="Order">
+        INSERT INTO `order`
+        VALUES (0, #{user_no}, #{order_tot}, #{order_pay}, #{ship_addr}, #{ship_cust}, #{ship_stat}, #{order_stat}, #{order_cp}, #{order_udate})
+        <selectKey keyProperty="order_no" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
     <update id="update" parameterType="Order">
         UPDATE `order` SET rev_title=#{rev_title}, rev_content=#{rev_content}, rev_rdate=now() WHERE rev_no=#{rev_no}
     </update>

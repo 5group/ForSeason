@@ -1,0 +1,53 @@
+<!-- 초기화화면은 주문내역 -->
+<style>
+	.myInfoLabel{
+		border-bottom: 2px solid black;
+		padding-bottom: 10px;
+		margin-bottom:30px;
+		color:#5D5D5D;
+	}
+	.myOrderTable{
+		border: 1px solid #cccccc;
+	}
+	#cartTableHeader > th{
+		font-size:16px;
+	}
+	#myOrderBody td{
+		font-size:14.5px;
+	}
+	#myOrderBody a{
+		text-decoration: underline;
+	}
+</style>
+<div class="col-md-9">
+<h1 class="myInfoLabel">나의 주문내역</h1>
+<div class="site-blocks-table">
+<table class="table table-bordered">
+	<thead>
+   	 	<tr id="cartTableHeader"> 
+        	<th>결제상태</th>
+        	<th>결제수단</th>
+        	<th>총액</th>
+        	<th>결제날짜</th>
+        	<th>쿠폰적용</th>
+        	<th>상세내역</th>
+    	</tr>
+	</thead>
+<tbody id="myOrderBody">
+    <tr th:each="order, stat:${session.order}">
+        <td th:text="${order.order_stat}"></td>
+        <td th:text="${order.order_pay}"></td>
+        <td th:text="${order.order_tot}"></td>
+        <td th:text="${order.order_udate}"></td>
+        <td th:text="${order.order_cp}"></td>
+        <td>
+        	<a th:href="|@{/myOrderDetail?no=}${order.order_no}|">click</a>
+        </td>
+    <tr/>
+</tbody>
+</table>
+</div>
+</div>
+
+  
+  
