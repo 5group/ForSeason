@@ -27,7 +27,7 @@
                     </label>
                 </td>
                 <td th:text="${user.getUser_name}"></td>
-                <td th:text="${user.getUser_email}"></td>
+                <td class="email" th:text="${user.getUser_email}"></td>
                 <td th:text="${user.getUser_phone}"></td>
                 <td th:text="${user.getUser_address}"></td>
                 <td th:text="${user.getUser_gender}"></td>
@@ -39,7 +39,13 @@
         <form>
             쿠폰 이름<input type="text" name="cou_name"><br>
             쿠폰 할인가격<input type="text" name="cou_price"><br>
-            <button onclick="getCheckboxValue()">쿠폰 발급</button>
+            <button onclick="getCheckboxCoupon()">쿠폰 발급</button>
+        </form>
+
+        <form>
+            제목<input type="text" name="subject_text"><br>
+            내용<input type="text" name="content_text"><br>
+            <button onclick="getCheckboxEmail()">사용자에게 이메일발송</button>
         </form>
     </div>
 </main>
@@ -53,7 +59,38 @@
         })
     }
 
-    function getCheckboxValue() {
+    function getCheckboxEmail() {
+        // 선택된 목록 가져오기
+        const selectedEls =
+            document.querySelectorAll('input[name="checkbox"]:checked');
+        // 선택된 목록에서 value 찾기
+        var result = [];
+        selectedEls.forEach((el) => {
+            const emailEl = el.parentElement.parentElement.nextElementSibling.nextElementSibling;
+            result.push(emailEl.innerText);
+        });
+        var c = confirm('메일수신을 진행 하시겠습니까?');
+        if (c == true) {
+            $.ajax({
+                url: '[[@{/userInfo/pushMail}]]',
+                type: 'post',
+                data: {
+                    "subMessage":$('input[name="subject_text"]').val(),
+                    "textMessage":$('input[name="content_text"]').val(),
+                    mailList:result
+                },
+                success: function (data) {
+                    location.href="/";
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        }
+    }
+
+
+    function getCheckboxCoupon() {
         // 선택된 목록 가져오기
         const selectedEls =
             document.querySelectorAll('input[name="checkbox"]:checked');
@@ -62,7 +99,7 @@
         selectedEls.forEach((el) => {
             result.push(el.value) ;
         });
-        var c = confirm('수정 하시겠습니까?');
+        var c = confirm('쿠폰발급을 진행 하시겠습니까?');
         if (c == true) {
             console.log(result);
             $.ajax({

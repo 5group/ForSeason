@@ -128,7 +128,7 @@ public class MainController {
             if(findUser != null&&findUser.getUser_phone().equals(userPhone)){
                 User user = new User();
                 user.setUser_id(findUser.getUser_id());
-                String subMessage = user.getUser_name() + "님의 비밀번호가 변경되었습니다.";
+                String subMessage = findUser.getUser_name() + "님의 비밀번호가 변경되었습니다.";
                 String pwd = mailService.setMailPwd();
                 mailService.sendMail(toEmail, subMessage, "password:"+pwd);
                 user.setUser_pwd(pwd);// 암호화할때 암호화 해야함..

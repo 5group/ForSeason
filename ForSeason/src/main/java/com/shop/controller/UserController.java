@@ -30,7 +30,6 @@ public class UserController {
 
     @RequestMapping("")
     public String main(Model model) {
-        System.out.println("test");
         model.addAttribute("center", dir + "center");
         return "main";
     }

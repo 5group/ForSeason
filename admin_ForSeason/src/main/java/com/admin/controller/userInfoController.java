@@ -3,6 +3,7 @@ package com.admin.controller;
 import com.admin.dto.Coupon;
 import com.admin.dto.User;
 import com.admin.service.CouponService;
+import com.admin.service.MailService;
 import com.admin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -23,6 +25,9 @@ public class userInfoController {
 
     @Autowired
     CouponService couponService;
+
+    @Autowired
+    MailService mailService;
 
     @Autowired
     HttpSession session;
@@ -39,7 +44,6 @@ public class userInfoController {
 
     @RequestMapping(value = "/createCoupon" ,method = RequestMethod.POST)
     public String createCoupon(@RequestParam String cou_name, @RequestParam int cou_price, @RequestParam(value = "noList[]") List<Integer> noList) throws Exception {
-        session.setAttribute("test", noList);
         Coupon coupon = new Coupon();
         for(Integer no : noList){
             coupon.setCou_name(cou_name);
@@ -47,6 +51,12 @@ public class userInfoController {
             coupon.setUser_no(no);
             couponService.register(coupon);
         }
+        return "main";
+    }
+
+    @RequestMapping(value = "/pushMail")
+    public String pushMail(@RequestParam String subMessage, @RequestParam String textMessage, @RequestParam(value = "mailList[]") List<String> mailList){
+        mailService.sendMailToMultipleRecipients(mailList, subMessage, textMessage);
         return "main";
     }
 }
