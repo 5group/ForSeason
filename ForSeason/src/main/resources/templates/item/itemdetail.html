@@ -1,781 +1,805 @@
 <link rel="stylesheet" href="css/colorlist.css">
 <style>
-/* 설재경 */
-/* 설재경 */
-/* 설재경 */
-	  .star {
-    position: relative;
-    font-size: 2rem;
-    color: #ddd;
-  }
-  
-  .star input {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    opacity: 0;
-    cursor: pointer;
-  }
-  
-  .star span {
-    width: 0;
-    position: absolute; 
-    left: 0;
-    color: red;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  
-  	  .star2 {
-    position: relative;
-    font-size: 2rem;
-    color: #ddd;
-  }
-  
-  .star2 input {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    opacity: 0;
-    cursor: pointer;
-  }
-  
-  .star2 span {
-    width: 0;
-    position: absolute; 
-    left: 0;
-    color: red;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  
-.review-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    /* 설재경 */
+    /* 설재경 */
+    /* 설재경 */
+    .star {
+        position: relative;
+        font-size: 2rem;
+        color: #ddd;
+    }
 
-.review-left {
-  font-weight: bold;
-}
+    .star input {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
 
-.review-right button {
-  background-color: white;
-  border: 1px solid red;
-  color: black;
-}
-.semireview-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .star span {
+        width: 0;
+        position: absolute;
+        left: 0;
+        color: red;
+        overflow: hidden;
+        pointer-events: none;
+    }
 
-.semireview-left {
-  font-weight: bold;
-}
+    .star2 {
+        position: relative;
+        font-size: 2rem;
+        color: #ddd;
+    }
 
-.semireview-right button {
-  background-color: white;
-  border: 1px solid red;
-  color: black;
-}
+    .star2 input {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        cursor: pointer;
+    }
 
-a, a:hover, a:visited, a:active{
-    text-decoration: none;
-    color: #000;
-}
-a:hover{
-    color: #a00;
-}
-h1{
-    text-align: center;
-    background-color: #fff;
-    padding: 5px;
-    margin: 0;
-}
+    .star2 span {
+        width: 0;
+        position: absolute;
+        left: 0;
+        color: red;
+        overflow: hidden;
+        pointer-events: none;
+    }
 
-/* 레이아웃 외곽 너비 400px 제한*/
-.wrap{
-    max-width: 1000px;
-    margin: 0 auto; /* 화면 가운데로 */
-    background-color: #fff;
-    height: 100%;
-    padding: 20px;
-    box-sizing: border-box;
+    .review-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-}
-.reviewform textarea{
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-}
-.rating .rate_radio {
-    position: relative;
-    display: inline-block;
-    z-index: 20;
-    opacity: 0.001;
-    width: 60px;
-    height: 60px;
-    background-color: #fff;
-    cursor: pointer;
-    vertical-align: top;
-    display: none;
-}
-.rating .rate_radio + label {
-    position: relative;
-    display: block;
-    float: left;
-    z-index: 10;
-    width: 60px;
-    height: 60px;
-    background-image: url(./images/starrate.png);
-    background-repeat: no-repeat;
-    background-size: 60px 60px;
-    cursor: pointer;
-}
-.rating .ratefill {
-    background-color: #ff8;
-    width: 0;
-    height: 60px;
-    position: absolute;
-}
+    .review-left {
+        font-weight: bold;
+    }
 
-.cmd{
-    margin-top: 20px;
-    text-align: right;
-}
-.cmd input[type="button"]{
-    padding: 10px 20px;
-    border: 1px solid #e8e8e8;
-    background-color: #fff;
-    background-color: #000;  
-    color: #fff;
-}
+    .review-right button {
+        background-color: white;
+        border: 1px solid red;
+        color: black;
+    }
 
-.warning_msg {
-    display: none;
-    position: relative;
-    text-align: center;
-    background: #ffffff;
-    line-height: 26px;
-    width: 100%;
-    color: red;
-    padding: 10px;
-    box-sizing: border-box;
-    border: 1px solid #e0e0e0;
-}
+    .semireview-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-/* 설재경 */
-/* 설재경 */
-/* 설재경 */
+    .semireview-left {
+        font-weight: bold;
+    }
 
-	#colorui{
-		overflow: hidden;
-		padding: 0px;
-	}
-	.colorli{
-		float:left;
-		list-style:none;
-		margin-right: 10px;
-		height:37px;
-	}
-	.colorli > span{
-		display:inline-block;
-		width:30px;
-		height:30px;
-		border:1px solid #cccccc;
-		cursor: pointer;
-	}
-	
-	.right_area .icon{
-	    display: flex;
-	    align-items: center;
-	    justify-content: center;
-	    width: calc(100vw * (45 / 1920));
-	    height: calc(100vw * (45 / 1920));
-	
-	    border-radius: 50%;
-	    border: solid 2px #eaeaea;
-	    background-color: #fff;
-	}
-	
-	.icon.heart img{
-	    width: calc(100vw * (24 / 1920));
-	    height: calc(100vw * (24 / 1920));
-	}
-	
-	.icon.heart.fas{
-	  color:red
-	}
-	.heart{
-	    transform-origin: center;
-	}
-	.heart.active img{
-	    animation: animateHeart .3s linear forwards;
-	}
-	
-	@keyframes animateHeart{
-	    0%{transform:scale(.2);}
-	    40%{transform:scale(1.2);}
-	    100%{transform:scale(1);}
-	 }
+    .semireview-right button {
+        background-color: white;
+        border: 1px solid red;
+        color: black;
+    }
+
+    a, a:hover, a:visited, a:active {
+        text-decoration: none;
+        color: #000;
+    }
+
+    a:hover {
+        color: #a00;
+    }
+
+    h1 {
+        text-align: center;
+        background-color: #fff;
+        padding: 5px;
+        margin: 0;
+    }
+
+    /* 레이아웃 외곽 너비 400px 제한*/
+    .wrap {
+        max-width: 1000px;
+        margin: 0 auto; /* 화면 가운데로 */
+        background-color: #fff;
+        height: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+
+    }
+
+    .reviewform textarea {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .rating .rate_radio {
+        position: relative;
+        display: inline-block;
+        z-index: 20;
+        opacity: 0.001;
+        width: 60px;
+        height: 60px;
+        background-color: #fff;
+        cursor: pointer;
+        vertical-align: top;
+        display: none;
+    }
+
+    .rating .rate_radio + label {
+        position: relative;
+        display: block;
+        float: left;
+        z-index: 10;
+        width: 60px;
+        height: 60px;
+        background-image: url(./images/starrate.png);
+        background-repeat: no-repeat;
+        background-size: 60px 60px;
+        cursor: pointer;
+    }
+
+    .rating .ratefill {
+        background-color: #ff8;
+        width: 0;
+        height: 60px;
+        position: absolute;
+    }
+
+    .cmd {
+        margin-top: 20px;
+        text-align: right;
+    }
+
+    .cmd input[type="button"] {
+        padding: 10px 20px;
+        border: 1px solid #e8e8e8;
+        background-color: #fff;
+        background-color: #000;
+        color: #fff;
+    }
+
+    .warning_msg {
+        display: none;
+        position: relative;
+        text-align: center;
+        background: #ffffff;
+        line-height: 26px;
+        width: 100%;
+        color: red;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #e0e0e0;
+    }
+
+    /* 설재경 */
+    /* 설재경 */
+    /* 설재경 */
+
+    #colorui {
+        overflow: hidden;
+        padding: 0px;
+    }
+
+    .colorli {
+        float: left;
+        list-style: none;
+        margin-right: 10px;
+        height: 37px;
+    }
+
+    .colorli > span {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        border: 1px solid #cccccc;
+        cursor: pointer;
+    }
+
+    .right_area .icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: calc(100vw * (45 / 1920));
+        height: calc(100vw * (45 / 1920));
+
+        border-radius: 50%;
+        border: solid 2px #eaeaea;
+        background-color: #fff;
+    }
+
+    .icon.heart img {
+        width: calc(100vw * (24 / 1920));
+        height: calc(100vw * (24 / 1920));
+    }
+
+    .icon.heart.fas {
+        color: red
+    }
+
+    .heart {
+        transform-origin: center;
+    }
+
+    .heart.active img {
+        animation: animateHeart .3s linear forwards;
+    }
+
+    @keyframes animateHeart {
+        0% {
+            transform: scale(.2);
+        }
+        40% {
+            transform: scale(1.2);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
 </style>
 <script>
-let drawStar = (target) => {
-    document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
-    let selectedValue = target.value / 2 ; 
-    console.log(`Selected Value: ${selectedValue }`);
-    document.querySelector('.selected-value').innerHTML = selectedValue;
+    let drawStar = (target) => {
+        document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+        let selectedValue = target.value / 2;
+        console.log(`Selected Value: ${selectedValue}`);
+        document.querySelector('.selected-value').innerHTML = selectedValue;
 
-  }
-  
-var item_no,color_no,size_no,cart_cnt,rev_score;
-var user_no,rev_title,rev_title,rev_content;
-	
-	function plusClick(){
-		var curqtt = parseInt($("#buyQtt").val());
-		if(curqtt+1 == 11){
-			alert("최대 주문수량은 10개입니다.")
-			$("#buyQtt").val(curqtt-1);
-			return;
-		}
-	}	
-	function minusClick(){
-		var curqtt = parseInt($("#buyQtt").val());
-		if(curqtt-1 == 0){
-			alert("최소 주문수량은 1개입니다.")
-			$("#buyQtt").val(curqtt+1);
-			return;
-		}
-	}	
+    }
 
-	$(document).ready(function(){
+    var item_no, color_no, size_no, cart_cnt, rev_score;
+    var user_no, rev_title, rev_title, rev_content;
 
-		
-		
-		
-		
-		item_no=$("#item_no").val();
-		
-		/*<![CDATA[*/
-		var checkWish = "[[${checkWish}]]";	
-		/*]]>*/
-		if(checkWish=='Yes'){
-			var $likeBtn =$('.icon.heart');
-			$likeBtn.toggleClass('active');
-        	if($likeBtn.hasClass('active')){          
-          	 	$('.icon.heart').find('img').attr({
-              	   'src': 'https://cdn-icons-png.flaticon.com/512/803/803087.png',
-               		alt:'찜하기 완료'
-           		}); 
-        	}
-		}
-		
-		 /*<![CDATA[*/
-	    var info = "[[${item.item_info}]]";
-	    /*]]>*/
-	    console.log(info);
-	    info = info.replaceAll('※', '<br>※');
-	    const el = document.querySelector("#itemInfo")
-	    el.insertAdjacentHTML('afterbegin', '<p>'+info+'</p>'); 
-	    
-		$('.colorli').click(function(){    //컬러 클릭했을 때 이미지 바뀌기, 재고(사이즈) 어떤거 있는지 확인
-			color_no=this.getAttribute("value");  //클릭한 컬러의 넘버
-			var color_index=$(this).children('input').val();
+    function plusClick() {
+        var curqtt = parseInt($("#buyQtt").val());
+        if (curqtt + 1 == 11) {
+            alert("최대 주문수량은 10개입니다.")
+            $("#buyQtt").val(curqtt - 1);
+            return;
+        }
+    }
 
-		    /*<![CDATA[*/
-		    var CateArr = ["[[${cateName[0]}]]","[[${cateName[1]}]]","[[${cateName[2]}]]"];
-		    /*]]>*/
-			
-			$.ajax({
-				url:'[[@{/getStock}]]',
-				data: {"item_no":item_no, "color_no":color_no, "color_index":color_index, "CateArr":CateArr}, //서버 컨트롤러에 데이터 전송
-				success:function(data){
-					var imgsrc=$("img[name='titleImg']").attr('src');
-					imgsrc=imgsrc.substring(0, imgsrc.lastIndexOf('/')+1);
-					imgsrc=imgsrc+data.imgsrc;
-					$("img[name='titleImg']").attr('src', imgsrc);  //이미지 바꾸기
-					$("input[name='shop-sizes']").attr('disabled', true); //재고 없는건 비활성화
-					$.each(data.colorStock,function(key,value) {  //재고에 있는 사이즈 불러오기
-						$("input[class='"+value.size_name+"Input']").attr('disabled', false); //재고 있는건 활성화
-					});			
-				},error: function () {
-					alert("상품 이미지를 불러오는데 실패했습니다.");
-			    }
-			});	
-			
-			$("#color_no").val(color_no);
-			$(".colorli").css('border', '0px');
-			$(this).css('border-bottom', '3px solid black');
-			$("input:radio[name=shop-sizes]").prop('checked', false);
-		})
-		
-		$("input:radio[name=shop-sizes]").click(function(){
-			if($("#color_no").val()==0){
-				alert("색상을 먼저 선택해주세요.");
-				$("input:radio[name=shop-sizes]").prop('checked', false);
-				return;
-			}
-			
-			size_no=this.getAttribute("value");
-			$("#size_no").val(size_no);
-		})
-		
-	   
-		$('#btn_cart').click(function(){   //장바구니 담기 버튼
-			 /*<![CDATA[*/
-	    		var uid = "[[${session.loginUser}]]";
-	    	/*]]>*/
-			if(uid==""){
-				alert("로그인이 필요합니다.");
-				return;
-			}
-			if($("#color_no").val()==0 || $("#size_no").val()==0){
-				alert("필수옵션을 선택해주세요.");
-				return;
-			}
-	
-			color_no=$("#color_no").val();
-			size_no=$("#size_no").val();
-			cart_cnt=$("#buyQtt").val();
-			
-			$.ajax({
-				url:'[[@{/cartInsert}]]',
-				data: {"item_no":item_no, "color_no":color_no, "size_no":size_no, "cart_cnt":cart_cnt}, //서버 컨트롤러에 데이터 전송
-				success:function(data){
-					if(data == 0){
-						alert("장바구니에 담겼습니다.");
-					}else{
-						alert("이미 장바구니에 담긴 상품입니다.");
-					}
-				},
+    function minusClick() {
+        var curqtt = parseInt($("#buyQtt").val());
+        if (curqtt - 1 == 0) {
+            alert("최소 주문수량은 1개입니다.")
+            $("#buyQtt").val(curqtt + 1);
+            return;
+        }
+    }
+
+    $(document).ready(function () {
+
+
+        item_no = $("#item_no").val();
+
+        /*<![CDATA[*/
+        var checkWish = "[[${checkWish}]]";
+        /*]]>*/
+        if (checkWish == 'Yes') {
+            var $likeBtn = $('.icon.heart');
+            $likeBtn.toggleClass('active');
+            if ($likeBtn.hasClass('active')) {
+                $('.icon.heart').find('img').attr({
+                    'src': 'https://cdn-icons-png.flaticon.com/512/803/803087.png',
+                    alt: '찜하기 완료'
+                });
+            }
+        }
+
+        /*<![CDATA[*/
+        var info = "[[${item.item_info}]]";
+        /*]]>*/
+        console.log(info);
+        info = info.replaceAll('※', '<br>※');
+        const el = document.querySelector("#itemInfo")
+        el.insertAdjacentHTML('afterbegin', '<p>' + info + '</p>');
+
+        $('.colorli').click(function () {    //컬러 클릭했을 때 이미지 바뀌기, 재고(사이즈) 어떤거 있는지 확인
+            color_no = this.getAttribute("value");  //클릭한 컬러의 넘버
+            var color_index = $(this).children('input').val();
+
+            /*<![CDATA[*/
+            var CateArr = ["[[${cateName[0]}]]", "[[${cateName[1]}]]", "[[${cateName[2]}]]"];
+            /*]]>*/
+
+            $.ajax({
+                url: '[[@{/getStock}]]',
+                data: {"item_no": item_no, "color_no": color_no, "color_index": color_index, "CateArr": CateArr}, //서버 컨트롤러에 데이터 전송
+                success: function (data) {
+                    var imgsrc = $("img[name='titleImg']").attr('src');
+                    imgsrc = imgsrc.substring(0, imgsrc.lastIndexOf('/') + 1);
+                    imgsrc = imgsrc + data.imgsrc;
+                    $("img[name='titleImg']").attr('src', imgsrc);  //이미지 바꾸기
+                    $("input[name='shop-sizes']").attr('disabled', true); //재고 없는건 비활성화
+                    $.each(data.colorStock, function (key, value) {  //재고에 있는 사이즈 불러오기
+                        $("input[class='" + value.size_name + "Input']").attr('disabled', false); //재고 있는건 활성화
+                    });
+                }, error: function () {
+                    alert("상품 이미지를 불러오는데 실패했습니다.");
+                }
+            });
+
+            $("#color_no").val(color_no);
+            $(".colorli").css('border', '0px');
+            $(this).css('border-bottom', '3px solid black');
+            $("input:radio[name=shop-sizes]").prop('checked', false);
+        })
+
+        $("input:radio[name=shop-sizes]").click(function () {
+            if ($("#color_no").val() == 0) {
+                alert("색상을 먼저 선택해주세요.");
+                $("input:radio[name=shop-sizes]").prop('checked', false);
+                return;
+            }
+
+            size_no = this.getAttribute("value");
+            $("#size_no").val(size_no);
+        })
+
+
+        $('#btn_cart').click(function () {   //장바구니 담기 버튼
+            /*<![CDATA[*/
+            var uid = "[[${session.loginUser}]]";
+            /*]]>*/
+            if (uid == "") {
+                alert("로그인이 필요합니다.");
+                return;
+            }
+            if ($("#color_no").val() == 0 || $("#size_no").val() == 0) {
+                alert("필수옵션을 선택해주세요.");
+                return;
+            }
+
+            color_no = $("#color_no").val();
+            size_no = $("#size_no").val();
+            cart_cnt = $("#buyQtt").val();
+
+            $.ajax({
+                url: '[[@{/cartInsert}]]',
+                data: {"item_no": item_no, "color_no": color_no, "size_no": size_no, "cart_cnt": cart_cnt}, //서버 컨트롤러에 데이터 전송
+                success: function (data) {
+                    if (data == 0) {
+                        alert("장바구니에 담겼습니다.");
+                    } else {
+                        alert("이미 장바구니에 담긴 상품입니다.");
+                    }
+                },
                 error: function () {
                     alert("error");
                 }
-			});	 
-		});	  
+            });
+        });
 
-		$('#revbtn').click(function(){   //리뷰 글쓰기 버튼
-			item_no=$("#item_no").val();
-			item_no=$("#item_no").val();
-			rev_title=$("#rev_title").val();
-			rev_content=$("#rev_content").val();
-	        rev_score = document.querySelector("input[type=range]").value * 0.5;
+        $('#revbtn').click(function () {   //리뷰 글쓰기 버튼
+            item_no = $("#item_no").val();
+            item_no = $("#item_no").val();
+            rev_title = $("#rev_title").val();
+            rev_content = $("#rev_content").val();
+            rev_score = document.querySelector("input[type=range]").value * 0.5;
 
- 			let alertMessage = 
-	            "item_no: " + item_no + "\n" +
-	            "rev_title: " + rev_title + "\n" +
-	            "rev_content: " + rev_content + "\n" +
-		        "rev_score: " + rev_score;
+            let alertMessage =
+                "item_no: " + item_no + "\n" +
+                "rev_title: " + rev_title + "\n" +
+                "rev_content: " + rev_content + "\n" +
+                "rev_score: " + rev_score;
 
-				alert(alertMessage);
-			
- 			$.ajax({
-				url:'[[@{/reviewInsert}]]',
-				data: {"item_no":item_no, "rev_title":rev_title, "rev_content":rev_content, "rev_score":rev_score}, //서버 컨트롤러에 데이터 전송
-				success:function(data){
-					if(data == 0){
-						alert("리뷰작성완료.");
+            alert(alertMessage);
+
+            $.ajax({
+                url: '[[@{/reviewInsert}]]',
+                method: 'POST',
+                data: {"item_no": item_no, "rev_title": rev_title, "rev_content": rev_content, "rev_score": rev_score}, //서버 컨트롤러에 데이터 전송
+                success: function (data) {
+                    if (data == 0) {
+                        alert("리뷰작성완료.");
                         location.reload(); // refresh the page
 
-					}else{
-						alert("문제발생");
-					}
-				}
-			});	  //Restcontroller로 받으면 오류 안남
-		});	 
-		
+                    } else {
+                        alert("문제발생");
+                    }
+                }
+            });	  //Restcontroller로 받으면 오류 안남
+        });
 
-	});
-	
-	//heart 좋아요 클릭시 하트색 변경
-	$(function(){
-	    var $likeBtn =$('.icon.heart');
 
-	    $likeBtn.click(function(){
-        	/*<![CDATA[*/
-    		var uid = "[[${session.loginUser}]]";
-    		/*]]>*/
-			if(uid==""){
-				alert("로그인이 필요합니다.");
-				return;
-			}
-    		
-        	$likeBtn.toggleClass('active');
+    });
 
-        	if($likeBtn.hasClass('active')){          
-          	 	$(this).find('img').attr({
-              		'src': 'https://cdn-icons-png.flaticon.com/512/803/803087.png',
-               		alt:'찜하기 완료'
-           		});
-          	 	
-          	 	$.ajax({
-    				url:'[[@{/insertWish}]]',
-    				data: {"item_no":item_no}, //서버 컨트롤러에 데이터 전송
-    				success: function () {
-   	                    alert("관심상품에 등록했습니다.");
-   	                },
-   	                error: function () {
-   	                    alert("error");
-   	                }
-    			});	 
-          	 	
-        	}else{
-            	$(this).find('i').removeClass('fas').addClass('far')
-           		$(this).find('img').attr({
-              		'src': 'https://cdn-icons-png.flaticon.com/512/812/812327.png',
-              		alt:"찜하기"
-           		})
-           		
-           		$.ajax({
-    				url:'[[@{/deleteWish}]]',
-    				data: {"item_no":item_no}, //서버 컨트롤러에 데이터 전송
-    				success: function () {
-   	                    alert("관심상품 등록을 해제했습니다.");
-   	                },
-   	                error: function () {
-   	                    alert("error");
-   	                }
-    			});	 
-        	}	
-	    })
-	})
+    //heart 좋아요 클릭시 하트색 변경
+    $(function () {
+        var $likeBtn = $('.icon.heart');
 
-</script>    
-    
-    <div class="bg-light py-3">
-      <div class="container">
+        $likeBtn.click(function () {
+            /*<![CDATA[*/
+            var uid = "[[${session.loginUser}]]";
+            /*]]>*/
+            if (uid == "") {
+                alert("로그인이 필요합니다.");
+                return;
+            }
+
+            $likeBtn.toggleClass('active');
+
+            if ($likeBtn.hasClass('active')) {
+                $(this).find('img').attr({
+                    'src': 'https://cdn-icons-png.flaticon.com/512/803/803087.png',
+                    alt: '찜하기 완료'
+                });
+
+                $.ajax({
+                    url: '[[@{/insertWish}]]',
+                    data: {"item_no": item_no}, //서버 컨트롤러에 데이터 전송
+                    success: function () {
+                        alert("관심상품에 등록했습니다.");
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+
+            } else {
+                $(this).find('i').removeClass('fas').addClass('far')
+                $(this).find('img').attr({
+                    'src': 'https://cdn-icons-png.flaticon.com/512/812/812327.png',
+                    alt: "찜하기"
+                })
+
+                $.ajax({
+                    url: '[[@{/deleteWish}]]',
+                    data: {"item_no": item_no}, //서버 컨트롤러에 데이터 전송
+                    success: function () {
+                        alert("관심상품 등록을 해제했습니다.");
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
+        })
+    })
+
+</script>
+
+<div class="bg-light py-3">
+    <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Tank Top T-Shirt</strong></div>
+            <div class="col-md-12 mb-0"><a href="index.html">Home</a> <span class="mx-2 mb-0">/</span> <strong
+                    class="text-black">Tank Top T-Shirt</strong></div>
         </div>
-      </div>
-    </div>  
-
-    <div class="site-section">
-      <div class="container">
-      <h1 style="color: black;margin-bottom:40px;border-bottom:1px solid #cccccc;" th:text="${item.item_name}"></h1>
-        <div class="row">
-        
-          <div class="col-md-6">
-            <img name="titleImg" th:src="|@{img/}${cateName[0]}/${cateName[1]}/${cateName[2]}/${item.item_name}/${imgnames[0]}|" alt="Image" class="img-fluid"> <!-- 처음이미지는 첫번째 이미지 -->
-            <input type="hidden" id="item_no" name="item_no" th:value="${item.item_no}">
-          </div>
-          <div class="col-md-6">
-           <!--  <h2 class="text-black" th:text=${item.item_name}></h2> -->
-           	<p id="itemInfo"></p>     <!-- 이 태그 뒤에 설명 추가 -->
-           	<p><strong class="text-primary h4" th:text="${#numbers.formatInteger(item.item_price, 0, 'COMMA')}+'원'"></strong></p>
-         
-            <!-- 색상 선택 -->
-            <div class="mb-1 d-flex" >
-            <span style="font-size: 22px; line-height:30px; color:black; margin-right:16px;">Color:</span>
-              <ul id="colorui">
-              	<li class="colorli" th:each="o, stat:${colorlist}" th:value="${o.color_no}">
-              		<span th:class="${o.color_name}"></span>
-              		<input type="hidden" th:class="|color_index_${stat.index}|" th:value="${stat.index}">
-              	</li>  	
-              </ul>
-              <input type="hidden" id="color_no" name="color_no" value="0">
-            </div>
-            
-            <!-- 사이즈 선택 -->
-            <div class="mb-1 d-flex">
-              <span style="font-size: 22px; line-height:23px; color:black; margin-right:15px;">Size:</span>
-              <label for="option-sm" class="d-flex mr-3 mb-3" th:each="o:${sizelist}">
-                <span class="d-inline-block mr-2" style="top:-2px; position: relative;">
-                	<input type="radio" id="option-s" name="shop-sizes" th:value="${o.size_no}" th:class="${o.size_name}+'Input'"></span> <span class="d-inline-block text-black" th:text="${o.size_name}"></span>
-              </label>
-     		  <input type="hidden" id="size_no" name="size_no" value="0">
-            </div>
-            
-            <!-- 수량 선택 -->
-            <div class="mb-5" style="margin-bottom: 1.3rem!important;">
-              <div class="input-group mb-3" style="max-width: 120px;">
-	              <div class="input-group-prepend">
-	                <button class="btn btn-outline-primary js-btn-minus" type="button" onclick="minusClick();">&minus;</button>
-	              </div>
-	              <input type="text" class="form-control text-center" id="buyQtt" value="1" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
-	              <div class="input-group-append">
-	                <button class="btn btn-outline-primary js-btn-plus" type="button" onclick="plusClick();">&plus;</button>
-	              </div>
-              </div>
-
-            </div>
-            
-            <div class="right_area" style="height:45px; width:200px;">	
-				<p style="float:left;"><a href="#none" id="btn_cart" class="buy-now btn btn-sm btn-primary">Add To Cart</a></p>
-				<a href="javascript:;" class="icon heart" style="height:45px; width:45px; float:right;">
-					<img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
-				</a>
-			</div>	
-
-          </div>
-        </div>
-      </div>
     </div>
-			<!-- 상품평 영역 시작 -->
-			<!-- 상품평 영역 시작 -->
-			<!-- 상품평 영역 시작 -->
+</div>
 
+<div class="site-section">
+    <div class="container">
+        <h1 style="color: black;margin-bottom:40px;border-bottom:1px solid #cccccc;" th:text="${item.item_name}"></h1>
+        <div class="row">
+
+            <div class="col-md-6">
+                <img name="titleImg"
+                     th:src="|@{img/}${cateName[0]}/${cateName[1]}/${cateName[2]}/${item.item_name}/${imgnames[0]}|"
+                     alt="Image" class="img-fluid"> <!-- 처음이미지는 첫번째 이미지 -->
+                <input type="hidden" id="item_no" name="item_no" th:value="${item.item_no}">
+            </div>
+            <div class="col-md-6">
+                <!--  <h2 class="text-black" th:text=${item.item_name}></h2> -->
+                <p id="itemInfo"></p>     <!-- 이 태그 뒤에 설명 추가 -->
+                <p><strong class="text-primary h4"
+                           th:text="${#numbers.formatInteger(item.item_price, 0, 'COMMA')}+'원'"></strong></p>
+
+                <!-- 색상 선택 -->
+                <div class="mb-1 d-flex">
+                    <span style="font-size: 22px; line-height:30px; color:black; margin-right:16px;">Color:</span>
+                    <ul id="colorui">
+                        <li class="colorli" th:each="o, stat:${colorlist}" th:value="${o.color_no}">
+                            <span th:class="${o.color_name}"></span>
+                            <input type="hidden" th:class="|color_index_${stat.index}|" th:value="${stat.index}">
+                        </li>
+                    </ul>
+                    <input type="hidden" id="color_no" name="color_no" value="0">
+                </div>
+
+                <!-- 사이즈 선택 -->
+                <div class="mb-1 d-flex">
+                    <span style="font-size: 22px; line-height:23px; color:black; margin-right:15px;">Size:</span>
+                    <label for="option-sm" class="d-flex mr-3 mb-3" th:each="o:${sizelist}">
+                <span class="d-inline-block mr-2" style="top:-2px; position: relative;">
+                	<input type="radio" id="option-s" name="shop-sizes" th:value="${o.size_no}"
+                           th:class="${o.size_name}+'Input'"></span> <span class="d-inline-block text-black"
+                                                                           th:text="${o.size_name}"></span>
+                    </label>
+                    <input type="hidden" id="size_no" name="size_no" value="0">
+                </div>
+
+                <!-- 수량 선택 -->
+                <div class="mb-5" style="margin-bottom: 1.3rem!important;">
+                    <div class="input-group mb-3" style="max-width: 120px;">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-primary js-btn-minus" type="button" onclick="minusClick();">
+                                &minus;
+                            </button>
+                        </div>
+                        <input type="text" class="form-control text-center" id="buyQtt" value="1" placeholder=""
+                               aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary js-btn-plus" type="button" onclick="plusClick();">
+                                &plus;
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="right_area" style="height:45px; width:200px;">
+                    <p style="float:left;"><a href="#none" id="btn_cart" class="buy-now btn btn-sm btn-primary">Add To
+                        Cart</a></p>
+                    <a href="javascript:;" class="icon heart" style="height:45px; width:45px; float:right;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/812/812327.png" alt="찜하기">
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 상품평 영역 시작 -->
+<!-- 상품평 영역 시작 -->
+<!-- 상품평 영역 시작 -->
 
 
 <div class="wrap">
-			<!-- 상품평 헤드 -->
+    <!-- 상품평 헤드 -->
 
-<div class="review-container">
-  <h4><div class="review-left">고객 상품평</div></h4>
-  <div class="review-right">
+    <div class="review-container">
+        <h4>
+            <div class="review-left">고객 상품평</div>
+        </h4>
+        <div class="review-right">
 
 
-<!-- 
-    <li th:if="${session.loginuser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
-    <li th:if="${session.loginuser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
- -->
-    <div th:if="${session.loginUser!=null}">
-    <button type="button" class="btn btn-danger" style="color: red;" data-toggle="modal" data-target="#reviewModal">
-      글쓰기
-    </button>
+            <!--
+                <li th:if="${session.loginuser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
+                <li th:if="${session.loginuser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
+             -->
+            <div th:if="${session.loginUser!=null}">
+                <button type="button" class="btn btn-danger" style="color: red;" data-toggle="modal"
+                        data-target="#reviewModal">
+                    글쓰기
+                </button>
+            </div>
+
+
+        </div>
     </div>
 
 
+    <hr style="width: 100%; height: 1px; border: 1; background-color: black;">
 
-  </div>
-</div>
-
-
-<hr style="width: 100%; height: 1px; border: 1; background-color: black;">
-
-<div class="semireview-container">
-	<div class="semireview-left">
+    <div class="semireview-container">
+        <div class="semireview-left">
 
 		<span class="star2">
 		★★★★★ 	
 		<span th:style="'width: ' + (${item.revavg_score} * 20) + '%'">★★★★★</span>
-		</span>	
- 
-
-<a th:text="${item.revavg_score} + ' / 5.0'" style="font-size: larger; color: gray;">2.5 / 5.0</a>
-
-	</div>
-	
-	
-<!-- 	<div class="semireview-right">최근 리뷰 : <a href="#" class="comment-link" th:text="${movie.rcnt}">15</a></div> -->
-    <div class="semireview-right">최근 리뷰 : <a href="#" class="comment-link" th:text="${item.rcnt}"></a></div>
-</div>
+		</span>
 
 
+            <a th:text="${item.revavg_score} + ' / 5.0'" style="font-size: larger; color: gray;">2.5 / 5.0</a>
 
-<hr style="width: 100%; height: 0.5px; border: 0; background-color: gray; clear: both;">
-
-<!-- 상품의 리뷰게시판 시작 -->
-<!-- 상품의 리뷰게시판 시작 -->
-<!-- 상품의 리뷰게시판 시작 -->
-
-
-<div class="customer_review_list" th:each="r:${reviewlist}"> 
-  
-<!-- 왼쪽 제목 -->    
-    <strong class="cr_tit" th:text="${r.rev_title}">TEST1</strong>
-<!-- 왼쪽 제목 -->    
-    
-<!-- 오른쪽 ID | 날짜 -->
-<!--     <span class="info_user" th:text="${user.no} + '|' +${#dates.format(r.udate,'yyyy-MM-dd')} " style="float:right;">id01 - 2023.01.12</span> -->
-    <span class="info_user" th:text="${r.user_id} + '  |  ' +${#dates.format(r.rev_udate,'yyyy-MM-dd')}" style="float:right;">TEST2-3</span>
-
-
-<!-- 오른쪽 ID | 날짜 -->
-
-<!-- 별점  -->
-<div></div>
-<span class="star2">
-★★★★★	
-<span th:style="'width: ' + (${r.rev_score} * 20) + '%'">★★★★★</span>
-</span>
-<!-- 별점 -->
-
-<!-- 리뷰내용 -->
-    <div class="review_cont" th:text="${r.rev_content}">
-	TEST4
-    </div>
-<!-- 리뷰내용 -->
-
-<!-- 선 -->
-<hr style="width: 100%; height: 0.5px; border: 0; background-color: lightgray; clear: both;">
-<!-- 선 -->
-
-</div>
-
-<!-- 상품의 리뷰게시판 끝 -->
-<!-- 상품의 리뷰게시판 끝 -->
-<!-- 상품의 리뷰게시판 끝 -->
-
-
-<!-- 더보기 버튼 -->
-<center>
-<a th:href="|@{/reviewdetail?item_no=}${item.item_no}|" style="background-color: black; color: white; padding: 0.75mm 2.25mm;">더보기</a>
-</center>
-
-<br>
-<br>
-<!-- 더보기 버튼 -->
-
-
-
-  <!-- 글쓰기 Modal -->
-  <!-- 글쓰기 Modal -->
-  <!-- 글쓰기 Modal -->
-  
-   
-  <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="reviewModalLabel">리뷰 작성</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
         </div>
 
 
+        <!-- 	<div class="semireview-right">최근 리뷰 : <a href="#" class="comment-link" th:text="${movie.rcnt}">15</a></div> -->
+        <div class="semireview-right">최근 리뷰 : <a href="#" class="comment-link" th:text="${item.rcnt}"></a></div>
+    </div>
 
 
-  
-        
-        <form name="reviewform" class="reviewform" method="post">
-  <!-- 글쓰기 Modal 시작폼 -->
-  <!-- 글쓰기 Modal 시작폼 -->
+    <hr style="width: 100%; height: 0.5px; border: 0; background-color: gray; clear: both;">
 
-          <div class="modal-body">
-        <!-- 리뷰폼 시작-->
-            <div class="review-form" id="review-form">
-  	        <!-- <input name="item_no" th:value="${item_no}" type="hidden"> -->
-<!--  			  <input name="user_no" th:value="${session.loginUser.user_no}" type="hidden"> -->
+    <!-- 상품의 리뷰게시판 시작 -->
+    <!-- 상품의 리뷰게시판 시작 -->
+    <!-- 상품의 리뷰게시판 시작 -->
 
-			  <input type="hidden" id="item_no" name="item_no" th:value="${item.item_no}">
-		<!-- 별점 영역 -->
-		<!-- 별점 영역 -->
-		<!-- 별점 영역 -->
-                <span class="star">
+
+    <div class="customer_review_list" th:each="r:${reviewlist}">
+
+        <!-- 왼쪽 제목 -->
+        <strong class="cr_tit" th:text="${r.rev_title}">TEST1</strong>
+        <!-- 왼쪽 제목 -->
+
+        <!-- 오른쪽 ID | 날짜 -->
+        <!--     <span class="info_user" th:text="${user.no} + '|' +${#dates.format(r.udate,'yyyy-MM-dd')} " style="float:right;">id01 - 2023.01.12</span> -->
+        <span class="info_user" th:text="${r.user_id} + '  |  ' +${#dates.format(r.rev_udate,'yyyy-MM-dd')}"
+              style="float:right;">TEST2-3</span>
+
+
+        <!-- 오른쪽 ID | 날짜 -->
+
+        <!-- 별점  -->
+        <div></div>
+        <span class="star2">
+★★★★★	
+<span th:style="'width: ' + (${r.rev_score} * 20) + '%'">★★★★★</span>
+</span>
+        <!-- 별점 -->
+
+        <!-- 리뷰내용 -->
+        <div class="review_cont" th:text="${r.rev_content}">
+            TEST4
+        </div>
+        <!-- 리뷰내용 -->
+
+        <!-- 선 -->
+        <hr style="width: 100%; height: 0.5px; border: 0; background-color: lightgray; clear: both;">
+        <!-- 선 -->
+
+    </div>
+
+    <!-- 상품의 리뷰게시판 끝 -->
+    <!-- 상품의 리뷰게시판 끝 -->
+    <!-- 상품의 리뷰게시판 끝 -->
+
+
+    <!-- 더보기 버튼 -->
+    <center>
+        <a th:href="|@{/reviewdetail?item_no=}${item.item_no}|"
+           style="background-color: black; color: white; padding: 0.75mm 2.25mm;">더보기</a>
+    </center>
+
+    <br>
+    <br>
+    <!-- 더보기 버튼 -->
+
+
+    <!-- 글쓰기 Modal -->
+    <!-- 글쓰기 Modal -->
+    <!-- 글쓰기 Modal -->
+
+
+    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">리뷰 작성</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+                <form name="reviewform" class="reviewform" method="post">
+                    <!-- 글쓰기 Modal 시작폼 -->
+                    <!-- 글쓰기 Modal 시작폼 -->
+
+                    <div class="modal-body">
+                        <!-- 리뷰폼 시작-->
+                        <div class="review-form" id="review-form">
+                            <!-- <input name="item_no" th:value="${item_no}" type="hidden"> -->
+                            <!--  			  <input name="user_no" th:value="${session.loginUser.user_no}" type="hidden"> -->
+
+                            <input type="hidden" id="item_no" name="item_no" th:value="${item.item_no}">
+                            <!-- 별점 영역 -->
+                            <!-- 별점 영역 -->
+                            <!-- 별점 영역 -->
+                            <span class="star">
                   ★★★★★
                   <span>★★★★★</span>
                   <input type="range" oninput="drawStar(this)" value="" step="1" min="0" max="10">
                 </span>
-			  <div class="selected-value" name="rev_score" id="rev_score">1</div>
+                            <div class="selected-value" name="rev_score" id="rev_score">1</div>
 
-		<!-- 별점 영역 -->
-		<!-- 제목 영역 -->
-              <label for="reviewTitle">제목(필수)</label>
-              <textarea rows="1" class="form-control" name="rev_title" id="rev_title"></textarea>
-		<!-- 제목 영역 -->
-		<!-- 내용 영역 -->
-              <label for="reviewContent">내용(필수)</label>
-              <div class="warning_msg">Please enter a review with at least 5 characters.</div>
-              <textarea rows="10" class="form-control"  name="rev_content" id="rev_content"></textarea>
-		<!-- 내용 영역 -->
-            </div> 
-        <!-- review-form 마무리 -->
+                            <!-- 별점 영역 -->
+                            <!-- 제목 영역 -->
+                            <label for="reviewTitle">제목(필수)</label>
+                            <textarea rows="1" class="form-control" name="rev_title" id="rev_title"></textarea>
+                            <!-- 제목 영역 -->
+                            <!-- 내용 영역 -->
+                            <label for="reviewContent">내용(필수)</label>
+                            <div class="warning_msg">Please enter a review with at least 5 characters.</div>
+                            <textarea rows="10" class="form-control" name="rev_content" id="rev_content"></textarea>
+                            <!-- 내용 영역 -->
+                        </div>
+                        <!-- review-form 마무리 -->
 
 
+                    </div>
+                    <!-- 글쓰기 Modal 끝폼 -->
+                    <!-- 글쓰기 Modal 끝폼 -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <!-- Submit -->
+                        <button type="submit" id="revbtn" class="btn btn-primary">전송</button>
+                        <!-- 			<input type="submit" id="rbtn" value="전송" class="btn btn-primary"> -->
+                        <!-- Submit -->
 
-          </div>
-  <!-- 글쓰기 Modal 끝폼 -->
-  <!-- 글쓰기 Modal 끝폼 -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-  <!-- Submit -->
-            <button type="submit" id="revbtn" class="btn btn-primary">전송</button>
-<!-- 			<input type="submit" id="rbtn" value="전송" class="btn btn-primary"> -->
-  <!-- Submit -->
-			    
-          </div>
-        </form>
-      </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
- 
-			<!-- 상품평 영역 마침 -->
-			<!-- 상품평 영역 마침 -->
-			<!-- 상품평 영역 마침 -->
+
+    <!-- 상품평 영역 마침 -->
+    <!-- 상품평 영역 마침 -->
+    <!-- 상품평 영역 마침 -->
 
 </div>
 
 
-
-
-    <div class="site-section block-3 site-blocks-2 bg-light">
-      <div class="container">
+<div class="site-section block-3 site-blocks-2 bg-light">
+    <div class="container">
         <div class="row justify-content-center">
-          <div class="col-md-7 site-section-heading text-center pt-4">
-            <h2>Featured Products</h2>
-          </div>
+            <div class="col-md-7 site-section-heading text-center pt-4">
+                <h2>Featured Products</h2>
+            </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
-            <div class="nonloop-block-3 owl-carousel">
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Tank Top</a></h3>
-                    <p class="mb-0">Finding perfect t-shirt</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
+            <div class="col-md-12">
+                <div class="nonloop-block-3 owl-carousel">
+                    <div class="item">
+                        <div class="block-4 text-center">
+                            <figure class="block-4-image">
+                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
+                            </figure>
+                            <div class="block-4-text p-4">
+                                <h3><a href="#">Tank Top</a></h3>
+                                <p class="mb-0">Finding perfect t-shirt</p>
+                                <p class="text-primary font-weight-bold">$50</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="block-4 text-center">
+                            <figure class="block-4-image">
+                                <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
+                            </figure>
+                            <div class="block-4-text p-4">
+                                <h3><a href="#">Corater</a></h3>
+                                <p class="mb-0">Finding perfect products</p>
+                                <p class="text-primary font-weight-bold">$50</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="block-4 text-center">
+                            <figure class="block-4-image">
+                                <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
+                            </figure>
+                            <div class="block-4-text p-4">
+                                <h3><a href="#">Polo Shirt</a></h3>
+                                <p class="mb-0">Finding perfect products</p>
+                                <p class="text-primary font-weight-bold">$50</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="block-4 text-center">
+                            <figure class="block-4-image">
+                                <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
+                            </figure>
+                            <div class="block-4-text p-4">
+                                <h3><a href="#">T-Shirt Mockup</a></h3>
+                                <p class="mb-0">Finding perfect products</p>
+                                <p class="text-primary font-weight-bold">$50</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="block-4 text-center">
+                            <figure class="block-4-image">
+                                <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
+                            </figure>
+                            <div class="block-4-text p-4">
+                                <h3><a href="#">Corater</a></h3>
+                                <p class="mb-0">Finding perfect products</p>
+                                <p class="text-primary font-weight-bold">$50</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Corater</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Polo Shirt</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">T-Shirt Mockup</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="block-4 text-center">
-                  <figure class="block-4-image">
-                    <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                  </figure>
-                  <div class="block-4-text p-4">
-                    <h3><a href="#">Corater</a></h3>
-                    <p class="mb-0">Finding perfect products</p>
-                    <p class="text-primary font-weight-bold">$50</p>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
 

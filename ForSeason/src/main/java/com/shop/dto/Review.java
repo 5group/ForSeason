@@ -35,5 +35,12 @@ public class Review {
 		this.rev_udate = rev_udate;
 		this.rev_rdate = rev_rdate;
 	}
-    
+
+    public Review(int user_no, int item_no, String rev_title, String rev_content, double rev_score) {
+        this.item_no = item_no;
+        this.user_no = user_no;
+        this.rev_title = rev_title;
+        this.rev_content = rev_content;
+        this.rev_score = rev_score;
+    }
 }

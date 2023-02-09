@@ -12,7 +12,7 @@
     </select>
     <insert id="insert" parameterType="Review">
         INSERT INTO review
-        VALUES (#{rev_no}, #{item_no}, #{user_no}, #{rev_title}, #{rev_content}, #{rev_score}, now(), now())
+        VALUES (0,  #{user_no}, #{item_no}, #{rev_title}, #{rev_content}, #{rev_score}, now(), now())
     </insert>
     <update id="update" parameterType="Review">
         UPDATE review SET rev_title=#{rev_title}, rev_content=#{rev_content}, rev_rdate=now() WHERE rev_no=#{rev_no}

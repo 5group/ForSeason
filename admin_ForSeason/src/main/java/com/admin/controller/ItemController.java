@@ -56,6 +56,7 @@ public class ItemController {
         model.addAttribute("itemList", itemList);
         List<Stock> stockList = new ArrayList<Stock>();
         for(Item item :itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
+        System.out.println("stockList:" + stockList);
         session.setAttribute("itemList", itemList);
         model.addAttribute("stockList", stockList);
         model.addAttribute("center", dir + "center");

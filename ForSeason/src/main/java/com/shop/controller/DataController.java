@@ -200,14 +200,14 @@ public class DataController {
     	
     	return result;
     }
-    @RequestMapping("/reviewInsert")
+    @RequestMapping(value = "/reviewInsert", method = RequestMethod.POST)
     public Object reviewInsert(int item_no, String rev_title, String rev_content, double rev_score) throws Exception {
         int result = 0;
 //      System.out.println(item_no + ", " + rev_title + ", " + rev_content + ", " + rev_score);
 
         User user = (User)session.getAttribute("loginUser");
-     
-        Review review = new Review(0, item_no, user.getUser_no(), rev_title, rev_content, rev_score, null, null);
+        System.out.println("user:"+user.getUser_no());
+        Review review = new Review(user.getUser_no(),item_no , rev_title, rev_content, rev_score);
         System.out.println(review);
         reviewService.register(review);
                 
