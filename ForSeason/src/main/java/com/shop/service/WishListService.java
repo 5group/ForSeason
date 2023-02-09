@@ -50,4 +50,13 @@ public class WishListService implements MyService<Integer, WishList> {
     public List<WishList> get_list(int user_no) throws Exception{
         return mapper.selectList(user_no);
     }
+
+    public String checkWishByString(int item_no, int user_no) throws Exception {
+        WishList wishList = new WishList();
+        wishList.setUser_no(user_no);
+        wishList.setItem_no(item_no);
+        WishList checkWish = checkUserWish(wishList);
+        if (checkWish != null) return "Yes";
+        return "No";
+    }
 }

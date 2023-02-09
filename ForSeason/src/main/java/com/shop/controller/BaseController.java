@@ -18,7 +18,7 @@ public class BaseController {
     CategoryService categoryService;
 
     @ModelAttribute
-    public void categories(Model model) throws Exception{
+    public void categories(Model model) throws Exception {
         Map<String, List<Category>> mapCateList = new HashMap<String, List<Category>>();
         List<Category> topCategory = null;
         List<Category> middleCategory = null;

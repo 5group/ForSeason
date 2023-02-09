@@ -36,14 +36,14 @@ public class UserController {
 
     @RequestMapping("/register")
     public String register(Model model, User user, HttpSession session) {
-        User c = null;
+        User userResult = null;
         try {
             if (userService.get_id(user.getUser_id()) == null || userService.get_id(user.getUser_id()).equals("")) {
                 userService.register(user);
                 model.addAttribute("center", dir + "registerok");
-                c = userService.get_id(user.getUser_id());
-                model.addAttribute("obj", c);
-                session.setAttribute("loginUser", c);
+                userResult = userService.get_id(user.getUser_id());
+                model.addAttribute("obj", userResult);
+                session.setAttribute("loginUser", userResult);
                 return "redirect:/";
             }
         } catch (Exception e) {
@@ -64,30 +64,22 @@ public class UserController {
     @RequestMapping("/pwd_update")
     public String pwdUpdate(String user_pwd) {
         try {
-            User u = (User) session.getAttribute("loginUser");
-            u.setUser_id(u.getUser_id());
-            u.setUser_pwd(user_pwd);
-            userService.set_pwd(u);
-            session.setAttribute("loginUser", u);
-            System.out.println(u);
+            User user = (User) session.getAttribute("loginUser");
+            user.setUser_id(user.getUser_id());
+            user.setUser_pwd(user_pwd);
+            userService.set_pwd(user);
+            session.setAttribute("loginUser", user);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "main";
     }
 
-    @RequestMapping("/update")
-    public String update(User user) {
-        System.out.println(user);
-        return "main";
-    }
-
     @RequestMapping("/deleteUser")
-    public String deleteUser(String user_pwd) throws Exception {
+    public String deleteUser() throws Exception {
     	User user = (User) session.getAttribute("loginUser");
         userService.remove(user.getUser_id());
         session.invalidate();
-        
         return "redirect:/";
     }
     

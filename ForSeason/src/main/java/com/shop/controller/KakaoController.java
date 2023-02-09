@@ -33,7 +33,6 @@ public class KakaoController {
         User user = userService.get_id(userInfo.get("user_id"));
         if (user != null) {
             session.setAttribute("loginUser", user);
-            //model.addAttribute("is_check", "true");
         } else {
             model.addAttribute("center", "user/register");
         }

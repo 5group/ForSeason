@@ -88,15 +88,11 @@ public class MainController {
             if (user != null) {
                 if (user.getUser_pwd().equals(pwd)) {
                     result = "user/loginok";
-                    List<Coupon> coupon_list = couponService.getList(user.getUser_no());
-                    List<Cart> cart_list = cartService.get_list(user.getUser_no());
-                    List<Order> order_list = orderService.get_list(user.getUser_no());
-                    List<OrderDetail> od_list = orderDetailService.getODList(user.getUser_no());
                     session.setAttribute("loginUser", user);
-                    session.setAttribute("coupon", coupon_list); //user 즉시 sesstion 넣어주기
-                    session.setAttribute("cartList", cart_list); // test를 위한 sesstion 처리
-                    session.setAttribute("order", order_list);
-                    session.setAttribute("od", od_list);
+                    session.setAttribute("coupon", couponService.getList(user.getUser_no())); //user 즉시 sesstion 넣어주기
+                    session.setAttribute("cartList", cartService.get_list(user.getUser_no())); // test를 위한 sesstion 처리
+                    session.setAttribute("order", orderService.get_list(user.getUser_no()));
+                    session.setAttribute("od", orderDetailService.getODList(user.getUser_no()));
                 }
             }
         } catch (Exception e) {
@@ -114,30 +110,21 @@ public class MainController {
         return "main";
     }
 
-    @RequestMapping(value = "/find_pwd",method = RequestMethod.GET)
-    public String find_pwd(Model model){
+    @RequestMapping(value = "/find_pwd", method = RequestMethod.GET)
+    public String find_pwd(Model model) {
         model.addAttribute("center", "/user/findpwd");
         return "main";
     }
 
     @RequestMapping(value = "/find_pwd", method = RequestMethod.POST)
-    public String find_pwd(Model model, String userId, String userPhone, String toEmail){
+    public String find_pwd(Model model, String userId, String userPhone, String toEmail) throws Exception {
         User findUser = null;
-        try {
-            findUser = userService.get_id(userId);
-            if(findUser != null&&findUser.getUser_phone().equals(userPhone)){
-                User user = new User();
-                user.setUser_id(findUser.getUser_id());
-                String subMessage = findUser.getUser_name() + "님의 비밀번호가 변경되었습니다.";
-                String pwd = mailService.setMailPwd();
-                mailService.sendMail(toEmail, subMessage, "password:"+pwd);
-                user.setUser_pwd(pwd);// 암호화할때 암호화 해야함..
-                userService.set_pwd(user);
-                model.addAttribute("center", "center");
-                return "main";
-            }
-        } catch (Exception e) {
-            System.out.println("정상적이지 않습니다.");
+        findUser = userService.get_id(userId);
+        if (findUser != null && findUser.getUser_phone().equals(userPhone)) {
+            User user = mailService.userAndEmailByPwdReset(findUser, toEmail);
+            userService.set_pwd(user);
+            model.addAttribute("center", "center");
+            return "main";
         }
         return "/find_pwd";
     }

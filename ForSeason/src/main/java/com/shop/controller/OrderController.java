@@ -43,70 +43,55 @@ public class OrderController {
     @RequestMapping("/order")
     public String order(Model model) throws Exception {
         List<Cart> cartList = (List<Cart>) session.getAttribute("orderCartList");
-        Item item = null;
         int tot_price = 0;
-        int index = 0;
         int item_count = 0;
         String text = "";
         List<Item> itemList = new ArrayList<Item>();
         List<Stock> stockList = new ArrayList<Stock>();
         for (Cart cart : cartList) {
-            Stock stock = stockService.getColorSizeName(cart.getStock_no());// cart get.stock ->
-            item_count = cart.getCart_cnt();// cart_no -> stock_no -> color name, size_name
-            item = itemService.get(stock.getItem_no()); // 상품 <- -> 재고
-            if (index == 0) text += item.getItem_name();
-            if (item.getItem_discnt() == 0){
+            Stock stock = stockService.getColorSizeName(cart.getStock_no());
+            item_count = cart.getCart_cnt();
+            Item item = itemService.get(stock.getItem_no());
+            if (item.getItem_discnt() == 0) {
                 tot_price += item.getItem_price() * item_count;
-            }else {
+            } else {
                 tot_price += (item.getItem_price() - item.getItem_price() * item.getItem_discnt() / 100) * item_count;
             }
-            index += 1;
             itemList.add(item);
             stockList.add(stock);
         }
-        text = String.format(text + "외%d개 제품", cartList.size() - 1);
-        if (index == 1) text = String.format(text + "같은 제품%d개", item_count);
-        model.addAttribute("stockList", stockList); // 사이즈 색상(리스트)
-        model.addAttribute("center", "order/checkout"); //
-        model.addAttribute("cartList", cartList); //session으로 쓸생각 고려
-        model.addAttribute("itemList", itemList); // 이름, 가격, 할인율
+        text = String.format("%s 외 %d 개 제품", itemList.get(0).getItem_name(), cartList.size() - 1);
+        if (itemList.size() == 1) {
+            text = String.format("%s 같은 제품 %d 개", text, item_count);
+        }
+        model.addAttribute("stockList", stockList);
+        model.addAttribute("center", "order/checkout");
+        model.addAttribute("cartList", cartList);
+        model.addAttribute("itemList", itemList);
         model.addAttribute("item_name", text);
         model.addAttribute("item_tot", tot_price);
+
         return "main";
     }
 
-    @RequestMapping("/order/order_detail")
-    public String orderDetail(@RequestBody Map<String, Object> params) throws Exception {
-        List<Cart> list = (List<Cart>) session.getAttribute("orderCartList");
-        User user = (User) session.getAttribute("loginUser");
-        Order order = orderService.createItemsByOrder(params, user.getUser_no());// 주문DB 만들어 주고 주문 반환
-        successOrder(order.getOrder_no(), list); // 반환받은 주문의 넘버를 받아서 detail에 넣어줌 - 재고에서 재고업데이트
-        String coupon_no = (String) params.get("coupon_no");
-        if (!Objects.equals(coupon_no, "0") && !Objects.equals(coupon_no, "null"))
-            couponService.useCoupon(Integer.parseInt(coupon_no));//쿠폰 상태 변환
-        List<Cart> cartList = cartService.setCartList(user.getUser_no(), list);
-        session.setAttribute("cartList", cartList);
-        System.out.println(cartList);
-        
-        List<Order> order_list = orderService.get_list(user.getUser_no());
-        session.setAttribute("order", order_list);
-        
-        return "main";
-    }
-
-    // 서비스에 있어야하나 지금은 애매하여 일단둠
-    public void successOrder(int order_no, List<Cart> list) throws Exception {
-        for (Cart cart : list) {
-            OrderDetail od = new OrderDetail();
-            Stock stock = stockService.get(cart.getStock_no());
-            Item item = itemService.get(stock.getItem_no());
-            int stock_no = cart.getStock_no();
-            int cnt = cart.getCart_cnt();
-            int price = item.getItem_price();
-            int discnt = item.getItem_discnt();
-            orderDetailService.createOrderDetail(order_no, stock_no, cnt, price, discnt);
-            stockService.setAmount(stock_no, cnt);
+        @RequestMapping("/order/order_detail")
+        public String orderDetail (@RequestBody Map < String, Object > params) throws Exception {
+            List<Cart> cartList = (List<Cart>) session.getAttribute("orderCartList");
+            User user = (User) session.getAttribute("loginUser");
+            Order order = orderService.createItemsByOrder(params, user.getUser_no());
+            int orderNo = order.getOrder_no();
+            orderDetailService.successOrder(orderNo, cartList);
+            String couponNo = (String) params.get("coupon_no");
+            if (!couponNo.equals("0") && !couponNo.equals("null")) {
+                couponService.useCoupon(Integer.parseInt(couponNo));
+            }
+            List<Cart> updatedCartList = cartService.setCartList(user.getUser_no(), cartList);
+            session.setAttribute("cartList", updatedCartList);
+            List<Order> orderList = orderService.get_list(user.getUser_no());
+            session.setAttribute("order", orderList);
+            return "main";
         }
-    }
 
-}
+        // 서비스에 있어야하나 지금은 애매하여 일단둠
+
+    }

@@ -1,5 +1,6 @@
 package com.shop.service;
 
+import com.shop.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,6 +25,16 @@ public class MailService {
         simpleMessage.setText(textMessage);
         // 메일 발송
         javaMailSender.send(simpleMessage);
+    }
+
+    public User userAndEmailByPwdReset(User findUser, String toEmail){
+        User user = new User();
+        user.setUser_id(findUser.getUser_id());
+        String subMessage = findUser.getUser_name() + "님의 비밀번호가 변경되었습니다.";
+        String pwd = setMailPwd();
+        sendMail(toEmail, subMessage, "password:"+pwd);
+        user.setUser_pwd(pwd);// 암호화할때 암호화 해야함..
+        return user;
     }
 
     public void sendMailToMultipleRecipients(List<String> toEmails, String subject, String textMessage) {
