@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
-public class MainController {
+public class MainController{
 
     @Autowired
     UserService userService;
@@ -70,7 +70,7 @@ public class MainController {
     }
 
     @RequestMapping("/myPage")
-    public String info(Model model) {
+    public String info(Model model) throws Exception{
         model.addAttribute("center", "user/myPage");
         return "main";
     }

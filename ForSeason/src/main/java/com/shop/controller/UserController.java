@@ -30,9 +30,6 @@ public class UserController {
     @Autowired
     MailService mailService;
 
-    @Value("custPwdKey")
-    String key;
-
     @RequestMapping("")
     public String main(Model model) {
         model.addAttribute("center", dir + "center");
@@ -72,7 +69,7 @@ public class UserController {
         try {
             User user = (User) session.getAttribute("loginUser");
             user.setUser_id(user.getUser_id());
-            user.setUser_pwd(user_pwd);
+            user.setUser_pwd(CryptoUtil.encryptAES256(user_pwd, "123456testsogood"));
             userService.set_pwd(user);
             session.setAttribute("loginUser", user);
         } catch (Exception e) {
