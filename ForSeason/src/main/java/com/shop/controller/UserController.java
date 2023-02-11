@@ -1,10 +1,12 @@
 package com.shop.controller;
 
 import com.shop.dto.User;
+import com.shop.frame.CryptoUtil;
 import com.shop.service.CouponService;
 import com.shop.service.MailService;
 import com.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,9 @@ public class UserController {
     @Autowired
     MailService mailService;
 
+    @Value("custPwdKey")
+    String key;
+
     @RequestMapping("")
     public String main(Model model) {
         model.addAttribute("center", dir + "center");
@@ -39,12 +44,13 @@ public class UserController {
         User userResult = null;
         try {
             if (userService.get_id(user.getUser_id()) == null || userService.get_id(user.getUser_id()).equals("")) {
+                user.setUser_pwd(CryptoUtil.encryptAES256(user.getUser_pwd(), "123456testsogood"));
                 userService.register(user);
                 model.addAttribute("center", dir + "registerok");
                 userResult = userService.get_id(user.getUser_id());
                 model.addAttribute("obj", userResult);
                 session.setAttribute("loginUser", userResult);
-                return "redirect:/";
+                return "redirect:/login";
             }
         } catch (Exception e) {
             e.printStackTrace();

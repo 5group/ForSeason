@@ -1,8 +1,10 @@
 package com.shop.controller;
 
 import com.shop.dto.*;
+import com.shop.frame.CryptoUtil;
 import com.shop.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +33,9 @@ public class MainController {
 
     @Autowired
     CouponService couponService;
+
+    @Autowired
+    HttpSession session;
 
     // http://127.0.0.1/
     @RequestMapping("/")
@@ -77,16 +82,14 @@ public class MainController {
         return "main";
     }
 
-    //@RequestMapping("/loginimpl")
     @RequestMapping(value = "/loginimpl", method = RequestMethod.POST)
-    public String loginimpl(HttpSession session, String id, String pwd, Model model) {
-        System.out.println("haha");
+    public String loginimpl(String id, String pwd, Model model) {
         User user = null;
         String result = "user/loginfail";
         try {
             user = userService.get_id(id);
             if (user != null) {
-                if (user.getUser_pwd().equals(pwd)) {
+                if (user.getUser_pwd().equals(CryptoUtil.encryptAES256(pwd, "123456testsogood"))) {
                     result = "user/loginok";
                     session.setAttribute("loginUser", user);
                     session.setAttribute("coupon", couponService.getList(user.getUser_no())); //user 즉시 sesstion 넣어주기
@@ -103,7 +106,7 @@ public class MainController {
     }
 
     @RequestMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout() {
         if (session != null) {
             session.invalidate();
         }

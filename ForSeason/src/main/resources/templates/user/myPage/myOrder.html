@@ -38,7 +38,7 @@
         <td th:text="${order.order_stat}"></td>
         <td th:text="${order.order_pay}"></td>
         <td th:text="${order.order_tot}"></td>
-        <td th:text="${order.order_udate}"></td>
+        <td th:text="${#dates.format(order.order_udate, 'yyyy-MM-dd HH:mm:ss')}"></td>
         <td th:text="${order.order_cp}"></td>
         <td>
         	<a th:href="|@{/myOrderDetail?no=}${order.order_no}|">click</a>
