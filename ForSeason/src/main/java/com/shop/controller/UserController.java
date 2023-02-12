@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 
 @Controller
 @RequestMapping("/user")
@@ -46,7 +47,6 @@ public class UserController {
                 model.addAttribute("center", dir + "registerok");
                 userResult = userService.get_id(user.getUser_id());
                 model.addAttribute("obj", userResult);
-                session.setAttribute("loginUser", userResult);
                 return "redirect:/login";
             }
         } catch (Exception e) {
@@ -85,8 +85,7 @@ public class UserController {
         session.invalidate();
         return "redirect:/";
     }
-    
-   
+
     
 //    @RequestMapping("/info_update")
 //    public String infoUpdate(User info_user) {

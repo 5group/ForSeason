@@ -1,0 +1,151 @@
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        $(document).ready(function (){
+            // 비밀번호 찾기 버튼 클릭 이벤트
+            $("#findPwdBtn").click(function () {
+                // 필요한 데이터 입력 칸들 보이도록 설정
+                $("#pwdName").show();
+                $("#idName").hide();
+            });
+
+            // 아이디 찾기 버튼 클릭 이벤트
+            $("#findIdBtn").click(function () {
+                // 필요한 데이터 입력 칸들 보이도록 설정
+                $("#idName").show();
+                $("#pwdName").hide();
+            });
+
+            $("#findBtn").click(function () {
+                var data = {};
+                var url = "";
+                var message = "";
+                if ($("#idName").is(":visible")) {
+                    // 아이디 찾기
+                    data = {
+                        user_name: $("#id_user_name").val(),
+                        user_phone: $("#id_user_phone").val(),
+                        user_email: $("#id_user_email").val()
+                    };
+                    url = "[[@{/find_id}]]";
+                    message = "회원님의 아이디를 ";
+                } else {
+                    // 비밀번호 찾기
+                    data = {
+                        user_id: $("#pwd_user_id").val(),
+                        user_phone: $("#pwd_user_phone").val(),
+                        user_email: $("#pwd_user_email").val()
+                    };
+                    url = "[[@{/find_pwd}]]";
+                    message = "회원님의 비밀번호를 ";
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: data,
+                    success: function (response) {
+                        if (response === "not found") {
+                            alert("일치하는 정보가 없습니다.");
+                        } else {
+                            alert(message + response);
+                        }
+                    },
+                    error: function (xhr, status, error) { // ajax Error 처리 ㅇ.ㅇ
+                        console.log(xhr);
+                        console.log(status);
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+
+
+    </script>
+    <style>
+        .mybtn {
+            width: 150px;
+            height: 40px;
+            padding: 0;
+            display: inline;
+            border-radius: 4px;
+            background: #212529;
+            color: #fff;
+            margin-top: 20px;
+            border: solid 2px #212529;
+            transition: all 0.5s ease-in-out 0s;
+        }
+
+        .mybtn:hover .mybtn:focus {
+            background: white;
+            color: #212529;
+            text-decoration: none;
+        }
+
+        .inputField {
+            display: none;
+        }
+    </style>
+    <title>아이디/비밀번호 찾기</title>
+</head>
+<body>
+<div class="w3-content w3-container w3-margin-top">
+    <div class="w3-container w3-card-4 w3-auto" style="width: 382px;height: 456.3px;">
+        <div class="w3-center w3-large w3-margin-top">
+            <h3>아이디/비밀번호 찾기</h3>
+        </div>
+        <div>
+            <!-- 아이디 찾기 입력 필드 -->
+            <div id="idName" class="inputField">
+                <p>
+                    <label>이름</label>
+                    <input class="w3-input" type="text" id="id_user_name" name="id_user_name"
+                           placeholder="회원가입한 이름을 입력하세요" required>
+                </p>
+                <p>
+                    <label>휴대폰번호</label>
+                    <input class="w3-input" type="text" id="id_user_phone" name="id_user_phone"
+                           placeholder="회원가입한 휴대폰번호를 입력하세요" required>
+                </p>
+                <p>
+                    <label>이메일</label>
+                    <input class="w3-input" type="text" id="id_user_email" name="id_user_email"
+                           placeholder="회원가입한 이메일을 입력하세요" required>
+                </p>
+            </div>
+
+            <!-- 비밀번호 찾기 입력 필드 -->
+            <div id="pwdName" class="inputField">
+                <p>
+                    <label>아이디</label>
+                    <input class="w3-input" type="text" id="pwd_user_id" name="pwd_user_id"
+                           placeholder="회원가입한 아이디를 입력하세요" required>
+                </p>
+                <p>
+                    <label>휴대폰번호</label>
+                    <input class="w3-input" type="text" id="pwd_user_phone" name="pwd_user_phone"
+                           placeholder="회원가입한 휴대폰번호를 입력하세요" required>
+                </p>
+                <p>
+                    <label>이메일</label>
+                    <input class="w3-input" type="text" id="pwd_user_email" name="pwd_user_email"
+                           placeholder="회원가입한 이메일을 입력하세요" required>
+                </p>
+            </div>
+
+            <!-- 아이디/비밀번호 찾기 버튼 -->
+            <div class="w3-center">
+                <button id="findBtn" class="mybtn">아이디/비밀번호 찾기</button>
+            </div>
+            <div class="w3-center">
+                <button id="findIdBtn" class="mybtn">아이디 찾기</button>
+                <button id="findPwdBtn" class="mybtn">비밀번호 찾기</button>
+            </div>
+        </div>
+    </div>
+</div>

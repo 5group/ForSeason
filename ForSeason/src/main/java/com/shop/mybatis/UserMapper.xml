@@ -10,6 +10,13 @@
     <select id="selectId" parameterType="String" resultType="User">
         SELECT * FROM user WHERE user_id=#{user_id}
     </select>
+    <select id="selectFindUser" parameterType="hashMap" resultType="String">
+        SELECT user_id
+        FROM user
+        where user_phone = #{user_phone}
+          and user_name = #{user_name}
+          and user_email = #{user_email}
+    </select>
     <select id="selectAll" resultType="User">
         SELECT * FROM user
     </select>

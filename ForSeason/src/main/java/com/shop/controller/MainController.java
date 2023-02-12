@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -25,8 +26,7 @@ public class MainController{
     @Autowired
     OrderService orderService;
 
-    @Autowired
-    MailService mailService;
+
 
     @Autowired
     OrderDetailService orderDetailService;
@@ -113,23 +113,10 @@ public class MainController{
         return "main";
     }
 
-    @RequestMapping(value = "/find_pwd", method = RequestMethod.GET)
-    public String find_pwd(Model model) {
-        model.addAttribute("center", "/user/findpwd");
+    @RequestMapping(value = "/find_info", method = RequestMethod.GET)
+    public String find_info(Model model) {
+        model.addAttribute("center", "/user/findinfo");
         return "main";
-    }
-
-    @RequestMapping(value = "/find_pwd", method = RequestMethod.POST)
-    public String find_pwd(Model model, String userId, String userPhone, String toEmail) throws Exception {
-        User findUser = null;
-        findUser = userService.get_id(userId);
-        if (findUser != null && findUser.getUser_phone().equals(userPhone)) {
-            User user = mailService.userAndEmailByPwdReset(findUser, toEmail);
-            userService.set_pwd(user);
-            model.addAttribute("center", "center");
-            return "main";
-        }
-        return "/find_pwd";
     }
 
 }
