@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.shop.frame.CryptoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -119,7 +120,8 @@ public class MyPageController {
     }
 
     @RequestMapping("/changeMyPwdView")
-    public String changeMyPwd(@SessionAttribute("loginUser") User user, Model model) {
+    public String changeMyPwd(@SessionAttribute("loginUser") User user, Model model) throws Exception{
+        user.setUser_pwd(CryptoUtil.decryptAES256(user.getUser_pwd(),"123456testsogood"));
         model.addAttribute("user", user);
         model.addAttribute("center", "user/myPage/changeMyPwd");
         return "main";

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.shop.frame.CryptoUtil;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -90,15 +91,6 @@ public class DataController {
         return list;
     }
 
-    @RequestMapping("test")
-    public ModelAndView item_list() throws Exception {
-        List<Cart> list = (List<Cart>) session.getAttribute("cart");
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("/order/index");
-        modelAndView.addObject("maplist", requiredOrderMap(list));
-        return modelAndView;
-    }
-
     @RequestMapping(value = "/orderByCartList", method = RequestMethod.POST)
     public void orderByCartList(@RequestParam(value = "cartList[]") List<Integer> cartList, @RequestParam(value = "cartCntList[]") List<Integer> cartCntList) throws Exception {
         List<Cart> orderCartList = new ArrayList<Cart>();
@@ -163,12 +155,11 @@ public class DataController {
     }
 
     @RequestMapping("/checkUserPwd")
-    public Object checkPwd(String user_pwd, Model model) throws Exception {
+    public Object checkPwd(String user_pwd) throws Exception {
         int result = 0;
-
         User user = (User) session.getAttribute("loginUser");
         String pwd = user.getUser_pwd();
-        if (pwd.equals(user_pwd)) {
+        if (pwd.equals(CryptoUtil.encryptAES256(user_pwd, "123456testsogood"))) {
             result = 1;
         }
         return result;
