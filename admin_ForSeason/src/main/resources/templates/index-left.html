@@ -1,0 +1,46 @@
+<div class="quixnav-scroll">
+         <ul class="metismenu" id="menu">
+             <li class="nav-label first">쇼핑몰관리</li>
+             <li>
+             	<a th:href="@{/}" aria-expanded="false">
+             		<i class="icon icon-single-04"></i><span class="nav-text">종합차트</span>
+             	</a>
+             </li>
+              <li>
+             	<a th:href="@{/orderList}" aria-expanded="false">
+             		<i class="icon icon-single-04"></i><span class="nav-text">주문내역</span>
+             	</a>
+             </li>
+             
+             
+             <li class="nav-label">상품/재고관리</li>
+             <li th:each="top:${topCategory}">
+             	<a href="javascript:void()" class="has-arrow" aria-expanded="false">
+             		<i class="icon icon-tag"></i><span th:text="${top.cate_name}" th:onclick="|location.href='@{/itemList/cate_no=}${top.cate_no}'|"></span>
+             	</a>
+                 <ul aria-expanded="false">
+                     <li th:each="middle:${middleCategory}" th:if="${middle.cate_no2==top.cate_no}">
+                     	<a class="has-arrow" href="javascript:void()" aria-expanded="false"><span th:text="${middle.cate_name}" th:onclick="|location.href='@{/itemList/midCate_no=}${middle.cate_no}'|"></span></a>
+                         <ul aria-expanded="false">
+                             <li th:each="sub:${subCategory}" th:if="${sub.cate_no2==middle.cate_no}">
+                             	<a th:href="|@{/itemList/itemCate_no=}${sub.cate_no}|" th:text="${sub.cate_name}">경량패딩</a>
+                             </li>
+                         </ul>
+                     </li>
+                 </ul>
+             </li>
+             
+    	        
+             <li class="nav-label">사용자관리</li>
+             <li>
+             	<a th:href="@{/userInfo}" aria-expanded="false">
+             		<i class="icon icon-single-04"></i><span class="nav-text">쿠폰발급/메일전송</span>
+             	</a>
+             </li>
+             <li>
+             	<a th:href="@{/userQuestion}" aria-expanded="false">
+             		<i class="icon icon-single-04"></i><span class="nav-text">사용자문의</span>
+             	</a>
+             </li>
+         </ul>
+     </div>

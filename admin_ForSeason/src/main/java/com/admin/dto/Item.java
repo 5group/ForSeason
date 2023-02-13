@@ -18,6 +18,8 @@ public class Item {
     private String item_info;
     private int item_hit;
     private Date item_udate;
+    
+    private String cate_name;
 
     public Item(int cate_no, String item_name, int item_price, int item_discnt, String item_info, int item_hit, Date item_udate) {
         this.cate_no = cate_no;
@@ -28,5 +30,5 @@ public class Item {
         this.item_hit = item_hit;
         this.item_udate = item_udate;
     }
-    private String cate_name;
+   
 }

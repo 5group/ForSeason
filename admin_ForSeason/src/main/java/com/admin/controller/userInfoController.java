@@ -38,8 +38,9 @@ public class userInfoController {
     public String main(Model model) throws Exception {
         List<User> userList = userService.get();
         model.addAttribute("userList", userList);
-        model.addAttribute("center", dir + "center");
-        return "main";
+        //model.addAttribute("center", dir + "center");
+        model.addAttribute("center", dir + "centerUser");
+        return "index";
     }
 
     @RequestMapping(value = "/createCoupon" ,method = RequestMethod.POST)
@@ -51,12 +52,12 @@ public class userInfoController {
             coupon.setUser_no(no);
             couponService.register(coupon);
         }
-        return "main";
+        return "index";
     }
 
     @RequestMapping(value = "/pushMail")
     public String pushMail(@RequestParam String subMessage, @RequestParam String textMessage, @RequestParam(value = "mailList[]") List<String> mailList){
         mailService.sendMailToMultipleRecipients(mailList, subMessage, textMessage);
-        return "main";
+        return "index";
     }
 }

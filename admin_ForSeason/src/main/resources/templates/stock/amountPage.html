@@ -1,24 +1,34 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-<table>
-    <thead>
-    <tr>
-        <form id="register_form">
+
+<style>
+	#register_form div{
+		text-align: center;
+		margin-bottom: 10px;
+	}
+	.title{
+		font-size: 25px;
+		font-weight: bold;
+		border-bottom: 1px solid #cccccc;
+	}
+</style>
+
+<div>
+	 <form id="register_form">
+	 		<div class="title">재고정보</div>
             <input type="hidden" name="stock_no" th:value="${stock.stock_no}"/>
             <input type="hidden" name="item_no" th:value="${stock.item_no}"/>
             <input type="hidden" name="size_no" th:value="${stock.size_no}"/>
             <input type="hidden" name="color_no" th:value="${stock.color_no}"/>
-            <td th:text="|아이템 번호: ${stock.item_no}|"></td>
-            <td th:text="|사이즈 번호: ${stock.size_no}|"></td>
-            <td th:text="|컬러 번호: ${stock.color_no}|"></td>
-            <td>
-                재고 : <input type="text" id="stock_amount" name="amount" th:value="${stock.amount}">
-                <a href="#" onclick="testSend()">수정하기</a>
-            </td>
-        </form>
-    </tr>
-    </thead>
-</table>
+            <div th:text="|아이템 번호: ${stock.item_no}|"></div>
+            <div th:text="|사이즈 번호: ${stock.size_no}|"></div>
+            <div th:text="|컬러 번호: ${stock.color_no}|"></div>
+            <div>
+                재고 : <input type="text" id="stock_amount" name="amount" th:value="${stock.amount}" style="width: 80px;">
+            </div>
+     </form>
+     <div style="text-align:center"><a href="#" onclick="testSend()">수정하기</a></div>
+</div>
 <script>
     function testSend() {
         var c = confirm('수정 하시겠습니까?');
@@ -34,6 +44,7 @@
                     "amount": $('input[name="amount"]').val()
                 },
                 success: function () {
+                	opener.parent.location.reload();
                     window.close();
                 }
             });

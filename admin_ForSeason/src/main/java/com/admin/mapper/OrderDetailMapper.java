@@ -12,4 +12,5 @@ import java.util.List;
 public interface OrderDetailMapper extends MyMapper<Integer, OrderDetail> {
     public List<OrderDetail> selectList(int user_no);
     public List<OrderDetail> select_userODList(int user_no);
+    public List<OrderDetail> topCateOrderTotalList(String cate_name);
 }

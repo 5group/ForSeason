@@ -28,29 +28,34 @@ public class MainController {
 
     @Autowired
     HttpSession session;
-
+    
+    		
     @RequestMapping("/")
-    public String main(Model model) throws Exception {
+    public String index(Model model) throws Exception {
         if(session.getAttribute("adminLogin") == null){
             return "redirect:/login";
         }
-        model.addAttribute("center2", "/chartList/center");
-        List<Stock> stockList = stockService.getAdminMainList();
-        model.addAttribute("stockList", stockList);
-        return "main";
+        //model.addAttribute("center2", "/chartList/center");
+        //List<Stock> stockList = stockService.getAdminMainList();
+        //model.addAttribute("stockList", stockList);
+        //return "main";
+        return "index";
     }
-
+    
+    @RequestMapping("/orderList")
+    public String blank(Model model) throws Exception{
+    	model.addAttribute("center", "/orderList/orderList");
+    	List<Stock> stockList = stockService.getAdminMainList();
+        model.addAttribute("stockList", stockList);
+    	return "index";
+    }
+    
     @RequestMapping("/login")
     public String login() {
-        return "admin/login";
+        //return "admin/login";
+        return "admin/index-login";
     }
-
-    @RequestMapping("/logout")
-    public String logout(){
-        session.invalidate();
-        return "main";
-    }
-
+    
     @RequestMapping(value = "/checkLogin")
     public String checkLogin(String id, String pwd) throws Exception {
         Admin admin = adminService.get(id);
@@ -62,5 +67,25 @@ public class MainController {
         return "redirect:/login";
     }
 
-
+    @RequestMapping("/logout")
+    public String logout(){
+        session.invalidate();
+        return "redirect:/";
+    }
+    
+    @RequestMapping("/userQuestion")
+    public String userQuestion(Model model){
+        model.addAttribute("center", "userQuestion/center");
+        return "index";
+    }
+    
+    
+    //main -> index
+    @RequestMapping("/main")
+    public String main(Model model) throws Exception {
+        model.addAttribute("center2", "/chartList/center");
+        List<Stock> stockList = stockService.getAdminMainList();
+        model.addAttribute("stockList", stockList);
+        return "main";
+    }
 }

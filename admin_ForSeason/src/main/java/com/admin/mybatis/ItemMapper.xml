@@ -12,7 +12,10 @@
     </select>
     <insert id="insert" parameterType="Item">
         INSERT INTO item
-        VALUES (null, #{cate_no}, #{item_name},#{item_price}, #{item_discnt}, #{item_info}, #{item_hit}, #{item_img}, now())
+        VALUES (null, #{cate_no}, #{item_name},#{item_price}, #{item_discnt}, #{item_info}, #{item_hit}, now())
+    	<selectKey keyProperty="item_no" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
     <update id="update" parameterType="Item">
         UPDATE item SET item_price=#{item_price}, item_discnt=#{item_discnt}, item_info=#{item_info}, item_udate=now() WHERE item_no=#{item_no}
@@ -27,5 +30,9 @@
 
 	<select id="getCateList" parameterType="Integer" resultType="Item">
         SELECT * FROM item WHERE cate_no=#{cate_no}
+    </select>
+    
+    <select id="selectName" parameterType="String" resultType="Item">
+    	select item_name from item where item_name=#{item_name}
     </select>
 </mapper>

@@ -26,6 +26,7 @@ public class OrderDetail {
     private String color_name;
     private String size_name;
     private String order_cp;
+    private String cate_name;
 
     public OrderDetail(int od_no, int order_no, int stock_no, int od_cnt, int od_price, int od_dicnt) {
         this.od_no = od_no;

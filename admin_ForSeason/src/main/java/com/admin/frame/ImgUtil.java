@@ -12,8 +12,8 @@ public class ImgUtil {
         byte[] data;
         String imgname = mf.getOriginalFilename();
         int index = imgname.indexOf("/");
-        admindir += "women/아우터/캐주얼아우터/"+imgname.substring(0, index);
-        custdir += "women/아우터/캐주얼아우터/"+imgname.substring(0, index);
+        admindir += "women/아우터/경량패딩/"+imgname.substring(0, index);
+        custdir += "women/아우터/경량패딩/"+imgname.substring(0, index);
         createFile(admindir);
         createFile(custdir);
         String jpg_name = imgname.substring(index);

@@ -1,7 +1,10 @@
 package com.admin.controller;
 
 import com.admin.dto.Item;
+import com.admin.dto.OrderDetail;
 import com.admin.dto.Stock;
+import com.admin.service.JsonService;
+import com.admin.service.OrderDetailService;
 import com.admin.service.OrderService;
 import com.admin.service.StockService;
 import org.json.simple.JSONArray;
@@ -25,6 +28,12 @@ public class DataController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    OrderDetailService orderDetailService;
+
+    @Autowired
+    JsonService jsonService;
 
     @Autowired
     HttpSession session;
@@ -71,6 +80,43 @@ public class DataController {
         jObject.put("dayTotal", totalList);
         System.out.println(jObject);
         return jObject;
+    }
+
+    @RequestMapping("/pieChart")
+    public JSONObject pieChart(){
+        JSONObject jObject = new JSONObject();
+        List<Integer> allTotalList = new ArrayList<Integer>();
+        List<OrderDetail> kidsTotalList = orderDetailService.getTopCateNameByTotalList("KIDS");
+        List<OrderDetail> menTotalList = orderDetailService.getTopCateNameByTotalList("MEN");
+        List<OrderDetail> womenTotalList = orderDetailService.getTopCateNameByTotalList("WOMEN");
+        totalListAdd(allTotalList, kidsTotalList);
+        totalListAdd(allTotalList, menTotalList);
+        totalListAdd(allTotalList, womenTotalList);
+        jObject.put("total", allTotalList);
+        System.out.println("piechart:"+jObject);
+        return jObject;
+    }
+
+    @RequestMapping("/bubbleChart")
+    public JSONArray bubbleChart(){
+        String kids = "KIDS";
+        String men = "MEN";
+        String women = "WOMEN";
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.add(jsonService.totalListByJSONObject(orderDetailService.getTopCateNameByTotalList(kids), kids, "#FF0000"));
+        jsonArray.add(jsonService.totalListByJSONObject(orderDetailService.getTopCateNameByTotalList(men), men, "#00FF00"));
+        jsonArray.add(jsonService.totalListByJSONObject(orderDetailService.getTopCateNameByTotalList(women), women, "#0000FF"));
+        System.out.println("bubblechart:"+jsonArray);
+        return jsonArray;
+    }
+
+    public List<Integer> totalListAdd(List<Integer> allTotalList, List<OrderDetail> cateTotalList){
+        int index = 0;
+        for (OrderDetail orderDetail :cateTotalList){
+            index += orderDetail.getOrder_tot();
+        }
+        allTotalList.add(index);
+        return allTotalList;
     }
 
 

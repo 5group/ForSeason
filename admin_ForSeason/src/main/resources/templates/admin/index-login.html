@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-100" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Focus - Bootstrap Admin Dashboard </title>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{bootstrapUI/images/favicon.png}">
+    <link th:href="@{bootstrapUI/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container-fluid h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-6">
+                    <div class="authincation-content">
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="auth-form">
+                                    <h4 class="text-center mb-4">Admin Login</h4>
+                                    <form id="login_form">
+                                        <div class="form-group">
+                                            <label><strong>Email</strong></label>
+                                            <input type="text" class="form-control" name="id" placeholder="ID">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Password</strong></label>
+                                            <input type="password" class="form-control" name="pwd" placeholder="Password">
+                                        </div>
+                                        <div class="text-center">
+                                            <button class="btn btn-primary btn-block">Sign me in</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    $('#login_form > .text-center > button').click(function () {
+        $('#login_form').attr({
+            'method': 'post',
+            'action': '[[@{/checkLogin}]]'
+        });
+        $('#login_form').submit();
+    });
+</script>
+
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script th:src="@{bootstrapUI/vendor/global/global.min.js}"></script>
+    <script th:src="@{bootstrapUI/js/quixnav-init.js}"></script>
+    <script th:src="@{bootstrapUI/js/custom.min.js}"></script>
+
+</body>
+
+</html>

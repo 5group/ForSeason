@@ -5,13 +5,18 @@
 <mapper namespace="com.admin.mapper.OrderDetailMapper">
 
     <select id="select" parameterType="Integer" resultType="OrderDetail">
-        SELECT * FROM order_detail WHERE od_no=#{od_no}
+        SELECT *
+        FROM order_detail
+        WHERE od_no = #{od_no}
     </select>
     <select id="selectAll" resultType="OrderDetail">
-        SELECT * FROM order_detail
+        SELECT *
+        FROM order_detail
     </select>
     <select id="selectList" parameterType="Integer" resultType="OrderDetail">
-        SELECT * FROM order_detail where user_no=#{user_no}
+        SELECT *
+        FROM order_detail
+        where user_no = #{user_no}
     </select>
     <select id="select_userODList" parameterType="Integer" resultType="OrderDetail">
         select o.order_udate,
@@ -43,10 +48,32 @@
         VALUES (0, #{order_no}, #{stock_no}, #{od_cnt}, #{od_price}, #{od_dicnt})
     </insert>
     <update id="update" parameterType="OrderDetail">
-        UPDATE order_detail SET rev_title=#{rev_title}, rev_content=#{rev_content}, rev_rdate=now() WHERE rev_no=#{rev_no}
+        UPDATE order_detail
+        SET rev_title=#{rev_title},
+            rev_content=#{rev_content},
+            rev_rdate=now()
+        WHERE rev_no = #{rev_no}
     </update>
     <delete id="delete" parameterType="Integer">
-        DELETE FROM order_detail WHERE od_no=#{od_no}
+        DELETE
+        FROM order_detail
+        WHERE od_no = #{od_no}
     </delete>
+
+    <select id="topCateOrderTotalList" parameterType="String" resultType="OrderDetail">
+        select od.od_price * od.od_cnt as 'order_tot', c.cate_name as 'cate_name'
+        from order_detail od
+                 inner join stock s
+                 inner join item i
+                 inner join category c
+                 inner join category c2
+                 inner join category c3
+        where od.stock_no = s.stock_no
+          and s.item_no = i.item_no
+          and i.cate_no = c.cate_no
+          and c.cate_no2 = c2.cate_no
+          and c2.cate_no2 = c3.cate_no
+          and c3.cate_name = #{cate_name};
+    </select>
 
 </mapper>

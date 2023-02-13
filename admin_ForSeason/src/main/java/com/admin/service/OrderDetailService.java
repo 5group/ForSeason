@@ -39,21 +39,7 @@ public class OrderDetailService implements MyService<Integer, OrderDetail> {
         return mapper.selectAll();
     }
 
-    public List<OrderDetail> get_list(int user_no) throws Exception{
-        return mapper.selectList(user_no);
-    }
-
-    public List<OrderDetail> getODList(int user_no) throws Exception{
-        return mapper.select_userODList(user_no);
-    }
-
-    public void createOrderDetail(int order_no, int stock_no, int cnt, int price, int discnt) throws Exception {
-        OrderDetail orderDetail = new OrderDetail();
-        orderDetail.setOrder_no(order_no);
-        orderDetail.setStock_no(stock_no);
-        orderDetail.setOd_cnt(cnt);
-        orderDetail.setOd_price(price);
-        orderDetail.setOd_dicnt(discnt);
-        mapper.insert(orderDetail);
+    public List<OrderDetail> getTopCateNameByTotalList(String cate_name){
+        return mapper.topCateOrderTotalList(cate_name);
     }
 }

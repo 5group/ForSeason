@@ -1,27 +1,35 @@
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<style>
+	.table-responsive input{
+		margin-bottom: 10px;
+	}
+	.table-responsive label{
+		margin-bottom: 0px;
+	}
+</style>
+
+<div class="container-fluid">
     <div class="table-responsive">
         <table class="table table-striped table-sm">
+        <input type="button" value="뒤로가기" name="btn_back" id="btn_back">
+        <h2 style="margin-bottom:20px; border-bottom: 1px solid #cccccc; padding-bottom:10px;">상품 수정</h2>
             <thead>
             <form id="register_form">
                 <input type="hidden" th:value="${item.getItem_no}" name="item_no" id="item_no">
                 <label for="item_name">상품이름</label>
-                <input type="text" class="form-control" name="item_name" id="item_name"
-                       th:value="${item.getItem_name}" readonly>
+                <input type="text" class="form-control" name="item_name" id="item_name" th:value="${item.getItem_name}" readonly>
                 <label for="item_price">가격</label>
-                <input type="text" class="form-control" name="item_price" id="item_price"
-                       th:value="${item.getItem_price}">
+                <input type="text" class="form-control" name="item_price" id="item_price" th:value="${item.getItem_price}">
                 <label for="item_discnt">할인가격</label>
-                <input type="text" class="form-control" name="item_discnt" id="item_discnt"
-                       th:value="${item.getItem_discnt}">
+                <input type="text" class="form-control" name="item_discnt" id="item_discnt" th:value="${item.getItem_discnt}">
                 <label for="item_info">상세설명</label>
-                <textarea class="form-control" rows="9" name="item_info" id="item_info"
-                          th:text="${item.getItem_info}"></textarea>
+                <textarea class="form-control" rows="9" name="item_info" id="item_info" th:text="${item.getItem_info}"></textarea>
+                </br>
                 <input type="button" value="수정" name="btn3" id="btn3">
             </form>
             </thead>
         </table>
     </div>
-</main>
+</div>
 
 <script>
     function checkValue() {
@@ -36,6 +44,7 @@
     }
 
     $('#btn3').click(function () {
+    	
         is_value = checkValue();
         if (is_value == true) {
             $('#register_form').attr({
@@ -43,9 +52,13 @@
                 "method": "post"
             })
             $('#register_form').submit();
-            alert("상품이 성공적으로 바뀌었습니다.")
+            alert("상품이 성공적으로 바뀌었습니다.");
         } else {
             alert("조건이 만족하지 않습니다.")
         }
+    })
+    
+    $('#btn_back').click(function () {
+    	history.go(-1);     
     })
 </script>

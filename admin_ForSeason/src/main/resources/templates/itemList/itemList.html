@@ -1,0 +1,378 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<style>
+	.table-responsive{
+		color:black;
+	}
+	.table-responsive a{
+		color: blue;
+		text-decoration: underline;
+	}
+
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
+
+    #sliders td input[type="range"] {
+        display: inline;
+    }
+
+    #sliders td {
+        padding-right: 1em;
+        white-space: nowrap;
+    }
+    
+    .modal-body input{
+    	margin-bottom:10px;
+    }
+    .modal-body{
+    	margin: 0px auto;
+    }
+    
+    /*table*/
+    
+    .table{
+	color: black;
+	}
+	table {
+	  width: 100%;
+	}
+	
+	table, td {
+	  border-collapse: collapse;
+	  border: 1px solid #cccccc;
+	}
+	
+	thead {
+	  display: table; /* to take the same width as tr */
+	  width: calc(100% - 17px); /* - 17px because of the scrollbar width */
+	  font-weight: bold;
+	}
+	
+	thead tr{
+	  height: 40px;
+	  line-height: 30px;
+	}
+	
+	tbody {
+	  display: block; /* to enable vertical scrolling */
+	  max-height: 500px; /* e.g. */
+	  overflow-y: scroll; /* keeps the scrollbar even if it doesn't need it; display purpose */
+	}
+	
+	th, td {
+	  padding: 5px;
+	  word-break: break-all; /* 4. */
+	}
+	
+	tr {
+	  display: table; /* display purpose; th's border */
+	  width: 100%;
+	  box-sizing: border-box; /* because of the border (Chrome needs this line, but not FF) */
+	}
+	
+	td {
+	  text-align: center;
+	  border-left: none;
+	}
+    
+    
+</style>
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+
+            <div class="container-fluid">
+            	<div style="border-bottom: 1px solid #cccccc; margin: 20px 0px;">
+                     <h3>카테고리별 매출차트</h3>
+                </div>
+            	<div style="margin-bottom: 30px;">
+					    <div class="table-responsive">
+					        <table class="table table-striped table-sm">
+					            <div id="myChart"></div>
+					            Start<input type="date" name="startDay">
+					            ~End<input type="date" name="endDay">
+					            <button id="btn" style="margin-left: 5px;">데이터 보기</button>
+					        </table>
+					    </div>
+            	</div>
+
+
+                <div class="row" style="width:100%">
+                    <div class="col-12">
+                            <div style="border-bottom: 1px solid #cccccc; margin: 20px 0px; padding-bottom:5px;">
+                                <span style="color:black; font-size:1.5rem;">재고 현황</span>
+                                
+                                <div class="page-titles mx-0" style="width: 116px; float: right; margin-right: 20px; border:2px solid #D5D5D5; height: 39px; padding: 7px 10px 7px 20px;">
+		                        <button type="button" class="btn" data-toggle="modal" data-target="#basicModal" style="color:black; padding:0px; border:none; font-size:18px; height:20px; line-height: 22px;">상품추가</button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="basicModal">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">상품등록</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+	                                                <div class="table-responsive">
+		                                                <form id="register_form">
+												            카테고리 번호<input type="text" name="cateNo" value=""></br>
+												            상품이름<input type="text" name="itemName" value=""></br>
+												            상품가격<input type="text" name="itemPrice" value=""></br>
+												            상품설명<input type="text" name="itemInfo" value=""></br>
+												            IMG<input type="file" class="img" name="img" webkitdirectory>
+												            <p></p>
+												            <a href="#">등록</a>
+												        </form>
+	                                                </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                        
+                				</div>
+                                <div style="padding-left:10px; float: right; color:black; padding-top:7px;">
+				                    <form>
+						                할인율&nbsp;&nbsp;<input type="text" name="item_discnt">
+						                <button onclick="getCheckboxValue()">할인율 적용</button>
+						            </form>
+				                </div>
+                            </div>
+                            
+                            <input class="form-control" id="hzInput" type="text" placeholder="Search.." style="margin-bottom: 20px;">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-sm">
+                                    <thead class="thead">
+                                        <tr>
+							                <td style="width:45px;">
+							                    <label>
+							                        <input type="checkbox" name="selectAll" value="selectAll" onclick='selectAll(this)'/>
+							                        <span class="checkmark"></span>
+							                    </label>
+							                </td>
+							                <td>상품이름</td>
+							                <td style="width:98px;">가격</td>
+							                <td style="width:59px;">할인율</td>
+							                <td style="width:294px;">사이즈/색상별 재고</td>
+							                <td style="width:59px;">조회수</td>
+							                <td style="width:162px;">만든날짜</td>
+							                <td style="width:60px;">수정</td>
+							            </tr>
+                                    </thead>
+                                    <tbody id="hzTable">
+                                        <tr th:each="item, stat:${itemList}">
+							                <td style="width:50px;">
+							                    <label>
+							                        <input type="checkbox" name="checkbox" th:value="${item.getItem_no}" onclick='checkselectAll()'>
+							                        <span class="checkmark"></span>
+							                    </label>
+							                </td>
+							                <td th:text="${item.getItem_name}" style="width: 450px;"></td>
+							                <td th:text="${item.getItem_price}" style="width:120px;"></td>
+							                <td th:text="${item.getItem_discnt}" style="width:70px;"></td>
+							                <td style="width:300px;">
+							                	<select class="stockSelect" name="stockSelect" onchange="showPopUp()">
+							                		<option value="none">===========재고리스트===========</option>
+							                		<option th:each="stock:${stockList}" th:if="${stock.getItem_name == item.getItem_name}" th:value="${stock.getStock_no}" th:text="|컬러:${stock.getColor_name} 사이즈:${stock.getSize_name} 재고:${stock.getAmount}|" class="stock_amount">
+							                			
+							                		</option>
+							                	</select>
+							                    <!-- <span th:each="stock:${stockList}" th:if="${stock.getItem_name == item.getItem_name}">
+							                        <a  th:href="|javascript:window.open('/stock_no=${stock.getStock_no}', '', 'width=400, height=400, left=600')|" th:text="|컬러:${stock.getColor_name} 사이즈:${stock.getSize_name} 재고:${stock.getAmount}|" class="stock_amount"></a></br>
+							                    </span> -->
+							                </td>
+							                <td th:text="${item.getItem_hit}" style="width:70px;"></td>
+							                <td th:text="${#dates.format(item.getItem_udate, 'yyyy-MM-dd HH:mm:ss')}" style="width: 200px;"></td>
+							                <td style="width:70px;"><a th:href="|/itemList/itemNo=${item.getItem_no}|">수정</a></td>
+							            </tr>
+                                    </tbody>
+                                </table>                 
+                        	</div>
+                        </div> 
+                    </div>
+            </div>
+
+<script>
+
+    function selectAll(selectAll) {
+        const checkboxes
+            = document.getElementsByName("checkbox");
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked;
+        })
+    }
+
+    function getCheckboxValue() {
+        // 선택된 목록 가져오기
+        const selectedEls =
+            document.querySelectorAll('input[name="checkbox"]:checked');
+        // 선택된 목록에서 value 찾기
+        var result = [];
+        selectedEls.forEach((el) => {
+            result.push(el.value);
+        });
+        var c = confirm('수정 하시겠습니까?');
+        if (c == true) {
+            if ($('input[name="item_discnt"]').val() >= 100) {
+                alert("할인율이 100을 넘을순 없습니다.")
+            } else {
+                $.ajax({
+                    url: '[[@{/itemList/disCntUpdate}]]',
+                    type: 'post',
+                    data: {
+                        "item_discnt": $('input[name="item_discnt"]').val(),
+                        noList: result
+                    }
+                });
+            }
+        }
+    }
+
+    function checkselectAll() {
+        // 전체 체크박스
+        const checkboxes
+            = document.querySelectorAll('input[name="checkbox"]');
+        // 선택된 체크박스
+        const checked
+            = document.querySelectorAll('input[name="checkbox"]:checked');
+        // select all 체크박스
+        const selectAll
+            = document.querySelector('input[name="selectAll"]');
+        if (checkboxes.length === checked.length) {
+            selectAll.checked = true;
+        } else {
+            selectAll.checked = false;
+        }
+    }
+    
+    $(document).ready(function(){
+    	$('.stockSelect').on('change', function(){
+    		//alert(this.value);
+    		var stock_no=this.value;
+    		window.open('/stock_no='+stock_no, '', 'width=500, height=250, top=200, left=550')
+    	})
+    });
+    
+    
+    function displaychart(data) {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'myChart',
+                type: 'column',
+                options3d: {
+                    enabled: true,
+                    alpha: 0,
+                    beta: 0,
+                    depth: 70,
+                    viewDistance: 25
+                }
+            },
+            xAxis: {
+                categories: data.dayDate
+            },
+            yAxis: {
+                title: {
+                    enabled: false
+                }
+            },
+            tooltip: {
+                headerFormat: '<b>{point.key}</b><br>',
+                pointFormat: 'Cars sold: {point.y}'
+            },
+            title: {
+                text: '2023년 1분기 가격 ',
+                align: 'left'
+            },
+            subtitle: {
+                text: 'Source: ' +
+                    '<a href="https://ofv.no/registreringsstatistikk"' +
+                    'target="_blank">OFV</a>',
+                align: 'left'
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                column: {
+                    depth: 25
+                }
+            },
+            series: [{
+                data: data.dayTotal
+            }]
+        })
+    }
+
+    function getdata(sm, em) {
+        $.ajax({
+            url: "[[@{/cateStockList}]]",
+            data: {'sm': sm, 'em': em},
+            success: function (data) {
+                displaychart(data);
+            }
+        });
+    };
+
+    const input = document.querySelector('#register_form > .img');
+    input.addEventListener('change', showTextFile);
+
+    function showTextFile() {
+        const selectedFiles = input.files;
+        var file_name = "";
+        console.log("show");
+
+        for (const file of selectedFiles) {
+            console.log("test");
+            file_name += '<input type="hidden" value="' + file.name.substring(0, 2) + '"name="colorValue">';
+        }
+        $('#register_form > p').html(file_name);
+    }
+     
+    $(document).ready(function () {   
+    	$("#hzInput").on("keyup", function() {
+
+    	    var value = $(this).val().toLowerCase();
+
+    	    $("#hzTable tr").filter(function() {
+
+    	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+
+    	    });
+
+    	  });
+    	 
+    	    
+        $('#btn').click(function () {
+            var sm = $('input[name="startDay"]').val();
+            var em = $('input[name="endDay"]').val();
+            if (sm >= em) {
+                alert('다시 입력 하세요');
+                return;
+            }
+            getdata(sm, em);
+        });
+        
+        $('#register_form  > a').click(function () {
+            $('#register_form').attr({
+                'enctype': 'multipart/form-data',
+                'method': 'post',
+                'action': '[[@{/itemList/register}]]'
+            });
+            $('#register_form').submit();
+        });
+    });
+</script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
