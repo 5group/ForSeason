@@ -3,17 +3,11 @@ package com.admin.controller;
 import com.admin.dto.Item;
 import com.admin.dto.OrderDetail;
 import com.admin.dto.Stock;
-import com.admin.service.JsonService;
-import com.admin.service.OrderDetailService;
-import com.admin.service.OrderService;
-import com.admin.service.StockService;
+import com.admin.service.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.DateFormat;
@@ -34,6 +28,9 @@ public class DataController {
 
     @Autowired
     JsonService jsonService;
+
+    @Autowired
+    ItemService itemService;
 
     @Autowired
     HttpSession session;
@@ -80,6 +77,16 @@ public class DataController {
         jObject.put("dayTotal", totalList);
         System.out.println(jObject);
         return jObject;
+    }
+
+    @RequestMapping(value = "/itemList/disCntUpdate", method = RequestMethod.POST)
+    public void disCntUpdate(@RequestParam(value = "noList[]") List<Integer> noList,  @RequestParam int item_discnt) throws Exception {
+        Item item = new Item();
+        for(Integer no:noList){
+            item.setItem_no(no);
+            item.setItem_discnt(item_discnt);
+            itemService.modifyDiscnt(item);
+        }
     }
 
     @RequestMapping("/pieChart")

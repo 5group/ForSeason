@@ -232,7 +232,9 @@
                         "item_discnt": $('input[name="item_discnt"]').val(),
                         noList: result
                     }
-                });
+                }).done(function() {
+					location.reload();
+				});
             }
         }
     }
