@@ -38,12 +38,14 @@ public class UserController {
     }
 
     @RequestMapping("/register")
-    public String register(Model model, User user, HttpSession session) {
+    public String register(Model model, User user) {
         User userResult = null;
         try {
             if (userService.get_id(user.getUser_id()) == null || userService.get_id(user.getUser_id()).equals("")) {
                 user.setUser_pwd(CryptoUtil.encryptAES256(user.getUser_pwd(), "123456testsogood"));
                 userService.register(user);
+                System.out.println(user.getUser_no());
+                couponService.firstCoupon(user.getUser_no());
                 model.addAttribute("center", dir + "registerok");
                 userResult = userService.get_id(user.getUser_id());
                 model.addAttribute("obj", userResult);

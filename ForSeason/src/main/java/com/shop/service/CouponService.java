@@ -47,4 +47,14 @@ public class CouponService implements MyService<Integer, Coupon> {
         coupon.setCou_no(coupon_no);
         mapper.update(coupon);
     }
+
+    public void firstCoupon(int user_no) throws Exception{
+        int price = 5000;
+        for(int i = 1; i <= 4; i++) {
+            int resultPrice = i * price;
+            String couponName = String.format("회원가입 기념 %s원 할인쿠폰", resultPrice);
+            Coupon coupon = new Coupon(couponName, resultPrice, user_no);
+            register(coupon);
+        }
+    }
 }

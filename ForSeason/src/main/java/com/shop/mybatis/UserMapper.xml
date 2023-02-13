@@ -22,7 +22,10 @@
     </select>
     <insert id="insert" parameterType="User">
         INSERT INTO user
-        VALUES (user_no, #{user_id}, #{user_pwd},#{user_email}, #{user_name}, #{user_phone}, #{user_address}, #{user_gender}, now(), now())
+        VALUES (0, #{user_id}, #{user_pwd},#{user_email}, #{user_name}, #{user_phone}, #{user_address}, #{user_gender}, now(), now())
+        <selectKey keyProperty="user_no" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
     <update id="update" parameterType="User">
         UPDATE user SET user_email=#{user_email}, user_name=#{user_name}, user_phone=#{user_phone}, user_address=#{user_address}, user_rdate=now() WHERE user_id=#{user_id}
