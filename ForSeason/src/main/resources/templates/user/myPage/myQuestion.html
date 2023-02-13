@@ -1,15 +1,443 @@
 <style>
-	.myInfoLabel{
-		border-bottom: 2px solid black;
-		padding-bottom: 10px;
-		margin-bottom:30px;
-		color:#5D5D5D;
-	}
+#qnaModal .modal-dialog {
+	max-width: 500px;
+	max-height: 500px;
+}
+
+#qnaModal .modal-body textarea {
+	border: none;
+}
+
+#qnaModal #reply_card {
+	border: none;
+	background-color: #f8f9fa;
+}
+
+.myInfoLabel {
+	border-bottom: 2px solid black;
+	padding-bottom: 10px;
+	margin-bottom: 30px;
+	color: #5D5D5D;
+}
+
+#tablehead {
+	height: 70%;
+	line-height: 50%;
+}
+
+tbody tr td {
+	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
+}
 </style>
+<script>
+$(document).ready(function() {
+	  // Constants
+	  var qnasPerPage = 5;
+
+	  // Selectors
+	  var $qnaRows = $('.qna-row');
+	  var $prevBtn = $('#prevBtn');
+	  var $nextBtn = $('#nextBtn');
+	  var $pageNumbers = $('#pageNumbers');
+
+	  // Variables
+	  var currentPage = 1;
+	  var totalPages = Math.ceil($qnaRows.length / qnasPerPage);
+
+	  // Functions
+	  function updatePageNumbers() {
+	    $pageNumbers.text(currentPage + ' / ' + totalPages);
+	  }
+
+	  function updateQnas() {
+	    $qnaRows.hide();
+	    $qnaRows
+	      .slice((currentPage - 1) * qnasPerPage, currentPage * qnasPerPage)
+	      .show();
+	  }
+
+	  // Event listeners
+	  $prevBtn.click(function() {
+	    if (currentPage > 1) {
+	      currentPage--;
+	      updatePageNumbers();
+	      updateQnas();
+	    }
+	  });
+
+	  $nextBtn.click(function() {
+	    if (currentPage < totalPages) {
+	      currentPage++;
+	      updatePageNumbers();
+	      updateQnas();
+	    }
+	  });
+
+	  // Initialization
+	  updatePageNumbers();
+	  updateQnas();
+	});
+	var qna_title, qna_content;
+
+
+	$(document).ready(function() {
+
+	});
+	$(document).ready(function() {
+		let qnaNo;
+		
+		$('tbody tr').click(function() {
+			qnaNo = $(this).find('td:first').text();
+			$.ajax({
+				url : '/qna/get',
+				data : {qnaNo : qnaNo},
+				dataType : 'json',
+				success : function(data) {
+					$('#qna_qna_title').val(data.qna_title);
+					$('#qna_qna_content').val(data.qna_content);
+					if (data.rep_no != 0) {
+						$('#rep_admin_id').val(data.admin_id);
+						$('#rep_content').val(data.rep_content);
+						var date = new Date(data.rep_date);
+						$('#rep_date').val(date.toLocaleDateString('ko-KR'));
+						$('#reply_card').show();
+					} else {
+						$('#reply_card').hide();
+					}
+					$('#qnaModal').modal('show');
+				},
+				error : function() {
+					alert('Failed to get QNA data');
+				}
+			});
+		});
+		
+		  $('#delete-form').submit(function(event) {
+			    event.preventDefault(); // prevent default form submission
+			    
+			    $.post('/qna/delete', {qnaNo: qnaNo}) // send post request to delete controller
+			      .done(function() {
+			        window.location.href = '/qna'; // redirect to qna page
+					location.reload(); // refresh the page
+			      })
+			      .fail(function() {
+					location.reload(); // refresh the page
+			      });
+			  });
+		});
+
+	
+	$(document).ready(
+			function() {
+				$('#revbtn').click(
+						function() { //리뷰 글쓰기 버튼
+							alert("hi");
+
+							qna_title = $("#qna_title").val();
+							qna_content = $("#qna_content").val();
+
+							var alertMessage = "qna_title: " + qna_title + "\n"
+									+ "qna_content: " + qna_content;
+
+							$.ajax({
+								url : '[[@{/QnaInsert}]]',
+								data : {
+									"qna_title" : qna_title,
+									"qna_content" : qna_content
+								}, //서버 컨트롤러에 데이터 전송
+								method : 'POST',
+								success : function(data) {
+									if (data == 0) {
+										alert("리뷰작성완료.");
+										location.reload(); // refresh the page
+
+									} else {
+										alert("문제발생");
+									}
+								}
+							});
+						});
+
+			});
+</script>
+
 
 <div class="col-md-9">
 	<h1 class="myInfoLabel">1:1 문의</h1>
 	<div class="site-blocks-table">
 
+		<!-- QNA -->
+		<!-- QNA -->
+		<!-- QNA -->
+		<div
+			style="display: flex; justify-content: space-between; align-items: center;">
+			<div style="margin-left: 25px;">1:1 문의를 요청하고, 그에 대한 답변을 확인 할 수
+				있습니다.</div>
+			<button id="send_btn" class="btn btn-primary py-2 px-2.5"
+				style="float: right; margin-right: 35px;" data-toggle="modal"
+				data-target="#reviewModal">작성하기</button>
+
+		</div>
+		<br>
+		<div class="content-wrapper" style="width: 98%">
+
+			<div class="row">
+				<div class="col-12 grid-margin stretch-card">
+					<div class="card" style="border: none;">
+
+
+						<div class="card-body" style="padding: 0.5rem 1rem;">
+							<div style="overflow-x: auto;">
+
+								<table class="table table-hover" id="dataTable">
+									<colgroup>
+										<col style="width: 10%">
+										<col style="width: 60%">
+										<!-- 										<col style="width: 15%"> -->
+										<col style="width: 30%">
+										<col style="width: 10%">
+									</colgroup>
+									<thead>
+										<tr id="tablehead"
+											style="font-weight: bold; padding: 0.0625rem 0.5rem;">
+											<th>No</th>
+											<th style="text-align: center;">Title</th>
+											<!-- 											<th style="text-align: center;">ID</th> -->
+											<th style="text-align: center;">Date</th>
+											<th style="text-align: center;">Answer</th>
+										</tr>
+									</thead>
+
+									<tbody th:each="qna:${qnalist}">
+										<tr class="qna-row" data-qna-no="${qna.qna_no}"
+											style="cursor: pointer" data-toggle="modal"
+											data-target="#qnaModal" data-qna-title="${qna.qna_title}"
+											data-qna-content="${qna.qna_content}">
+											<td th:text="${qna.qna_no}"></td>
+											<td th:text="${qna.qna_title}" style="text-align: center"></td>
+											<td th:text="${#dates.format(qna.qna_rdate, 'yyyy-MM-dd')}"
+												style="text-align: center"></td>
+											<td th:text="${qna.rep_no == 0 ? '' : '답변완료'}"
+												style="text-align: center"></td>
+										</tr>
+									</tbody>
+
+
+								</table>
+								<div id="paginationContainer">
+									<button id="prevBtn">Prev</button>
+									<span id="pageNumbers"></span>
+									<button id="nextBtn">Next</button>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- QNA -->
+			<!-- QNA -->
+			<!-- QNA -->
+
+
+		</div>
 	</div>
 </div>
+
+
+
+
+<!-- QNA 글쓰기 modal -->
+<!-- QNA 글쓰기 modal -->
+<!-- QNA 글쓰기 modal -->
+<div class="modal fade" id="reviewModal" style="z-index: 9999"
+	tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="reviewModalLabel">1:1 문의</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<form name="reviewform" class="reviewform" method="post">
+				<!-- 글쓰기 Modal 시작폼 -->
+				<!-- 글쓰기 Modal 시작폼 -->
+
+				<div class="modal-body">
+					<!-- 리뷰폼 시작-->
+					<div class="review-form" id="review-form">
+
+						<!-- 			  <input type="hidden" id="item_no" name="item_no" th:value="">
+ -->
+						<!-- 제목 영역 -->
+						<label for="reviewTitle">제목(필수)</label>
+						<textarea rows="1" class="form-control" name="qna_title"
+							id="qna_title"></textarea>
+						<!-- 제목 영역 -->
+						<!-- 내용 영역 -->
+						<label for="reviewContent">내용(필수)</label>
+
+						<textarea rows="10" class="form-control" name="qna_content"
+							id="qna_content"></textarea>
+						<!-- 내용 영역 -->
+					</div>
+					<!-- review-form 마무리 -->
+
+
+
+				</div>
+				
+				
+				
+				<!-- 글쓰기 Modal 끝폼 -->
+				<!-- 글쓰기 Modal 끝폼 -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+					<!-- Submit -->
+					<button type="submit" id="revbtn" class="btn btn-primary">전송</button>
+					<!-- 			<input type="submit" id="rbtn" value="전송" class="btn btn-primary"> -->
+					<!-- Submit -->
+
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<!-- QNA 글쓰기 modal -->
+<!-- QNA 글쓰기 modal -->
+<!-- QNA 글쓰기 modal -->
+
+
+<!-- QNA 글보기 modal -->
+<!-- QNA 글쓰기 modal -->
+<!-- QNA 글쓰기 modal -->
+
+<div class="modal fade" id="qnaModal" style="z-index: 9999;"
+	tabindex="-1" role="dialog" aria-labelledby="qnaModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="width: 700px; height: 925px;">
+
+			<div class="modal-header">
+				<h5 class="modal-title" id="qnaModalLabel"
+					style="text-align: center;">문의내역</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h5 class="card-header">문의</h5>
+
+
+				<div class="form-group">
+					<label for="qna_title">제목</label>
+					<textarea type="text" class="form-control" id="qna_qna_title"
+						readonly></textarea>
+				</div>
+				<div class="form-group">
+					<label for="qna_content">내용</label>
+					<textarea class="form-control" id="qna_qna_content" rows="3"
+						readonly></textarea>
+				</div>
+
+				<br>
+				<div class="card mt-3" id="reply_card">
+					<h5 class="card-header">관리자 답변</h5>
+					<br>
+					<div class="form-group">
+						<label for="rep_admin_id">작성자</label>
+						<textarea type="text" class="form-control" id="rep_admin_id"
+							rows="1" readonly></textarea>
+					</div>
+
+
+					<div class="form-group">
+						<label for="rep_content">내용</label>
+						<textarea class="form-control" id="rep_content" rows="3" readonly></textarea>
+					</div>
+
+					<div class="form-group">
+						<label for="rep_date">작성일</label>
+						<textarea type="text" class="form-control" id="rep_date" readonly></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+
+
+				<form id="delete-form" method="post" action="/qna/delete" >
+					<input type="hidden" name="qnaNo">
+					<button type="submit" class="btn btn-danger">삭제</button>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- 	<div class="modal fade" id="qnaModal" style="z-index: 9999"
+		tabindex="-1" role="dialog" aria-labelledby="qnaModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="qnaModalLabel">문의내역 확인</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="qna_title">제목</label> <input type="text"
+							class="form-control" id="qna_title" readonly>
+					</div>
+					<div class="form-group">
+						<label for="qna_content">내용</label>
+						<textarea class="form-control" id="qna_content" rows="5" readonly></textarea>
+					</div>
+
+					<div class="card mt-3" id="reply_card">
+						<h5 class="card-header">답변</h5>
+						<div class="card-body">
+							<div class="form-group">
+								<label for="rep_admin_id">작성자</label> <input type="text"
+									class="form-control" id="rep_admin_id" readonly>
+							</div>
+							<div class="form-group">
+								<label for="rep_content">내용</label>
+								<textarea class="form-control" id="rep_content" rows="3"
+									readonly></textarea>
+							</div>
+							<div class="form-group">
+								<label for="rep_date">작성일</label> <input type="text"
+									class="form-control" id="rep_date" readonly>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div> -->
+
+<!-- QNA 글쓰기 modal -->
+<!-- QNA 글쓰기 modal -->
+<!-- QNA 글쓰기 modal -->

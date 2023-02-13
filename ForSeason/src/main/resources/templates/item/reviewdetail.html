@@ -193,17 +193,11 @@ $(document).ready(function(){
 		rev_content=$("#rev_content").val();
 	    rev_score = document.querySelector("input[type=range]").value * 0.5;
 	
-			let alertMessage = 
-	        "item_no: " + item_no + "\n" +
-	        "rev_title: " + rev_title + "\n" +
-	        "rev_content: " + rev_content + "\n" +
-	        "rev_score: " + rev_score;
-	
-			alert(alertMessage);
-		
+
 			$.ajax({
 			url:'[[@{/reviewInsert}]]',
-			data: {"item_no":item_no, "rev_title":rev_title, "rev_content":rev_content, "rev_score":rev_score}, //서버 컨트롤러에 데이터 전송
+            data: {"item_no": item_no, "rev_title": rev_title, "rev_content": rev_content, "rev_score": rev_score}, //서버 컨트롤러에 데이터 전송
+			method: 'POST',
 			success:function(data){
 				if(data == 0){
 					alert("리뷰작성완료.");

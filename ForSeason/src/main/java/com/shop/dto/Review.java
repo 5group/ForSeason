@@ -21,7 +21,7 @@ public class Review {
     private Date rev_udate;
     private Date rev_rdate;
 	private int rcnt;
-
+	private String item_name;
     
 	//insert 관련
     public Review(int rev_no, int item_no, int user_no, String rev_title, String rev_content, double rev_score,

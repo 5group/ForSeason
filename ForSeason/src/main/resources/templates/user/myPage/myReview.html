@@ -1,15 +1,391 @@
 <style>
-	.myInfoLabel{
-		border-bottom: 2px solid black;
-		padding-bottom: 10px;
-		margin-bottom:30px;
-		color:#5D5D5D;
-	}
+/* modal */
+.modal-dialog {
+	max-width: 800px;
+	margin: 1.75rem auto;
+}
+
+.review-form {
+	padding: 20px;
+}
+
+.star {
+	position: relative;
+	font-size: 2rem;
+	color: #ddd;
+}
+
+.star input {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.star span {
+	width: 0;
+	position: absolute;
+	left: 0;
+	color: red;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+input[type="range"] {
+	width: 100%;
+	margin-top: 10px;
+}
+
+.selected-value {
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+.warning_msg {
+	display: none;
+	color: red;
+	margin-top: 10px;
+}
+
+/* modal */
+.star2 {
+	position: relative;
+	font-size: 2rem;
+	color: #ddd;
+}
+
+.star2 input {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.star2 span {
+	width: 0;
+	position: absolute;
+	left: 0;
+	color: red;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.myInfoLabel {
+	border-bottom: 2px solid black;
+	padding-bottom: 10px;
+	margin-bottom: 30px;
+	color: #5D5D5D;
+}
+
+.row {
+	display: flex;
+}
+
+.left {
+	width: 150px;
+	text-align: center;
+	margin: 10px;
+}
+
+.center {
+	width: 600px;
+	text-align: left;
+	margin: 10px;
+	border-left: 1px solid gray;
+	border-right: 1px solid gray;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.title {
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.picture {
+	width: 150px;
+	height: 150px;
+}
+
+.right {
+	width: 80px;
+	text-align: right;
+	margin: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.edit-button {
+	width: 80px;
+	height: 30px;
+	background-color: gray;
+	color: white;
+	border: 1px solid gray;
+	text-align: center;
+	cursor: pointer;
+	margin-top: 10px;
+}
+
+.delete-button {
+	width: 80px;
+	height: 30px;
+	border: 1px solid gray;
+	color: gray;
+	text-align: center;
+	cursor: pointer;
+	margin-top: 10px;
+}
 </style>
 
+<script>
+/* 글쓰기 */
+let drawStar = (target) => {
+    document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+    let selectedValue = target.value / 2 ; 
+    console.log(`Selected Value: ${selectedValue }`);
+    document.querySelector('.selected-value').innerHTML = selectedValue;
+  }
+</script>
+
 <div class="col-md-9">
-	<h1 class="myInfoLabel">나의 리뷰</h1>
-	<div class="site-blocks-table">
+	<h1 class="myInfoLabel">상품평 관리</h1>
+	구매하신 상품의 상품 후기를 등록하시거나, 등록하신 상품평 내역을 조회 할 수 있습니다. <br> <br>
+	<div class="site-blocks-table"></div>
+
+
+
+
+	<div class="review-container">
+
+
+		<!--리뷰 반복문 시작  -->
+		<!--리뷰 반복문 시작  -->
+		<!--리뷰 반복문 시작  -->
+		<div id="reviewsContainer">
+			<div class="customer_review_list" th:each="r:${reviewlist}">
+				<div class="row">
+					<div class="left">
+						<a th:href="|@{/itemdetail?item_no=}${r.item_no}|"> <img
+							th:src="|@{img/}${allCateList.get(r.item_no).top_cate_name}/${allCateList.get(r.item_no).mid_cate_name}/${allCateList.get(r.item_no).cate_name}/${r.item_name}/${titleImgList.get(r.item_no)}|"
+							alt="Image placeholder" class="img-fluid">
+						</a>
+
+
+
+					</div>
+					<div class="center">
+						<div class="title" th:text="${r.rev_title}"></div>
+						<div th:text="${#dates.format(r.rev_udate,'yyyy-MM-dd')}"></div>
+
+
+						<div></div>
+						<span class="star2"> ★★★★★ <span
+							th:style="'width: ' + (${r.rev_score} * 20) + '%'">★★★★★</span>
+						</span> <br>
+						<div class="review_cont" th:text="${r.rev_content}"></div>
+
+					</div>
+					<div class="right">
+						<button class="edit-button" th:value="${r.rev_no}"
+							data-toggle="modal" data-target="#reviewModal">수정하기</button>
+						<button class="delete-button" th:value="${r.rev_no}"
+							id="rev-remove">삭제하기</button>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--리뷰 반복문 끝  -->
+		<!--리뷰 반복문 끝  -->
+		<!--리뷰 반복문 끝  -->
 
 	</div>
-</div>
+
+	<br>
+	<center>
+		<button id="loadMoreBtn">리뷰 더보기</button>
+	</center>
+
+
+
+	<!-- 글쓰기 Modal -->
+	<!-- 글쓰기 Modal -->
+	<!-- 글쓰기 Modal -->
+
+
+	<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" style="z-index: 9999;"
+		aria-labelledby="reviewModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" style="width: 500px; height: 700px;">
+				<div class="modal-header">
+					<h5 class="modal-title" id="reviewModalLabel">리뷰 작성</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form name="reviewform" class="reviewform" method="post"
+					id="review-form">
+					<div class="modal-body">
+
+
+<textarea rows="1" class="form-control" name="rev_no2" id="rev_no2" style="display: none;"></textarea>
+					
+						<div class="review-form" id="review-form">
+							<input type="hidden" id="item_no" name="item_no"> 
+
+
+							<span class="star"> ★★★★★ 
+							<span style="width: 70%;">★★★★★</span>
+							 
+							<input type="range" oninput="drawStar(this)" value="" step="1" min="0"	max="10">
+							</span>
+							<div class="selected-value" name="rev_score" id="rev_score2"
+								th:text="${rev_score}">1</div>
+
+
+								
+							<label for="reviewTitle">제목(필수)</label>
+							<textarea rows="1" class="form-control" name="rev_title"
+								id="rev_title"></textarea>
+							<label for="reviewContent">내용(필수)</label>
+							<div class="warning_msg">Please enter a review with at
+								least 5 characters.</div>
+							<textarea rows="10" class="form-control" name="rev_content"
+								id="rev_content"></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Close</button>
+						<button type="submit" id="revbtn" class="btn btn-primary">전송</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- 글쓰기 Modal -->
+	<!-- 글쓰기 Modal -->
+	<!-- 글쓰기 Modal -->
+
+
+
+
+	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var reviewsContainer = document.getElementById("reviewsContainer");
+		var customerReviewList = reviewsContainer
+				.getElementsByClassName("customer_review_list");
+		var loadMoreBtn = document.getElementById("loadMoreBtn");
+
+		// alert(customerReviewList.length);
+		var currentIndex = 0;
+		var step = 5;
+
+		// Show a maximum of 5 reviews initially
+		for (let i = 0; i < customerReviewList.length; i++) {
+			if (i < step) {
+				customerReviewList[i].style.display = "block";
+				currentIndex = i + 1;
+			} else {
+				customerReviewList[i].style.display = "none";
+			}
+		}
+		loadMoreBtn.addEventListener("click", function() {
+			for (let i = currentIndex; i < currentIndex + step; i++) {
+				if (i < customerReviewList.length) {
+					customerReviewList[i].style.display = "block";
+				} else {
+
+					//		    	 alert("추가적인 리스트가 없습니다.");
+					break;
+
+				}
+			}
+			currentIndex += step;
+		});
+
+	});
+	$(document).ready(function() {
+		$(".delete-button").click(function() {
+			if (confirm("해당리뷰를 삭제하시겠습니까?")) {
+				var rev_no = $(this).val();
+				$.ajax({
+					url : "/deletereview",
+					type : "POST",
+					data : {
+						rev_no : rev_no
+					},
+					success : function(result) {
+						location.reload();
+					},
+					error : function(error) {
+						// code to handle any errors that may occur during the deletion process
+					}
+				});
+			}
+		});
+	});
+	
+	$(document).ready(function() {
+		  $('.edit-button').click(function() {
+		    
+			  var revNo = $(this).val();
+			  
+		      $.ajax({
+		      type: "POST",
+		      url: "/getReview",
+		      data: {revNo: revNo},
+              dataType : 'json',
+		      success: function(data) {
+		        $('#rev_title').val(data.rev_title);
+		        $('#rev_content').val(data.rev_content);
+		        $('#rev_score2').text(data.rev_score);
+		        $('#reviewModal').modal('show');
+		        $('#rev_no2').text(revNo);
+		      },
+		      error: function() {
+		        alert('Failed to load review data.');
+		      }
+		    });
+		  });
+		});
+
+	
+	$('#review-form').submit(function(event) {
+		  event.preventDefault();
+		  var rev_no = $('#rev_no2').val();
+		  var rev_title = $('#rev_title').val();
+		  var rev_content = $('#rev_content').val();
+		  var rev_score = $('.selected-value').text();
+
+		  var data = {
+		    rev_no: rev_no,
+		    rev_title: rev_title,
+		    rev_content: rev_content,
+		    rev_score: rev_score
+		  };
+
+		  $.ajax({
+		    url: '[[@{/updateReview}]]',
+		    type: 'POST',
+		    data: data,
+		    success: function() {
+		      $('#reviewModal').modal('hide');
+			location.reload();
+		    },
+		    error: function() {
+		      alert('Failed to write review.');
+		    }
+		  });
+		});
+
+
+</script>

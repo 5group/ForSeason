@@ -1,12 +1,13 @@
 package com.shop.service;
 
-import com.shop.dto.Review;
-import com.shop.frame.MyService;
-import com.shop.mapper.ReviewMapper;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.shop.dto.Review;
+import com.shop.frame.MyService;
+import com.shop.mapper.ReviewMapper;
 
 @Service
 public class ReviewService implements MyService<Integer, Review> {
@@ -37,6 +38,9 @@ public class ReviewService implements MyService<Integer, Review> {
     public List<Review> get() throws Exception {
         return mapper.selectAll();
     }
+    public Review revnoselect(Integer id) throws Exception {
+    	return mapper.revnoselect(id);	
+    }
     
     public List<Review> SelectSortUdateTests(int id) throws Exception {
 		return mapper.SelectSortUdateTests(id);
@@ -53,5 +57,14 @@ public class ReviewService implements MyService<Integer, Review> {
 		return mapper.SelectallSortScoreAscTests(id);
 	}
     
+    public List<Review> userselect(int id) throws Exception {
+		return mapper.userselect(id);
+	}
+    
+    public List<Review> get_list(int user_no) throws Exception{
+        return mapper.selectlist(user_no);
+    }
+
+	
     
 }

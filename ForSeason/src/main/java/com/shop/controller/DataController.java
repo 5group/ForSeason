@@ -2,33 +2,34 @@ package com.shop.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.shop.frame.CryptoUtil;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.shop.dto.Cart;
 import com.shop.dto.Coupon;
 import com.shop.dto.Item;
+import com.shop.dto.Qna;
 import com.shop.dto.Review;
 import com.shop.dto.Size;
 import com.shop.dto.Stock;
 import com.shop.dto.User;
 import com.shop.dto.WishList;
+import com.shop.frame.CryptoUtil;
 import com.shop.service.CartService;
 import com.shop.service.ColorService;
 import com.shop.service.ItemService;
+import com.shop.service.QnaService;
 import com.shop.service.ReviewService;
 import com.shop.service.StockService;
 import com.shop.service.UserService;
@@ -64,6 +65,11 @@ public class DataController {
     @Autowired
     ReviewService reviewService;
 
+    @Autowired
+    QnaService qnaService;
+
+    
+    
     @RequestMapping(value = "/couponList", method = RequestMethod.GET)
     public List<Coupon> coupon_list() {
         List<Coupon> list = (List<Coupon>) session.getAttribute("coupon");
@@ -174,6 +180,29 @@ public class DataController {
         return result;
     }
 
+    @RequestMapping(value = "/QnaInsert", method = RequestMethod.POST)
+    public Object QnaInsert(String qna_title, String qna_content) throws Exception {
+    	System.out.println(qna_title);
+    	System.out.println(qna_content);
+    	int result = 0;
+        User user = (User) session.getAttribute("loginUser");
+        Qna qna = new Qna(user.getUser_no(),qna_title, qna_content);
+        System.out.println(qna);
+
+        qnaService.register(qna);
+        return result;
+    }
+    
+    @RequestMapping(value = "/updateReview", method = RequestMethod.POST)
+    public void updateReview(Review review) throws Exception {
+        review.setRev_no(review.getRev_no());
+    	review.setRev_title(review.getRev_title());
+        review.setRev_content(review.getRev_content());
+        review.setRev_score(review.getRev_score());
+        review.setRev_rdate(new Date());
+        reviewService.modify(review);
+    }
+    
     @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
     public void infoUpdate(User info_user) throws Exception {
         User u = (User) session.getAttribute("loginUser");

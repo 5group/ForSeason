@@ -1,24 +1,35 @@
 package com.shop.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import com.shop.frame.CryptoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.shop.dto.Category;
 import com.shop.dto.Item;
-import com.shop.dto.Stock;
+import com.shop.dto.Qna;
+import com.shop.dto.Review;
 import com.shop.dto.User;
 import com.shop.dto.WishList;
+import com.shop.frame.CryptoUtil;
+import com.shop.service.CategoryService;
+import com.shop.service.FileService;
 import com.shop.service.ItemService;
+import com.shop.service.QnaService;
+import com.shop.service.ReviewService;
+import com.shop.service.StockService;
 import com.shop.service.UserService;
 import com.shop.service.WishListService;
 
@@ -37,6 +48,26 @@ public class MyPageController {
     @Autowired
     WishListService wishListService;
 
+    @Autowired
+    QnaService qnaservice;
+
+    @Autowired
+    StockService stockservice;
+
+    @Autowired
+    ReviewService reviewservice;    
+    
+    @Autowired
+    FileService fileService;
+    
+    @Autowired
+    CategoryService categoryService;
+    
+    @Value("${custdir}")
+    String custdir;    
+    
+
+    
     @RequestMapping("/myOrder")
     public String myOrder(Model model, HttpSession session) {
         model.addAttribute("center", "user/myPage");
@@ -59,20 +90,99 @@ public class MyPageController {
         return "main";
     }
 
-    @RequestMapping("/myReview")
-    public String myReview(Model model) {
+    @RequestMapping("/myReview" )
+    public String myReview(Model model, @SessionAttribute("loginUser") User user) throws Exception {
+        Map<Integer, Category> allCateList = new HashMap<Integer, Category>();
+        Map<Integer, String> titleImgList = new HashMap<Integer, String>();
+
+        Item item = null;
+        List<Review> reviewlist = null;
+        Category category = null;
+    	reviewlist = reviewservice.userselect(user.getUser_no());
+
+    	for(Review r:reviewlist) {
+
+    	category = itemService.getCategorys(r.getItem_no()); // 해당 아이템에 대중소 카테고리 이름불러옴 //item_no로 카테고리 다 알 수 있음
+    	item = itemService.get(r.getItem_no());
+    	
+    	allCateList.put(r.getItem_no(), category);
+        
+    	String[] cateName = {category.getTop_cate_name(), category.getMid_cate_name(), category.getCate_name()};
+        String[] imgnames = fileService.getFileList(custdir, category.getTop_cate_name(), category.getMid_cate_name(), category.getCate_name(), item.getItem_name());
+        if (imgnames != null) {
+            String titleImg = imgnames[0];
+            titleImgList.put(r.getItem_no(), titleImg);
+        	}
+    	}
+    	System.out.println(reviewlist);
+        
+    	model.addAttribute("item", item);  //타이틀 이미지 리스트(.jpg)
+        model.addAttribute("titleImgList", titleImgList);  //타이틀 이미지 리스트(.jpg)
+        model.addAttribute("allCateList", allCateList);
+        model.addAttribute("reviewlist", reviewlist);
         model.addAttribute("center", "user/myPage");
         model.addAttribute("infocenter", "user/myPage/myReview");
+        
+        return "main";
+    }
+    
+    @PostMapping("/getReview")
+    @ResponseBody
+    public Review getReview(@RequestParam("revNo") Integer rev_no) {
+    	Review review = null;
+    try {
+		review = reviewservice.revnoselect(rev_no);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+      System.out.println(review);
+      return review;
+    }
+    
+    @RequestMapping(value = "/deletereview")
+    public String deleteReview(@RequestParam("rev_no") int rev_no, Model model) throws Exception {
+    	System.out.println(rev_no);
+    	reviewservice.remove(rev_no);
+        model.addAttribute("center", "user/myPage");
+        model.addAttribute("infocenter", "user/myPage/myReview");
+
         return "main";
     }
 
     @RequestMapping("/myQuestion")
-    public String myQuestion(Model model) {
-        model.addAttribute("center", "user/myPage");
+    public String myQuestion(Model model, @SessionAttribute("loginUser") User user) throws Exception {
+    	Qna qna = null;
+    	List<Qna> qnalist = null;
+    	qnalist = qnaservice.userselect(user.getUser_no());
+    	System.out.println(qnalist);
+    	
+    	
+    	model.addAttribute("qnalist", qnalist);
+    	model.addAttribute("center", "user/myPage");
         model.addAttribute("infocenter", "user/myPage/myQuestion");
         return "main";
     }
+    @RequestMapping("/qna/get")
+    @ResponseBody
+    public Qna getQna(@RequestParam("qnaNo") int qnaNo, Model model) {
+        System.out.println(qnaNo);
+    	
+    	Qna qna = null;
+    	try {
+			qna = qnaservice.qnaselect(qnaNo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	System.out.println(qna);
+    	
+        return qna;
+    }
 
+    
+    
+    
     @RequestMapping("/myWishList")
     public String myWishList(Model model, HttpSession session) throws Exception {
         User user = (User) session.getAttribute("loginUser");
