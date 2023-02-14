@@ -220,7 +220,9 @@ public class DataController {
         String email = user.getUser_email();
         User findUser = userService.get_id(id);
         if(findUser != null && findUser.getUser_phone().equals(phone) && findUser.getUser_email().equals(email)){
-            mailService.userAndEmailByPwdReset(findUser, email);
+            User resultUser = mailService.userAndEmailByPwdReset(findUser, email);
+            user.setUser_pwd(resultUser.getUser_pwd());
+            userService.set_pwd(user);
             return "해당이메일로 안전하게 보내드렸습니다.";
         }
         return "not found";
