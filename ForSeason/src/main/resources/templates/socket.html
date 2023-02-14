@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>챗봇 구현 예제</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.6.3/css/foundation.min.css">
+  <style>
+    #chatbot-icon {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 50px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/6540/6540769.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      text-align: center;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<button id="chatbot-icon" data-open="chatbot-modal"></button>
+<div class="reveal" id="chatbot-modal" data-reveal>
+  <h1>챗봇</h1>
+  <div>
+    <p>안녕하세요. 챗봇입니다.</p>
+    <ul id="message-area"></ul>
+    <input type="text" id="chat-input" placeholder="Type a message...">
+    <button onclick="sendMessage()">전송</button>
+  </div>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<script>
+  var stompClient = null;
+
+  function connect() {
+    var socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, onConnected, onError);
+  }
+
+  function onConnected() {
+    stompClient.subscribe('/topic/public', onMessageReceived);
+  }
+
+  function onMessageReceived(payload) {
+    var message = payload.body;
+    var messageArea = document.getElementById("message-area");
+    var messageElement = document.createElement('li');
+    var textElement = document.createElement('p');
+    var messageText = document.createTextNode("말년이:"+message);
+    textElement.appendChild(messageText);
+    messageElement.appendChild(textElement);
+    messageArea.appendChild(messageElement);
+  }
+
+  function onError(error) {
+    console.log(error)
+  }
+
+  function sendMessage() {
+    var inputElement = document.getElementById("chat-input");
+    var messageContent = inputElement.value.trim();
+    if (messageContent && stompClient) {
+      var chatMessage = {
+        sender: "User",
+        content: messageContent,
+        type: "CHAT"
+      };
+      stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(messageContent));
+      inputElement.value = "";
+      var messageArea = document.getElementById("message-area");
+      var messageElement = document.createElement('li');
+      var textElement = document.createElement('p');
+      var messageText = document.createTextNode("나:"+chatMessage.content);
+      textElement.appendChild(messageText);
+      messageElement.appendChild(textElement);
+      messageArea.appendChild(messageElement);
+    }
+  }
+
+  window.onload = function() {
+    connect();
+  };
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.6.3/js/foundation.min.js"></script>
+<script>
+  $(document).foundation();
+</script>
+</body>
+</html>

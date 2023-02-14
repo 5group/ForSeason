@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.shop.service.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,14 +27,6 @@ import com.shop.dto.Stock;
 import com.shop.dto.User;
 import com.shop.dto.WishList;
 import com.shop.frame.CryptoUtil;
-import com.shop.service.CartService;
-import com.shop.service.ColorService;
-import com.shop.service.ItemService;
-import com.shop.service.QnaService;
-import com.shop.service.ReviewService;
-import com.shop.service.StockService;
-import com.shop.service.UserService;
-import com.shop.service.WishListService;
 
 @RestController
 public class DataController {
@@ -67,6 +60,9 @@ public class DataController {
 
     @Autowired
     QnaService qnaService;
+
+    @Autowired
+    MailService mailService;
 
     
     
@@ -202,7 +198,34 @@ public class DataController {
         review.setRev_rdate(new Date());
         reviewService.modify(review);
     }
-    
+
+    @RequestMapping("/find_id")
+    public String findId(User user) throws Exception {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_phone", user.getUser_phone());
+        map.put("user_name", user.getUser_name());
+        map.put("user_email", user.getUser_email());
+        if(null != userService.findUserId(map)){
+            user.setUser_id(userService.findUserId(map));
+            mailService.getEmailByFindId(user);
+            return "해당이메일로 안전하게 보내드렸습니다.";
+        }
+        return "not found";
+    }
+
+    @RequestMapping("/find_pwd")
+    public String findPwd(User user) throws Exception {
+        String id = user.getUser_id();
+        String phone = user.getUser_phone();
+        String email = user.getUser_email();
+        User findUser = userService.get_id(id);
+        if(findUser != null && findUser.getUser_phone().equals(phone) && findUser.getUser_email().equals(email)){
+            mailService.userAndEmailByPwdReset(findUser, email);
+            return "해당이메일로 안전하게 보내드렸습니다.";
+        }
+        return "not found";
+    }
+
     @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
     public void infoUpdate(User info_user) throws Exception {
         User u = (User) session.getAttribute("loginUser");

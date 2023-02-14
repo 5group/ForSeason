@@ -29,29 +29,17 @@ public class CryptoUtil {
         return enStr;
     }
 
-    public static String decryptAES256(String str, String key)
-            throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
-            InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
-
+    public static String decryptAES256(String str, String key) throws UnsupportedEncodingException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
         byte[] keyBytes = new byte[16];
-
         System.arraycopy(key.getBytes("utf-8"), 0, keyBytes, 0, keyBytes.length);
-
         SecretKeySpec keySpec = new SecretKeySpec(keyBytes, "AES");
-
         Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
-
         String iv = key.substring(0, 16);
-
         byte[] ivBytes = new byte[16];
         System.arraycopy(iv.getBytes("utf-8"), 0, ivBytes, 0, ivBytes.length);
-
         c.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(ivBytes));
-
         // 암호화된 데이터를 decoding 한다.
         byte[] byteStr = Base64.getDecoder().decode(str);
-
         return new String(c.doFinal(byteStr), "utf-8");
-
     }
 }

@@ -8,7 +8,6 @@
     <!-- jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-	
 	<!-- kakao address api -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     
@@ -16,7 +15,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mukta:300,400,700"> 
     <!-- icon css -->
     <link rel="stylesheet" th:href="@{fonts/icomoon/style.css}">
-
 	<!-- bootstrap css -->
     <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{css/magnific-popup.css}">
@@ -29,7 +27,11 @@
     
 	<!-- main css -->
     <link rel="stylesheet" th:href="@{css/style.css}">
-    
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
+    </style>
+
   </head>
   <body>
   
@@ -43,7 +45,8 @@
 	<!-- center -->
   	<div id="center" th:include="${center} ? ${center} : '/inc/center'"></div>
     <!-- center end -->
-   
+
+    <div id="socket" th:include="/socket"></div>
 
 	<!-- footer -->
   	<div id="footer" th:include="/inc/footer"></div>
