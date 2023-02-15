@@ -82,7 +82,12 @@ $(document).ready(function() {
 
 
 	$(document).ready(function() {
+		$('#send_btn').click(function(){
+			$('.modal-content').css('height', '550px');
 
+		});
+		
+		
 	});
 	$(document).ready(function() {
 		let qnaNo;
@@ -96,7 +101,9 @@ $(document).ready(function() {
 				success : function(data) {
 					$('#qna_qna_title').val(data.qna_title);
 					$('#qna_qna_content').val(data.qna_content);
+					$('.modal-content').css('height', '500px');
 					if (data.rep_no != 0) {
+						$('.modal-content').css('height', '950px');
 						$('#rep_admin_id').val(data.admin_id);
 						$('#rep_content').val(data.rep_content);
 						var date = new Date(data.rep_date);
@@ -131,8 +138,9 @@ $(document).ready(function() {
 	$(document).ready(
 			function() {
 				$('#revbtn').click(
+						
 						function() { //리뷰 글쓰기 버튼
-							alert("hi");
+//							alert("hi");
 
 							qna_title = $("#qna_title").val();
 							qna_content = $("#qna_content").val();

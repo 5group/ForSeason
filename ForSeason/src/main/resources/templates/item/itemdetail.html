@@ -380,13 +380,13 @@
             rev_content = $("#rev_content").val();
             rev_score = document.querySelector("input[type=range]").value * 0.5;
 
-            let alertMessage =
-                "item_no: " + item_no + "\n" +
-                "rev_title: " + rev_title + "\n" +
-                "rev_content: " + rev_content + "\n" +
-                "rev_score: " + rev_score;
+//             let alertMessage =
+//                "item_no: " + item_no + "\n" +
+//                "rev_title: " + rev_title + "\n" +
+//                "rev_content: " + rev_content + "\n" +
+//                "rev_score: " + rev_score;
 
-            alert(alertMessage);
+//            alert(alertMessage);
 
             $.ajax({
                 url: '[[@{/reviewInsert}]]',

@@ -1,112 +1,236 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>
-.table{
+#pageNumbers a {
+	margin-right: 5px;
+	font-size: 2em;
+}
+
+#pageNumbers a {
+	margin-right: 5px;
+}
+
+.table {
 	color: black;
 }
+
 table {
-  width: 100%;
+	width: 100%;
 }
 
 table, td {
-  border-collapse: collapse;
-  border: 1px solid #cccccc;
+	border-collapse: collapse;
+	border: 1px solid #cccccc;
 }
 
 thead {
-  display: table; /* to take the same width as tr */
-  width: calc(100% - 17px); /* - 17px because of the scrollbar width */
-  font-weight: bold;
+	display: table; /* to take the same width as tr */
+	width: calc(100% - 17px); /* - 17px because of the scrollbar width */
+	font-weight: bold;
 }
 
-thead tr{
-  height: 50px;
-  line-height: 50px;
+thead tr {
+	height: 50px;
+	line-height: 50px;
 }
 
 tbody {
-  display: block; /* to enable vertical scrolling */
-  max-height: 500px; /* e.g. */
-  overflow-y: scroll; /* keeps the scrollbar even if it doesn't need it; display purpose */
+	display: block; /* to enable vertical scrolling */
+	max-height: 500px; /* e.g. */
+	overflow-y: scroll;
+	/* keeps the scrollbar even if it doesn't need it; display purpose */
 }
 
 th, td {
-  padding: 5px;
-  word-break: break-all; /* 4. */
+	padding: 5px;
+	word-break: break-all; /* 4. */
 }
 
 tr {
-  display: table; /* display purpose; th's border */
-  width: 100%;
-  box-sizing: border-box; /* because of the border (Chrome needs this line, but not FF) */
+	display: table; /* display purpose; th's border */
+	width: 100%;
+	box-sizing: border-box;
+	/* because of the border (Chrome needs this line, but not FF) */
 }
 
 td {
-  text-align: center;
-  border-left: none;
+	text-align: center;
+	border-left: none;
 }
+
+
 </style>
-            <div class="container-fluid">
-                <div class="row page-titles mx-0">
-                    <div class="col-sm-6 p-md-0">
-                        <div class="welcome-text">
-                            <h4>최근 주문내역</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <input class="form-control" id="hzInput" type="text" placeholder="Search.." >
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-							        <table class="table table-striped table-sm">
-							            <thead class="thead">
-							            <tr>
-							                <td style="width: 80px;">유저번호</td>
-							                <td style="width: 80px;">수령인</td>
-							                <td style="width: 200px;">배송지</td>
-							                <td style="width: 350px;">아이템/사이즈/색상</td>
-							                <td>결제액</td>
-							                <td style="width: 180px;">결제날짜</td>
-							                <td style="width: 100px;">현재재고량</td>
-							            </tr>
-							            </thead>
-							            <tbody id="hzTable">
-							            <tr th:each="stock:${stockList}">
-							                <td th:text="${stock.getUser_no()}" style="width: 80px;"></td>
-							                <td th:text="${stock.getShip_cust()}" style="width: 80px;"></td>
-							                <td th:text="${stock.getShip_addr()}" style="width: 200px;"></td>
-							                <td th:utext="|${stock.getItem_name()}</br>${stock.getSize_name()}/${stock.getColor_name()}|" style="width: 350px;"></td>
-							                <td th:text="|${stock.getOrder_tot()} 원|"></td>
-							                <td th:text="${#dates.format(stock.getOrder_udate(), 'yyyy-MM-dd HH:mm:ss')}" style="width: 180px;"></td>
-							                <td th:text="${stock.getAmount()}" style="width: 100px;"></td>
-							            </tr>
-							            </tbody>
-							        </table>
-							    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="container-fluid">
+	<div class="row page-titles mx-0">
+		<div class="col-sm-6 p-md-0">
+			<div class="welcome-text">
+				<h4>최근 주문내역</h4>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<input class="form-control" id="hzInput" type="text"
+						placeholder="Search..">
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-striped table-sm">
+							<thead class="thead">
+								<tr>
+									<td style="width: 80px;">유저번호</td>
+									<td style="width: 80px;">수령인</td>
+									<td style="width: 200px;">배송지</td>
+									<td style="width: 350px;">아이템/사이즈/색상</td>
+									<td>결제액</td>
+									<td style="width: 180px;">결제날짜</td>
+									<td style="width: 100px;">현재재고량</td>
+								</tr>
+							</thead>
+							<tbody id="hzTable">
+								<tr th:each="stock:${stockList}">
+									<td th:text="${stock.getUser_no()}" style="width: 80px;"></td>
+									<td th:text="${stock.getShip_cust()}" style="width: 80px;"></td>
+									<td th:text="${stock.getShip_addr()}" style="width: 200px;"></td>
+									<td
+										th:utext="|${stock.getItem_name()}</br>${stock.getSize_name()}/${stock.getColor_name()}|"
+										style="width: 350px;"></td>
+									<td th:text="|${stock.getOrder_tot()} 원|"></td>
+									<td
+										th:text="${#dates.format(stock.getOrder_udate(), 'yyyy-MM-dd HH:mm:ss')}"
+										style="width: 180px;"></td>
+									<td th:text="${stock.getAmount()}" style="width: 100px;"></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div id="paginationContainer">
+							<div id="prevBtn"></div>
+							<span id="pageNumbers"></span>
+							<div id="nextBtn"></div>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</div>
 
 <script>
-	$(document).ready(function(){
-		$("#hzInput").on("keyup", function() {
 
-    	    var value = $(this).val().toLowerCase();
 
-    	    $("#hzTable tr").filter(function() {
+$(document).ready(
+	    function() {
+	        // 상수 값 설정
+	        var itemsPerPage = 9;  // 한 페이지당 표시되는 아이템 수
+	        var pagesPerSet = 10;   // 한 번에 표시되는 페이지 수
 
-    	      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+	        // 선택자 지정
+	        var $rows = $('#hzTable tr');  // 테이블의 각 행을 나타내는 선택자
+	        var $prevBtn = $('#prevBtn');  // '이전' 버튼 선택자
+	        var $nextBtn = $('#nextBtn');  // '다음' 버튼 선택자
+	        var $pageNumbers = $('#pageNumbers');  // 페이지 번호 링크를 담는 선택자
 
-    	    });
+	        // 변수 초기화
+	        var currentPage = 1;  // 현재 페이지 번호
+	        var totalPages = Math.ceil($rows.length / itemsPerPage);  // 전체 페이지 수
 
-    	  });
+	        // 페이지 번호 링크 업데이트 함수
+	        function updatePageNumbers() {
+	            $pageNumbers.empty();  // 페이지 번호 링크를 초기화
+	            var numSets = Math.ceil(totalPages / pagesPerSet);  // 페이지 번호 세트 수 계산
+	            var currentSet = Math.ceil(currentPage / pagesPerSet);  // 현재 페이지 번호가 속한 페이지 번호 세트 번호 계산
+
+	            // '이전' 버튼 생성
+	            if (currentSet > 1) {
+	                var prevPage = (currentSet - 2) * pagesPerSet + 1;
+	                var prevBtn = $('<a href="#">이전</a>').click(
+	                    function() {
+	                        goToPage(prevPage);  // 이전 페이지로 이동
+	                        return false;
+	                    });
+	                $pageNumbers.append(prevBtn);  // '이전' 버튼 추가
+	            }
+
+	            // 페이지 번호 링크 생성
+	            var startPage = (currentSet - 1) * pagesPerSet + 1;
+	            var endPage = Math.min(startPage + pagesPerSet - 1, totalPages);
+	            for (var i = startPage; i <= endPage; i++) {
+	                var pageLink = $('<a href="#">' + i + '</a>').click(
+	                    (function(i) {
+	                        return function() {
+	                            goToPage(i);  // 해당 페이지로 이동
+	                            return false;
+	                        }
+	                    })(i));
+	                if (i === currentPage) {
+	                    pageLink.addClass('active');  // 현재 페이지 번호에 해당하는 페이지 번호 링크에 'active' 클래스 추가
+	                }
+	                $pageNumbers.append(pageLink);  // 페이지 번호 링크 추가
+	            }
+
+	            // '다음' 버튼 생성
+	            if (currentSet < numSets) {
+	                var nextPage = currentSet * pagesPerSet + 1;
+	                var nextBtn = $('<a href="#">다음</a>').click(
+	                    function() {
+	                        goToPage(nextPage);  // 다음 페이지로 이동
+	                        return false;
+	                    });
+	                $pageNumbers.append(nextBtn);  // '다음' 버튼 추가
+	            }
+	        }
+
+	        // 표시할 아이템 업데이트 함수
+	        function updateItems() {
+	            $rows.hide();  // 모든 행을 숨김
+	            $rows.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).show();  // 현재 페이지에 해당하는 행만 표시
+	       
+	    }
+
+	    // 페이지 이동 함수
+	    function goToPage(page) {
+	        currentPage = page;  // 현재 페이지 번호 업데이트
+	        updatePageNumbers();  // 페이지 번호 업데이트
+	        updateItems();  // 표시할 아이템 업데이트
+	    }
+
+	    // 초기화
+	    updatePageNumbers();  // 페이지 번호 초기화
+	    updateItems();  // 표시할 아이템 초기화
 	});
+	
+	
+	
+	
+	$(document).ready(
+			function() {
+				$("#hzInput").on(
+						"keyup",
+						function() {
+
+							var value = $(this).val().toLowerCase();
+
+							$("#hzTable tr").filter(
+									function() {
+
+										$(this).toggle(
+												$(this).text().toLowerCase()
+														.indexOf(value) > -1)
+
+									});
+
+						});
+			});
 </script>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.QnaMapper">
+
+	<select id="select" parameterType="Integer" resultType="Qna">
+		SELECT *
+		FROM review WHERE rev_no=#{rev_no}
+	</select>
+
+	<select id="selectAll" resultType="Qna">
+		SELECT q.qna_no, q.user_no, u.user_id, q.qna_title, q.qna_content,
+		q.qna_rdate,
+		r.rep_no, r.admin_id, r.rep_content, r.rep_date
+		FROM qna q
+		LEFT JOIN reply r ON q.qna_no = r.qna_no
+		LEFT JOIN user u ON q.user_no = u.user_no
+		ORDER BY r.rep_date ASC;
+	</select>
+
+	<insert id="insert" parameterType="Qna">
+		INSERT INTO review
+		VALUES
+		(#{rev_no}, #{item_no}, #{user_no}, #{rev_title}, #{rev_content},
+		#{rev_score}, now(), now())
+	</insert>
+	<update id="update" parameterType="Qna">
+		UPDATE review SET
+		rev_title=#{rev_title}, rev_content=#{rev_content},
+		rev_rdate=now()
+		WHERE rev_no=#{rev_no}
+	</update>
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM qna WHERE qna_no=#{qna_no}
+	</delete>
+
+	<select id="userselect" parameterType="Integer" resultType="Qna">
+		SELECT q.qna_no, q.user_no, u.user_id, q.qna_title, q.qna_content,
+		q.qna_rdate,
+		r.rep_no, r.admin_id, r.rep_content, r.rep_date
+		FROM qna q
+		LEFT JOIN reply r ON q.qna_no = r.qna_no
+		LEFT JOIN user u ON q.user_no = u.user_no
+		ORDER BY r.rep_date ASC;
+	</select>
+
+
+	<select id="qnaselect" parameterType="Integer" resultType="Qna">
+		SELECT q.qna_no, q.user_no, q.qna_title, q.qna_content, q.qna_rdate,
+		r.rep_no, r.admin_id, r.rep_content, r.rep_date
+		FROM qna q
+		LEFT JOIN
+		reply r ON q.qna_no = r.qna_no
+		WHERE q.qna_no = #{qna_no};
+	</select>
+	
+
+
+</mapper>

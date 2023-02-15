@@ -1,0 +1,458 @@
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+<style>
+.thead {
+	line-height: 40px;
+}
+
+#pageNumbers a {
+	margin-right: 5px;
+	font-size: 2em;
+}
+
+#pageNumbers a {
+	margin-right: 5px;
+}
+
+.table {
+	color: black;
+}
+</style>
+<script>
+var qna_title, qna_content;
+
+$(document).ready(function() {
+	
+	let revNo;
+
+	$('tbody tr').click(function() {
+		revNo = $(this).find('td:first').text();
+		
+		$.ajax({
+			url : '/rev/get',
+			data : {revNo : revNo},
+			dataType : 'json',
+			success : function(data) {
+
+				$('#rev_rev_no').val(data.rev_no);
+
+				var date1 = new Date(data.rev_rdate);
+				$('#rev_rdate').val(date1.toLocaleDateString('ko-KR'));
+				
+				$('#rev_item_name').val(data.item_name);
+				
+				$('#rev_user_id').val(data.user_id);
+				
+				$('#rev_rev_title').val(data.rev_title);
+				
+				$('#rev_rev_score').val(data.rev_score);
+				
+				$('#rev_rev_content').val(data.rev_content);
+
+				$('#revModal').modal('show');
+			},
+			error : function() {
+				alert('Failed to get QNA data');
+			}
+		});
+	});
+
+	
+	
+	$('#delete-form').submit(function(event) {
+		event.preventDefault();
+		
+		  if(confirm("정말로 삭제하시겠습니까?")) {
+
+		$.ajax({
+			url: '/rev/delete',
+			data: { revNo: revNo },
+			type: 'POST',
+			success: function(result) {
+				$('#revModal').modal('hide');
+				window.location.href = '/rev';
+				location.reload();
+			},
+			error: function() {
+				location.reload();
+			}
+		});
+		  }
+	});
+
+});
+	
+
+/* 
+	$('#insert-form').submit(function(event) {
+		  var qna_no = $('#qna_qna_no').val();
+			alert(qna_no);
+ 			event.preventDefault();
+ 			
+		  var rep_content = $('#rep_content').val();
+		  alert(rep_content);
+		  
+		  
+		  $.ajax({
+		    url: '[[@{/qnaInsert}]]',
+		    data :{ 
+		    	"qna_no" : qna_no,
+		    	"rep_content" : rep_content
+		    	  },
+		    method: 'POST',
+		    success: function() {
+		      $('#qnaModal').modal('hide');
+			location.reload();
+		    },
+		    error: function() {
+		      alert('Failed to write review.');
+		    }
+		  }); 
+		});
+
+
+
+	
+	$('#modify-form').submit(function(event) {
+		  var rep_no = $('#rep_rep_no').val();
+		  var rep_content = $('#rep_content').val();
+		  var qna_no = $('#qna_qna_no').val(); // 수정 대상 Reply 객체의 qna_no 값
+
+		  
+		  
+		  $.ajax({
+			  url: '[[@{/updatereply}]]',
+			  data: {
+			    "qna_no": qna_no,
+			    "rep_no": rep_no,
+			    "rep_content": rep_content
+			  },
+			  method: 'POST',
+			  success: function() {
+			    $('#qnaModal').modal('hide');
+			    location.reload();
+			  },
+			  error: function() {
+			    alert('Failed to update reply.');
+			  }
+			});
+		});
+ 
+ */	
+	
+	
+	
+	$('#delete-form').submit(function(event) {
+		event.preventDefault();
+		
+		$.ajax({
+			url: '/qna/delete',
+			data: { qnaNo: qnaNo },
+			type: 'POST',
+			success: function(result) {
+				$('#qnaModal').modal('hide');
+				window.location.href = '/qna';
+				location.reload();
+			},
+			error: function() {
+				location.reload();
+			}
+		});
+
+
+});
+</script>
+
+<div class="container-fluid">
+
+
+	<div class="row page-titles mx-0">
+		<div class="col-sm-6 p-md-0">
+			<div class="welcome-text">
+				<h4>사용자 문의</h4>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+
+				<!-- 검색 기능 -->
+				<div class="card-header">
+					<input class="form-control" id="hzInput" type="text"
+						placeholder="Search..">
+				</div>
+				<!-- 글 폼  -->
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-hover" id="dataTable">
+							<thead class="thead"
+								style="text-align: center; height: 40px; vertical-align: middle;">
+
+								<tr>
+									<td style="width: 80px; font-weight: bold;">리뷰No</td>
+									<td style="width: 80px; font-weight: bold;">유저ID</td>
+									<td style="width: 200px; font-weight: bold;">상품이름</td>
+									<td style="width: 150px; font-weight: bold;">제목</td>
+									<td style="width: 200px; font-weight: bold;">내용</td>
+									<td style="width: 80px; font-weight: bold;">평점</td>
+									<td style="width: 100px; font-weight: bold;">작성일</td>
+								</tr>
+							</thead>
+							 							
+							<tbody id="hzTable" th:each="rev: ${revlist}"
+								style="background-color: white;">
+								<tr class="qna-row" data-qna-no="${rev.rev_no}"
+									style="cursor: pointer" data-toggle="modal"
+									data-target="#qnaModal" data-qna-title="${rev.rev_title}"
+									data-qna-content="${rev.rev_content}">
+									<td th:text="${rev.rev_no}" style="text-align: center;"></td>
+									<td th:text="${rev.user_id}" style="text-align: center;"></td>
+									<td th:text="${rev.item_name}" style="padding-left: 50px;"></td>
+									<td th:text="${rev.rev_title}" style="padding-left: 50px;"></td>
+									<td th:text="${rev.rev_content}" style="padding-left: 50px;"></td>
+									<td th:text="${rev.rev_score}" style="text-align: center;"></td>
+									<td th:text="${#dates.format(rev.rev_rdate, 'yyyy-MM-dd')}"	style="text-align: center;"></td>
+								</tr>
+							</tbody>
+						</table>
+ 
+							<!-- Paging -->
+							<br>
+							<div id="paginationContainer">
+								<div id="prevBtn"></div>
+								<span id="pageNumbers"></span>
+								<div id="nextBtn"></div>
+							</div>
+							<!-- Paging -->
+					</div>
+					<!-- 글 폼 -->
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- QNA 글보기 modal -->
+<!-- QNA 글보기 modal -->
+<!-- QNA 글보기 modal -->
+
+<div class="modal fade" id="revModal" style="z-index: 9999;"
+	tabindex="-1" role="dialog" aria-labelledby="qnaModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content" style="width: 700px; height: 850px;">
+
+			<div class="modal-header">
+				<h3 class="modal-title" id="qnaModalLabel"
+					style="text-align: center;">상품평 보기</h3>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<h5 class="card-header" style="font-weight: bold;">리뷰번호</h5>
+
+				<textarea rows="1" class="form-control" name="rev_rev_no"
+					id="rev_rev_no" style="display: block ;"></textarea>
+
+
+				
+				<div class="form-group">
+					<label for="rev_title">ID</label>
+					<textarea type="text" class="form-control" rows="1"
+						id="rev_user_id" readonly></textarea>
+				</div>
+				
+
+				<label for="rev_rdate">작성일</label>
+				<textarea type="text" class="form-control" rows="1" id="rev_rdate"
+					readonly></textarea>
+
+
+				
+				<div class="form-group">
+					<label for="item_name">상품명</label>
+					<textarea class="form-control" id="rev_item_name" rows="1"
+						readonly></textarea>
+				</div>
+				
+				
+				<div class="form-group">
+					<label for="rev_score">별점</label>
+					<textarea class="form-control" id="rev_rev_score" rows="1"
+						readonly></textarea>
+				</div>
+				
+				
+
+
+				<div class="form-group">
+					<label for="rev_title">제목</label>
+					<textarea type="text" class="form-control" rows="1"
+						id="rev_rev_title" readonly></textarea>
+				</div>
+				
+
+				
+				<div class="form-group">
+					<label for="rev_content">내용</label>
+					<textarea class="form-control" id="rev_rev_content" rows="6"
+						readonly></textarea>
+				</div>
+
+				
+			</div>
+			<div class="modal-footer">
+
+
+
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+
+				<form id="delete-form" method="post" action="/rev/delete">
+					<input type="hidden" name="revNo">
+					<button type="submit" class="btn btn-danger">삭제</button>
+				</form>
+
+
+
+<!-- 				<form id="modify-form" method="post" action="/qna/modify">
+					<input type="hidden" name="qnaNo">
+					<button type="submit" id="mobtn" class="btn btn-primary">수정</button>
+				</form>
+
+				<form id="insert-form" method="post" action="/qna/insert">
+					<input type="hidden" name="qnaNo">
+					<button type="submit" id="inbtn" class="btn btn-primary">전송</button>
+				</form> -->
+
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+$(document).ready(
+	    function() {
+	        // 상수 값 설정
+	        var itemsPerPage = 10;  // 한 페이지당 표시되는 아이템 수
+	        var pagesPerSet = 5;   // 한 번에 표시되는 페이지 수
+
+	        // 선택자 지정
+	        var $rows = $('#hzTable tr');  // 테이블의 각 행을 나타내는 선택자
+	        var $prevBtn = $('#prevBtn');  // '이전' 버튼 선택자
+	        var $nextBtn = $('#nextBtn');  // '다음' 버튼 선택자
+	        var $pageNumbers = $('#pageNumbers');  // 페이지 번호 링크를 담는 선택자
+
+	        // 변수 초기화
+	        var currentPage = 1;  // 현재 페이지 번호
+	        var totalPages = Math.ceil($rows.length / itemsPerPage);  // 전체 페이지 수
+
+	        // 페이지 번호 링크 업데이트 함수
+	        function updatePageNumbers() {
+	            $pageNumbers.empty();  // 페이지 번호 링크를 초기화
+	            var numSets = Math.ceil(totalPages / pagesPerSet);  // 페이지 번호 세트 수 계산
+	            var currentSet = Math.ceil(currentPage / pagesPerSet);  // 현재 페이지 번호가 속한 페이지 번호 세트 번호 계산
+
+	            // '이전' 버튼 생성
+	            if (currentSet > 1) {
+	                var prevPage = (currentSet - 2) * pagesPerSet + 1;
+	                var prevBtn = $('<a href="#">이전</a>').click(
+	                    function() {
+	                        goToPage(prevPage);  // 이전 페이지로 이동
+	                        return false;
+	                    });
+	                $pageNumbers.append(prevBtn);  // '이전' 버튼 추가
+	            }
+
+	            // 페이지 번호 링크 생성
+	            var startPage = (currentSet - 1) * pagesPerSet + 1;
+	            var endPage = Math.min(startPage + pagesPerSet - 1, totalPages);
+	            for (var i = startPage; i <= endPage; i++) {
+	                var pageLink = $('<a href="#">' + i + '</a>').click(
+	                    (function(i) {
+	                        return function() {
+	                            goToPage(i);  // 해당 페이지로 이동
+	                            return false;
+	                        }
+	                    })(i));
+	                if (i === currentPage) {
+	                    pageLink.addClass('active');  // 현재 페이지 번호에 해당하는 페이지 번호 링크에 'active' 클래스 추가
+	                }
+	                $pageNumbers.append(pageLink);  // 페이지 번호 링크 추가
+	            }
+
+	            // '다음' 버튼 생성
+	            if (currentSet < numSets) {
+	                var nextPage = currentSet * pagesPerSet + 1;
+	                var nextBtn = $('<a href="#">다음</a>').click(
+	                    function() {
+	                        goToPage(nextPage);  // 다음 페이지로 이동
+	                        return false;
+	                    });
+	                $pageNumbers.append(nextBtn);  // '다음' 버튼 추가
+	            }
+	        }
+
+	        // 표시할 아이템 업데이트 함수
+	        function updateItems() {
+	            $rows.hide();  // 모든 행을 숨김
+	            $rows.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).show();  // 현재 페이지에 해당하는 행만 표시
+	       
+	    }
+
+	    // 페이지 이동 함수
+	    function goToPage(page) {
+	        currentPage = page;  // 현재 페이지 번호 업데이트
+	        updatePageNumbers();  // 페이지 번호 업데이트
+	        updateItems();  // 표시할 아이템 업데이트
+	    }
+
+	    // 초기화
+	    updatePageNumbers();  // 페이지 번호 초기화
+	    updateItems();  // 표시할 아이템 초기화
+	});
+	
+	
+$(document).ready(function() { 
+	$("#hzInput").on("keyup",function() {
+		var value = $(this).val().toLowerCase();
+		$("#hzTable tr").filter(function() {
+			$(this).toggle(
+					$(this).text().toLowerCase().indexOf(value) > -1)
+					});
+		});
+	
+});
+</script>
+
+
+
+
+
