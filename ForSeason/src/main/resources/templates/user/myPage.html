@@ -3,10 +3,9 @@
 		padding-top: 2em;
 	}
 	#infocenter{
-		margin: 40px 0px 0px 50px; 
-		/* border:0px solid #cccccc; */
-		width: 900px; 
-	}
+		margin: 40px 0px 0px 50px;
+		width: 900px;
+	} 
 	.myinfo{
 		/*border: 1px solid #cccccc;*/
 		margin-top: 20px;
@@ -39,7 +38,6 @@
 	.myinfo a{
 		color: #999999;
 	}
-	
 </style>
 
     <div class="bg-light py-3">
@@ -60,7 +58,7 @@
             <div class="myinfo">
             	<div class="myinfo_name">
             		<span class="myname" th:text="${session.loginUser.user_name}"></span>님</br>
-            		<button class="btn btn-primary btn-sm" style="width:135px; height:30px; line-height:10px;" th:onclick="|location.href='@{/changeMyInfo}'|"><a>회원정보수정</a></button>
+            		<button class="btn btn-primary btn-sm" style="width:135px; height:30px; line-height:10px;" th:onclick="|location.href='@{/checkPwd?loc=changeMyInfo}'|"><a>회원정보수정</a></button>
             	</div>
             	<nav>
             		<ul class="myinfo_shopping">
@@ -86,7 +84,6 @@
             	</nav>
 			</div>
           </div>
-               
           <div id="infocenter" th:include="${infocenter} ? ${infocenter} : '/user/myPage/myOrder'">
           	
           </div>

@@ -43,15 +43,15 @@ public class MainController{
         return "main";
     }
 
-    @RequestMapping("/about")
-    public String about(Model model) {
-        model.addAttribute("center", "about");
-        return "main";
-    }
-
     @RequestMapping("/contact")
     public String contact(Model model) {
         model.addAttribute("center", "contact");
+        return "main";
+    }
+    
+    @RequestMapping("/locationMap")
+    public String locationMap(Model model) {
+        model.addAttribute("center", "locationMap");
         return "main";
     }
     /////////////////////////////

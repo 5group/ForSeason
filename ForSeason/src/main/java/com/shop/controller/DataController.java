@@ -8,7 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.shop.service.*;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +27,14 @@ import com.shop.dto.Stock;
 import com.shop.dto.User;
 import com.shop.dto.WishList;
 import com.shop.frame.CryptoUtil;
+import com.shop.service.CartService;
+import com.shop.service.ColorService;
+import com.shop.service.ItemService;
+import com.shop.service.QnaService;
+import com.shop.service.ReviewService;
+import com.shop.service.StockService;
+import com.shop.service.UserService;
+import com.shop.service.WishListService;
 
 @RestController
 public class DataController {
@@ -60,9 +68,6 @@ public class DataController {
 
     @Autowired
     QnaService qnaService;
-
-    @Autowired
-    MailService mailService;
 
     
     
@@ -198,36 +203,7 @@ public class DataController {
         review.setRev_rdate(new Date());
         reviewService.modify(review);
     }
-
-    @RequestMapping("/find_id")
-    public String findId(User user) throws Exception {
-        HashMap<String, String> map = new HashMap<>();
-        map.put("user_phone", user.getUser_phone());
-        map.put("user_name", user.getUser_name());
-        map.put("user_email", user.getUser_email());
-        if(null != userService.findUserId(map)){
-            user.setUser_id(userService.findUserId(map));
-            mailService.getEmailByFindId(user);
-            return "해당이메일로 안전하게 보내드렸습니다.";
-        }
-        return "not found";
-    }
-
-    @RequestMapping("/find_pwd")
-    public String findPwd(User user) throws Exception {
-        String id = user.getUser_id();
-        String phone = user.getUser_phone();
-        String email = user.getUser_email();
-        User findUser = userService.get_id(id);
-        if(findUser != null && findUser.getUser_phone().equals(phone) && findUser.getUser_email().equals(email)){
-            User resultUser = mailService.userAndEmailByPwdReset(findUser, email);
-            user.setUser_pwd(resultUser.getUser_pwd());
-            userService.set_pwd(user);
-            return "해당이메일로 안전하게 보내드렸습니다.";
-        }
-        return "not found";
-    }
-
+    
     @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
     public void infoUpdate(User info_user) throws Exception {
         User u = (User) session.getAttribute("loginUser");
@@ -239,4 +215,26 @@ public class DataController {
         userService.modify(u);
         session.setAttribute("loginUser", u);
     }
+    
+    
+    
+    
+
+	@RequestMapping("/getmarker2")
+	public Object getmarker2(String loc) {
+		JSONArray ja = new JSONArray();
+
+			JSONObject jo1 = new JSONObject();
+			jo1.put("title", "ForSeason 본사");
+			//jo1.put("target", "http://www.naver.com");
+			jo1.put("address", "서울특별시 강남구 도산대로 145 인우빌딩 B1~2F");
+			jo1.put("info", "남성, 여성, 어린이를 위한 캐주얼웨어를 선보이는 의류소매점입니다.");
+			jo1.put("lat", 37.518469);
+			jo1.put("lng", 127.0244304);
+			jo1.put("img", "mapImg.jpg");
+			ja.add(jo1);
+
+
+		return ja;
+	}
 }

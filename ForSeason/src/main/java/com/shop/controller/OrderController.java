@@ -92,6 +92,4 @@ public class OrderController {
             return "main";
         }
 
-        // 서비스에 있어야하나 지금은 애매하여 일단둠
-
     }

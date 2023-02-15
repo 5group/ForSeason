@@ -52,6 +52,32 @@ public class ItemController {
 
     @Autowired
     ReviewService reviewservice;
+    
+    @RequestMapping(value = "/itemListBest", method = RequestMethod.GET)
+    public String itemListBest(Model model) throws Exception {
+    	Map<Integer, Category> allCateList = new HashMap<Integer, Category>();
+    	Map<Integer, String> titleImgList = new HashMap<Integer, String>();
+    	
+		List<Item> itemList = itemservice.getBestItemList();   //주문량 top9 아이템 뽑아오기
+	    for (Item i : itemList) {
+	    	System.out.println(i.getItem_no());
+	        Category category = itemservice.getCategorys(i.getItem_no());  //현재 아이템의 대,중,소 카테고리 모두 불러오기(이미지경로를 알기 위해)
+	        allCateList.put(i.getItem_no(), category);
+	        // 타이틀 이미지
+	        String[] imgnames = fileService.getFileList(custdir, category.getTop_cate_name(), category.getMid_cate_name(), category.getCate_name(), i.getItem_name());
+	        if (imgnames != null) {
+	            String titleImg = imgnames[0];
+	            titleImgList.put(i.getItem_no(), titleImg);
+	        }
+	    }
+    	
+	    System.out.println(titleImgList);
+        model.addAttribute("titleImgList", titleImgList);  //타이틀 이미지 리스트(.jpg)
+        model.addAttribute("allCateList", allCateList);  //아이템 하나의 대,중,소 카테고리(이미지 경로)
+        model.addAttribute("itemList", itemList);
+    	model.addAttribute("center", "item/itemlistBest");
+    	return "main";
+    }
 
     // 대,중,소는 if문으로 확인, 검색&정렬, 페이징도 여기서
     @RequestMapping(value = "/getItemList", method = RequestMethod.GET)

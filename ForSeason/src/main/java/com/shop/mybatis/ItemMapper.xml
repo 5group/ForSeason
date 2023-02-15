@@ -101,4 +101,11 @@
     <update id="updateItemhit" parameterType="Integer">
         UPDATE item SET item_hit=item_hit+1 WHERE item_no=#{item_no};
     </update>
+    
+    <select id="selectBestItemList" resultType="Item">
+    	SELECT i.item_no, i.item_name, i.item_price, count(i.item_no) AS 'item_order_total' FROM `order_detail` od
+		INNER JOIN stock s
+		INNER JOIN item i
+		WHERE od.stock_no=s.stock_no AND s.item_no=i.item_no GROUP BY i.item_no ORDER BY item_order_total DESC LIMIT 9;
+    </select>
 </mapper>

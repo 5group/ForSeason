@@ -17,8 +17,6 @@ public interface ItemMapper extends MyMapper<Integer, Item> {
 	public Category selectCategorys(Integer item_no) throws Exception;
 	public void updateItemhit(Integer item_no) throws Exception;
 	public Integer totalRecord(HashMap<String, Object> curCateMap) throws Exception;
+	public List<Item> selectBestItemList() throws Exception;
 	
-
-
-
 }

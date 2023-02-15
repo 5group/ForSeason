@@ -21,6 +21,8 @@ public class Item {
 
     private int rcnt;  //설재경 추가
     private double revavg_score; //설재경 추가
+    
+    private int item_order_total; //아이템이 주문된 갯수
 
     
     //private int cate_no2;

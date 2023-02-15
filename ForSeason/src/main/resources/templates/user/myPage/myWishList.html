@@ -14,6 +14,7 @@
 	}
 	#myOrderBody td{
 		font-size:14.5px;
+		background-color: white;
 	}
 	#myOrderBody a{
 		text-decoration: underline;
@@ -26,6 +27,7 @@
 	<thead>
    	 	<tr id="cartTableHeader"> 
         	<th class="cart-name">번호</th>
+        	<th class="product-image">상품 이미지</th>
 	        <th class="product-name">상품 이름</th>
 	        <th class="product-price">상품가격</th>
 	        <th class="product-remove">선택</th>
@@ -34,11 +36,17 @@
 	<tbody id="myOrderBody">
 		<tr th:each="wish, stat:${wish}">
 	        <td class="cart-name" style="padding:0px; width:80px;"><h2 class="h5 text-black" th:text="${stat.count}"></h2></td>
-	        <td class="product-name" th:text="${item[stat.index].item_name}"></td>
+	        <td class="product-image">
+	        	<a th:href="|@{/itemdetail?item_no=}${item[stat.index].item_no}|"> 
+	        		<img th:src="|@{img/}${allCateList.get(item[stat.index].item_no).top_cate_name}/${allCateList.get(item[stat.index].item_no).mid_cate_name}/${allCateList.get(item[stat.index].item_no).cate_name}/${item[stat.index].item_name}/${titleImgList.get(item[stat.index].item_no)}|"
+						 alt="Image placeholder" class="img-fluid" style="width:150px; height: 150px;">
+				</a></td>
+	        <td class="product-name" th:text="${item[stat.index].item_name}">
+	        </td>
 	        <td class="product-price" th:value="${item[stat.index].item_price}" th:text="${item[stat.index].item_price}"></td>
 	        <td style="padding:0px; width:130px;">
-	        	<button class="product-detailPage btn-primary btn-sm" type="button" th:id="${wish.wish_no}" style="border: 0px;" th:onclick="|location.href='@{/itemdetail?item_no=}${item[stat.index].item_no}'|">이동</button>
-	            <button class="product-remove btn-primary btn-sm" type="button" th:id="${wish.wish_no}" style="border: 0px;">삭제</button>
+	        	<button class="product-detailPage btn-primary btn-sm" type="button" th:id="${item[stat.index].item_no}" style="border: 0px;" th:onclick="|location.href='@{/itemdetail?item_no=}${item[stat.index].item_no}'|">이동</button>
+	            <button class="product-remove btn-primary btn-sm" type="button" th:id="${item[stat.index].item_no}" style="border: 0px;">삭제</button>
 	        </td>
 	    </tr>
 	</tbody>
@@ -60,6 +68,7 @@
     					"item_no":wishProductId
     				}, //서버 컨트롤러에 데이터 전송
     				success: function () {
+    					alert("성공");
     					location.href = "[[@{/myWishList}]]"
                         console.log("success")
    	                },

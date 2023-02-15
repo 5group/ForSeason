@@ -32,6 +32,7 @@ public class BaseController {
         mapCateList.put("sub", subCategory);
 
         model.addAttribute("mapCateList", mapCateList);
+        
     }
 }
 

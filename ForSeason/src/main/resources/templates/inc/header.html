@@ -2,7 +2,7 @@
 	.site-top-icons > ul > li:first-child{
 		margin-right:13px;
 		font-size:19.4px;
-        font-family: 'Silkscreen', cursive;
+        /* font-family: 'Silkscreen', cursive; */
 	}
 </style>
 <script>
@@ -63,7 +63,7 @@
       <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
           <ul class="site-menu js-clone-nav d-none d-md-block" style="padding-left:0px;">
-          	<li><a href="#">BEST</a></li>
+          	<li><a th:href="@{/itemListBest}">BEST</a></li>
           	<!-- 아이템 카테고리 -->
           	<li class="has-children active" th:each="top:${mapCateList.get('top')}">
           		<a th:href="|@{/getItemList?cate_no=}${top.cate_no}|" th:text="${top.cate_name}"></a>
@@ -82,14 +82,14 @@
             
             
             <li class="has-children">
-              <a th:href="@{/about}">About</a>
+              <a href="#none">About</a>
               <ul class="dropdown">
+              	<li><a th:href="@{/locationMap}">찾아오는 길</a></li>
                 <li><a th:href="@{/contact}">문의</a></li>
-                <li><a href="#">FAQ</a></li>
                 <!-- <li><a href="#">Menu Three</a></li> -->
               </ul>
             </li>
-            <li><a th:href="@{/}">HOME</a></li>
+            <!-- <li><a th:href="@{/}">HOME</a></li> -->
           </ul>
         </div>
       </nav>

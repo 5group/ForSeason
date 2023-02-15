@@ -188,10 +188,28 @@ public class MyPageController {
         User user = (User) session.getAttribute("loginUser");
         List<WishList> wish_list = wishListService.get_list(user.getUser_no());
         List<Item> itemList = new ArrayList<Item>();
+        Map<Integer, Category> allCateList = new HashMap<Integer, Category>();
+        Map<Integer, String> titleImgList = new HashMap<Integer, String>();
+        Category category = null;
+        
         for (WishList wish : wish_list) {
             Item item = itemService.get(wish.getItem_no());
             itemList.add(item);
+            
+            category = itemService.getCategorys(wish.getItem_no()); // 해당 아이템에 대중소 카테고리 이름불러옴 //item_no로 카테고리 다 알 수 있음
+        	
+        	allCateList.put(wish.getItem_no(), category);
+            
+        	String[] cateName = {category.getTop_cate_name(), category.getMid_cate_name(), category.getCate_name()};
+            String[] imgnames = fileService.getFileList(custdir, category.getTop_cate_name(), category.getMid_cate_name(), category.getCate_name(), item.getItem_name());
+            if (imgnames != null) {
+                String titleImg = imgnames[0];
+                titleImgList.put(wish.getItem_no(), titleImg);
+            }
         }
+            
+        model.addAttribute("titleImgList", titleImgList);  //타이틀 이미지 리스트(.jpg)
+        model.addAttribute("allCateList", allCateList);
         model.addAttribute("item", itemList);
         model.addAttribute("wish", wish_list);
         model.addAttribute("center", "user/myPage");

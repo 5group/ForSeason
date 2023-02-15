@@ -1,0 +1,194 @@
+<style>
+#mapul{
+	margin: 0px;
+	padding: 0px;
+	list-style:none;
+	width: 485px;
+}
+#mapul > li{
+	float:left;
+}
+#mapul > li:nth-child(1){
+	padding-top:20px;
+	width: 70%;
+}
+#mapul > li:nth-child(2){
+	margin-left:5px;
+	
+}
+#map{
+	width: 100%;
+	height: 400px;
+	margin: 0px auto;
+	border:1px solid black; 
+}
+</style>
+
+<script>
+var lat = 37.518469;
+var lng = 127.0244500;
+var map;
+
+function display(){
+	var mapContainer = document.querySelector('#map'); 
+	var mapOption = { 
+	        center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
+	        level: 4 // 지도의 확대 레벨
+	    };
+	map = new kakao.maps.Map(mapContainer, mapOption); 
+};
+
+function getdata(){
+	$.ajax({
+		url:'[[@{/getmarker2}]]',
+		success:function(data){
+			displaymarker(data);  //데이터 뿌리기
+		}
+	});
+};
+
+function displaymarker(data){
+	//마커 모양 바꾸기
+	var imageSrc = "/images/marker.png"; 
+    var imageSize = new kakao.maps.Size(50, 55);     
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);  
+	
+	for(var i=0; i<data.length; i++){
+		 var marker = new kakao.maps.Marker({
+	        map: map,
+	        position: new kakao.maps.LatLng(data[i].lat, data[i].lng),
+		 	image: markerImage //마커 이미지 설정
+		 });
+		 
+		 var iwContent = '<ul id="mapul"><li><h3>'+data[i].title+'</h3>';
+		 iwContent += '<p>'+data[i].address+'</p><hr>'; 
+		 iwContent += '<p>'+data[i].info+'</p></li>'; 
+		 iwContent += '<li><img width="140px" src="/images/'+data[i].img+'"></li></ul>';
+	     var iwPosition = new kakao.maps.LatLng(data[i].lat, data[i].lng);
+
+		 var infowindow = new kakao.maps.InfoWindow({
+		     position : iwPosition, 
+		     content : iwContent
+		 });
+		 
+		 kakao.maps.event.addListener(marker, 'mouseover', mouseoverListener(marker, infowindow));
+		 kakao.maps.event.addListener(marker, 'mouseout', mouseoutListener(marker, infowindow));
+		 //kakao.maps.event.addListener(marker, 'click', mouseclickListener(data[i].target));	 
+	};
+	
+	function mouseoverListener(marker, infowindow) {
+		return function(){
+			infowindow.open(map, marker);
+		};
+	}
+	function mouseoutListener(marker, infowindow) {
+		return function(){
+			infowindow.close();
+		};
+	}
+	function mouseclickListener(target) {
+	  	return function(){
+	  		location.href = target;
+	  	};
+	}
+	
+};
+
+function go(lat,lng){
+	var moveLatLon = new kakao.maps.LatLng(lat,lng);
+    map.panTo(moveLatLon);     
+    getdata();
+};
+
+$(document).ready(function(){
+	display();
+	go(37.518469,127.0244304);
+});
+</script>
+
+    <div class="bg-light py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 mb-0"><a th:href="@{/}">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">찾아오는 길</strong></div>
+        </div>
+      </div>
+    </div>  
+
+    <div class="site-section border-bottom" data-aos="fade">
+      <div class="container">
+        <div class="row mb-5">
+        	<div class="col-md-9" style="margin-bottom:20px;">
+	    		<div class="site-section-heading pt-3 mb-4">
+              		<h2 class="text-black">찾아오는 길</h2>
+              		<h4 style="color:gray;">▶&nbsp;신사역에서 5-10분 거리</h4>
+            	</div>      	
+            </div>
+            <div class="col-md-2"></div>
+          	<div class="col-md-8">
+            	<div class="block-16"><!-- 
+            		<button id="bt1">Seoul</button>
+					<button id="bt2">Busan</button>
+					<button id="bt3">jeju</button> -->
+					<div id="map"></div> 
+            	</div>
+          	</div> 
+        </div>
+      </div>
+    </div>
+
+    <div class="site-section border-bottom" data-aos="fade">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-7 site-section-heading text-center pt-4">
+            <h2>Shop Admin</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+  
+            <div class="block-38 text-center">
+              <div class="block-38-img">
+                <div class="block-38-header">
+                  <img src="images/person_1.jpg" alt="Image placeholder" class="mb-4">
+                  <h3 class="block-38-heading h4">KJY</h3>
+                  <p class="block-38-subheading">CEO/Co-Founder</p>
+                </div>
+                <div class="block-38-body">
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut minima nihil sit distinctio recusandae doloribus ut fugit officia voluptate soluta. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="block-38 text-center">
+              <div class="block-38-img">
+                <div class="block-38-header">
+                  <img src="images/person_2.jpg" alt="Image placeholder" class="mb-4">
+                  <h3 class="block-38-heading h4">SJK</h3>
+                  <p class="block-38-subheading">Co-Founder</p>
+                </div>
+                <div class="block-38-body">
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut minima nihil sit distinctio recusandae doloribus ut fugit officia voluptate soluta. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <div class="block-38 text-center">
+              <div class="block-38-img">
+                <div class="block-38-header">
+                  <img src="images/person_3.jpg" alt="Image placeholder" class="mb-4">
+                  <h3 class="block-38-heading h4">CMS</h3>
+                  <p class="block-38-subheading">Marketing</p>
+                </div>
+                <div class="block-38-body">
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut minima nihil sit distinctio recusandae doloribus ut fugit officia voluptate soluta. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+ 

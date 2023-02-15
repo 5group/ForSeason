@@ -55,5 +55,9 @@ public class ItemService implements MyService<Integer, Item> {
     public Integer totalRecord(HashMap<String, Object> curCateMap) throws Exception{
     	return mapper.totalRecord(curCateMap);
     }
+    
+    public List<Item> getBestItemList() throws Exception {
+        return mapper.selectBestItemList();
+    }
 
 }

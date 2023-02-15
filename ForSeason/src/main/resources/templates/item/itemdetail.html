@@ -1,5 +1,100 @@
 <link rel="stylesheet" href="css/colorlist.css">
 <style>
+
+	.tab {
+	  --animation-time: 200ms;
+	  position: relative;
+	}
+	
+	.tab::after {
+	  content: "";
+	  display: block;
+	  bottom: 0;
+	  left: 0;
+	  width: 100%;
+	  height: var(--underline-size, 2px);
+	  position: absolute;
+	  background-color: var(--underline-color, currentColor);
+	  transition: transform ease var(--animation-time, 200ms),
+	    opacity ease 0ms 200ms;
+	  opacity: 0;
+	}
+	.tab.after-slide::after {
+	  transform: translateX(100%);
+	}
+	.tab.before-slide::after {
+	  transform: translateX(-100%);
+	}
+	
+	.section-slk .tab:active ~ .tab::after {
+	  transform: translateX(1%);
+	}
+	
+	.tabs-wrapper:not(:hover) .tab:not(.is-active)::after {
+	  transform: translateY(100%);
+	}
+	
+	.tabs:hover .tab:active::after,
+	.tabs-wrapper:hover .tabs:hover .tab:active::after {
+	  transition-delay: 0ms, 0ms;
+	}
+	
+	.tab.is-active::after {
+	  transform: translateX(0%);
+	  opacity: 1;
+	}
+	
+	/* Just for styling */
+	.tabs-wrapper {
+	  width: 100%;
+	 /*  border-bottom: 1px solid #5d5d5d !important; */
+	}
+	
+	.tabs {
+	  display: flex;
+	}
+	
+	.tab {
+	  --underline-color: #7971ea;
+	  --underline-size: 3px;
+	  color: inherit;
+	  padding: 20px;
+	  text-decoration: none;
+	  white-space: nowrap;
+	  line-height: 1;
+	  width: inherit;
+	}
+	
+	.active-content .text {
+	  display: none;
+	  margin: 0px 20px 0px;
+	}
+	.active-content .text.active-text {
+	  display: block;
+	}
+	
+	.section-slk .tab {
+	  color: #5d5d5d !important;
+	}
+	.section-slk .tabs-wrapper .tabs .tab.is-active {
+	  color: #7971ea !important;
+	  font-weight: bold;
+	}
+	
+	@media (max-width: 1000px) {
+	  .tabs-wrapper {
+	    overflow-x: scroll;
+	  }
+	  ::-webkit-scrollbar {
+	    background: transparent;
+	    display: none; /* Optional: just make scrollbar invisible */
+	  }
+	  /* Optional: show position indicator in red */
+	  ::-webkit-scrollbar-thumb {
+	    background: transparent;
+	  }
+	}
+
     /* 설재경 */
     /* 설재경 */
     /* 설재경 */
@@ -101,7 +196,7 @@
 
     /* 레이아웃 외곽 너비 400px 제한*/
     .wrap {
-        max-width: 1000px;
+        max-width: 1140px;
         margin: 0 auto; /* 화면 가운데로 */
         background-color: #fff;
         height: 100%;
@@ -473,7 +568,6 @@
 
 <div class="site-section">
     <div class="container">
-        <h1 style="color: black;margin-bottom:40px;border-bottom:1px solid #cccccc;" th:text="${item.item_name}"></h1>
         <div class="row">
 
             <div class="col-md-6">
@@ -483,13 +577,15 @@
                 <input type="hidden" id="item_no" name="item_no" th:value="${item.item_no}">
             </div>
             <div class="col-md-6">
-                <!--  <h2 class="text-black" th:text=${item.item_name}></h2> -->
-                <p id="itemInfo"></p>     <!-- 이 태그 뒤에 설명 추가 -->
-                <p><strong class="text-primary h4"
+                <h2 class="text-black" th:text=${item.item_name} style="font-size: 2em; height:15%; margin-top: 20px;"></h2> 
+                
+                <p style="height:15%;"><strong class="text-primary h4"
                            th:text="${#numbers.formatInteger(item.item_price, 0, 'COMMA')}+'원'"></strong></p>
-
+                           
+                           
+				<h2 style="font-size: 1.5em;">옵션</h2> <hr>
                 <!-- 색상 선택 -->
-                <div class="mb-1 d-flex">
+                <div class="mb-1 d-flex" style="height: 10%;">
                     <span style="font-size: 22px; line-height:30px; color:black; margin-right:16px;">Color:</span>
                     <ul id="colorui">
                         <li class="colorli" th:each="o, stat:${colorlist}" th:value="${o.color_no}">
@@ -501,7 +597,7 @@
                 </div>
 
                 <!-- 사이즈 선택 -->
-                <div class="mb-1 d-flex">
+                <div class="mb-1 d-flex" style="height: 9%;">
                     <span style="font-size: 22px; line-height:23px; color:black; margin-right:15px;">Size:</span>
                     <label for="option-sm" class="d-flex mr-3 mb-3" th:each="o:${sizelist}">
                 <span class="d-inline-block mr-2" style="top:-2px; position: relative;">
@@ -513,7 +609,7 @@
                 </div>
 
                 <!-- 수량 선택 -->
-                <div class="mb-5" style="margin-bottom: 1.3rem!important;">
+                <div class="mb-5" style="margin-bottom: 0rem!important; height: 10%;">
                     <div class="input-group mb-3" style="max-width: 120px;">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-primary js-btn-minus" type="button" onclick="minusClick();">
@@ -531,7 +627,7 @@
 
                 </div>
 
-                <div class="right_area" style="height:45px; width:200px;">
+                <div class="right_area" style="margin-top: 30px; width:200px;">
                     <p style="float:left;"><a href="#none" id="btn_cart" class="buy-now btn btn-sm btn-primary">Add To
                         Cart</a></p>
                     <a href="javascript:;" class="icon heart" style="height:45px; width:45px; float:right;">
@@ -543,188 +639,226 @@
         </div>
     </div>
 </div>
-<!-- 상품평 영역 시작 -->
-<!-- 상품평 영역 시작 -->
-<!-- 상품평 영역 시작 -->
 
 
-<div class="wrap">
-    <!-- 상품평 헤드 -->
-
-    <div class="review-container">
-        <h4>
-            <div class="review-left">고객 상품평</div>
-        </h4>
-        <div class="review-right">
-
-
-            <!--
-                <li th:if="${session.loginuser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
-                <li th:if="${session.loginuser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
-             -->
-            <div th:if="${session.loginUser!=null}">
-                <button type="button" class="btn btn-danger" style="color: red;" data-toggle="modal"
-                        data-target="#reviewModal">
-                    글쓰기
-                </button>
-            </div>
-
-
-        </div>
+<!-- 여기서 부터  -->
+<div class="section-slk">
+  <div class="container p-0">
+  
+    <div class="tabs-wrapper">
+      <nav class="tabs">
+        <a href="#none" class="tab after-slide is-active" data-target="1">고객 상품평</a>
+        <a href="#none" class="tab after-slide" data-target="2">상품설명</a>
+      </nav>
     </div>
 
-
-    <hr style="width: 100%; height: 1px; border: 1; background-color: black;">
-
-    <div class="semireview-container">
-        <div class="semireview-left">
-
-		<span class="star2">
-		★★★★★ 	
-		<span th:style="'width: ' + (${item.revavg_score} * 20) + '%'">★★★★★</span>
-		</span>
-
-
-            <a th:text="${item.revavg_score} + ' / 5.0'" style="font-size: larger; color: gray;">2.5 / 5.0</a>
-
+    <div class="row p-0">
+      <div class="active-content">
+      
+      
+        <!-- 리뷰영역 시작 -->
+        <div class="text active-text" style="width: 1140px;">
+        	 	 <!-- 상품평 영역 시작 -->
+				<!-- 상품평 영역 시작 -->
+				<!-- 상품평 영역 시작 -->
+				
+				
+				<div class="wrap">
+				    <!-- 상품평 헤드 -->
+				
+				    <div class="review-container">
+				        <h4>
+				            <div class="review-left">고객 상품평</div>
+				        </h4>
+				        <div class="review-right">
+				
+				
+				            <!--
+				                <li th:if="${session.loginuser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
+				                <li th:if="${session.loginuser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
+				             -->
+				            <div th:if="${session.loginUser!=null}">
+				                <button type="button" class="btn btn-danger" style="color: red;" data-toggle="modal"
+				                        data-target="#reviewModal">
+				                    글쓰기
+				                </button>
+				            </div>
+				
+				
+				        </div>
+				    </div>
+				
+				
+				    <hr style="width: 100%; height: 1px; border: 1; background-color: black;">
+				
+				    <div class="semireview-container">
+				        <div class="semireview-left">
+				
+						<span class="star2">
+						★★★★★ 	
+						<span th:style="'width: ' + (${item.revavg_score} * 20) + '%'">★★★★★</span>
+						</span>
+				
+				
+				            <a th:text="${item.revavg_score} + ' / 5.0'" style="font-size: larger; color: gray;">2.5 / 5.0</a>
+				
+				        </div>
+				
+				
+				        <!-- 	<div class="semireview-right">최근 리뷰 : <a href="#" class="comment-link" th:text="${movie.rcnt}">15</a></div> -->
+				        <div class="semireview-right">최근 리뷰 : <a href="#" class="comment-link" th:text="${item.rcnt}"></a></div>
+				    </div>
+				
+				
+				    <hr style="width: 100%; height: 0.5px; border: 0; background-color: gray; clear: both;">
+				
+				    <!-- 상품의 리뷰게시판 시작 -->
+				    <!-- 상품의 리뷰게시판 시작 -->
+				    <!-- 상품의 리뷰게시판 시작 -->
+				
+				
+				    <div class="customer_review_list" th:each="r:${reviewlist}">
+				
+				        <!-- 왼쪽 제목 -->
+				        <strong class="cr_tit" th:text="${r.rev_title}">TEST1</strong>
+				        <!-- 왼쪽 제목 -->
+				
+				        <!-- 오른쪽 ID | 날짜 -->
+				        <!--     <span class="info_user" th:text="${user.no} + '|' +${#dates.format(r.udate,'yyyy-MM-dd')} " style="float:right;">id01 - 2023.01.12</span> -->
+				        <span class="info_user" th:text="${r.user_id} + '  |  ' +${#dates.format(r.rev_udate,'yyyy-MM-dd')}"
+				              style="float:right;">TEST2-3</span>
+				
+				
+				        <!-- 오른쪽 ID | 날짜 -->
+				
+				        <!-- 별점  -->
+				        <div></div>
+				        <span class="star2">
+				★★★★★	
+				<span th:style="'width: ' + (${r.rev_score} * 20) + '%'">★★★★★</span>
+				</span>
+				        <!-- 별점 -->
+				
+				        <!-- 리뷰내용 -->
+				        <div class="review_cont" th:text="${r.rev_content}">
+				            TEST4
+				        </div>
+				        <!-- 리뷰내용 -->
+				
+				        <!-- 선 -->
+				        <hr style="width: 100%; height: 0.5px; border: 0; background-color: lightgray; clear: both;">
+				        <!-- 선 -->
+				
+				    </div>
+				
+				    <!-- 상품의 리뷰게시판 끝 -->
+				    <!-- 상품의 리뷰게시판 끝 -->
+				    <!-- 상품의 리뷰게시판 끝 -->
+				
+				
+				    <!-- 더보기 버튼 -->
+				    <center>
+				        <a th:href="|@{/reviewdetail?item_no=}${item.item_no}|"
+				           style="background-color: black; color: white; padding: 0.75mm 2.25mm;">더보기</a>
+				    </center>
+				
+				    <br>
+				    <br>
+				    <!-- 더보기 버튼 -->
+				
+				
+				    <!-- 글쓰기 Modal -->
+				    <!-- 글쓰기 Modal -->
+				    <!-- 글쓰기 Modal -->
+				
+				
+				    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel"
+				         aria-hidden="true">
+				        <div class="modal-dialog" role="document">
+				            <div class="modal-content">
+				                <div class="modal-header">
+				                    <h5 class="modal-title" id="reviewModalLabel">리뷰 작성</h5>
+				                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				                        <span aria-hidden="true">&times;</span>
+				                    </button>
+				                </div>
+				
+				
+				                <form name="reviewform" class="reviewform" method="post">
+				                    <!-- 글쓰기 Modal 시작폼 -->
+				                    <!-- 글쓰기 Modal 시작폼 -->
+				
+				                    <div class="modal-body">
+				                        <!-- 리뷰폼 시작-->
+				                        <div class="review-form" id="review-form">
+				                            <!-- <input name="item_no" th:value="${item_no}" type="hidden"> -->
+				                            <!--  			  <input name="user_no" th:value="${session.loginUser.user_no}" type="hidden"> -->
+				
+				                            <input type="hidden" id="item_no" name="item_no" th:value="${item.item_no}">
+				                            <!-- 별점 영역 -->
+				                            <!-- 별점 영역 -->
+				                            <!-- 별점 영역 -->
+				                            <span class="star">
+				                  ★★★★★
+				                  <span>★★★★★</span>
+				                  <input type="range" oninput="drawStar(this)" value="" step="1" min="0" max="10">
+				                </span>
+				                            <div class="selected-value" name="rev_score" id="rev_score">1</div>
+				
+				                            <!-- 별점 영역 -->
+				                            <!-- 제목 영역 -->
+				                            <label for="reviewTitle">제목(필수)</label>
+				                            <textarea rows="1" class="form-control" name="rev_title" id="rev_title"></textarea>
+				                            <!-- 제목 영역 -->
+				                            <!-- 내용 영역 -->
+				                            <label for="reviewContent">내용(필수)</label>
+				                            <div class="warning_msg">Please enter a review with at least 5 characters.</div>
+				                            <textarea rows="10" class="form-control" name="rev_content" id="rev_content"></textarea>
+				                            <!-- 내용 영역 -->
+				                        </div>
+				                        <!-- review-form 마무리 -->
+				
+				
+				                    </div>
+				                    <!-- 글쓰기 Modal 끝폼 -->
+				                    <!-- 글쓰기 Modal 끝폼 -->
+				                    <div class="modal-footer">
+				                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				                        <!-- Submit -->
+				                        <button type="submit" id="revbtn" class="btn btn-primary">전송</button>
+				                        <!-- 			<input type="submit" id="rbtn" value="전송" class="btn btn-primary"> -->
+				                        <!-- Submit -->
+				
+				                    </div>
+				                </form>
+				            </div>
+				        </div>
+				    </div>
+				
+				    <!-- 상품평 영역 마침 -->
+				    <!-- 상품평 영역 마침 -->
+				    <!-- 상품평 영역 마침 -->
+				
+				</div>
+        </div> 
+        <!-- 리뷰영역 끝 --> 
+        
+        
+        <!-- 설명영역 시작 -->
+        <div class="text" id="itemInfo"> <!-- 이 태그 뒤에 설명 추가 -->
         </div>
-
-
-        <!-- 	<div class="semireview-right">최근 리뷰 : <a href="#" class="comment-link" th:text="${movie.rcnt}">15</a></div> -->
-        <div class="semireview-right">최근 리뷰 : <a href="#" class="comment-link" th:text="${item.rcnt}"></a></div>
+        <!-- 설명영역 끝 -->
+      </div>
     </div>
-
-
-    <hr style="width: 100%; height: 0.5px; border: 0; background-color: gray; clear: both;">
-
-    <!-- 상품의 리뷰게시판 시작 -->
-    <!-- 상품의 리뷰게시판 시작 -->
-    <!-- 상품의 리뷰게시판 시작 -->
-
-
-    <div class="customer_review_list" th:each="r:${reviewlist}">
-
-        <!-- 왼쪽 제목 -->
-        <strong class="cr_tit" th:text="${r.rev_title}">TEST1</strong>
-        <!-- 왼쪽 제목 -->
-
-        <!-- 오른쪽 ID | 날짜 -->
-        <!--     <span class="info_user" th:text="${user.no} + '|' +${#dates.format(r.udate,'yyyy-MM-dd')} " style="float:right;">id01 - 2023.01.12</span> -->
-        <span class="info_user" th:text="${r.user_id} + '  |  ' +${#dates.format(r.rev_udate,'yyyy-MM-dd')}"
-              style="float:right;">TEST2-3</span>
-
-
-        <!-- 오른쪽 ID | 날짜 -->
-
-        <!-- 별점  -->
-        <div></div>
-        <span class="star2">
-★★★★★	
-<span th:style="'width: ' + (${r.rev_score} * 20) + '%'">★★★★★</span>
-</span>
-        <!-- 별점 -->
-
-        <!-- 리뷰내용 -->
-        <div class="review_cont" th:text="${r.rev_content}">
-            TEST4
-        </div>
-        <!-- 리뷰내용 -->
-
-        <!-- 선 -->
-        <hr style="width: 100%; height: 0.5px; border: 0; background-color: lightgray; clear: both;">
-        <!-- 선 -->
-
-    </div>
-
-    <!-- 상품의 리뷰게시판 끝 -->
-    <!-- 상품의 리뷰게시판 끝 -->
-    <!-- 상품의 리뷰게시판 끝 -->
-
-
-    <!-- 더보기 버튼 -->
-    <center>
-        <a th:href="|@{/reviewdetail?item_no=}${item.item_no}|"
-           style="background-color: black; color: white; padding: 0.75mm 2.25mm;">더보기</a>
-    </center>
-
-    <br>
-    <br>
-    <!-- 더보기 버튼 -->
-
-
-    <!-- 글쓰기 Modal -->
-    <!-- 글쓰기 Modal -->
-    <!-- 글쓰기 Modal -->
-
-
-    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="reviewModalLabel">리뷰 작성</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-
-                <form name="reviewform" class="reviewform" method="post">
-                    <!-- 글쓰기 Modal 시작폼 -->
-                    <!-- 글쓰기 Modal 시작폼 -->
-
-                    <div class="modal-body">
-                        <!-- 리뷰폼 시작-->
-                        <div class="review-form" id="review-form">
-                            <!-- <input name="item_no" th:value="${item_no}" type="hidden"> -->
-                            <!--  			  <input name="user_no" th:value="${session.loginUser.user_no}" type="hidden"> -->
-
-                            <input type="hidden" id="item_no" name="item_no" th:value="${item.item_no}">
-                            <!-- 별점 영역 -->
-                            <!-- 별점 영역 -->
-                            <!-- 별점 영역 -->
-                            <span class="star">
-                  ★★★★★
-                  <span>★★★★★</span>
-                  <input type="range" oninput="drawStar(this)" value="" step="1" min="0" max="10">
-                </span>
-                            <div class="selected-value" name="rev_score" id="rev_score">1</div>
-
-                            <!-- 별점 영역 -->
-                            <!-- 제목 영역 -->
-                            <label for="reviewTitle">제목(필수)</label>
-                            <textarea rows="1" class="form-control" name="rev_title" id="rev_title"></textarea>
-                            <!-- 제목 영역 -->
-                            <!-- 내용 영역 -->
-                            <label for="reviewContent">내용(필수)</label>
-                            <div class="warning_msg">Please enter a review with at least 5 characters.</div>
-                            <textarea rows="10" class="form-control" name="rev_content" id="rev_content"></textarea>
-                            <!-- 내용 영역 -->
-                        </div>
-                        <!-- review-form 마무리 -->
-
-
-                    </div>
-                    <!-- 글쓰기 Modal 끝폼 -->
-                    <!-- 글쓰기 Modal 끝폼 -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <!-- Submit -->
-                        <button type="submit" id="revbtn" class="btn btn-primary">전송</button>
-                        <!-- 			<input type="submit" id="rbtn" value="전송" class="btn btn-primary"> -->
-                        <!-- Submit -->
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- 상품평 영역 마침 -->
-    <!-- 상품평 영역 마침 -->
-    <!-- 상품평 영역 마침 -->
-
+  </div>
 </div>
+
+<!-- 여기까지 -->
+
+
+
+
+
 
 
 <div class="site-section block-3 site-blocks-2 bg-light">
@@ -739,62 +873,67 @@
                 <div class="nonloop-block-3 owl-carousel">
                     <div class="item">
                         <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Tank Top</a></h3>
-                                <p class="mb-0">Finding perfect t-shirt</p>
-                                <p class="text-primary font-weight-bold">$50</p>
-                            </div>
+		                  <figure class="block-4-image">
+		                  	<a th:href="@{/itemdetail?item_no=13}">
+		                    	<img th:src="@{img/WOMEN/아우터/셋업/릴랙스테일러드재킷/32BEIGE.jpg}" alt="Image placeholder" class="img-fluid">
+		                    </a>
+		                  </figure>
+		                  <div class="block-4-text p-4" style="padding:1rem!important">
+		                    <h3><a th:href="@{itemdetail?item_no=13}">릴랙스테일러드재킷</a></h3>
+		                    <p class="text-primary font-weight-bold">89,000</p>
+		                  </div>
                         </div>
                     </div>
                     <div class="item">
                         <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Corater</a></h3>
-                                <p class="mb-0">Finding perfect products</p>
-                                <p class="text-primary font-weight-bold">$50</p>
-                            </div>
+		                  <figure class="block-4-image">
+		                  	<a th:href="@{/itemdetail?item_no=238}">
+		                    	<img th:src="@{img/MEN/상의/니트/캐시미어크루넥스웨터(긴팔)/58DARKGREEN.jpg}" alt="Image placeholder" class="img-fluid">
+		                    </a>
+		                  </figure>
+		                  <div class="block-4-text p-4" style="padding:1rem!important">
+		                    <h3><a th:href="@{/itemdetail?item_no=238}">캐시미어크루넥스웨터(긴팔)</a></h3>
+		                    <p class="text-primary font-weight-bold">149,000</p>
+		                  </div>
                         </div>
                     </div>
                     <div class="item">
                         <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_2.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Polo Shirt</a></h3>
-                                <p class="mb-0">Finding perfect products</p>
-                                <p class="text-primary font-weight-bold">$50</p>
-                            </div>
+		                  <figure class="block-4-image">
+		                  	<a th:href="@{/itemdetail?item_no=34}">
+		                    	<img th:src="@{img/WOMEN/상의/니트/워셔블코튼V넥스웨터(긴팔)/12PINK.jpg}" alt="Image placeholder" class="img-fluid">
+		                  	</a>
+		                  </figure>
+		                  <div class="block-4-text p-4" style="padding:1rem!important">
+		                    <h3><a th:href="@{/itemdetail?item_no=34}">워셔블코튼V넥스웨터(긴팔)</a></h3>
+		                    <p class="text-primary font-weight-bold">39,900</p>
+		                  </div>
                         </div>
                     </div>
                     <div class="item">
                         <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/cloth_3.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">T-Shirt Mockup</a></h3>
-                                <p class="mb-0">Finding perfect products</p>
-                                <p class="text-primary font-weight-bold">$50</p>
-                            </div>
+		                  <figure class="block-4-image">
+		                  	<a th:href="@{/itemdetail?item_no=443}">
+		                    	<img th:src="@{img/KIDS/아우터/경량패딩/KIDS울트라라이트다운베스트/11PINK.jpg}" alt="Image placeholder" class="img-fluid">
+		                    </a>
+		                  </figure>
+		                  <div class="block-4-text p-4" style="padding:1rem!important">
+		                    <h3><a th:href="@{/itemdetail?item_no=443}">KIDS울트라라이트다운베스트</a></h3>
+		                    <p class="text-primary font-weight-bold">19,900</p>
+		                  </div>
                         </div>
                     </div>
                     <div class="item">
                         <div class="block-4 text-center">
-                            <figure class="block-4-image">
-                                <img src="images/shoe_1.jpg" alt="Image placeholder" class="img-fluid">
-                            </figure>
-                            <div class="block-4-text p-4">
-                                <h3><a href="#">Corater</a></h3>
-                                <p class="mb-0">Finding perfect products</p>
-                                <p class="text-primary font-weight-bold">$50</p>
-                            </div>
+		                  <figure class="block-4-image">
+		                  	<a th:href="@{/itemdetail?item_no=17}">
+		                    	<img th:src="@{img/WOMEN/아우터/후리스/후리스풀집재킷(긴팔)/72PURPLE.jpg}" alt="Image placeholder" class="img-fluid">
+		                    </a>
+		                  </figure>
+		                  <div class="block-4-text p-4" style="padding:1rem!important">
+		                    <h3><a th:href="@{/itemdetail?item_no=17}">후리스풀집재킷(긴팔)</a></h3>
+		                    <p class="text-primary font-weight-bold">9,900</p>
+		                  </div>
                         </div>
                     </div>
                 </div>
@@ -802,4 +941,30 @@
         </div>
     </div>
 </div>
+
+
+<script>
+$(document).on(
+		"click",
+		".section-slk .container .tabs-wrapper .tabs .tab",
+		function () {
+			if ($(this).data("target") < $(".is-active").data("target")) {
+				$(".section-slk .container .tabs-wrapper .tabs .tab").addClass("before-slide");
+		      	$(".section-slk .container .tabs-wrapper .tabs .tab").removeClass("after-slide");
+		    } else {
+		      $(".section-slk .container .tabs-wrapper .tabs .tab").removeClass("before-slide");
+		      $(".section-slk .container .tabs-wrapper .tabs .tab").addClass("after-slide");
+		    }
+
+		    $(".section-slk .container .tabs-wrapper .tabs .tab").removeClass("is-active");
+		    $(this).addClass("is-active");
+
+		    $(".section-slk .active-content .text").removeClass("active-text");
+		    let active_text = $(this).data("target");
+		    $(
+		      `.section-slk .active-content div:nth-child(${parseInt(active_text)})`
+		    ).addClass("active-text");
+		  }
+		);
+</script>
 
