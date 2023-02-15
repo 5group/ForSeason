@@ -119,4 +119,9 @@ public class MainController{
         return "main";
     }
 
+    @RequestMapping("/weather")
+    public String weather(String weather, Model model){
+        model.addAttribute("weater", weather);
+        return "weather";
+    }
 }

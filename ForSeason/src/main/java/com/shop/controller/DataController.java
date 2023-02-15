@@ -1,21 +1,23 @@
 package com.shop.controller;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shop.service.*;
+import org.json.simple.ItemList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.shop.dto.Cart;
 import com.shop.dto.Coupon;
@@ -69,7 +71,10 @@ public class DataController {
     @Autowired
     QnaService qnaService;
 
-    
+    @Autowired
+    MailService mailService;
+
+
     
     @RequestMapping(value = "/couponList", method = RequestMethod.GET)
     public List<Coupon> coupon_list() {
@@ -183,27 +188,57 @@ public class DataController {
 
     @RequestMapping(value = "/QnaInsert", method = RequestMethod.POST)
     public Object QnaInsert(String qna_title, String qna_content) throws Exception {
-    	System.out.println(qna_title);
-    	System.out.println(qna_content);
-    	int result = 0;
+        System.out.println(qna_title);
+        System.out.println(qna_content);
+        int result = 0;
         User user = (User) session.getAttribute("loginUser");
-        Qna qna = new Qna(user.getUser_no(),qna_title, qna_content);
+        Qna qna = new Qna(user.getUser_no(), qna_title, qna_content);
         System.out.println(qna);
 
         qnaService.register(qna);
         return result;
     }
-    
+
     @RequestMapping(value = "/updateReview", method = RequestMethod.POST)
     public void updateReview(Review review) throws Exception {
         review.setRev_no(review.getRev_no());
-    	review.setRev_title(review.getRev_title());
+        review.setRev_title(review.getRev_title());
         review.setRev_content(review.getRev_content());
         review.setRev_score(review.getRev_score());
         review.setRev_rdate(new Date());
         reviewService.modify(review);
     }
-    
+
+
+    @RequestMapping("/find_id")
+    public String findId(User user) throws Exception {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("user_phone", user.getUser_phone());
+        map.put("user_name", user.getUser_name());
+        map.put("user_email", user.getUser_email());
+        if (null != userService.findUserId(map)) {
+            user.setUser_id(userService.findUserId(map));
+            mailService.getEmailByFindId(user);
+            return "해당이메일로 안전하게 보내드렸습니다.";
+        }
+        return "not found";
+    }
+
+    @RequestMapping("/find_pwd")
+    public String findPwd(User user) throws Exception {
+        String id = user.getUser_id();
+        String phone = user.getUser_phone();
+        String email = user.getUser_email();
+        User findUser = userService.get_id(id);
+        if (findUser != null && findUser.getUser_phone().equals(phone) && findUser.getUser_email().equals(email)) {
+            User resultUser = mailService.userAndEmailByPwdReset(findUser, email);
+            user.setUser_pwd(resultUser.getUser_pwd());
+            userService.set_pwd(user);
+            return "해당이메일로 안전하게 보내드렸습니다.";
+        }
+        return "not found";
+    }
+
     @RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
     public void infoUpdate(User info_user) throws Exception {
         User u = (User) session.getAttribute("loginUser");
@@ -215,10 +250,6 @@ public class DataController {
         userService.modify(u);
         session.setAttribute("loginUser", u);
     }
-    
-    
-    
-    
 
 	@RequestMapping("/getmarker2")
 	public Object getmarker2(String loc) {
@@ -237,4 +268,106 @@ public class DataController {
 
 		return ja;
 	}
+
+    @RequestMapping("/randomItemList")
+    public Object randomItemList() throws Exception {
+        Random random = new Random();
+        List<Item> result = new ArrayList<>();
+        int weatherIndex = Integer.parseInt((String) session.getAttribute("weather"));
+        for (int i = 0; i <= 2; i++) {
+            if (10 > weatherIndex) {
+                int cateNo = 10 + i * 30;
+                List<Item> itemList = itemService.midCateByItemList(cateNo);
+                result.add(itemList.get(random.nextInt(itemService.midCateByItemList(cateNo).size())));
+                System.out.println(result);
+            } else {
+                result.add(itemService.get().get(random.nextInt(itemService.get().size())));
+            }
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/api/weather")
+    public String restApiGetWeather() throws Exception {
+        Date date = new Date();
+        SimpleDateFormat f1 = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat f2 = new SimpleDateFormat("HH");
+        String yyyyMMdd = f1.format(date);
+        String hh = String.valueOf(Integer.parseInt(f2.format(date)) - 4)+"00";
+        System.out.println(hh);
+        String url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
+                + "?serviceKey=jjjiDNS%2BzqFXxPo8JNr%2F%2Bk%2BCXU0wMKxiH%2BDHqy3wkSzoqaRuIfRCcsiYMFo%2BEQaenBccGaZPv65Lz6TyDx89DA%3D%3D"
+                + "&dataType=JSON"            // JSON, XML
+                + "&numOfRows=10"             // 페이지 ROWS
+                + "&pageNo=1"                 // 페이지 번호
+                + "&base_date=" + yyyyMMdd    // 발표일자
+                + "&base_time=0800"        // 발표시각
+                + "&nx=60"                    // 예보지점 X 좌표
+                + "&ny=127";                  // 예보지점 Y 좌표
+
+        HashMap<String, Object> resultMap = getDataFromJson(url, "UTF-8", "get", "");
+        Map<String, Object> response = (Map<String, Object>) resultMap.get("response");
+        Map<String, Object> body = (Map<String, Object>) response.get("body");
+        Map<String, Object> items = (Map<String, Object>) body.get("items");
+        List<Map<String, Object>> itemList = (List<Map<String, Object>>) items.get("item");
+        String firstFcstValue = (String) itemList.get(0).get("fcstValue");
+        session.setAttribute("weather", firstFcstValue);
+        return firstFcstValue;
+    }
+
+
+    public HashMap<String, Object> getDataFromJson(String url, String encoding, String type, String jsonStr) throws Exception {
+        boolean isPost = false;
+        if ("post".equals(type)) {
+            isPost = true;
+        } else {
+            url = "".equals(jsonStr) ? url : url + "?request=" + jsonStr;
+        }
+        return getStringFromURL(url, encoding, isPost, jsonStr, "application/json");
+    }
+
+    public HashMap<String, Object> getStringFromURL(String url, String encoding, boolean isPost, String parameter, String contentType) throws Exception {
+        URL apiURL = new URL(url);
+        HttpURLConnection conn = null;
+        BufferedReader br = null;
+        BufferedWriter bw = null;
+        HashMap<String, Object> resultMap = new HashMap<String, Object>();
+
+        try {
+            conn = (HttpURLConnection) apiURL.openConnection();
+            conn.setConnectTimeout(5000);
+            conn.setReadTimeout(5000);
+            conn.setDoOutput(true);
+            if (isPost) {
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", contentType);
+                conn.setRequestProperty("Accept", "*/*");
+            } else {
+                conn.setRequestMethod("GET");
+            }
+            conn.connect();
+            if (isPost) {
+                bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream(), "UTF-8"));
+                bw.write(parameter);
+                bw.flush();
+                bw = null;
+            }
+            br = new BufferedReader(new InputStreamReader(conn.getInputStream(), encoding));
+            String line = null;
+            StringBuffer result = new StringBuffer();
+            while ((line = br.readLine()) != null) result.append(line);
+            ObjectMapper mapper = new ObjectMapper();
+            resultMap = mapper.readValue(result.toString(), HashMap.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception(url + " interface failed" + e.toString());
+        } finally {
+            if (conn != null) conn.disconnect();
+            if (br != null) br.close();
+            if (bw != null) bw.close();
+        }
+
+        return resultMap;
+    }
 }
+

@@ -60,4 +60,8 @@ public class ItemService implements MyService<Integer, Item> {
         return mapper.selectBestItemList();
     }
 
+    public List<Item> midCateByItemList(int cate_no) throws Exception {
+        return mapper.selectMiddleCateNoByItem(cate_no);
+    }
+
 }

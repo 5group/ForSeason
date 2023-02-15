@@ -26,8 +26,7 @@
     <delete id="delete" parameterType="Integer">
         DELETE FROM item WHERE item_no=#{item_no}
     </delete>
-    
-    
+
     <select id="totalRecord" parameterType="map" resultType="Integer">
     	SELECT count(*) FROM item i
     	<if test="middle!=null or top!=null"> INNER JOIN category c </if>
@@ -97,15 +96,19 @@
 		inner join category c3
 		where i.cate_no=c1.cate_no AND item_no=#{item_no} AND c1.cate_no2=c2.cate_no AND c2.cate_no2=c3.cate_no
     </select>
+
+	<select id="selectMiddleCateNoByItem" parameterType="Integer" resultType="Item">
+		select * from item i INNER JOIN category c  where i.cate_no=c.cate_no AND c.cate_no2= #{cate_no};
+	</select>
     
     <update id="updateItemhit" parameterType="Integer">
         UPDATE item SET item_hit=item_hit+1 WHERE item_no=#{item_no};
     </update>
-    
-    <select id="selectBestItemList" resultType="Item">
-    	SELECT i.item_no, i.item_name, i.item_price, count(i.item_no) AS 'item_order_total' FROM `order_detail` od
-		INNER JOIN stock s
-		INNER JOIN item i
+
+	<select id="selectBestItemList" resultType="Item">
+		SELECT i.item_no, i.item_name, i.item_price, count(i.item_no) AS 'item_order_total' FROM `order_detail` od
+																									 INNER JOIN stock s
+																									 INNER JOIN item i
 		WHERE od.stock_no=s.stock_no AND s.item_no=i.item_no GROUP BY i.item_no ORDER BY item_order_total DESC LIMIT 9;
-    </select>
+	</select>
 </mapper>

@@ -1,97 +1,172 @@
 <style>
-	.site-top-icons > ul > li:first-child{
-		margin-right:13px;
-		font-size:19.4px;
+    .site-top-icons > ul > li:first-child {
+        margin-right: 13px;
+        font-size: 19.4px;
         /* font-family: 'Silkscreen', cursive; */
-	}
+    }
 </style>
 <script>
-	function itemSearch(){
-		var searchWord = $('#searchWord').val();
-		searchWord=searchWord.trim();  //공백제거
-		$('#searchWord').val(searchWord);
-		if(searchWord.length==0){
-			alert("검색어를 입력하세요.");
-			return false;
-		}
-		return true;
-	}
+    function itemSearch() {
+        var searchWord = $('#searchWord').val();
+        searchWord = searchWord.trim();  //공백제거
+        $('#searchWord').val(searchWord);
+        if (searchWord.length == 0) {
+            alert("검색어를 입력하세요.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<script>
+    function showWeather() {
+        jQuery.ajax({
+            url: '[[@{/api/weather}]]',
+            type: "get",
+            timeout: 30000,
+            success: function (data) {
+                var temperature = data;
+                var icon = "/images/free-icon-cloudy-8420352.png";
+                var html = '<div style="padding: 10px; background-color: #f5f5f5; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);"><img src="' + icon + '" alt="Weather Icon" style="width: 50px; height: auto; margin-right: 10px;" /><span style="font-size: 1.2rem; font-weight: bold;">' + "현재 온도:" + temperature + '℃</span></div>';
+                var itemListHtml = html + '<ul style="list-style: none; margin: 0; padding: 0;">' + "현재 날씨에 대한 추천 상품입니다. 해당 링크를 클릭하시면 해당상품으로 이동합니다.";
+                jQuery.ajax({
+                    type: "get",
+                    url: '[[@{/randomItemList}]]',
+                    success: function (Data) {
+                        Data.forEach(function (item) {
+                            itemListHtml += '<li style="margin-bottom: 10px; padding: 10px; background-color: #f5f5f5; border-radius: 5px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); transition: all 0.2s ease-in-out;"><a href="/itemdetail?item_no=' + item.item_no + '" style="color: #0070c0; text-decoration: none; font-weight: bold;">' + item.item_name + '</li>';
+                        });
+                        itemListHtml += '</ul>';
+
+                        window.open("", "날씨", "width=600,height=500").document.write(itemListHtml);
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+<script>
+    function showWeather() {
+        jQuery.ajax({
+            url: '[[@{/api/weather}]]',
+            type: "get",
+            timeout: 30000,
+            success: function (data) {
+                var temperature = data;
+                var icon = "/images/free-icon-cloudy-8420352.png";
+                var html = '<div style="padding: 10px; background-color: #f5f5f5; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);"><img src="' + icon + '" alt="Weather Icon" style="width: 50px; height: auto; margin-right: 10px;" /><span style="font-size: 1.2rem; font-weight: bold;">' + "현재 온도:" + temperature + '℃</span></div>';
+                var itemListHtml = html + '<ul style="list-style: none; margin: 0; padding: 0;">' + "현재 날씨에 대한 추천 상품입니다. 해당 링크를 클릭하시면 해당상품으로 이동합니다.";
+                jQuery.ajax({
+                    type: "get",
+                    url: '[[@{/randomItemList}]]',
+                    success: function (Data) {
+                        Data.forEach(function (item) {
+                            itemListHtml += '<li style="margin-bottom: 10px; padding: 10px; background-color: #f5f5f5; border-radius: 5px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); transition: all 0.2s ease-in-out;"><a href="/itemdetail?item_no=' + item.item_no + '" style="color: #0070c0; text-decoration: none; font-weight: bold;">' + item.item_name + '</li>';
+                        });
+                        itemListHtml += '</ul>';
+
+                        window.open("", "날씨", "width=600,height=500").document.write(itemListHtml);
+                    }
+                });
+            }
+        });
+    }
 </script>
 
 <header class="site-navbar" role="banner">
-      <div class="site-navbar-top">
+    <div class="site-navbar-top">
         <div class="container">
-          <div class="row align-items-center">
+            <div class="row align-items-center">
 
-            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
-              <form th:action="|@{/getItemList?cate_no=}${cate_no}&searchWord=${searchWord}|" class="site-block-top-search" onsubmit="return itemSearch()">
-                <span class="icon icon-search2"></span>
-                <input type="hidden" id="cate_no" name="cate_no" th:value="${cate_no}">
-                <input type="text" id="searchWord" name="searchWord" class="form-control border-0" placeholder="Search"> 
-              </form>
+                <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+                    <form th:action="|@{/getItemList?cate_no=}${cate_no}&searchWord=${searchWord}|"
+                          class="site-block-top-search" onsubmit="return itemSearch()">
+                        <span class="icon icon-search2"></span>
+                        <input type="hidden" id="cate_no" name="cate_no" th:value="${cate_no}">
+                        <input type="text" id="searchWord" name="searchWord" class="form-control border-0"
+                               placeholder="Search">
+                    </form>
+                </div>
+
+                <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+                    <div class="site-logo">
+                        <a th:href="@{/}" class="js-logo-clone">ForSeason</a>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+                    <div class="site-top-icons">
+                        <ul>
+                            <li th:if="${session.loginUser!=null}" th:text="${session.loginUser.user_name}+'님'"></li>
+                            <li th:if="${session.loginUser==null}"><a th:href="@{/login}"><span
+                                    class="icon icon-person"></span></a></li>
+                            <li th:if="${session.loginUser!=null}"><a th:href="@{/logout}"><span
+                                    class="icon icon-sign-out"></span></a></li>
+                            <li th:if="${session.loginUser!=null}"><a th:href="@{/myPage}"><span
+                                    class="icon icon-person"></span></a></li>
+                            <li th:if="${session.loginUser!=null}"><a th:href="@{/myWishList}"><span
+                                    class="icon icon-heart"></span></a></li>
+                            <li>
+                                <a th:if="${session.loginUser!=null}" th:href="@{/cart}" class="site-cart">
+                                    <span class="icon icon-shopping_cart"></span>
+                                    <span class="count" th:if="${#lists.size(session.cartList)==0}">0</span>
+                                    <span class="count" th:if="${#lists.size(session.cartList)!=0}"
+                                          th:text="${#lists.size(session.cartList)}">0</span>
+                                </a>
+                            </li>
+                            <li class="d-inline-block d-md-none ml-md-0"><a href="#"
+                                                                            class="site-menu-toggle js-menu-toggle"><span
+                                    class="icon-menu"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
-
-            <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
-              <div class="site-logo">
-                <a th:href="@{/}" class="js-logo-clone">ForSeason</a>
-              </div>
-            </div>
-
-            <div class="col-6 col-md-4 order-3 order-md-3 text-right">
-              <div class="site-top-icons">	
-                <ul>
-                  <li th:if="${session.loginUser!=null}" th:text="${session.loginUser.user_name}+'님'"></li>
-                  <li th:if="${session.loginUser==null}"><a th:href="@{/login}"><span class="icon icon-person"></span></a></li>
-                  <li th:if="${session.loginUser!=null}"><a th:href="@{/logout}"><span class="icon icon-sign-out"></span></a></li>
-                  <li th:if="${session.loginUser!=null}"><a th:href="@{/myPage}"><span class="icon icon-person"></span></a></li>
-                  <li th:if="${session.loginUser!=null}"><a th:href="@{/myWishList}"><span class="icon icon-heart"></span></a></li>
-                  <li>
-                    <a th:if="${session.loginUser!=null}" th:href="@{/cart}" class="site-cart">
-                      <span class="icon icon-shopping_cart"></span>
-                      <span class="count" th:if="${#lists.size(session.cartList)==0}">0</span>
-                      <span class="count" th:if="${#lists.size(session.cartList)!=0}" th:text="${#lists.size(session.cartList)}">0</span>
-                    </a>
-                  </li> 
-                  <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
-                </ul>
-              </div> 
-            </div>
-
-          </div>
         </div>
-      </div> 
-      <nav class="site-navigation text-right text-md-center" role="navigation">
+    </div>
+    <nav class="site-navigation text-right text-md-center" role="navigation">
         <div class="container">
-          <ul class="site-menu js-clone-nav d-none d-md-block" style="padding-left:0px;">
-          	<li><a th:href="@{/itemListBest}">BEST</a></li>
-          	<!-- 아이템 카테고리 -->
-          	<li class="has-children active" th:each="top:${mapCateList.get('top')}">
-          		<a th:href="|@{/getItemList?cate_no=}${top.cate_no}|" th:text="${top.cate_name}"></a>
-          		<ul class="dropdown">
-          			<li class="has-children" th:each="middle:${mapCateList.get('middle')}" th:if="${middle.cate_no2==top.cate_no}">
-	                  <a th:href="|@{/getItemList?cate_no=}${middle.cate_no}|" th:text="${middle.cate_name}"></a>
-	                  <ul class="dropdown">
-	                    <li th:each="sub:${mapCateList.get('sub')}" th:if="${sub.cate_no2==middle.cate_no}">
-	                    	<a a th:href="|@{/getItemList?cate_no=}${sub.cate_no}" th:text="${sub.cate_name}"></a>
-	                    </li>
-	                  </ul>
-	                </li>
-          		</ul>
-          	</li>
-            <!-- 아이템 카테고리 end -->
-            
-            
-            <li class="has-children">
-              <a href="#none">About</a>
+            <ul class="site-menu js-clone-nav d-none d-md-block" style="padding-left:0px;">
+                <li id="weather" onclick="showWeather()">날씨</li>
+
+                <div id="weatherModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <p id="weatherData"></p>
+                    </div>
+                </div>
+                <li><a th:href="@{/itemListBest}">BEST</a></li>
+                <!-- 아이템 카테고리 -->
+                <li class="has-children active" th:each="top:${mapCateList.get('top')}">
+                    <a th:href="|@{/getItemList?cate_no=}${top.cate_no}|" th:text="${top.cate_name}"></a>
+                    <ul class="dropdown">
+                        <li class="has-children" th:each="middle:${mapCateList.get('middle')}"
+                            th:if="${middle.cate_no2==top.cate_no}">
+                            <a th:href="|@{/getItemList?cate_no=}${middle.cate_no}|" th:text="${middle.cate_name}"></a>
+                            <ul class="dropdown">
+                                <li th:each="sub:${mapCateList.get('sub')}" th:if="${sub.cate_no2==middle.cate_no}">
+                                    <a a th:href="|@{/getItemList?cate_no=}${sub.cate_no}"
+                                       th:text="${sub.cate_name}"></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <!-- 아이템 카테고리 end -->
+
+
+                <li class="has-children">
+                    <a href="#none">About</a>
               <ul class="dropdown">
               	<li><a th:href="@{/locationMap}">찾아오는 길</a></li>
-                <li><a th:href="@{/contact}">문의</a></li>
-                <!-- <li><a href="#">Menu Three</a></li> -->
-              </ul>
-            </li>
-            <!-- <li><a th:href="@{/}">HOME</a></li> -->
-          </ul>
+                        <li><a th:href="@{/contact}">문의</a></li>
+                        <!-- <li><a href="#">Menu Three</a></li> -->
+                    </ul>
+                </li>
+                <!-- <li><a th:href="@{/}">HOME</a></li> -->
+            </ul>
         </div>
-      </nav>
-    </header>
+    </nav>
+</header>
     

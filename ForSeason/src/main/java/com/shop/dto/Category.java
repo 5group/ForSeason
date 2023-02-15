@@ -14,7 +14,6 @@ public class Category {
     
     private String top_cate_name;
     private String mid_cate_name;
-    
 
 	public Category(String top_cate_name, String mid_cate_name, String cate_name) {
 		this.top_cate_name = top_cate_name;
