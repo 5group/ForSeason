@@ -3,12 +3,18 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <style>
+
+#pageNumbers a {
+	margin-right: 5px;
+	font-size: 2em;
+}
+
+#pageNumbers a {
+	margin-right: 5px;
+}
+
 	.table-responsive{
 		color:black;
-	}
-	.table-responsive a{
-		color: blue;
-		text-decoration: underline;
 	}
 
     .highcharts-figure,
@@ -37,7 +43,11 @@
     /*table*/
     
     .table{
-	color: black;
+		color: black;
+	}
+	.table a{
+		color:purple;
+		text-decoration:underline;
 	}
 	table {
 	  width: 100%;
@@ -102,15 +112,11 @@
 					        </table>
 					    </div>
             	</div>
-
-
-                <div class="row" style="width:100%">
-                    <div class="col-12">
-                            <div style="border-bottom: 1px solid #cccccc; margin: 20px 0px; padding-bottom:5px;">
-                                <span style="color:black; font-size:1.5rem;">재고 현황</span>
-                                
-                                <div class="page-titles mx-0" style="width: 116px; float: right; margin-right: 20px; border:2px solid #D5D5D5; height: 39px; padding: 7px 10px 7px 20px;">
-		                        <button type="button" class="btn" data-toggle="modal" data-target="#basicModal" style="color:black; padding:0px; border:none; font-size:18px; height:20px; line-height: 22px;">상품추가</button>
+            	
+            	<div style="border-bottom: 1px solid #cccccc; margin: 10px 0px 10px;">
+                     <h3>상품추가</h3>
+                </div>
+            	<button type="button" class="btn" data-toggle="modal" data-target="#basicModal" style="color:white; background-color: #593bdb; border:none; font-size:18px; height:50px; line-height: 22px;">상품추가</button>
                                     <!-- Modal -->
                                     <div class="modal fade" id="basicModal">
                                         <div class="modal-dialog" role="document">
@@ -138,8 +144,16 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>                        
-                				</div>
+                                    </div> 
+
+
+                <div class="row" style="width:100%">
+                    <div class="col-12">
+                            <div style="border-bottom: 1px solid #cccccc; margin: 30px 0px 20px; padding-bottom:5px;">
+                                <span style="color:black; font-size:1.5rem;">재고 현황</span>
+                                
+		                         
+                                    
                                 <div style="padding-left:10px; float: right; color:black; padding-top:7px;">
 				                    <form>
 						                할인율&nbsp;&nbsp;<input type="text" name="item_discnt">
@@ -153,33 +167,33 @@
                                 <table class="table table-striped table-sm">
                                     <thead class="thead">
                                         <tr>
-							                <td style="width:45px;">
+							                <td style="width:4%;">
 							                    <label>
 							                        <input type="checkbox" name="selectAll" value="selectAll" onclick='selectAll(this)'/>
 							                        <span class="checkmark"></span>
 							                    </label>
 							                </td>
 							                <td>상품이름</td>
-							                <td style="width:98px;">가격</td>
-							                <td style="width:59px;">할인율</td>
-							                <td style="width:294px;">사이즈/색상별 재고</td>
-							                <td style="width:59px;">조회수</td>
-							                <td style="width:162px;">만든날짜</td>
-							                <td style="width:60px;">수정</td>
+							                <td style="width:9%;">가격</td>
+							                <td style="width:6%;">할인율</td>
+							                <td style="width:27%;">사이즈/색상별 재고</td>
+							                <td style="width:5%;">조회수</td>
+							                <td style="width:13%;">만든날짜</td>
+							                <td style="width:4%;">수정</td>
 							            </tr>
                                     </thead>
                                     <tbody id="hzTable">
                                         <tr th:each="item, stat:${itemList}">
-							                <td style="width:50px;">
+							                <td style="width:4%;">
 							                    <label>
 							                        <input type="checkbox" name="checkbox" th:value="${item.getItem_no}" onclick='checkselectAll()'>
 							                        <span class="checkmark"></span>
 							                    </label>
 							                </td>
-							                <td th:text="${item.getItem_name}" style="width: 450px;"></td>
-							                <td th:text="${item.getItem_price}" style="width:120px;"></td>
-							                <td th:text="${item.getItem_discnt}" style="width:70px;"></td>
-							                <td style="width:300px;">
+							                <td th:text="${item.getItem_name}"></td>
+							                <td th:text="${item.getItem_price}" style="width:9%;"></td>
+							                <td th:text="${item.getItem_discnt}" style="width:6%;"></td>
+							                <td style="width:27%;">
 							                	<select class="stockSelect" name="stockSelect" onchange="showPopUp()">
 							                		<option value="none">===========재고리스트===========</option>
 							                		<option th:each="stock:${stockList}" th:if="${stock.getItem_name == item.getItem_name}" th:value="${stock.getStock_no}" th:text="|컬러:${stock.getColor_name} 사이즈:${stock.getSize_name} 재고:${stock.getAmount}|" class="stock_amount">
@@ -190,18 +204,107 @@
 							                        <a  th:href="|javascript:window.open('/stock_no=${stock.getStock_no}', '', 'width=400, height=400, left=600')|" th:text="|컬러:${stock.getColor_name} 사이즈:${stock.getSize_name} 재고:${stock.getAmount}|" class="stock_amount"></a></br>
 							                    </span> -->
 							                </td>
-							                <td th:text="${item.getItem_hit}" style="width:70px;"></td>
-							                <td th:text="${#dates.format(item.getItem_udate, 'yyyy-MM-dd HH:mm:ss')}" style="width: 200px;"></td>
-							                <td style="width:70px;"><a th:href="|/itemList/itemNo=${item.getItem_no}|">수정</a></td>
+							                <td th:text="${item.getItem_hit}" style="width:5%;"></td>
+							                <td th:text="${#dates.format(item.getItem_udate, 'yyyy-MM-dd HH:mm:ss')}" style="width:13%;"></td>
+							                <td style="width:4%;"><a th:href="|/itemList/itemNo=${item.getItem_no}|">수정</a></td>
 							            </tr>
                                     </tbody>
-                                </table>                 
+                                </table>  
+                                
+								<div id="paginationContainer" style="margin-bottom: 20px;">
+									<div id="prevBtn"></div>
+									<span id="pageNumbers"></span>
+									<div id="nextBtn"></div>
+								</div>
+                                
+                                               
                         	</div>
                         </div> 
                     </div>
             </div>
 
 <script>
+
+$(document).ready(
+	    function() {
+	        // 상수 값 설정
+	        var itemsPerPage = 9;  // 한 페이지당 표시되는 아이템 수
+	        var pagesPerSet = 5;   // 한 번에 표시되는 페이지 수
+
+	        // 선택자 지정
+	        var $rows = $('#hzTable tr');  // 테이블의 각 행을 나타내는 선택자
+	        var $prevBtn = $('#prevBtn');  // '이전' 버튼 선택자
+	        var $nextBtn = $('#nextBtn');  // '다음' 버튼 선택자
+	        var $pageNumbers = $('#pageNumbers');  // 페이지 번호 링크를 담는 선택자
+
+	        // 변수 초기화
+	        var currentPage = 1;  // 현재 페이지 번호
+	        var totalPages = Math.ceil($rows.length / itemsPerPage);  // 전체 페이지 수
+
+	        // 페이지 번호 링크 업데이트 함수
+	        function updatePageNumbers() {
+	            $pageNumbers.empty();  // 페이지 번호 링크를 초기화
+	            var numSets = Math.ceil(totalPages / pagesPerSet);  // 페이지 번호 세트 수 계산
+	            var currentSet = Math.ceil(currentPage / pagesPerSet);  // 현재 페이지 번호가 속한 페이지 번호 세트 번호 계산
+
+	            // '이전' 버튼 생성
+	            if (currentSet > 1) {
+	                var prevPage = (currentSet - 2) * pagesPerSet + 1;
+	                var prevBtn = $('<a href="#">이전</a>').click(
+	                    function() {
+	                        goToPage(prevPage);  // 이전 페이지로 이동
+	                        return false;
+	                    });
+	                $pageNumbers.append(prevBtn);  // '이전' 버튼 추가
+	            }
+
+	            // 페이지 번호 링크 생성
+	            var startPage = (currentSet - 1) * pagesPerSet + 1;
+	            var endPage = Math.min(startPage + pagesPerSet - 1, totalPages);
+	            for (var i = startPage; i <= endPage; i++) {
+	                var pageLink = $('<a href="#">' + i + '</a>').click(
+	                    (function(i) {
+	                        return function() {
+	                            goToPage(i);  // 해당 페이지로 이동
+	                            return false;
+	                        }
+	                    })(i));
+	                if (i === currentPage) {
+	                    pageLink.addClass('active');  // 현재 페이지 번호에 해당하는 페이지 번호 링크에 'active' 클래스 추가
+	                }
+	                $pageNumbers.append(pageLink);  // 페이지 번호 링크 추가
+	            }
+
+	            // '다음' 버튼 생성
+	            if (currentSet < numSets) {
+	                var nextPage = currentSet * pagesPerSet + 1;
+	                var nextBtn = $('<a href="#">다음</a>').click(
+	                    function() {
+	                        goToPage(nextPage);  // 다음 페이지로 이동
+	                        return false;
+	                    });
+	                $pageNumbers.append(nextBtn);  // '다음' 버튼 추가
+	            }
+	        }
+
+	        // 표시할 아이템 업데이트 함수
+	        function updateItems() {
+	            $rows.hide();  // 모든 행을 숨김
+	            $rows.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).show();  // 현재 페이지에 해당하는 행만 표시
+	       
+	    }
+
+	    // 페이지 이동 함수
+	    function goToPage(page) {
+	        currentPage = page;  // 현재 페이지 번호 업데이트
+	        updatePageNumbers();  // 페이지 번호 업데이트
+	        updateItems();  // 표시할 아이템 업데이트
+	    }
+
+	    // 초기화
+	    updatePageNumbers();  // 페이지 번호 초기화
+	    updateItems();  // 표시할 아이템 초기화
+	});
 
     function selectAll(selectAll) {
         const checkboxes

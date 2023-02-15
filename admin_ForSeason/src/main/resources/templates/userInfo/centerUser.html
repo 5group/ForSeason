@@ -1,4 +1,4 @@
-
+<!-- 
             <div class="container-fluid">
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
@@ -20,5 +20,387 @@
                     </div>
                 </div>
             </div>
+            
+   -->          
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<style>
+#pageNumbers a {
+	margin-right: 5px;
+	font-size: 2em;
+}
+
+#pageNumbers a {
+	margin-right: 5px;
+}
+
+.table {
+	color: black;
+}
+
+table {
+	width: 100%;
+}
+
+table, td {
+	border-collapse: collapse;
+	border: 1px solid #cccccc;
+}
+
+thead {
+	display: table; /* to take the same width as tr */
+	width: calc(100% - 17px); /* - 17px because of the scrollbar width */
+	font-weight: bold;
+}
+
+.thead tr {
+	height: 20px;
+}
+
+.thead td{
+	vertical-align: middle;
+}
+
+.container{
+    margin-top: 0.5rem !important;
+}
+
+tbody {
+	display: block; /* to enable vertical scrolling */
+	max-height: 500px; /* e.g. */
+	overflow-y: scroll;
+	/* keeps the scrollbar even if it doesn't need it; display purpose */
+}
+
+th, td {
+	padding: 5px;
+	word-break: break-all; /* 4. */
+}
+
+tr {
+	display: table; /* display purpose; th's border */
+	width: 100%;
+	box-sizing: border-box;
+	/* because of the border (Chrome needs this line, but not FF) */
+}
+
+td {
+	text-align: center;
+	border-left: none;
+}
+</style>
+<div class="container-fluid">
+	<div class="row page-titles mx-0">
+		<div class="col-sm-6 p-md-0">
+			<div class="welcome-text">
+				<h4>쿠폰발급/메일전송</h4>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin:0px 0px 15px 0px;">
+		<button type="button" class="btn" data-toggle="modal" data-target="#basicModal" style="color:white; background-color: #593bdb; border:none; font-size:18px; height:50px; line-height: 22px; margin-right:10px;">쿠폰발급</button>
+                                   <!-- Modal -->
+                                   <div class="modal fade" id="basicModal">
+                                       <div class="modal-dialog" role="document">
+                                           <div class="modal-content">
+                                               <div class="modal-header">
+                                                   <h5 class="modal-title">쿠폰발급</h5>
+                                                   <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                                   </button>
+                                               </div>
+                                               <div class="modal-body" style="color: black;">
+                                                <form>
+											        쿠폰 이름<br><input type="text" name="cou_name"><br>
+											        쿠폰 할인가격<br><input type="text" name="cou_price"><br><br>
+											        <button onclick="getCheckboxCoupon()">쿠폰 발급</button>
+											    </form>
+                                               </div>
+                                               <div class="modal-footer">
+                                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div> 
+                                    
+                                    
+         <button type="button" class="btn" data-toggle="modal" data-target="#basicModal2" style="color:white; background-color: #593bdb; border:none; font-size:18px; height:50px; line-height: 22px;">이메일전송</button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="basicModal2">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">이메일전송</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body"  style="color: black;">
+	                                                <form>
+												        제목<br>
+												        <input type="text" name="subject_text"><br>
+												        내용
+												        <textarea class="form-control" rows="9" name="content_text" id="content_text" style="border-color:black;"></textarea><br>
+												        <button onclick="getCheckboxEmail()">이메일전송</button>
+												    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                               
+	    
+	</div>
+	
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<input class="form-control" id="hzInput" type="text" placeholder="Search..">
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-striped table-sm">
+							<thead class="thead">
+								<tr>
+									<td style="width:5%;">
+					                    <label class="container">
+					                        <input type="checkbox" name="selectAll" value="selectAll" onclick='selectAll(this)'/>
+					                        <span class="checkmark"></span>
+					                    </label>
+					                </td>
+									<td style="width:8%;">이름</td>
+									<td style="width:17%;">이메일</td>
+									<td style="width:13%;">전화번호</td>
+									<td style="width:21%;">주소</td>
+									<td style="width:7%;">성별</td>
+									<td>만든날짜</td>
+									<td>수정날짜</td>
+								</tr>
+							</thead>
+							<tbody id="hzTable">
+								<tr th:each="user:${userList}">
+					                <td style="width:5%;">
+					                    <label class="container">
+					                        <input type="checkbox" name="checkbox" th:value="${user.getUser_no}" onclick='checkselectAll()'>
+					                        <span class="checkmark"></span>
+					                    </label>
+					                </td>
+					                <td th:text="${user.getUser_name}" style="width:8%;"></td>
+					                <td class="email" th:text="${user.getUser_email}" style="width:17%;"></td>
+					                <td th:text="${user.getUser_phone}" style="width:13%;"></td>
+					                <td th:text="${user.getUser_address}" style="width:21%;"></td>
+					                <td th:text="${user.getUser_gender}" style="width:7%;"></td>
+					                <td th:text="${#dates.format(user.getUser_udate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					                <td th:text="${#dates.format(user.getUser_rdate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					            </tr>
+							</tbody>
+						</table>
+
+						<div id="paginationContainer">
+							<div id="prevBtn"></div>
+							<span id="pageNumbers"></span>
+							<div id="nextBtn"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</div>
+</div>
+
+<script>
+$(document).ready(
+	    function() {
+	        // 상수 값 설정
+	        var itemsPerPage = 9;  // 한 페이지당 표시되는 아이템 수
+	        var pagesPerSet = 5;   // 한 번에 표시되는 페이지 수
+
+	        // 선택자 지정
+	        var $rows = $('#hzTable tr');  // 테이블의 각 행을 나타내는 선택자
+	        var $prevBtn = $('#prevBtn');  // '이전' 버튼 선택자
+	        var $nextBtn = $('#nextBtn');  // '다음' 버튼 선택자
+	        var $pageNumbers = $('#pageNumbers');  // 페이지 번호 링크를 담는 선택자
+
+	        // 변수 초기화
+	        var currentPage = 1;  // 현재 페이지 번호
+	        var totalPages = Math.ceil($rows.length / itemsPerPage);  // 전체 페이지 수
+
+	        // 페이지 번호 링크 업데이트 함수
+	        function updatePageNumbers() {
+	            $pageNumbers.empty();  // 페이지 번호 링크를 초기화
+	            var numSets = Math.ceil(totalPages / pagesPerSet);  // 페이지 번호 세트 수 계산
+	            var currentSet = Math.ceil(currentPage / pagesPerSet);  // 현재 페이지 번호가 속한 페이지 번호 세트 번호 계산
+
+	            // '이전' 버튼 생성
+	            if (currentSet > 1) {
+	                var prevPage = (currentSet - 2) * pagesPerSet + 1;
+	                var prevBtn = $('<a href="#">이전</a>').click(
+	                    function() {
+	                        goToPage(prevPage);  // 이전 페이지로 이동
+	                        return false;
+	                    });
+	                $pageNumbers.append(prevBtn);  // '이전' 버튼 추가
+	            }
+
+	            // 페이지 번호 링크 생성
+	            var startPage = (currentSet - 1) * pagesPerSet + 1;
+	            var endPage = Math.min(startPage + pagesPerSet - 1, totalPages);
+	            for (var i = startPage; i <= endPage; i++) {
+	                var pageLink = $('<a href="#">' + i + '</a>').click(
+	                    (function(i) {
+	                        return function() {
+	                            goToPage(i);  // 해당 페이지로 이동
+	                            return false;
+	                        }
+	                    })(i));
+	                if (i === currentPage) {
+	                    pageLink.addClass('active');  // 현재 페이지 번호에 해당하는 페이지 번호 링크에 'active' 클래스 추가
+	                }
+	                $pageNumbers.append(pageLink);  // 페이지 번호 링크 추가
+	            }
+
+	            // '다음' 버튼 생성
+	            if (currentSet < numSets) {
+	                var nextPage = currentSet * pagesPerSet + 1;
+	                var nextBtn = $('<a href="#">다음</a>').click(
+	                    function() {
+	                        goToPage(nextPage);  // 다음 페이지로 이동
+	                        return false;
+	                    });
+	                $pageNumbers.append(nextBtn);  // '다음' 버튼 추가
+	            }
+	        }
+
+	        // 표시할 아이템 업데이트 함수
+	        function updateItems() {
+	            $rows.hide();  // 모든 행을 숨김
+	            $rows.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).show();  // 현재 페이지에 해당하는 행만 표시
+	       
+	    }
+
+	    // 페이지 이동 함수
+	    function goToPage(page) {
+	        currentPage = page;  // 현재 페이지 번호 업데이트
+	        updatePageNumbers();  // 페이지 번호 업데이트
+	        updateItems();  // 표시할 아이템 업데이트
+	    }
+
+	    // 초기화
+	    updatePageNumbers();  // 페이지 번호 초기화
+	    updateItems();  // 표시할 아이템 초기화
+	});
+	$(document).ready(
+			function() {
+				$("#hzInput").on(
+						"keyup",
+						function() {
+
+							var value = $(this).val().toLowerCase();
+
+							$("#hzTable tr").filter(
+									function() {
+
+										$(this).toggle(
+												$(this).text().toLowerCase()
+														.indexOf(value) > -1)
+
+									});
+
+						});
+			});
+	
+	 function selectAll(selectAll) {
+	        const checkboxes
+	            = document.getElementsByName("checkbox");
+	        checkboxes.forEach((checkbox) => {
+	            checkbox.checked = selectAll.checked;
+	        })
+	    }
+
+	    function getCheckboxEmail() {
+	        // 선택된 목록 가져오기
+	        const selectedEls =
+	            document.querySelectorAll('input[name="checkbox"]:checked');
+	        // 선택된 목록에서 value 찾기
+	        var result = [];
+	        selectedEls.forEach((el) => {
+	            const emailEl = el.parentElement.parentElement.nextElementSibling.nextElementSibling;
+	            result.push(emailEl.innerText);
+	        });
+	        var c = confirm('메일수신을 진행 하시겠습니까?');
+	        if (c == true) {
+	            $.ajax({
+	                url: '[[@{/userInfo/pushMail}]]',
+	                type: 'post',
+	                data: {
+	                    "subMessage":$('input[name="subject_text"]').val(),
+	                    "textMessage":$('textarea[name="content_text"]').val(),
+	                    mailList:result
+	                },
+	                success: function (data) {
+	                    location.href="/";
+	                },
+	                error: function () {
+	                    alert("error");
+	                }
+	            });
+	        }
+	    }
+
+
+	    function getCheckboxCoupon() {
+	        // 선택된 목록 가져오기
+	        const selectedEls =
+	            document.querySelectorAll('input[name="checkbox"]:checked');
+	        // 선택된 목록에서 value 찾기
+	        var result = [];
+	        selectedEls.forEach((el) => {
+	            result.push(el.value) ;
+	        });
+	        var c = confirm('쿠폰발급을 진행 하시겠습니까?');
+	        if (c == true) {
+	            console.log(result);
+	            $.ajax({
+	                url: '[[@{/userInfo/createCoupon}]]',
+	                type: 'post',
+	                data: {
+	                    "cou_name":$('input[name="cou_name"]').val(),
+	                    "cou_price":$('input[name="cou_price"]').val(),
+	                    noList:result
+	                },
+	                success: function (data) {
+	                    location.href="/";
+	                },
+	                error: function () {
+	                    alert("error");
+	                }
+	            });
+	        }
+	    }
+
+	    function checkselectAll() {
+	        // 전체 체크박스
+	        const checkboxes
+	            = document.querySelectorAll('input[name="checkbox"]');
+	        // 선택된 체크박스
+	        const checked
+	            = document.querySelectorAll('input[name="checkbox"]:checked');
+	        // select all 체크박스
+	        const selectAll
+	            = document.querySelector('input[name="selectAll"]');
+	        if (checkboxes.length === checked.length) {
+	            selectAll.checked = true;
+	        } else {
+	            selectAll.checked = false;
+	        }
+	    }
+</script>
 
 
