@@ -43,28 +43,49 @@ Google Email API 등록 : https://cloud.google.com/appengine/docs/standard/java/
 Iamport API 등록 : https://portone.gitbook.io/docs/<br> 
 
 
-<details open>
+details open>
 <summary>User Detail View</summary>
 
-### Login Page
-![alt text](./userImages/UserMainPage.png) 
 ### Main Page 
-![alt text](AdminMainPage.png) 
-### Chart Click Event
-![alt text](AdminChartDayClick.png) 
-![alt text](AdminChartClickEvent.png) 
-### Category Page
-![alt text](AdminCategoryClickEventPage.png) 
-### Item Add Click 
-![alt text](itemAddPage.png) 
-### UserPush Coupon And Mail Page
-![alt text](UserPushCouponAndMail.png) 
-### Discount Click
-![alt text](checkDiscountPage.png) 
-### QnA Page - Reply Page
-![alt text](qnaPage.png) ![alt text](replyPage.png) 
-### Datail Click
-![alt text](qnaDatailPage.png) 
+- HOME
+![alt text](./userImages/UserMainPage.png)
+![alt text](./userImages/userHomeBody.png)
+
+- Best, Map
+![alt text](./userImages/userBestPage.png)
+![alt text](./userImages/shopMapPage.png)
+### Login Page
+- Login, Sign Up
+![alt text](./userImages/userLoginPage.png) 
+![alt text](./userImages/userKakaoLoginOkPage.png) 
+### UserInfo 
+- Order Page
+![alt text](./userImages/userOrder.png) 
+![alt text](./userImages/userOrderDetail.png) 
+- WishList, Review Page
+![alt text](./userImages/userWishListPage.png) 
+![alt text](./userImages/userReviewPage.png) 
+
+- Coupon, Qna Page
+![alt text](./userImages/userCoupon.png) 
+![alt text](./userImages/userQnAPage.png) 
+- UserInfo Change
+![alt text](./userImages/userCheckPassword.png) 
+![alt text](./userImages/userChangeInfo.png) 
+![alt text](./userImages/userDelete.png) 
+
+### Item Page
+- ItemDetail(Wish ADD)
+![alt text](./userImages/userWishView.png) 
+- ItemSearch
+![alt text](./userImages/userSearchPage.png) 
+
+- order ADD
+![alt text](./userImages/orderAdd.png) 
+
+### QnA Page
+- QnA Page
+![alt text](./userImages/qnaADD.png)
 
 
 
