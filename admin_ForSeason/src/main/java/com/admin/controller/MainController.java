@@ -135,7 +135,7 @@ public class MainController {
 		return "index";
 	}
 
-	@RequestMapping(value = "/updatereply", method = RequestMethod.POST)
+	@RequestMapping(value = "/qna/modify", method = RequestMethod.POST)
 	public String updatereply(Reply reply) throws Exception {
 		System.out.println("컨트롤러 시작");
 
@@ -143,7 +143,7 @@ public class MainController {
 
 		System.out.println(reply);
 		replyservice.modify(reply);
-		return "index";
+		return "redirect:/qna";
 	}
 
 	@RequestMapping(value = "/qna/delete", method = RequestMethod.POST)
