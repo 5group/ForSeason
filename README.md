@@ -115,7 +115,7 @@ Iamport API 등록 : https://portone.gitbook.io/docs/<br>
 ### Discount Click
 ![alt text](adminImages/checkDiscountPage.png) 
 ### QnA Page - Reply Page
-![alt text](adminImages/qnaPage.png) ![alt text](replyPage.png) 
+![alt text](adminImages/qnaPage.png) ![alt text](adminImages/replyPage.png) 
 ### Datail Click
 ![alt text](adminImages/qnaDatailPage.png) 
 
