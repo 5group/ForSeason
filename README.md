@@ -49,7 +49,7 @@ Iamport API 등록 : https://portone.gitbook.io/docs/<br>
 ### Login Page
 ![alt text](UserMainPage.png) 
 ### Main Page 
-![alt text](AdminMainPage.png) 
+![alt text](./adminImages/AdminMainPage.png) 
 ### Chart Click Event
 ![alt text](AdminChartDayClick.png) 
 ![alt text](AdminChartClickEvent.png) 
