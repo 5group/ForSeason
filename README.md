@@ -43,7 +43,7 @@ Google Email API 등록 : https://cloud.google.com/appengine/docs/standard/java/
 Iamport API 등록 : https://portone.gitbook.io/docs/<br> 
 
 
-details open>
+<details open>
 <summary>User Detail View</summary>
 
 ### Main Page 
