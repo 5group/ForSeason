@@ -47,9 +47,9 @@ Iamport API 등록 : https://portone.gitbook.io/docs/<br>
 <summary>User Detail View</summary>
 
 ### Login Page
-![alt text](UserMainPage.png) 
+![alt text](./userImages/UserMainPage.png) 
 ### Main Page 
-![alt text](./adminImages/AdminMainPage.png) 
+![alt text](AdminMainPage.png) 
 ### Chart Click Event
 ![alt text](AdminChartDayClick.png) 
 ![alt text](AdminChartClickEvent.png) 
@@ -74,24 +74,24 @@ Iamport API 등록 : https://portone.gitbook.io/docs/<br>
 <summary>Admin Detail View </summary>
 
 ### Login Page
-![alt text](adminLoginPage.png) 
+![alt text](./adminImages/adminLoginPage.png) 
 ### Main Page 
-![alt text](AdminMainPage.png) 
+![alt text](./adminImages/AdminMainPage.png) 
 ### Chart Click Event
-![alt text](AdminChartDayClick.png) 
-![alt text](AdminChartClickEvent.png) 
+![alt text](./adminImages/AdminChartDayClick.png) 
+![alt text](./adminImages/AdminChartClickEvent.png) 
 ### Category Page
-![alt text](AdminCategoryClickEventPage.png) 
+![alt text](./adminImages/AdminCategoryClickEventPage.png) 
 ### Item Add Click 
-![alt text](itemAddPage.png) 
+![alt text](./adminImages/itemAddPage.png) 
 ### UserPush Coupon And Mail Page
-![alt text](UserPushCouponAndMail.png) 
+![alt text](./adminImages/UserPushCouponAndMail.png) 
 ### Discount Click
-![alt text](checkDiscountPage.png) 
+![alt text](./adminImages/checkDiscountPage.png) 
 ### QnA Page - Reply Page
-![alt text](qnaPage.png) ![alt text](replyPage.png) 
+![alt text](./adminImages/qnaPage.png) ![alt text](replyPage.png) 
 ### Datail Click
-![alt text](qnaDatailPage.png) 
+![alt text](./adminImages/qnaDatailPage.png) 
 
 
 </details>
