@@ -19,10 +19,33 @@
       text-align: center;
       cursor: pointer;
     }
+    
+#chatbot-icon:hover {
+  animation: jump 0.5s linear infinite;
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-25px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+    
+    
   </style>
 </head>
+
+
 <body>
+
 <button id="chatbot-icon" data-open="chatbot-modal"></button>
+
+
 <div class="reveal" id="chatbot-modal" data-reveal>
   <h1>챗봇</h1>
   <div>
@@ -35,6 +58,8 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
+
+
 <script>
   var stompClient = null;
 
@@ -87,6 +112,8 @@
   window.onload = function() {
     connect();
   };
+  
+  
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.6.3/js/foundation.min.js"></script>
