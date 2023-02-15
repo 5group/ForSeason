@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>챗봇 구현 예제</title>
+
   <style>
     #chatbot-icon {
       position: fixed;
@@ -16,7 +13,7 @@
       text-align: center;
       cursor: pointer;
     }
-    
+
 #chatbot-icon:hover {
   animation: jump 0.5s linear infinite;
 }
@@ -35,12 +32,9 @@
     
     
   </style>
-</head>
 
 
-<body>
-
-<button id="chatbot-icon" data-open="chatbot-modal"></button>
+<button id="chatbot-icon" data-open="chatbot-modal"> </button>
 
 
 <div class="reveal" id="chatbot-modal" data-reveal>
@@ -49,7 +43,7 @@
     <p>안녕하세요. 챗봇입니다.</p>
     <ul id="message-area"></ul>
     <input type="text" id="chat-input" placeholder="Type a message...">
-    <button onclick="sendMessage()">전송</button>
+    <button onclick="ajaxTest()">전송</button>
   </div>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
@@ -58,64 +52,39 @@
 
 
 <script>
-  var stompClient = null;
 
-  function connect() {
-    var socket = new SockJS('/ws');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, onConnected, onError);
-  }
-
-  function onConnected() {
-    stompClient.subscribe('/topic/public', onMessageReceived);
-  }
-
-  function onMessageReceived(payload) {
-    var message = payload.body;
+  function ajaxTest (){
+    var inputElement = document.getElementById("chat-input");
+    var messageContent = inputElement.value.trim();
     var messageArea = document.getElementById("message-area");
     var messageElement = document.createElement('li');
     var textElement = document.createElement('p');
-    var messageText = document.createTextNode("말년이:"+message);
+    var messageText = document.createTextNode("나:"+messageContent);
     textElement.appendChild(messageText);
     messageElement.appendChild(textElement);
     messageArea.appendChild(messageElement);
+    $.ajax({
+      url:"[[@{/chatBot}]]",
+      data: {messageContent: messageContent},
+      success : function (data){
+        var messageArea = document.getElementById("message-area");
+        var messageElement = document.createElement('li');
+        var textElement = document.createElement('p');
+        var messageText = document.createTextNode("말년이:"+data);
+        textElement.appendChild(messageText);
+        messageElement.appendChild(textElement);
+        messageArea.appendChild(messageElement);
+      }
+    })
   }
 
-  function onError(error) {
-    console.log(error)
-  }
 
-  function sendMessage() {
-    var inputElement = document.getElementById("chat-input");
-    var messageContent = inputElement.value.trim();
-    if (messageContent && stompClient) {
-      var chatMessage = {
-        sender: "User",
-        content: messageContent,
-        type: "CHAT"
-      };
-      stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(messageContent));
-      inputElement.value = "";
-      var messageArea = document.getElementById("message-area");
-      var messageElement = document.createElement('li');
-      var textElement = document.createElement('p');
-      var messageText = document.createTextNode("나:"+chatMessage.content);
-      textElement.appendChild(messageText);
-      messageElement.appendChild(textElement);
-      messageArea.appendChild(messageElement);
-    }
-  }
 
-  window.onload = function() {
-    connect();
-  };
-  
-  
+
+
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.6.3/js/foundation.min.js"></script>
 <script>
   $(document).foundation();
 </script>
-</body>
-</html>

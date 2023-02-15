@@ -9,6 +9,7 @@ import java.util.*;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shop.frame.ChatBotUtil;
 import com.shop.service.*;
 import org.json.simple.ItemList;
 import org.json.simple.JSONArray;
@@ -286,6 +287,18 @@ public class DataController {
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @RequestMapping("/chatBot")
+    public String chatBot(String messageContent) throws IOException {
+        System.out.println(messageContent);
+        if(null == messageContent) {
+            return "넌잘못됐다";
+        }else {
+            String result = ChatBotUtil.chat(messageContent);
+            return result;
+        }
+    }
+
 
     @GetMapping("/api/weather")
     public String restApiGetWeather() throws Exception {
