@@ -43,49 +43,54 @@ Google Email API 등록 : https://cloud.google.com/appengine/docs/standard/java/
 Iamport API 등록 : https://portone.gitbook.io/docs/<br> 
 
 
+# 👍 WBS
+
+# 🙋🏻 웹 구성요소
+
 <details open>
 <summary>User Detail View</summary>
 
 ### Main Page 
 - HOME
-![alt text](./userImages/UserMainPage.png)
-![alt text](./userImages/userHomeBody.png)
+![alt text](userImages/UserMainPage.png)
+![alt text](userImages/userHomeBody.png)
 
 - Best, Map
-![alt text](./userImages/userBestPage.png)
-![alt text](./userImages/shopMapPage.png)
+![alt text](userImages/userBestPage.png)
+![alt text](userImages/shopMapPage.png)
 ### Login Page
 - Login, Sign Up
-![alt text](./userImages/userLoginPage.png) 
-![alt text](./userImages/userKakaoLoginOkPage.png) 
+![alt text](userImages/userLoginPage.png) 
+![alt text](userImages/userKakaoLoginOkPage.png) 
 ### UserInfo 
 - Order Page
-![alt text](./userImages/userOrder.png) 
-![alt text](./userImages/userOrderDetail.png) 
+![alt text](userImages/userOrder.png) 
+![alt text](userImages/userOrderDetail.png) 
 - WishList, Review Page
-![alt text](./userImages/userWishListPage.png) 
-![alt text](./userImages/userReviewPage.png) 
+![alt text](userImages/userWishListPage.png) 
+![alt text](userImages/userReviewPage.png) 
 
 - Coupon, Qna Page
-![alt text](./userImages/userCoupon.png) 
-![alt text](./userImages/userQnAPage.png) 
+![alt text](userImages/userCoupon.png) 
+![alt text](userImages/userQnAPage.png) 
 - UserInfo Change
-![alt text](./userImages/userCheckPassword.png) 
-![alt text](./userImages/userChangeInfo.png) 
-![alt text](./userImages/userDelete.png) 
+![alt text](userImages/userCheckPassword.png) 
+![alt text](userImages/userChangeInfo.png) 
+![alt text](userImages/userDelete.png) 
 
 ### Item Page
 - ItemDetail(Wish ADD)
-![alt text](./userImages/userWishView.png) 
+![alt text](userImages/userWishView.png) 
 - ItemSearch
-![alt text](./userImages/userSearchPage.png) 
+![alt text](userImages/userSearchPage.png) 
 
 - order ADD
-![alt text](./userImages/orderAdd.png) 
+![alt text](userImages/orderAdd.png) 
 
 ### QnA Page
 - QnA Page
-![alt text](./userImages/qnaADD.png)
+![alt text](userImages/qnaADD.png)
+
 
 
 
@@ -95,39 +100,37 @@ Iamport API 등록 : https://portone.gitbook.io/docs/<br>
 <summary>Admin Detail View </summary>
 
 ### Login Page
-![alt text](./adminImages/adminLoginPage.png) 
+![alt text](adminImages/adminLoginPage.png) 
 ### Main Page 
-![alt text](./adminImages/AdminMainPage.png) 
+![alt text](adminImages/AdminMainPage.png) 
 ### Chart Click Event
-![alt text](./adminImages/AdminChartDayClick.png) 
-![alt text](./adminImages/AdminChartClickEvent.png) 
+![alt text](adminImages/AdminChartDayClick.png) 
+![alt text](adminImages/AdminChartClickEvent.png) 
 ### Category Page
-![alt text](./adminImages/AdminCategoryClickEventPage.png) 
+![alt text](adminImages/AdminCategoryClickEventPage.png) 
 ### Item Add Click 
-![alt text](./adminImages/itemAddPage.png) 
+![alt text](adminImages/itemAddPage.png) 
 ### UserPush Coupon And Mail Page
-![alt text](./adminImages/UserPushCouponAndMail.png) 
+![alt text](adminImages/UserPushCouponAndMail.png) 
 ### Discount Click
-![alt text](./adminImages/checkDiscountPage.png) 
+![alt text](adminImages/checkDiscountPage.png) 
 ### QnA Page - Reply Page
-![alt text](./adminImages/qnaPage.png) ![alt text](./adminImages/replyPage.png) 
+![alt text](adminImages/qnaPage.png) ![alt text](replyPage.png) 
 ### Datail Click
-![alt text](./adminImages/qnaDatailPage.png) 
+![alt text](adminImages/qnaDatailPage.png) 
 
 
 </details>
 
-# 👍 WBS
 
-
-# 프로젝트 과정 
+# 👩🏻‍💻 프로젝트 과정 
 
 김지영 : <br>
 조민수 : 파이썬을 이용한 이미지 크롤링을 통해 상품 카테고리 확장 <br>
 설재경 : <br>
 
 
-# 테스트 및 배포 
+# 👀 테스트 및 배포 
 
 
 # 기여 방법
