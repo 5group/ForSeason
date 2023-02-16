@@ -150,8 +150,8 @@
 
 ![alt text](images/wbs/wbsMain.png)
 ![alt text](images/wbs/wbsInput.png)
-![alt text](images/wbs/wbsFunctional Specification.png)
-![alt text](images/wbs/wbsInfomation Architectrue.png)
+![alt text](images/wbs/wbsFunctional_Specification.png)
+![alt text](images/wbs/wbsInfomation_Architectrue.png)
 </details>
 
 
