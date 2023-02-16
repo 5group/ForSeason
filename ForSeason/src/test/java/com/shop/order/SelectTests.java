@@ -16,7 +16,7 @@ public class SelectTests {
         Order order = null;
         try {
             order = service.get(1);
-            System.out.println(order);
+            //(order);
         } catch (Exception e) {
             e.printStackTrace();
         }

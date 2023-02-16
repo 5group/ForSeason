@@ -4,18 +4,16 @@ import com.shop.dto.*;
 import com.shop.frame.CryptoUtil;
 import com.shop.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
+
 
 @Controller
-public class MainController{
+public class MainController {
 
     @Autowired
     UserService userService;
@@ -27,7 +25,6 @@ public class MainController{
     OrderService orderService;
 
 
-
     @Autowired
     OrderDetailService orderDetailService;
 
@@ -37,7 +34,6 @@ public class MainController{
     @Autowired
     HttpSession session;
 
-    // http://127.0.0.1/
     @RequestMapping("/")
     public String main() {
         return "main";
@@ -48,13 +44,12 @@ public class MainController{
         model.addAttribute("center", "contact");
         return "main";
     }
-    
+
     @RequestMapping("/locationMap")
     public String locationMap(Model model) {
         model.addAttribute("center", "locationMap");
         return "main";
     }
-    /////////////////////////////
 
     @RequestMapping("/ordercomplete")
     public String ordercomplete(Model model) {
@@ -62,7 +57,6 @@ public class MainController{
         return "main";
     }
 
-    ///////////////////////////////////////////////
     @RequestMapping("/register")
     public String register(Model model) {
         model.addAttribute("center", "user/register");
@@ -70,12 +64,11 @@ public class MainController{
     }
 
     @RequestMapping("/myPage")
-    public String info(Model model) throws Exception{
+    public String info(Model model) throws Exception {
         model.addAttribute("center", "user/myPage");
         return "main";
     }
 
-    ////////////////////  로그인 /////////////////////
     @RequestMapping("/login")
     public String login(Model model) {
         model.addAttribute("center", "oauth/login");
@@ -84,10 +77,9 @@ public class MainController{
 
     @RequestMapping(value = "/loginimpl", method = RequestMethod.POST)
     public String loginimpl(String id, String pwd, Model model) {
-        User user = null;
         String result = "user/loginfail";
         try {
-            user = userService.get_id(id);
+            User user = userService.get_id(id);
             if (user != null) {
                 if (user.getUser_pwd().equals(CryptoUtil.encryptAES256(pwd, "123456testsogood"))) {
                     result = "user/loginok";
@@ -120,7 +112,7 @@ public class MainController{
     }
 
     @RequestMapping("/weather")
-    public String weather(String weather, Model model){
+    public String weather(String weather, Model model) {
         model.addAttribute("weater", weather);
         return "weather";
     }

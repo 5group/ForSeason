@@ -5,10 +5,14 @@
 <mapper namespace="com.shop.mapper.UserMapper">
 
     <select id="select" parameterType="Integer" resultType="User">
-        SELECT * FROM user WHERE user_no=#{user_no}
+        SELECT *
+        FROM user
+        WHERE user_no = #{user_no}
     </select>
     <select id="selectId" parameterType="String" resultType="User">
-        SELECT * FROM user WHERE user_id=#{user_id}
+        SELECT *
+        FROM user
+        WHERE user_id = #{user_id}
     </select>
     <select id="selectFindUser" parameterType="hashMap" resultType="String">
         SELECT user_id
@@ -18,23 +22,35 @@
           and user_email = #{user_email}
     </select>
     <select id="selectAll" resultType="User">
-        SELECT * FROM user
+        SELECT *
+        FROM user
     </select>
     <insert id="insert" parameterType="User">
         INSERT INTO user
-        VALUES (0, #{user_id}, #{user_pwd},#{user_email}, #{user_name}, #{user_phone}, #{user_address}, #{user_gender}, now(), now())
+        VALUES (0, #{user_id}, #{user_pwd},#{user_email}, #{user_name}, #{user_phone}, #{user_address}, #{user_gender},
+        now(), now())
         <selectKey keyProperty="user_no" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
     <update id="update" parameterType="User">
-        UPDATE user SET user_email=#{user_email}, user_name=#{user_name}, user_phone=#{user_phone}, user_address=#{user_address}, user_rdate=now() WHERE user_id=#{user_id}
+        UPDATE user
+        SET user_email=#{user_email},
+            user_name=#{user_name},
+            user_phone=#{user_phone},
+            user_address=#{user_address},
+            user_rdate=now()
+        WHERE user_id = #{user_id}
     </update>
     <update id="pwd_update" parameterType="User">
-        UPDATE user SET user_pwd=#{user_pwd} WHERE user_id=#{user_id}
+        UPDATE user
+        SET user_pwd=#{user_pwd}
+        WHERE user_id = #{user_id}
     </update>
     <delete id="delete" parameterType="String">
-        DELETE FROM user WHERE user_id=#{user_id}
+        DELETE
+        FROM user
+        WHERE user_id = #{user_id}
     </delete>
 
 </mapper>

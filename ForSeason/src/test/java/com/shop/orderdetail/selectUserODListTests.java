@@ -17,7 +17,6 @@ public class selectUserODListTests {
         List<OrderDetail> list = null;
         try {
             list = service.getODList(1);
-            for(OrderDetail od : list) System.out.println(od);
         } catch (Exception e) {
             e.printStackTrace();
         }

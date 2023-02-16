@@ -43,33 +43,30 @@ public class StockService implements MyService<Integer, Stock> {
         return mapper.selectAll();
     }
 
-    public void setAmount(int no, int cnt) throws Exception{
+    public void setAmount(int no, int cnt) throws Exception {
         Stock stock = mapper.select(no);
         stock.setAmount(stock.getAmount() - cnt);
         mapper.update(stock);
     }
-    
-    public List<Color> getStockColor(Integer item_no) throws Exception{
-    	return mapper.getStockColor(item_no);
-    }
-    
-    public List<Size> getStockSize(Integer item_no) throws Exception{
-    	return mapper.getStockSize(item_no);
-    }
-    
-    public int getStockNo(HashMap<String, Integer> map) throws Exception{
-		return mapper.getStockNo(map);
-	}
 
-    public List<Size> getStock(Integer item_no, Integer color_no) throws Exception{  //현재 재고 리스트로 보내기
-    	return mapper.selectStock(item_no, color_no);
+    public List<Color> getStockColor(Integer item_no) throws Exception {
+        return mapper.getStockColor(item_no);
+    }
+
+    public List<Size> getStockSize(Integer item_no) throws Exception {
+        return mapper.getStockSize(item_no);
+    }
+
+    public int getStockNo(HashMap<String, Integer> map) throws Exception {
+        return mapper.getStockNo(map);
+    }
+
+    public List<Size> getStock(Integer item_no, Integer color_no) throws Exception {  //현재 재고 리스트로 보내기
+        return mapper.selectStock(item_no, color_no);
     }
 
     public Stock getColorSizeName(Integer stock_no) throws Exception {
         return mapper.selectSizeColor(stock_no);
     }
 
-//    public List<Stock> getItemByStock(Integer item_no) throws Exception {
-//        return mapper.selectItemByStock(item_no);
-//    }
 }

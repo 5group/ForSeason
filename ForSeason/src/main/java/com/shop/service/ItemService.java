@@ -41,21 +41,24 @@ public class ItemService implements MyService<Integer, Item> {
     public List<Item> get() throws Exception {
         return mapper.selectAll();
     }
-    
-   
+
+
     public List<Item> getItemList(HashMap<String, Object> curCateMap) throws Exception {
         return mapper.selectItemList(curCateMap);
-    } 
-    public Category getCategorys(Integer item_no) throws Exception{
-    	return mapper.selectCategorys(item_no);
     }
-    public void updateItemhit(Integer item_no) throws Exception{
-    	mapper.updateItemhit(item_no);
+
+    public Category getCategorys(Integer item_no) throws Exception {
+        return mapper.selectCategorys(item_no);
     }
-    public Integer totalRecord(HashMap<String, Object> curCateMap) throws Exception{
-    	return mapper.totalRecord(curCateMap);
+
+    public void updateItemhit(Integer item_no) throws Exception {
+        mapper.updateItemhit(item_no);
     }
-    
+
+    public Integer totalRecord(HashMap<String, Object> curCateMap) throws Exception {
+        return mapper.totalRecord(curCateMap);
+    }
+
     public List<Item> getBestItemList() throws Exception {
         return mapper.selectBestItemList();
     }

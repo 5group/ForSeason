@@ -17,7 +17,6 @@ public class SeleteAllTests {
         List<User> list = null;
         try{
             list = service.get();
-            for(User user : list) System.out.println(user);
         }catch (Exception e){
             e.printStackTrace();
         }

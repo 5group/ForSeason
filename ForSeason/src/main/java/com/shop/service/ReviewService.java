@@ -38,33 +38,34 @@ public class ReviewService implements MyService<Integer, Review> {
     public List<Review> get() throws Exception {
         return mapper.selectAll();
     }
+
     public Review revnoselect(Integer id) throws Exception {
-    	return mapper.revnoselect(id);	
+        return mapper.revnoselect(id);
     }
-    
+
     public List<Review> SelectSortUdateTests(int id) throws Exception {
-		return mapper.SelectSortUdateTests(id);
-	}
-    
+        return mapper.SelectSortUdateTests(id);
+    }
+
     public List<Review> SelectallSortUdateTests(int id) throws Exception {
-		return mapper.SelectallSortUdateTests(id);
-	}
-    
+        return mapper.SelectallSortUdateTests(id);
+    }
+
     public List<Review> SelectallSortScoreDescTests(int id) throws Exception {
-		return mapper.SelectallSortScoreDescTests(id);
-	}
+        return mapper.SelectallSortScoreDescTests(id);
+    }
+
     public List<Review> SelectallSortScoreAscTests(int id) throws Exception {
-		return mapper.SelectallSortScoreAscTests(id);
-	}
-    
+        return mapper.SelectallSortScoreAscTests(id);
+    }
+
     public List<Review> userselect(int id) throws Exception {
-		return mapper.userselect(id);
-	}
-    
-    public List<Review> get_list(int user_no) throws Exception{
+        return mapper.userselect(id);
+    }
+
+    public List<Review> get_list(int user_no) throws Exception {
         return mapper.selectlist(user_no);
     }
 
-	
-    
+
 }

@@ -1,12 +1,10 @@
 package com.shop.service;
 
-import com.shop.dto.Cart;
 import com.shop.dto.WishList;
 import com.shop.frame.MyService;
 import com.shop.mapper.WishListMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -21,12 +19,12 @@ public class WishListService implements MyService<Integer, WishList> {
 
     @Override
     public void remove(Integer id) throws Exception {
-    	mapper.delete(id);
+        mapper.delete(id);
     }
 
     @Override
     public void modify(WishList wishList) throws Exception {
-    	mapper.update(wishList);
+        mapper.update(wishList);
     }
 
     @Override
@@ -38,16 +36,16 @@ public class WishListService implements MyService<Integer, WishList> {
     public List<WishList> get() throws Exception {
         return mapper.selectAll();
     }
-    
-    public void deleteUserWish(WishList wishList) throws Exception{
-    	mapper.deleteUserWish(wishList);
+
+    public void deleteUserWish(WishList wishList) throws Exception {
+        mapper.deleteUserWish(wishList);
     }
-    
-    public WishList checkUserWish(WishList wishList) throws Exception{
-    	return mapper.checkUserWish(wishList);
+
+    public WishList checkUserWish(WishList wishList) throws Exception {
+        return mapper.checkUserWish(wishList);
     }
-    
-    public List<WishList> get_list(int user_no) throws Exception{
+
+    public List<WishList> get_list(int user_no) throws Exception {
         return mapper.selectList(user_no);
     }
 

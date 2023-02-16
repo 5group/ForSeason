@@ -5,30 +5,46 @@
 <mapper namespace="com.shop.mapper.WishListMapper">
 
     <select id="select" parameterType="Integer" resultType="WishList">
-        SELECT * FROM wishlist WHERE wish_no=#{wish_no}
+        SELECT *
+        FROM wishlist
+        WHERE wish_no = #{wish_no}
     </select>
     <select id="selectAll" resultType="WishList">
-        SELECT * FROM wishlist
+        SELECT *
+        FROM wishlist
     </select>
     <insert id="insert" parameterType="WishList">
         INSERT INTO wishlist
         VALUES (#{wish_no}, #{user_no}, #{item_no})
     </insert>
     <update id="update" parameterType="WishList">
-        UPDATE wishlist SET user_no=#{user_no}, item_no=#{item_no} WHERE wish_no=#{wish_no}
+        UPDATE wishlist
+        SET user_no=#{user_no},
+            item_no=#{item_no}
+        WHERE wish_no = #{wish_no}
     </update>
     <delete id="delete" parameterType="Integer">
-        DELETE FROM wishlist WHERE wish_no=#{wish_no}
+        DELETE
+        FROM wishlist
+        WHERE wish_no = #{wish_no}
     </delete>
-    
+
     <delete id="deleteUserWish" parameterType="WishList">
-        DELETE FROM wishlist WHERE user_no=#{user_no} AND item_no=#{item_no}
+        DELETE
+        FROM wishlist
+        WHERE user_no = #{user_no}
+          AND item_no = #{item_no}
     </delete>
     <select id="checkUserWish" parameterType="WishList" resultType="WishList">
-    	SELECT * FROM wishlist WHERE user_no=#{user_no} AND item_no=#{item_no}
+        SELECT *
+        FROM wishlist
+        WHERE user_no = #{user_no}
+          AND item_no = #{item_no}
     </select>
     <select id="selectList" parameterType="Integer" resultType="WishList">
-        SELECT * FROM wishlist where user_no=#{user_no}
+        SELECT *
+        FROM wishlist
+        where user_no = #{user_no}
     </select>
 
 </mapper>

@@ -11,5 +11,6 @@ import java.util.List;
 @Mapper
 public interface CartMapper extends MyMapper<Integer, Cart> {
     public List<Cart> selectList(int user_no);
+
     public Cart checkCartList(Cart cart) throws Exception;
 }

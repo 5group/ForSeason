@@ -14,7 +14,7 @@ public class FileService {
             String imgnames[] = dir.list();
             return imgnames;
         }catch (Exception e){
-            System.out.println("해당경로에 파일이 존재하지 않음");
+            //("해당경로에 파일이 존재하지 않음");
             return null;
         }
     }

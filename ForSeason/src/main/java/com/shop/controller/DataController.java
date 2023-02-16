@@ -149,7 +149,7 @@ public class DataController {
         cartService.register(cart);
         List<Cart> cart_list = cartService.get_list(user.getUser_no());
         session.setAttribute("cartList", cart_list); // test를 위한 sesstion 처리
-        System.out.println(user.getUser_no());
+        //(user.getUser_no());
         return result;
     }
 
@@ -189,12 +189,12 @@ public class DataController {
 
     @RequestMapping(value = "/QnaInsert", method = RequestMethod.POST)
     public Object QnaInsert(String qna_title, String qna_content) throws Exception {
-        System.out.println(qna_title);
-        System.out.println(qna_content);
+        //(qna_title);
+        //(qna_content);
         int result = 0;
         User user = (User) session.getAttribute("loginUser");
         Qna qna = new Qna(user.getUser_no(), qna_title, qna_content);
-        System.out.println(qna);
+        //(qna);
 
         qnaService.register(qna);
         return result;
@@ -280,7 +280,7 @@ public class DataController {
                 int cateNo = 10 + i * 30;
                 List<Item> itemList = itemService.midCateByItemList(cateNo);
                 result.add(itemList.get(random.nextInt(itemService.midCateByItemList(cateNo).size())));
-                System.out.println(result);
+                //(result);
             } else {
                 result.add(itemService.get().get(random.nextInt(itemService.get().size())));
             }
@@ -290,7 +290,7 @@ public class DataController {
 
     @RequestMapping("/chatBot")
     public String chatBot(String messageContent) throws IOException {
-        System.out.println(messageContent);
+        //(messageContent);
         if(null == messageContent) {
             return "넌잘못됐다";
         }else {
@@ -307,13 +307,13 @@ public class DataController {
         SimpleDateFormat f2 = new SimpleDateFormat("HH");
         String yyyyMMdd = f1.format(date);
         String hh = String.valueOf(Integer.parseInt(f2.format(date)) - 4)+"00";
-        System.out.println(hh);
+        //(hh);
         String url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
                 + "?serviceKey=jjjiDNS%2BzqFXxPo8JNr%2F%2Bk%2BCXU0wMKxiH%2BDHqy3wkSzoqaRuIfRCcsiYMFo%2BEQaenBccGaZPv65Lz6TyDx89DA%3D%3D"
                 + "&dataType=JSON"            // JSON, XML
                 + "&numOfRows=10"             // 페이지 ROWS
                 + "&pageNo=1"                 // 페이지 번호
-                + "&base_date=" + yyyyMMdd    // 발표일자
+                + "&base_date=" + 20230216    // 발표일자
                 + "&base_time=0800"        // 발표시각
                 + "&nx=60"                    // 예보지점 X 좌표
                 + "&ny=127";                  // 예보지점 Y 좌표

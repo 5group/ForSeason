@@ -17,7 +17,7 @@ public class SelectIdTests {
         User user = null;
         try {
             user = service.get_id("id1");
-            System.out.println(user);
+            //(user);
         } catch (Exception e) {
             e.printStackTrace();
         }

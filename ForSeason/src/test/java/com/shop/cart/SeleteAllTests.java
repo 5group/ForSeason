@@ -34,12 +34,12 @@ public class SeleteAllTests {
                 index += 1;
             }
             if(index == 1){
-                System.out.println(text);
-                System.out.println(tot_price);
+                //(text);
+                //(tot_price);
             }else {
                 text = String.format(text + "외%d개 제품",index-1);
-                System.out.println(text);
-                System.out.println(tot_price);
+                //(text);
+                //(tot_price);
             }
         }catch (Exception e){
             e.printStackTrace();

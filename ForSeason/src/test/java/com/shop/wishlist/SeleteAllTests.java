@@ -17,7 +17,6 @@ public class SeleteAllTests {
         List<WishList> list = null;
         try{
             list = service.get();
-            for(WishList wishList : list) System.out.println(wishList);
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -18,7 +18,7 @@ public class InsertTests {
         Order order = new Order(0, 2, 10000, "카카오페이","서울특별시", "무인", "배송중", "결제완료", 1000,null);
         try{
             service.register(order);
-            System.out.println("OK");
+            //("OK");
         }catch (Exception e){
             e.printStackTrace();
             System.out.printf("Fail");

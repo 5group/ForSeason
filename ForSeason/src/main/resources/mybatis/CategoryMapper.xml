@@ -28,13 +28,28 @@
     <select id="getMiddleCategory" resultType="Category">
         SELECT * FROM category WHERE cate_no2 IN (SELECT cate_no FROM category WHERE cate_no2 IS NULL)
     </select>
-    <select id="getSubCategory" parameterType="Integer" resultType="Category">
+    <select id="getSubCategory" resultType="Category">
         SELECT * FROM category WHERE cate_no NOT IN (SELECT cate_no2 FROM category WHERE cate_no2 IS NOT NULL)
     </select>
+    
     <select id="selectCurCategory" parameterType="map" resultType="Category">
-    	select c3.cate_name as 'top_cate_name' from category c3
-		<if test="top != null">
-			where c3.cate_no=#{top};
-		</if>
+    	select c3.cate_name as 'top_cate_name' 
+    	<if test="middle!=null">, c2.cate_name as'mid_cate_name' </if>
+    	<if test="sub!=null">, c2.cate_name as'mid_cate_name', c1.cate_name </if>
+    	from category c3
+    	<choose>
+    		<when test="top!=null">
+    			where c3.cate_no=#{top};
+    		</when>
+    		<when test="middle!=null">
+    			inner join category c2
+				where c3.cate_no=c2.cate_no2 AND c2.cate_no=#{middle};
+    		</when>
+    		<when test="sub!=null">
+    			inner join category c2
+				inner join category c1
+				where c3.cate_no=c2.cate_no2 AND c2.cate_no=c1.cate_no2 AND c1.cate_no=#{sub};
+    		</when>
+    	</choose>
     </select>
 </mapper>

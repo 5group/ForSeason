@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.StockMapper">
+
+    <select id="select" parameterType="Integer" resultType="Stock">
+        SELECT * FROM stock WHERE stock_no=#{stock_no}
+    </select>
+    <select id="selectAll" resultType="Stock">
+        SELECT * FROM stock
+    </select>
+    <insert id="insert" parameterType="Stock">
+        INSERT INTO stock
+        VALUES (0, #{item_no}, #{color_no},#{size_no}, #{amount})
+    </insert>
+    <update id="update" parameterType="Stock">
+        UPDATE stock SET amount=#{amount} WHERE stock_no=#{stock_no}
+    </update>
+    <delete id="delete" parameterType="String">
+        DELETE FROM stock WHERE stock_no=#{stock_no}
+    </delete>
+
+    <select id="selectChart" parameterType="String" resultType="Stock">
+        select SUM(order_tot) order_tot, DATE(order_udate) order_udate
+        from `item` i
+                 inner join `stock` st
+                 inner join `order_detail` od
+                 inner join `order` o
+                 inner join `size` si
+                 inner join `color` co
+                 inner join `category` ct
+        where st.item_no = i.item_no
+          and st.stock_no = od.stock_no
+          and od.order_no = o.order_no
+          and st.size_no = si.size_no
+          and st.color_no = co.color_no
+          and ct.cate_no = i.cate_no
+          and DATE_FORMAT(o.order_udate, '%Y-%m-%d') BETWEEN #{start_date} AND #{end_date}
+        group by DATE(o.order_udate) order by order_udate asc
+    </select>
+
+    <select id="selectAdminMain" resultType="Stock">
+        select item_name, order_tot, color_name, order_udate, ship_stat, user_no, size_name, ship_cust, ship_addr, st.amount, o.order_no
+        from item i
+                 inner join stock st
+                 inner join order_detail od
+                 inner join `order` o
+                 inner join size si
+                 inner join color co
+                 inner join category ct
+        where st.item_no = i.item_no
+          and st.stock_no = od.stock_no
+          and od.order_no = o.order_no
+          and st.size_no = si.size_no
+          and st.color_no = co.color_no
+          and ct.cate_no = i.cate_no;
+
+    </select>
+
+    <select id="selectItemTotal"  parameterType="String" resultType="Stock">
+        select i.item_name, st.amount, si.size_name, co.color_name, st.stock_no, st.size_no, st.color_no
+        from `item` i
+                 inner join `stock` st
+                 inner join `size` si
+                 inner join `color` co
+        where st.item_no = i.item_no
+          and st.size_no = si.size_no
+          and st.color_no = co.color_no
+          and i.item_name = #{item_name};
+    </select>
+
+    <select id="selectCateTotal" parameterType="map" resultType="Stock">
+        select SUM(order_tot) order_tot, DATE(order_udate) order_udate
+        from stock st
+        inner join order_detail od
+        inner join `order` o
+        where st.stock_no = od.stock_no
+        and o.order_no = od.order_no
+        and st.item_no in
+        <foreach collection="itemNoList" item="item_no" index="index" open="(" separator="," close=")">
+            #{item_no}
+        </foreach>
+        and DATE_FORMAT(o.order_udate, '%Y-%m-%d') BETWEEN #{sm}
+        and #{em}
+        group by DATE(o.order_udate)
+        order by order_udate asc
+    </select>
+</mapper>

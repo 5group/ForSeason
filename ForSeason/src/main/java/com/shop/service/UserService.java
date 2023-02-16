@@ -2,11 +2,9 @@ package com.shop.service;
 
 
 import com.shop.dto.User;
-import com.shop.frame.CryptoUtil;
 import com.shop.frame.MyService;
 import com.shop.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -27,7 +25,7 @@ public class UserService implements MyService<Integer, User> {
         mapper.delete(integer);
     }
 
-    public void remove(String string) throws Exception{
+    public void remove(String string) throws Exception {
         mapper.delete(string);
     }
 
@@ -36,7 +34,7 @@ public class UserService implements MyService<Integer, User> {
         mapper.update(user);
     }
 
-    public void set_pwd(User user)throws Exception{
+    public void set_pwd(User user) throws Exception {
         mapper.pwd_update(user);
     }
 

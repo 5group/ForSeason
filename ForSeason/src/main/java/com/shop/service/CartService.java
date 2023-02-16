@@ -39,7 +39,7 @@ public class CartService implements MyService<Integer, Cart> {
         return mapper.selectAll();
     }
 
-    public List<Cart> get_list(int user_no) throws Exception{
+    public List<Cart> get_list(int user_no) throws Exception {
         return mapper.selectList(user_no);
     }
 
@@ -49,8 +49,8 @@ public class CartService implements MyService<Integer, Cart> {
         }
         return get_list(user_no);
     }
-    
-    public Cart checkCartList(Cart cart) throws Exception{
-    	return mapper.checkCartList(cart);
+
+    public Cart checkCartList(Cart cart) throws Exception {
+        return mapper.checkCartList(cart);
     }
 }

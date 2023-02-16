@@ -15,7 +15,7 @@ public class SelectTests {
         Coupon coupon = null;
         try {
             coupon = service.get(2);
-            System.out.println(coupon);
+            //(coupon);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -89,6 +89,7 @@ public class OrderController {
             session.setAttribute("cartList", updatedCartList);
             List<Order> orderList = orderService.get_list(user.getUser_no());
             session.setAttribute("order", orderList);
+            session.setAttribute("od", orderDetailService.getODList(user.getUser_no()));
             return "main";
         }
 

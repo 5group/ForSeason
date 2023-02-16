@@ -17,7 +17,7 @@ public class UpdateTests {
         coupon.setCou_no(6);
         try {
             service.modify(coupon);
-            System.out.println(coupon.getCou_no()+"번 쿠폰 사용 완료");
+            //(coupon.getCou_no()+"번 쿠폰 사용 완료");
         } catch (Exception e) {
             e.printStackTrace();
         }

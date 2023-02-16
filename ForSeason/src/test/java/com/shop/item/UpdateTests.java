@@ -22,7 +22,7 @@ public class UpdateTests {
         item.setItem_no(1);
         try {
             service.modify(item);
-            System.out.println(item.getItem_no()+"번 제품 수정 성공");
+            //(item.getItem_no()+"번 제품 수정 성공");
         } catch (Exception e) {
             e.printStackTrace();
         }

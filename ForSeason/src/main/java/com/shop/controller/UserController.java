@@ -6,13 +6,11 @@ import com.shop.service.CouponService;
 import com.shop.service.MailService;
 import com.shop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 
 @Controller
 @RequestMapping("/user")
@@ -44,7 +42,7 @@ public class UserController {
             if (userService.get_id(user.getUser_id()) == null || userService.get_id(user.getUser_id()).equals("")) {
                 user.setUser_pwd(CryptoUtil.encryptAES256(user.getUser_pwd(), "123456testsogood"));
                 userService.register(user);
-                System.out.println(user.getUser_no());
+                //(user.getUser_no());
                 couponService.firstCoupon(user.getUser_no());
                 model.addAttribute("center", dir + "registerok");
                 userResult = userService.get_id(user.getUser_id());
@@ -82,30 +80,10 @@ public class UserController {
 
     @RequestMapping("/deleteUser")
     public String deleteUser() throws Exception {
-    	User user = (User) session.getAttribute("loginUser");
+        User user = (User) session.getAttribute("loginUser");
         userService.remove(user.getUser_id());
         session.invalidate();
         return "redirect:/";
     }
-
-    
-//    @RequestMapping("/info_update")
-//    public String infoUpdate(User info_user) {
-//        try {
-//            System.out.println(info_user);
-//            User u = (User) session.getAttribute("loginUser");
-//            u.setUser_id(u.getUser_id());
-//            u.setUser_email(info_user.getUser_email());
-//            u.setUser_name(info_user.getUser_name());
-//            u.setUser_phone(info_user.getUser_phone());
-//            u.setUser_address(info_user.getUser_address());
-//            userService.modify(u);
-//            session.setAttribute("loginUser", u);
-//            System.out.println(session.getAttribute("loginUser"));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "main";
-//    }
 
 }

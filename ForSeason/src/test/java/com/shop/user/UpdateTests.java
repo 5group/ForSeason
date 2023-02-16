@@ -19,7 +19,7 @@ public class UpdateTests {
         user.setUser_name("주사맞음");
         try{
             service.modify(user);
-            System.out.println(user.getUser_id()+"번 제품 수정 성공");
+            //(user.getUser_id()+"번 제품 수정 성공");
         }catch (Exception e){
             e.printStackTrace();
         }

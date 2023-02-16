@@ -18,7 +18,7 @@ public class SelectTests {
         Cart cart = null;
         try {
             cart = service.get(2);
-            System.out.println(cart);
+            //(cart);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

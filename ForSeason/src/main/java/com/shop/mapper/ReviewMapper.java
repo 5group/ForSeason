@@ -12,13 +12,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReviewMapper extends MyMapper<Integer, Review> {
 
-	
-	List<Review> SelectSortUdateTests(int item_no);
-	List<Review> SelectallSortUdateTests(int item_no);
-	List<Review> SelectallSortScoreDescTests(int item_no);
-	List<Review> SelectallSortScoreAscTests(int item_no);
-	List<Review> userselect(int id);
-	List<Review> selectlist(int id);
-	Review revnoselect(Integer id);
-	
+
+    List<Review> SelectSortUdateTests(int item_no);
+
+    List<Review> SelectallSortUdateTests(int item_no);
+
+    List<Review> SelectallSortScoreDescTests(int item_no);
+
+    List<Review> SelectallSortScoreAscTests(int item_no);
+
+    List<Review> userselect(int id);
+
+    List<Review> selectlist(int id);
+
+    Review revnoselect(Integer id);
+
 }

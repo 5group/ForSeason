@@ -14,12 +14,14 @@ import com.shop.frame.MyMapper;
 @Repository
 @Mapper
 public interface StockMapper extends MyMapper<Integer, Stock> {
-	public List<Color> getStockColor(Integer item_no) throws Exception;
-	public List<Size> getStockSize(Integer item_no) throws Exception;
-	public int getStockNo(HashMap<String, Integer> map) throws Exception;
-	public Stock selectSizeColor(Integer stock_no) throws Exception;
+    public List<Color> getStockColor(Integer item_no) throws Exception;
 
-	public List<Size> selectStock(Integer item_no, Integer color_no) throws Exception;
+    public List<Size> getStockSize(Integer item_no) throws Exception;
 
-//	public List<Stock> selectItemByStock(Integer item_no) throws Exception;
+    public int getStockNo(HashMap<String, Integer> map) throws Exception;
+
+    public Stock selectSizeColor(Integer stock_no) throws Exception;
+
+    public List<Size> selectStock(Integer item_no, Integer color_no) throws Exception;
+
 }

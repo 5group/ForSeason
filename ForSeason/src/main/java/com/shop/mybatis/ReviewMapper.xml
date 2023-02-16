@@ -5,89 +5,130 @@
 <mapper namespace="com.shop.mapper.ReviewMapper">
 
     <select id="select" parameterType="Integer" resultType="Review">
-        SELECT * FROM review WHERE rev_no=#{rev_no}
+        SELECT *
+        FROM review
+        WHERE rev_no = #{rev_no}
     </select>
 
     <select id="userselect" parameterType="Integer" resultType="Review">
-        SELECT review.rev_no, review.user_no, review.item_no, review.rev_title, review.rev_content, review.rev_score, review.rev_rdate, review.rev_udate, item.item_name
-		FROM review
-		INNER JOIN item ON review.item_no = item.item_no
-		WHERE review.user_no = #{user_no};
+        SELECT review.rev_no,
+               review.user_no,
+               review.item_no,
+               review.rev_title,
+               review.rev_content,
+               review.rev_score,
+               review.rev_rdate,
+               review.rev_udate,
+               item.item_name
+        FROM review
+                 INNER JOIN item ON review.item_no = item.item_no
+        WHERE review.user_no = #{user_no};
     </select>
 
     <select id="selectlist" parameterType="Integer" resultType="Review">
-        SELECT * FROM review where user_no=#{user_no}
+        SELECT *
+        FROM review
+        where user_no = #{user_no}
     </select>
 
     <select id="revnoselect" parameterType="Integer" resultType="Review">
-		select * from review where rev_no = #{rev_no};
+        select *
+        from review
+        where rev_no = #{rev_no};
     </select>
 
 
-
     <select id="selectAll" resultType="Review">
-        SELECT * FROM review
+        SELECT *
+        FROM review
     </select>
 
 
     <insert id="insert" parameterType="Review">
         INSERT INTO review
-        VALUES (0,  #{user_no}, #{item_no}, #{rev_title}, #{rev_content}, #{rev_score}, now(), now())
+        VALUES (0, #{user_no}, #{item_no}, #{rev_title}, #{rev_content}, #{rev_score}, now(), now())
     </insert>
-    
-    
+
+
     <update id="update" parameterType="Review">
-        UPDATE review SET rev_title=#{rev_title}, rev_content=#{rev_content}, rev_score=#{rev_score}, rev_rdate=now() WHERE rev_no=#{rev_no}
+        UPDATE review
+        SET rev_title=#{rev_title},
+            rev_content=#{rev_content},
+            rev_score=#{rev_score},
+            rev_rdate=now()
+        WHERE rev_no = #{rev_no}
     </update>
-    
-    
+
+
     <delete id="delete" parameterType="Integer">
-        DELETE FROM review WHERE rev_no=#{rev_no}
+        DELETE
+        FROM review
+        WHERE rev_no = #{rev_no}
     </delete>
 
 
-	<select id="SelectSortUdateTests" parameterType="Integer" resultType="Review">
-	  SELECT rev_no, item_no, user.user_no, user.user_id, 
-	         rev_title, rev_content, rev_score, rev_udate
-	  FROM review
-	  JOIN user ON review.user_no = user.user_no
-	  WHERE item_no = #{item_no}
-	  ORDER BY rev_udate DESC
-	  LIMIT 3
-	</select>
+    <select id="SelectSortUdateTests" parameterType="Integer" resultType="Review">
+        SELECT rev_no,
+               item_no,
+               user.user_no,
+               user.user_id,
+               rev_title,
+               rev_content,
+               rev_score,
+               rev_udate
+        FROM review
+                 JOIN user ON review.user_no = user.user_no
+        WHERE item_no = #{item_no}
+        ORDER BY rev_udate DESC LIMIT 3
+    </select>
 
-	<select id="SelectallSortUdateTests" parameterType="Integer" resultType="Review">
-	  SELECT rev_no, item_no, user.user_no, user.user_id, 
-	         rev_title, rev_content, rev_score, rev_udate
-	  FROM review
-	  JOIN user ON review.user_no = user.user_no
-	  WHERE item_no = #{item_no}
-	  ORDER BY rev_udate DESC
-	  
-	</select>
+    <select id="SelectallSortUdateTests" parameterType="Integer" resultType="Review">
+        SELECT rev_no,
+               item_no,
+               user.user_no,
+               user.user_id,
+               rev_title,
+               rev_content,
+               rev_score,
+               rev_udate
+        FROM review
+                 JOIN user ON review.user_no = user.user_no
+        WHERE item_no = #{item_no}
+        ORDER BY rev_udate DESC
 
-	<select id="SelectallSortScoreDescTests" parameterType="Integer" resultType="Review">
-	  SELECT rev_no, item_no, user.user_no, user.user_id, 
-	         rev_title, rev_content, rev_score, rev_udate
-	  FROM review
-	  JOIN user ON review.user_no = user.user_no
-	  WHERE item_no = #{item_no}
-	  ORDER BY rev_score DESC
-	  
-	</select>
+    </select>
 
-	<select id="SelectallSortScoreAscTests" parameterType="Integer" resultType="Review">
-	  SELECT rev_no, item_no, user.user_no, user.user_id, 
-	         rev_title, rev_content, rev_score, rev_udate
-	  FROM review
-	  JOIN user ON review.user_no = user.user_no
-	  WHERE item_no = #{item_no}
-	  ORDER BY rev_score ASC
-	  
-	</select>
+    <select id="SelectallSortScoreDescTests" parameterType="Integer" resultType="Review">
+        SELECT rev_no,
+               item_no,
+               user.user_no,
+               user.user_id,
+               rev_title,
+               rev_content,
+               rev_score,
+               rev_udate
+        FROM review
+                 JOIN user ON review.user_no = user.user_no
+        WHERE item_no = #{item_no}
+        ORDER BY rev_score DESC
 
+    </select>
 
+    <select id="SelectallSortScoreAscTests" parameterType="Integer" resultType="Review">
+        SELECT rev_no,
+               item_no,
+               user.user_no,
+               user.user_id,
+               rev_title,
+               rev_content,
+               rev_score,
+               rev_udate
+        FROM review
+                 JOIN user ON review.user_no = user.user_no
+        WHERE item_no = #{item_no}
+        ORDER BY rev_score ASC
 
+    </select>
 
 
 </mapper>

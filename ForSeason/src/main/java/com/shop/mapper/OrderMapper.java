@@ -12,5 +12,4 @@ import java.util.List;
 public interface OrderMapper extends MyMapper<Integer, Order> {
     public List<Order> selectList(int user_no);
 
-//    public void insertTest(Order order) throws Exception;
 }

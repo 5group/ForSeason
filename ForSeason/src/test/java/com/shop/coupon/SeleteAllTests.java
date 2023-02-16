@@ -17,7 +17,7 @@ public class SeleteAllTests {
         List<Coupon> list = null;
         try{
             list = service.get();
-            for(Coupon coupon : list) System.out.println(coupon);
+
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -19,7 +19,7 @@ public class SeleteAllTests {
         List<Item> list = null;
         try{
             list = service.get();
-            for(Item item : list) System.out.println(item);
+
         }catch (Exception e){
             e.printStackTrace();
         }

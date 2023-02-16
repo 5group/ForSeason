@@ -52,7 +52,7 @@ public class ItemController {
         List<Stock> stockList = new ArrayList<>();
         session.setAttribute("itemList", itemList);
         for(Item item :itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
-        //System.out.println("topstockList:" + stockList);    
+        ////("topstockList:" + stockList);    
         model.addAttribute("stockList", stockList);
         model.addAttribute("itemList", itemList);
         //model.addAttribute("center", dir + "center");
@@ -68,7 +68,7 @@ public class ItemController {
         List<Stock> stockList = new ArrayList<>();
         session.setAttribute("itemList", itemList);
         for(Item item :itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
-        System.out.println("stockList"+stockList);
+        //("stockList"+stockList);
         model.addAttribute("stockList", stockList);
         model.addAttribute("itemList", itemList);
         //model.addAttribute("center", dir + "center");
@@ -112,17 +112,17 @@ public class ItemController {
                            @RequestParam("img") List<MultipartFile> mpfs,
                            @RequestParam("colorValue") List<Integer> colorValue) throws Exception {
         if (itemService.getName(itemName) != null) {
-            System.out.println("이미있는 파일입니다.");
+            //("이미있는 파일입니다.");
             return "main";
         }
         Item item = new Item(cateNo, itemName, Integer.parseInt(itemPrice), 0, itemInfo, 0, null);
         itemService.register(item);
         int itemNo = item.getItem_no();
-        System.out.println("itemNo:" + itemNo);
+        //("itemNo:" + itemNo);
         for (Integer color_no : colorValue) {
             for (int i = 1; i <= 4; i++) {
                 Stock stock = new Stock(itemNo, color_no, i, 100);
-                System.out.println("stock:" + stock);
+                //("stock:" + stock);
                 stockService.register(stock);
             }
         }

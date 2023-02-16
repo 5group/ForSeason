@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.mapper.ItemMapper">
+
+    <select id="select" parameterType="Integer" resultType="Item">
+        SELECT * FROM item WHERE item_no=#{item_no}
+    </select>
+    <select id="selectAll" resultType="Item">
+        SELECT * FROM item
+    </select>
+    <insert id="insert" parameterType="Item">
+        INSERT INTO item
+        VALUES (null, #{cate_no}, #{item_name},#{item_price}, #{item_discnt}, #{item_info}, #{item_hit}, now())
+    	<selectKey keyProperty="item_no" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    <update id="update" parameterType="Item">
+        UPDATE item SET item_price=#{item_price}, item_discnt=#{item_discnt}, item_info=#{item_info}, item_udate=now() WHERE item_no=#{item_no}
+    </update>
+
+    <update id="updateDiscnt" parameterType="Item">
+        UPDATE item SET item_discnt=#{item_discnt}, item_udate=now() WHERE item_no=#{item_no}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM item WHERE item_no=#{item_no}
+    </delete>
+
+	<select id="getCateList" parameterType="Integer" resultType="Item">
+        SELECT * FROM item WHERE cate_no=#{cate_no}
+    </select>
+    
+    <select id="selectName" parameterType="String" resultType="Item">
+    	select item_name from item where item_name=#{item_name}
+    </select>
+</mapper>

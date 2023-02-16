@@ -17,7 +17,6 @@ public class SeleteAllTests {
         List<OrderDetail> list = null;
         try{
             list = service.get();
-            for(OrderDetail od : list) System.out.println(od);
         }catch (Exception e){
             e.printStackTrace();
         }

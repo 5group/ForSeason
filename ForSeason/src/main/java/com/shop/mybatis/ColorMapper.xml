@@ -5,20 +5,27 @@
 <mapper namespace="com.shop.mapper.ColorMapper">
 
     <select id="select" parameterType="Integer" resultType="Color">
-        SELECT * FROM color WHERE color_no=#{color_no}
+        SELECT *
+        FROM color
+        WHERE color_no = #{color_no}
     </select>
     <select id="selectAll" resultType="Color">
-        SELECT * FROM color
+        SELECT *
+        FROM color
     </select>
     <insert id="insert" parameterType="Color">
         INSERT INTO color
         VALUES (#{color_no}, #{color_name})
     </insert>
     <update id="update" parameterType="Color">
-        UPDATE color SET color_name=#{color_name} WHERE color_no=#{color_no}
+        UPDATE color
+        SET color_name=#{color_name}
+        WHERE color_no = #{color_no}
     </update>
     <delete id="delete" parameterType="Integer">
-        DELETE FROM color WHERE color_no=#{color_no}
+        DELETE
+        FROM color
+        WHERE color_no = #{color_no}
     </delete>
- 
+
 </mapper>

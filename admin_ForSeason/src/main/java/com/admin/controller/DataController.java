@@ -51,7 +51,7 @@ public class DataController {
         }
         jObject.put("dayDate", dateList);
         jObject.put("dayTotal", totalList);
-        System.out.println(jObject);
+        //(jObject);
         return jObject;
     }
 
@@ -75,7 +75,7 @@ public class DataController {
         }
         jObject.put("dayDate", dateList);
         jObject.put("dayTotal", totalList);
-        System.out.println(jObject);
+        //(jObject);
         return jObject;
     }
 
@@ -100,7 +100,7 @@ public class DataController {
         totalListAdd(allTotalList, menTotalList);
         totalListAdd(allTotalList, womenTotalList);
         jObject.put("total", allTotalList);
-        System.out.println("piechart:"+jObject);
+        //("piechart:"+jObject);
         return jObject;
     }
 
@@ -113,7 +113,7 @@ public class DataController {
         jsonArray.add(jsonService.totalListByJSONObject(orderDetailService.getTopCateNameByTotalList(kids), kids, "#FF0000"));
         jsonArray.add(jsonService.totalListByJSONObject(orderDetailService.getTopCateNameByTotalList(men), men, "#00FF00"));
         jsonArray.add(jsonService.totalListByJSONObject(orderDetailService.getTopCateNameByTotalList(women), women, "#0000FF"));
-        System.out.println("bubblechart:"+jsonArray);
+        //("bubblechart:"+jsonArray);
         return jsonArray;
     }
 

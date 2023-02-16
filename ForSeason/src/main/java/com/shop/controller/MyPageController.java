@@ -114,7 +114,7 @@ public class MyPageController {
             titleImgList.put(r.getItem_no(), titleImg);
         	}
     	}
-    	System.out.println(reviewlist);
+    	//(reviewlist);
         
     	model.addAttribute("item", item);  //타이틀 이미지 리스트(.jpg)
         model.addAttribute("titleImgList", titleImgList);  //타이틀 이미지 리스트(.jpg)
@@ -136,13 +136,13 @@ public class MyPageController {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-      System.out.println(review);
+      //(review);
       return review;
     }
     
     @RequestMapping(value = "/deletereview")
     public String deleteReview(@RequestParam("rev_no") int rev_no, Model model) throws Exception {
-    	System.out.println(rev_no);
+    	//(rev_no);
     	reviewservice.remove(rev_no);
         model.addAttribute("center", "user/myPage");
         model.addAttribute("infocenter", "user/myPage/myReview");
@@ -155,7 +155,7 @@ public class MyPageController {
     	Qna qna = null;
     	List<Qna> qnalist = null;
     	qnalist = qnaservice.userselect(user.getUser_no());
-    	System.out.println(qnalist);
+    	//(qnalist);
     	
     	
     	model.addAttribute("qnalist", qnalist);
@@ -166,7 +166,7 @@ public class MyPageController {
     @RequestMapping("/qna/get")
     @ResponseBody
     public Qna getQna(@RequestParam("qnaNo") int qnaNo, Model model) {
-        System.out.println(qnaNo);
+        //(qnaNo);
     	
     	Qna qna = null;
     	try {
@@ -175,7 +175,7 @@ public class MyPageController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	System.out.println(qna);
+    	//(qna);
     	
         return qna;
     }

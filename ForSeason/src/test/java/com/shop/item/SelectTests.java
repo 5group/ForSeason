@@ -16,7 +16,7 @@ public class SelectTests {
         Item item = null;
         try {
             item = service.get(7);
-            System.out.println(item);
+            //(item);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

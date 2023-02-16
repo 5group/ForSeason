@@ -12,8 +12,9 @@ import com.shop.frame.MyMapper;
 @Repository
 public interface QnaMapper extends MyMapper<Integer, Qna> {
 
-	List<Qna> userselect(int id);
-	Qna qnaselect(int id);
-	
-	
+    List<Qna> userselect(int id);
+
+    Qna qnaselect(int id);
+
+
 }

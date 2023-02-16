@@ -13,41 +13,40 @@ import com.shop.mapper.QnaMapper;
 public class QnaService implements MyService<Integer, Qna> {
     @Autowired
     QnaMapper mapper;
-    
-	@Override
-	public void register(Qna qna) throws Exception {
-		mapper.insert(qna);
-	}
 
-	@Override
-	public void remove(Integer k) throws Exception {
-		mapper.delete(k);
-	}
+    @Override
+    public void register(Qna qna) throws Exception {
+        mapper.insert(qna);
+    }
 
-	@Override
-	public void modify(Qna v) throws Exception {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public void remove(Integer k) throws Exception {
+        mapper.delete(k);
+    }
 
-	@Override
-	public Qna get(Integer k) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public void modify(Qna v) throws Exception {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	public List<Qna> get() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Qna get(Integer k) throws Exception {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-    
-  public List<Qna> userselect(int id) throws Exception {
-		return mapper.userselect(id);
-	}
-  
-  public Qna qnaselect(int id) throws Exception{
-	  	return mapper.qnaselect(id);
-	  
-  }
+    @Override
+    public List<Qna> get() throws Exception {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public List<Qna> userselect(int id) throws Exception {
+        return mapper.userselect(id);
+    }
+
+    public Qna qnaselect(int id) throws Exception {
+        return mapper.qnaselect(id);
+
+    }
 }

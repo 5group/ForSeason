@@ -15,7 +15,7 @@ public class SelectTests {
         WishList wishList = null;
         try {
             wishList = service.get(1);
-            System.out.println(wishList);
+            //(wishList);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

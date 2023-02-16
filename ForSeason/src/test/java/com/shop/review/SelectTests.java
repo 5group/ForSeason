@@ -18,7 +18,7 @@ public class SelectTests {
         Review review = null;
         try {
             review = service.get(1);
-            System.out.println(review);
+            //(review);
         } catch (Exception e) {
             e.printStackTrace();
         }

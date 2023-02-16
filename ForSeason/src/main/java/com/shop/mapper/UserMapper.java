@@ -11,7 +11,9 @@ import java.util.HashMap;
 @Repository
 public interface UserMapper extends MyMapper<Integer, User> {
     public User selectId(String id) throws Exception;
+
     public void delete(String id) throws Exception;
+
     public void pwd_update(User user) throws Exception;
 
     public String selectFindUser(HashMap<String, String> hashMap) throws Exception;

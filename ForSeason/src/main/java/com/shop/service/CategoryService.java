@@ -60,14 +60,11 @@ public class CategoryService implements MyService<Integer, Category> {
 
     public HashMap<String, Object> setMapCateListByObjectMap(Map<String, List<Category>> mapCateList, Category category) {
         HashMap<String, Object> curItemInfoMap = new HashMap<String, Object>();
-        //카테고리정보가 존재할 때 (메인페이지에서 검색 제외)
-        if (mapCateList.get("top").toString().contains(category.toString())) {  //대분류일때
+        if (mapCateList.get("top").toString().contains(category.toString())) {
             curItemInfoMap.put("top", category.getCate_no());
-
-        } else if (mapCateList.get("middle").toString().contains(category.toString())) {  //중분류일때
+        } else if (mapCateList.get("middle").toString().contains(category.toString())) {
             curItemInfoMap.put("middle", category.getCate_no());
-
-        } else { //소분류일때
+        } else {
             curItemInfoMap.put("sub", category.getCate_no());
         }
         return curItemInfoMap;

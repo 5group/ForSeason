@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shop.mapper.CouponMapper">
+
+    <select id="select" parameterType="Integer" resultType="Coupon">
+        SELECT * FROM coupon WHERE cou_no=#{cou_no}
+    </select>
+    <select id="selectAll" resultType="Coupon">
+        SELECT * FROM coupon
+    </select>
+    <select id="selectList" parameterType="Integer" resultType="Coupon">
+        SELECT * FROM coupon where user_no=#{user_no} and cou_status=1 order by cou_status desc, cou_name, cou_rdate
+    </select>
+    <insert id="insert" parameterType="Coupon">
+        INSERT INTO coupon
+        VALUES (0,  #{user_no}, #{cou_name}, #{cou_price}, 1, now(), DATE_ADD(NOW(), INTERVAL 1 MONTH))
+    </insert>
+    <update id="update" parameterType="Coupon">
+        UPDATE coupon SET cou_status=0 WHERE cou_no=#{cou_no}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM coupon WHERE cou_no=#{cou_no}
+    </delete>
+
+</mapper>

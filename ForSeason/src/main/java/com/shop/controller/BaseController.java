@@ -20,19 +20,13 @@ public class BaseController {
     @ModelAttribute
     public void categories(Model model) throws Exception {
         Map<String, List<Category>> mapCateList = new HashMap<String, List<Category>>();
-        List<Category> topCategory = null;
-        List<Category> middleCategory = null;
-        List<Category> subCategory = null;
-
-        topCategory = categoryService.getTopCategory();  // 1,2,3
+        List<Category> topCategory = topCategory = categoryService.getTopCategory();
         mapCateList.put("top", topCategory);
-        middleCategory = categoryService.getMiddleCategory();  // 10,20,30 ....
+        List<Category> middleCategory = middleCategory = categoryService.getMiddleCategory();
         mapCateList.put("middle", middleCategory);
-        subCategory = categoryService.getSubCategory();  // 11,12 21,22 ....
+        List<Category> subCategory = subCategory = categoryService.getSubCategory();
         mapCateList.put("sub", subCategory);
-
         model.addAttribute("mapCateList", mapCateList);
-        
     }
 }
 

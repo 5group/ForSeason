@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.shop.dto.Color;
 import com.shop.frame.MyService;
 import com.shop.mapper.ColorMapper;
@@ -39,5 +38,5 @@ public class ColorService implements MyService<Integer, Color> {
     public List<Color> get() throws Exception {
         return mapper.selectAll();
     }
-   
+
 }

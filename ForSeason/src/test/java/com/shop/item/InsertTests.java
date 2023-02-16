@@ -18,7 +18,7 @@ public class InsertTests {
         //Item item = new Item(0, 31, "청바지", 10000, 10, "청바지 상품 등록", 0, null);
         try{
             //service.register(item);
-            System.out.println("OK");
+            //("OK");
         }catch (Exception e){
             e.printStackTrace();
             System.out.printf("Fail");

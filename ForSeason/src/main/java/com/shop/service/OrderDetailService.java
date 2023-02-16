@@ -48,15 +48,15 @@ public class OrderDetailService implements MyService<Integer, OrderDetail> {
         return mapper.selectAll();
     }
 
-    public List<OrderDetail> get_list(int user_no) throws Exception{
+    public List<OrderDetail> get_list(int user_no) throws Exception {
         return mapper.selectList(user_no);
     }
 
-    public List<OrderDetail> getODList(int user_no) throws Exception{
+    public List<OrderDetail> getODList(int user_no) throws Exception {
         return mapper.select_userODList(user_no);
     }
 
-    public void successOrder ( int order_no, List<Cart> list) throws Exception {
+    public void successOrder(int order_no, List<Cart> list) throws Exception {
         for (Cart cart : list) {
             Stock stock = stockService.get(cart.getStock_no());
             Item item = itemService.get(stock.getItem_no());

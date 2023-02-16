@@ -15,7 +15,7 @@ public class SelectTests {
         OrderDetail od = null;
         try {
             od = service.get(1);
-            System.out.println(od);
+            //(od);
         } catch (Exception e) {
             e.printStackTrace();
         }

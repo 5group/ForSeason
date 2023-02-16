@@ -80,7 +80,7 @@ public class MainController {
     @RequestMapping(value = "/checkLogin")
     public String checkLogin(String id, String pwd) throws Exception {
         Admin admin = adminService.get(id);
-        System.out.println(admin);
+        //(admin);
         if (admin != null && admin.getAdmin_password().equals(pwd)) {
             session.setAttribute("adminLogin", admin);
             return "redirect:/";
@@ -99,7 +99,7 @@ public class MainController {
 
 		List<Qna> qnaList = null;
 		qnaList = qnaservice.userselect();
-		System.out.println(qnaList);
+		//(qnaList);
 		model.addAttribute("qnalist", qnaList);
 		model.addAttribute("center", "userQuestion/qnaList");
 		return "index";
@@ -108,7 +108,7 @@ public class MainController {
 	@RequestMapping("/qna/get")
 	@ResponseBody
 	public Qna getQna(@RequestParam("qnaNo") int qnaNo, Model model) {
-		System.out.println(qnaNo);
+		//(qnaNo);
 
 		Qna qna = null;
 		try {
@@ -117,7 +117,7 @@ public class MainController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(qna);
+		//(qna);
 
 		return qna;
 	}
@@ -126,29 +126,29 @@ public class MainController {
 	public String qnaInsert(int qna_no, String rep_content) throws Exception {
 //        Admin ad = (Admin)session.getAttribute("adminLogin");
 //        if (ad == null) {
-//            System.out.println("ad is null");
+//            //("ad is null");
 //            return 0;
 //        }
 		Reply reply = new Reply(qna_no, "admin01", rep_content, null);
-		System.out.println(reply);
+		//(reply);
 		replyservice.register(reply);
 		return "index";
 	}
 
 	@RequestMapping(value = "/qna/modify", method = RequestMethod.POST)
 	public String updatereply(Reply reply) throws Exception {
-		System.out.println("컨트롤러 시작");
+		//("컨트롤러 시작");
 
 		reply.setRep_date(new Date());
 
-		System.out.println(reply);
+		//(reply);
 		replyservice.modify(reply);
 		return "redirect:/qna";
 	}
 
 	@RequestMapping(value = "/qna/delete", method = RequestMethod.POST)
 	public String deleteQna(@RequestParam(name = "qnaNo") int qnaNo) {
-		System.out.println(qnaNo);
+		//(qnaNo);
 		try {
 			qnaservice.remove(qnaNo);
 		} catch (Exception e) {
@@ -163,7 +163,7 @@ public class MainController {
 
 		List<Review> revList = null;
 		revList = reviewservice.revselect();
-		System.out.println(revList);
+		//(revList);
 		model.addAttribute("revlist", revList);
 		model.addAttribute("center", "userReview/revList");
 		return "index";
@@ -172,7 +172,7 @@ public class MainController {
 	@RequestMapping("/rev/get")
 	@ResponseBody
 	public Review getRev(@RequestParam("revNo") int revNo, Model model) {
-		System.out.println(revNo);
+		//(revNo);
 
 		Review review = null;
 		try {
@@ -181,14 +181,14 @@ public class MainController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(review);
+		//(review);
 
 		return review;
 	}
 
 	@RequestMapping(value = "/rev/delete", method = RequestMethod.POST)
 	public String deleteRev(@RequestParam(name = "revNo") int revNo) {
-		System.out.println(revNo);
+		//(revNo);
 		try {
 			reviewservice.remove(revNo);
 		} catch (Exception e) {

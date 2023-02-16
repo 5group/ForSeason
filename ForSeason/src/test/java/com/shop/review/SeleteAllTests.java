@@ -17,7 +17,6 @@ public class SeleteAllTests {
         List<Review> list = null;
         try{
             list = service.get();
-            for(Review review : list) System.out.println(review);
         }catch (Exception e){
             e.printStackTrace();
         }

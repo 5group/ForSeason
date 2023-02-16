@@ -5,7 +5,9 @@
 <mapper namespace="com.shop.mapper.StockMapper">
 
     <select id="select" parameterType="Integer" resultType="Stock">
-        SELECT * FROM stock WHERE stock_no=#{stock_no}
+        SELECT *
+        FROM stock
+        WHERE stock_no = #{stock_no}
     </select>
 
     <select id="selectSizeColor" parameterType="Integer" resultType="Stock">
@@ -20,40 +22,61 @@
           and st.stock_no = #{stock_no}
     </select>
     <select id="getStockColor" parameterType="Integer" resultType="Color">
-        SELECT c.color_no, c.color_name FROM stock s
-                                                 INNER JOIN color c
-        WHERE c.color_no=s.color_no AND item_no=#{item_no} GROUP BY c.color_no
+        SELECT c.color_no, c.color_name
+        FROM stock s
+                 INNER JOIN color c
+        WHERE c.color_no = s.color_no
+          AND item_no = #{item_no}
+        GROUP BY c.color_no
     </select>
     <select id="getStockSize" parameterType="Integer" resultType="Size">
-        SELECT si.size_no, si.size_name FROM stock s
-                                                 INNER JOIN size si
-        WHERE si.size_no=s.size_no AND item_no=#{item_no} GROUP BY si.size_no
+        SELECT si.size_no, si.size_name
+        FROM stock s
+                 INNER JOIN size si
+        WHERE si.size_no = s.size_no
+          AND item_no = #{item_no}
+        GROUP BY si.size_no
     </select>
     <select id="getStockNo" parameterType="hashMap" resultType="Integer">
-        select stock_no from stock where item_no=#{item_no} AND size_no=#{size_no} AND color_no=#{color_no};
+        select stock_no
+        from stock
+        where item_no = #{item_no}
+          AND size_no = #{size_no}
+          AND color_no = #{color_no};
     </select>
 
     <select id="selectAll" resultType="Stock">
-        SELECT * FROM stock
+        SELECT *
+        FROM stock
     </select>
     <insert id="insert" parameterType="Stock">
         INSERT INTO stock
-        VALUES (0, #{item_no}, #{color_no},#{size_no}, #{amount})
+        VALUES (0, #{item_no}, #{color_no}, #{size_no}, #{amount})
     </insert>
     <update id="update" parameterType="Stock">
-        UPDATE stock SET amount=#{amount} WHERE stock_no=#{stock_no}
+        UPDATE stock
+        SET amount=#{amount}
+        WHERE stock_no = #{stock_no}
     </update>
     <delete id="delete" parameterType="Integer">
-        DELETE FROM stock WHERE stock_no=#{stock_no}
+        DELETE
+        FROM stock
+        WHERE stock_no = #{stock_no}
     </delete>
 
     <select id="selectStock" parameterType="Integer" resultType="Size">
-    	select si.size_no, si.size_name from stock s
-		inner join size si
-		where si.size_no=s.size_no AND item_no=#{item_no} AND color_no=#{color_no} AND s.amount>0
+        select si.size_no, si.size_name
+        from stock s
+                 inner join size si
+        where si.size_no = s.size_no
+          AND item_no = #{item_no}
+          AND color_no = #{color_no}
+          AND s.amount > 0
     </select>
 
     <select id="selectItemByStock" parameterType="Integer" resultType="Stock">
-        SELECT * FROM stock WHERE item_no=#{item_no}
+        SELECT *
+        FROM stock
+        WHERE item_no = #{item_no}
     </select>
 </mapper>
