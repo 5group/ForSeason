@@ -71,7 +71,7 @@ Weather API 등록 : https://blog.codef.io/weather_api/<br>
 ![alt text](images/API/naverServiceToken.png)
 ## NAVER CLOVA CHATBOT API
 - 위치 : /src/main/frame/ChatBotUtil.class <br>
-기입사항 : REST KEY
+기입사항 : REST KEY <br>
 ![alt text](images/API/chatBotToken.png)
 ![alt text](images/API/naverClovaKey.png)
 
@@ -127,9 +127,9 @@ Weather API 등록 : https://blog.codef.io/weather_api/<br>
 ![alt text](images/userImages/userWishView.png) 
 - ItemSearch
 ![alt text](images/userImages/userSearchPage.png) 
-
-![alt text](images/userImages/orderAdd.png) 
 - order ADD
+![alt text](images/userImages/orderAdd.png) 
+
 
 ### QnA Page
 - QnA Page
