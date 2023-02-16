@@ -1,5 +1,5 @@
 # 👩‍👦‍👦 ForSeason
-![alt text](images/mainLogo.png)
+![alt text](images/mainLogo.png) <br>
 팀장 : 김지영 </br>
 팀원 : 조민수, 설재경 </br>
 개발 기간 :  2023.01.02 ~ 2023.02.17 (총 46일) </br>
