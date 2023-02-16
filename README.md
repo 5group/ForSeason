@@ -1,12 +1,23 @@
 # 👩‍👦‍👦 ForSeason
-
-팀장 : 김지영<br>
-팀원 : 조민수, 설재경
-개발 기간은 2023.01.02 ~ 2023.02.17 (총 46일) </br>
-주제 : 패션 리테일링 세일즈 마켓 EIMS 도입에 따른 기능 구현
+![alt text](images/mainLogo.png)
+팀장 : 김지영 </br>
+팀원 : 조민수, 설재경 </br>
+개발 기간 :  2023.01.02 ~ 2023.02.17 (총 46일) </br>
+주제 : 온라인 옷 쇼핑몰 </br>
 
 # 개요  
+
 - 시연 영상 : http://youtube.com/
+
+# 🗒️ 개발 목적 
+## 기획 목적
+1. 무난히 채택되는 웹쇼핑몰이라는 주제 우리만의 깊이로 담아낸다.
+2. 백앤드의 영역에서 기술적인 부분에 가장 효과적인 증명을 찾고자 했다.
+
+## 주제 선정
+ 1. 성별 > 옷분류 > 세부 옷분류 > 상품 > 색상 > size 카테고리를 단계별 정의, 깊은  multilayer 구현 
+ 2. multilayer 구현으로 통한 광범위한 데이터 재고 시스템 구현(출고, 입고)
+ 3. 상품 데이터가 광범위하게 증가에도, 관리용이한 유저경험 서비스
 
 # 🎩 개발 환경 / 시스템 구성
 
@@ -31,19 +42,52 @@
 1. 저장소를 클론합니다.
 2. 해당 프로젝트를 IDE(예: Eclipse, Intellij 등)에서 엽니다.
 3. DB 설정 파일(application.properties)에서 DB 정보를 수정합니다. <br>
- Intellij : mybatis.mapper-locations=classpath:mybatis/*.xml <br>
- Eclipse  : mybatis.mapper-locations=com/admin/mybatis/*.xml <br> 
 4. Maven을 이용하여 빌드하고 실행합니다.
 
 # 🧐 사용 방법
 주의 : 꼭 실행전에 해당 라이브러리를 사용하기 위해선 아래 API를 등록 후 키값과 Redirect URL 를 수정 해주셔야 합니다. <br>
 Kakao API 등록 : https://developers.kakao.com/docs/latest/ko/index<br> 
 Naver API 등록 : https://developers.naver.com/docs/common/openapiguide/appconf.md#api-%EC%84%A4%EC%A0%95<br>
+Naver CLOVA Chatbot API : https://www.ncloud.com/product/aiService/chatbot <br>
 Google Email API 등록 : https://cloud.google.com/appengine/docs/standard/java/mail/sending-mail-with-mail-api?hl=ko<br>
-Iamport API 등록 : https://portone.gitbook.io/docs/<br> 
+Iamport API 등록 : https://portone.gitbook.io/docs/<br>
+Weather API 등록 : https://blog.codef.io/weather_api/<br> 
 
+## application.properties<br> 
+![alt text](images/API/applicationProperties.png)
+- 위치 : src/main/resources/templates/application.properties
+ Intellij : mybatis.mapper-locations=classpath:mybatis/*.xml <br>
+ Eclipse  : mybatis.mapper-locations=com/admin/mybatis/*.xml <br> 
+## KAKAO Login, Map API
+- 위치 :  /src/main/service/KakaoService.class <br>
+기입사항 : REST KEY
+![alt text](images/API/kakaoServiceToken.png)
+- main.html 
+기입사항 : Javascript KEY
+![alt text](images/API/kakaoMapKey.png) 
+## NAVER Login API
+- 위치 : /src/main/service/naverService.class
+기입사항 : REST KEY
+![alt text](images/API/naverServiceToken.png)
+## NAVER CLOVA CHATBOT API
+- 위치 : /src/main/frame/ChatBotUtil.class
+기입사항 : REST KEY
+![alt text](images/API/chatBotToken.png)
+![alt text](images/API/naverClovaKey.png)
+
+## Weather API
+기입사항 : 일반 인증키
+- 위치 : /src/main/controller/DataController.class
+![alt text](images/API/weatherToken.png)
+
+
+
+# 프로젝트의 주요기능 및 특징
+프로젝트에서 제공하는 다차원적인 제품 분류 기능, 재고 관리 기능, 주문 처리 기능 등의 기능을 설명하고, 이를 통해 고객들이 더욱 편리하게 쇼핑을 할 수 있도록 하는 것을 강조할 수 있습니다.
 
 # 👍 WBS
+![alt text](images/wbs/wbsMain.png)
+![alt text](images/wbs/wbsInput.png)
 
 # 🙋🏻 웹 구성요소
 
@@ -52,44 +96,44 @@ Iamport API 등록 : https://portone.gitbook.io/docs/<br>
 
 ### Main Page 
 - HOME
-![alt text](userImages/UserMainPage.png)
-![alt text](userImages/userHomeBody.png)
+![alt text](images/userImages/UserMainPage.png)
+![alt text](images/userImages/userHomeBody.png)
 
 - Best, Map
-![alt text](userImages/userBestPage.png)
-![alt text](userImages/shopMapPage.png)
+![alt text](images/userImages/userBestPage.png)
+![alt text](images/userImages/shopMapPage.png)
 ### Login Page
 - Login, Sign Up
-![alt text](userImages/userLoginPage.png) 
-![alt text](userImages/userKakaoLoginOkPage.png) 
+![alt text](images/userImages/userLoginPage.png) 
+![alt text](images/userImages/userKakaoLoginOkPage.png) 
 ### UserInfo 
 - Order Page
-![alt text](userImages/userOrder.png) 
-![alt text](userImages/userOrderDetail.png) 
+![alt text](images/userImages/userOrder.png) 
+![alt text](images/userImages/userOrderDetail.png) 
 - WishList, Review Page
-![alt text](userImages/userWishListPage.png) 
-![alt text](userImages/userReviewPage.png) 
+![alt text](images/userImages/userWishListPage.png) 
+![alt text](images/userImages/userReviewPage.png) 
 
 - Coupon, Qna Page
-![alt text](userImages/userCoupon.png) 
-![alt text](userImages/userQnAPage.png) 
+![alt text](images/userImages/userCoupon.png) 
+![alt text](images/userImages/userQnAPage.png) 
 - UserInfo Change
-![alt text](userImages/userCheckPassword.png) 
-![alt text](userImages/userChangeInfo.png) 
-![alt text](userImages/userDelete.png) 
+![alt text](images/userImages/userCheckPassword.png) 
+![alt text](images/userImages/userChangeInfo.png) 
+![alt text](images/userImages/userDelete.png) 
 
 ### Item Page
 - ItemDetail(Wish ADD)
-![alt text](userImages/userWishView.png) 
+![alt text](images/userImages/userWishView.png) 
 - ItemSearch
-![alt text](userImages/userSearchPage.png) 
+![alt text](images/userImages/userSearchPage.png) 
 
+![alt text](images/userImages/orderAdd.png) 
 - order ADD
-![alt text](userImages/orderAdd.png) 
 
 ### QnA Page
 - QnA Page
-![alt text](userImages/qnaADD.png)
+![alt text](images/userImages/qnaADD.png)
 
 
 
@@ -100,24 +144,24 @@ Iamport API 등록 : https://portone.gitbook.io/docs/<br>
 <summary>Admin Detail View </summary>
 
 ### Login Page
-![alt text](adminImages/adminLoginPage.png) 
+![alt text](images/adminImages/adminLoginPage.png) 
 ### Main Page 
-![alt text](adminImages/AdminMainPage.png) 
+![alt text](images/adminImages/AdminMainPage.png) 
 ### Chart Click Event
-![alt text](adminImages/AdminChartDayClick.png) 
-![alt text](adminImages/AdminChartClickEvent.png) 
+![alt text](images/adminImages/AdminChartDayClick.png) 
+![alt text](images/adminImages/AdminChartClickEvent.png) 
 ### Category Page
-![alt text](adminImages/AdminCategoryClickEventPage.png) 
+![alt text](images/adminImages/AdminCategoryClickEventPage.png) 
 ### Item Add Click 
-![alt text](adminImages/itemAddPage.png) 
+![alt text](images/adminImages/itemAddPage.png) 
 ### UserPush Coupon And Mail Page
-![alt text](adminImages/UserPushCouponAndMail.png) 
+![alt text](images/adminImages/UserPushCouponAndMail.png) 
 ### Discount Click
-![alt text](adminImages/checkDiscountPage.png) 
+![alt text](images/adminImages/checkDiscountPage.png) 
 ### QnA Page - Reply Page
-![alt text](adminImages/qnaPage.png) ![alt text](adminImages/replyPage.png) 
+![alt text](images/adminImages/qnaPage.png) ![alt text](images/adminImages/replyPage.png) 
 ### Datail Click
-![alt text](adminImages/qnaDatailPage.png) 
+![alt text](images/adminImages/qnaDatailPage.png) 
 
 
 </details>
