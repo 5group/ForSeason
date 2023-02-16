@@ -62,22 +62,22 @@ Weather API 등록 : https://blog.codef.io/weather_api/<br>
 - 위치 :  /src/main/service/KakaoService.class <br>
 기입사항 : REST KEY
 ![alt text](images/API/kakaoServiceToken.png)
-- main.html 
+- 위치 : src/main/resources/templates/main.html <br>
 기입사항 : Javascript KEY
 ![alt text](images/API/kakaoMapKey.png) 
 ## NAVER Login API
-- 위치 : /src/main/service/naverService.class
+- 위치 : /src/main/service/naverService.class <br>
 기입사항 : REST KEY
 ![alt text](images/API/naverServiceToken.png)
 ## NAVER CLOVA CHATBOT API
-- 위치 : /src/main/frame/ChatBotUtil.class
+- 위치 : /src/main/frame/ChatBotUtil.class <br>
 기입사항 : REST KEY
 ![alt text](images/API/chatBotToken.png)
 ![alt text](images/API/naverClovaKey.png)
 
 ## Weather API
+- 위치 : /src/main/controller/DataController.class <br>
 기입사항 : 일반 인증키
-- 위치 : /src/main/controller/DataController.class
 ![alt text](images/API/weatherToken.png)
 
 
@@ -169,9 +169,9 @@ Weather API 등록 : https://blog.codef.io/weather_api/<br>
 
 # 👩🏻‍💻 프로젝트 과정 
 
-김지영 : <br>
-조민수 : 파이썬을 이용한 이미지 크롤링을 통해 상품 카테고리 확장 <br>
-설재경 : <br>
+김지영 : - 수정예정 <br>
+조민수 : - 수정예정 <br>
+설재경 : - 수정예정 <br>
 
 
 # 👀 테스트 및 배포 
