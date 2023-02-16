@@ -33,7 +33,7 @@
 
 # ERD 구조 
 
-<details>
+<details open>
 <summary>view images</summary>
 
 ![alt text](erd.png)
@@ -42,7 +42,7 @@
 -  https://www.erdcloud.com/d/7PDjo2FzznEwfmLCZ
 # UI
 
-<details>
+<details open>
 <summary>view images</summary>
 
 ![alt text](images/AdminUI.png) </br>
@@ -57,7 +57,7 @@
 5. 프로젝트를 실행합니다. `$ npm start`
 
 # 🧐 사용 방법
-주의 : 꼭 실행전에 해당 라이브러리를 사용하기 위해선 아래 API를 등록 후 키값과 Redirect URL 를 수정 해주셔야 합니다. <br>
+주의 : 꼭 실행전에 해당 라이브러리를 사용하기 위해선 아래 API를 등록 후 발급받은 키와 해당 Redirect URL 를 수정 해주셔야 합니다. <br>
 1. Kakao API 등록 : https://developers.kakao.com/docs/latest/ko/index 
 2. Naver API 등록 : https://developers.naver.com/docs/common/openapiguide/appconf.md#api-%EC%84%A4%EC%A0%95 
 3. Naver CLOVA Chatbot API : https://www.ncloud.com/product/aiService/chatbot 
@@ -65,14 +65,13 @@
 5. Iamport API 등록 : https://portone.gitbook.io/docs/ 
 6. Weather API 등록 : https://blog.codef.io/weather_api/  
 
-
-<details>
+<details open>
 <summary>View Setting Images</summary>
 
 ## application.properties<br>
 
 
-<details>
+<details open>
 <summary>view images</summary>
 
 ![alt text](images/API/applicationProperties.png)
@@ -85,7 +84,7 @@
 - 위치 :  /src/main/service/KakaoService.class <br>
 기입사항 : REST KEY<br>
 
-<details>
+<details open>
 <summary>view images</summary>
 
 ![alt text](images/API/kakaoServiceToken.png)
@@ -93,7 +92,7 @@
 
 - 위치 : src/main/resources/templates/main.html <br>
  기입사항 : Javascript KEY <br>
-<details>
+<details open>
 <summary>view images</summary>
 
 ![alt text](images/API/kakaoMapKey.png) 
@@ -104,7 +103,7 @@
 - 위치 : /src/main/service/naverService.class <br>
 기입사항 : REST KEY<br>
 
-<details>
+<details open>
 <summary>view images</summary>
 
 ![alt text](images/API/naverServiceToken.png)
@@ -115,7 +114,7 @@
 - 위치 : /src/main/frame/ChatBotUtil.class <br>
 기입사항 : REST KEY <br>
 
-<details>
+<details open>
 <summary>view images</summary>
 
 ![alt text](images/API/chatBotToken.png)<br>
@@ -125,7 +124,7 @@
 ## Weather API
 - 위치 : /src/main/controller/DataController.class <br>
 기입사항 : 일반 인증키<br>
-<details>
+<details open>
 <summary>view images</summary>
 
 ![alt text](images/API/weatherToken.png)
@@ -145,7 +144,7 @@
 
 # 👍 WBS
 
-<details>
+<details open>
 <summary>view images</summary>
 
 ![alt text](images/wbs/wbsMain.png)
@@ -306,30 +305,48 @@ Intellij Mybatis -  https://kyun2.tistory.com/69 <br>
 Selenium - https://wikidocs.net/177133 <br>
 
 
-# 트러블 슈팅 
+# ⚒️트러블 슈팅⚒️ 
 
-트러블 슈팅
 - 기획단계 결정 지연
-- 프로젝트 기획단계에서 매우 어려움을 줌
+  * 문제: 프로젝트 기획 단계에서 결정 지연이 발생하여 개발 일정이 밀렸습니다.
+  * 해결: 프로젝트 관련 회의에서 기획 단계 결정이 우선적으로 이루어지도록 다음과 같은 조치를 취했습니다.
+     * 회의 참석 인원에 대한 사전 안내 및 참석 요청
+     * 회의 일정 및 안건 미리 공지
+     * 회의록 작성 및 공유
+
+
 - ERD 작업간에 긴 시간에 소요됨
-- 이후 프로젝트 참여 없이 딴짓거리함 (게임, 동영상)
+  * 문제: ERD 작업이 예상보다 오랜 시간이 소요되었습니다.
+  * 해결: ERD 작업을 효율적으로 진행하기 위해 다음과 같은 조치를 취했습니다.
+    * ERD 작업 전 미리 관련 자료 수집 및 정리
+    * 작업을 시작하기 전 관련 인원과 논의하여 작업 방향성 확립
+    * ERD 작업 중 발생한 이슈는 빠르게 공유하여 해결
 
-- NCP 테스트 오류
-- 무한로딩 이미지 mapper 오류 발생
-- 해결 : 롤백 주소로 변환 후 오류 해결
+ 
+- NCP 테스트 오류, 무한로딩 이미지 mapper 오류 발생
+  * 문제: NCP 테스트 시 오류가 발생하였고, 무한로딩 이미지 mapper 오류도 발생하였습니다.
+  * 해결: 롤백 주소로 변환 후 오류가 발생하지 않는 것으로 확인되었으므로, 다음과 같은 조치를 취했습니다.
+    * 롤백 주소로 변환 후 테스트 및 오류 해결 서버 상태 모니터링을 통해 유사한 이슈 발생 시 빠르게 대처
 
 
-- 로그인 api 문제
-- 네이버의 api 테스트계정을 만들어야했기 때문에,
-- 네이버 테스트 계정을 만들수 있덤 김지영 팀장만 테스트 가능하였음
-- 테스트 계정 등록 및 심사 이후 진행 가능함
+- 깃 충돌 오류 및 프로젝트 공유 오류 발생
+  * 문제: 깃 충돌 오류가 발생하고 프로젝트 공유간의 오류가 발생하여, application.properties와 pom.xml 주소 오류를 확인해야 했습니다.
+  * 해결: Git 충돌 방지를 위해 해당 데이터를 제외한 git push를 시도하였으며, 이후 application.properties와 pom.xml 경로 오류를 확인하여 수정하였습니다.
+  
 
-- 카테고리 분류 및 알고리즘 정리의 에로사항
-- 3단계 카테고리 사이즈 컬러 를 기준으로 재고 관리를 하는것이 어려움
-- 카테고리는 항상 불러와쟈야 되는데 메인에서 불러오면
-- 딱 처음 들어갔을때만 뜨고 그 다음엔 안 뜬다
-- 그래서 컨트롤러 독립 관리를 통한(DataController) 해당 문제
+- 로그인 API 사용시 Paging Error 발생
+  * 문제: 로그인 API를 사용할 때 Paging Error가 발생하였습니다.
+  * 해결: Redirect URL이 정상적이지 않았기 때문에 해당 주소를 수정하였고, 이후 정상적으로 처리되었습니다.
+  
 
-- pom 환경설정 오류
+- 결제 진행시 할인율이 적용되지 않는 오류 발생
+  * 문제: 결제 진행시 할인율이 적용되지 않는 오류가 발생하였습니다.
+  * 해결: 해당 Database 코드가 잘못되어 있었기 때문에 Mysql을 수정하였고, 이후 정상적으로 처리되었습니다. 
 
-- 웹소켓 에러
+
+- 아이디/패스워드 찾기 버그 발생
+  * 문제: 아이디/패스워드 찾기 버그가 발생하였습니다.
+  * 해결: 이메일 Service에서 코드가 정상적으로 넘어가지 않는 문제를 발견하여 수정하였고, 이후 정상적으로 처리되었습니다.
+
+# 프로젝트 소감
+- 조민수 : 
