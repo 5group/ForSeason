@@ -247,133 +247,78 @@
 
 <table>
   <tr>
-    <td>이름</td>
-    <td>Part Table</td>
-    <td>기능</td>
+    <td>이름</td><td>Part Table</td><td>기능</td>
   </tr>
   <tr>
-    <td rowspan="25">김지영</td>
-    <td rowspan="3">카테고리</td>
-    <td>CRUD 구현</td>
+    <td rowspan="5">김지영</td><td>카테고리</td><td>CRUD, (대-중-소)분류 카테고리, 카테고리 별 상품리스트 구현 </td>
   </tr>
   <tr>
-    <td>대,중,소분류 카테고리 구현</td>
+    <td>상품</td><td>상품 검색, 정렬기능, 카테고리 분류, 검색, 정렬 결과에 따른 페이징,<br> 상품 상세페이지, 상품 색상 클릭시 이미지 변경, 베스트 아이템, 위시리스트 기능 구현 </td>
   </tr>
   <tr>
-    <td>카테고리 별 상품리스트 구현 </td>
+    <td>재고</td><td>색상 CRUD, 사이즈 CRUD, 색상별 사이즈 불러오기 기능 구현    </td>
   </tr>
   <tr>
-    <td rowspan="7">상품</td>
+    <td>사용자 UI</td><td>메인페이지, 로그인, 회원가입페이지, 상품리스트, 상품상세페이지, 마이페이지, 위시리스트   </td>
   </tr>
   <tr>
-    <td>상품 검색, 정렬기능 구현 </td>
+    <td>관리자 UI</td><td>메인페이지, 로그인페이지, 주문내역페이지, 상품/재고관리 페이지, 쿠폰/메일발송 페이지 </td>
   </tr>
   <tr>
-    <td>카테고리 분류, 검색, 정렬 결과에 따른 페이징 구현 </td>
+    <td rowspan="11">조민수</td><td>회원</td><td>CRUD, 회원 생성, 회원 탈퇴, 아이디/비밀번호 찾기, 정보 변경 및 패스워드 변경, <br>
+          Kakao Login, Kakao Logout, 주문 내역 조회, 주문상세내역 조회, 쿠폰 조회, <br>
+          회원가입시 이벤트성 쿠폰 발급, 회원 조회, 패스워드 암호화, 패스워드 이메일발송 암호화 구현
+    </td>
   </tr>
   <tr>
-    <td>상품 상세페이지 구현 </td>
+    <td>주문</td><td>CRUD, 카카오 페이 결제 구현</td>
   </tr>
   <tr>
-    <td>상품 색상 클릭시 이미지 변경 기능 구현 </td>
+    <td>장바구니</td><td>CRUD, 장바구니 페이지 구현, 결제시 해당 장바구니 제거 구현</td>
   </tr>
   <tr>
-    <td>베스트 아이템 기능 구현 </td>
+    <td>재고</td><td>CRUD, 주문 결제 시 재고 갯수 차감, 재고 조회, 재고 수정 추가, 페이지 구현</td>
   </tr>
   <tr>
-    <td>위시리스트 기능 구현 </td>
+    <td>상품</td><td>CRUD, BeautifulSoup, Selenium을 이용한 유니클로 상품 크롤링,<br> 상품데이터 수집 후 상품 자동등록 시스템, 상품 등록 및 가격 수정 구현</td>
   </tr>
   <tr>
-    <td rowspan="4">재고</td>
+    <td>차트</td><td>주문 내역 데이터를 이용한  bubbleChart, Line Chart, Pie Chart 구현</td>
   </tr>
   <tr>
-    <td>색상 CRUD 구현 </td>
+    <td>admin</td><td>Login 구현</td>
   </tr>
   <tr>
-    <td>사이즈 CRUD 구현 </td>
+    <td>챗봇</td><td>Naver CLOVA ChatBot 비동기식 데이터 통신 구현</td>
   </tr>
   <tr>
-    <td>색상별 사이즈 불러오기 기능 구현 </td>
+    <td>날씨</td><td>현재날씨, 온도에 맞는 상품추천 구현</td>
   </tr>
   <tr>
-    <td rowspan="5">사용자 UI</td>
+    <td>기타</td><td>우편 번호 API 기능 구현,<br> 카테고리별 이미지 데이터 자동수집 및 자동 등록 기능 구현 </td>
   </tr>
   <tr>
-    <td>메인페이지 </td>
+    <td>README</td><td>README 제작, 이미지 구현</td>
   </tr>
-  <tr>
-    <td>로그인, 회원가입페이지 </td>
-  </tr>
-  <tr>
-    <td>상품리스트, 상품상세페이지 </td>
-  </tr>
-  <tr>
-    <td>마이페이지, 위시리스트 </td>
-  </tr>
-  <tr>
-    <td rowspan="6">관리자 UI</td>
-  </tr>
-  <tr>
-  <td>메인페이지 </td>
-  </tr>
-  <tr>
-    <td>로그인페이지 </td>
-  </tr>
-  <tr>
-    <td>주문내역페이지 </td>
-  </tr>
-  <tr>
-    <td>상품/재고관리 페이지 </td>
-  </tr>
-  <tr>
-    <td>쿠폰/메일발송 페이지 </td>
-  </tr>
-  <tr><td rowspan="25">조민수</td><td rowspan="8">회원</td><td>CRUD 구현 </td></tr>
-  <tr><td>회원 생성, 회원 탈퇴, 아이디/비밀번호 찾기, <br> 정보 변경 및 패스워드 변경 기능 구현 </td></tr>
-  <tr><td>Kakao Login Logout API 기능 구현</td></tr>
-  <tr><td>주문 내역 조회, 주문상세내역 조회, 쿠폰 조회 기능 구현 </td></tr>
-  <tr><td>회원가입시 이벤트성 쿠폰 발급 기능 구현 </td></tr>
-  <tr><td>세션을 이용한 로그인 시 해당 회원 데이터 불러오기 기능 구현</td></tr>
-  <tr><td>Mysql 유저 패스워드 암호화 기능 구현 </td></tr>
-  <tr><td>패스워드 찾기 이메일/암호화 기능 구축</td></tr>
-  <tr><td rowspan="3">주문</td></tr>
-  <tr><td>CRUD 구현</td></tr>
-  <tr><td>카카오 페이 결제 기능 구현 </td></tr>
-  <tr><td rowspan="3">장바구니</td></tr>
-  <tr><td>CRUD 구현 </td></tr>
-  <tr><td>장바구니 페이지 구현, 결제시 해당 장바구니 제거 구현</td></tr>
-  <tr><td rowspan="4">재고</td></tr>
-  <tr><td>CRUD 구현</td></tr>
-  <tr><td>주문 결제 시 재고 갯수 차감 구현 및 더미데이터 구현</td></tr>
-  <tr><td>재고관리 페이징 및 기능 구현 </td></tr>
-  <tr><td rowspan="3">상품</td></tr>
-  <tr><td>CRUD 구현</td></tr>
-  <tr><td>BeautifulSoup, Selenium을 이용한 유니클로 상품 크롤링,<br> 상품데이터 수집 후 상품 자동등록 시스템 구현</td></tr>
-  <tr><td>챗봇</td><td>Naver CLOVA ChatBot API 연결로 비동기식 데이터 통신 구현</td></tr>
-  <tr><td>날씨</td><td>날씨 기능 구현, 온도에 맞는 상품추천 기능 구현</td></tr>
-  <tr><td>README</td><td>README.md 총제작</td></tr>
-  <tr><td>기타</td><td>우편 번호 API 기능 구현,<br> 카테고리별 이미지 데이터 자동수집 및 자동 등록 기능 구현 </td></tr>
 
-<tr><td rowspan="21">설재경</td><td rowspan="3">회원</td><td>Main Page 리뷰 / 문의 기능</td></tr>
-<tr><td>데이터 생성 / 삭제 고도화 기능 구현</td></tr>
-<tr><td>(ADMIN) Item/Review/Reply/User 테이블 브릿지 기능구현</td></tr>
-<tr><td rowspan="6">상품</td></tr>
-<tr><td>상품 디테일과 리뷰 디테일의 브릿지 기능 구현</td></tr>
-<tr><td>Image Upload 기능 구현</td></tr>
-<tr><td>별점 및 조회수 표시 기능 구현</td></tr>
-<tr><td>실시간 리뷰 조회 기능 구현</td></tr>
-<tr><td>어드민 페이지에서 리뷰 관리 기능 구현</td></tr>
-<tr><td rowspan="2">재고</td></tr>
-<tr><td>유니클로 사이트를 기반으로한 데이터 프로세싱 기능 구현</td></tr>
-<tr><td rowspan="3">VIEW</td><td>BootStrap 을 이용한 페이징 및 데이터 팝업, 모달창 기능 구현</td></tr>
-<tr><td>User/Admin Reply&Review 기능 구현</td></tr>
-<tr><td rowspan="2">WBS제작</td></tr>
-<tr><td>WBS</td></tr>
-<tr><td>NCP</td><td>NCP 서버 제작 및 환경 구축</td></tr>
-<tr><td>최종 발표 준비</td><td>PPT 제작, 동영상 편집 & 업로드, Script 작성  </td></tr>
-
-  
-
+  <tr>
+    <td rowspan="6">설재경</td><td>회원</td><td>Main Page 리뷰 / 문의, 데이터 생성 / 삭제 고도화 구현</td>
+  </tr>
+  <tr>
+    <td>상품</td><td>상품 디테일과 리뷰 디테일, 게시판, 별점 및 조회수 표시, <br> 오름차순~내림차순 조회, 실시간 리뷰 조회, 리뷰 관리 구현</td>
+  </tr>
+  <tr>
+    <td>VIEW</td><td>BootStrap 을 이용한 페이징 및 데이터 팝업 - 모달창, User/Admin Reply&Review 구현</td>
+  </tr>
+  <tr>
+    <td>WBS</td><td>WBS제작</td>
+  </tr>
+  <tr>
+    <td>NCP</td><td>NCP 서버 제작 및 환경 구축</td>
+  </tr>
+  <tr>
+    <td>최종 발표 준비</td><td>PPT 제작, 동영상 편집 & 업로드, Script 작성  </td>
+  </tr>
 </table>
 
 
