@@ -6,13 +6,13 @@
 주제 : EIMS 기능을 도입한 패션 리테일 세일즈 마켓 </br>
 
 # 개요  
-
-- 시연 영상 : http://youtube.com/
+서버 오픈 2023.02.01 ~ 2023.02.17 
+<br> 🛒 [ForSeason](http://27.96.130.136:80) <br> 🛒 [Admin_ForSeason](http://27.96.130.136:8181) <br> 💻 [시연 영상](http://youtube.com/) 
 
 # 🗒️ 개발 목적 
 ## 기획 목적
-1. 무난히 채택되는 웹쇼핑몰이라는 주제 우리만의 깊이로 담아낸다.
-2. 백앤드의 영역에서 기술적인 부분에 가장 효과적인 증명을 찾고자 했다.
+1. 무난히 채택되는 웹쇼핑몰이라는 주제 우리만의 깊이로 담아냄
+2. 백앤드의 영역에서 기술적인 부분에 가장 효과적인 증명을 찾을 것
 
 ## 주제 선정
  1. 성별 > 옷분류 > 세부 옷분류 > 상품 > 색상 > size 카테고리를 단계별 정의, 깊은  multilayer 구현 
@@ -39,7 +39,7 @@
 ![alt text](erd.png)
 </details>
 
--  https://www.erdcloud.com/d/7PDjo2FzznEwfmLCZ
+[ERD](https://www.erdcloud.com/d/7PDjo2FzznEwfmLCZ)
 # UI
 
 <details open>
@@ -58,12 +58,12 @@
 
 # 🧐 사용 방법
 주의 : 꼭 실행전에 해당 라이브러리를 사용하기 위해선 아래 API를 등록 후 발급받은 키와 해당 Redirect URL 를 수정 해주셔야 합니다. <br>
-1. Kakao API 등록 : https://developers.kakao.com/docs/latest/ko/index 
-2. Naver API 등록 : https://developers.naver.com/docs/common/openapiguide/appconf.md#api-%EC%84%A4%EC%A0%95 
-3. Naver CLOVA Chatbot API : https://www.ncloud.com/product/aiService/chatbot 
-4. Google Email API 등록 : https://cloud.google.com/appengine/docs/standard/java/mail/sending-mail-with-mail-api?hl=ko 
-5. Iamport API 등록 : https://portone.gitbook.io/docs/ 
-6. Weather API 등록 : https://blog.codef.io/weather_api/  
+1. [Kakao API 등록](https://developers.kakao.com/docs/latest/ko/index) 
+2. [Naver API 등록](https://developers.naver.com/docs/common/openapiguide/appconf.md#api-%EC%84%A4%EC%A0%95) 
+3. [Naver CLOVA ChatbotAP](https://www.ncloud.com/product/aiService/chatbot) 
+4. [Google Email API 등록](https://cloud.google.com/appengine/docs/standard/java/mail/sending-mail-with-mail-api?hl=ko) 
+5. [Iamport API 등록](https://portone.gitbook.io/docs/) 
+6. [Weather API 등록](https://blog.codef.io/weather_api/)  
 
 <details open>
 <summary>View Setting Images</summary>
@@ -78,8 +78,8 @@
 </details>
 
 - 위치 : src/main/resources/templates/application.properties <br>
- *- Intellij : mybatis.mapper-locations=classpath:mybatis/*.xml <br>
- *- Eclipse  : mybatis.mapper-locations=com/admin/mybatis/*.xml <br> 
+   * Intellij : mybatis.mapper-locations=classpath:mybatis/*.xml <br> 
+   * Eclipse  : mybatis.mapper-locations=com/admin/mybatis/*.xml <br> 
 ## KAKAO Login, Map API
 - 위치 :  /src/main/service/KakaoService.class <br>
 기입사항 : REST KEY<br>
@@ -139,16 +139,19 @@
 3. 변경 사항을 커밋합니다.
 4. 새로운 풀 리퀘스트를 생성합니다.
 
-# 프로젝트의 주요기능 및 특징
-프로젝트에서 제공하는 다차원적인 제품 분류 기능, 재고 관리 기능, 주문 처리 기능 등의 기능을 설명하고, 이를 통해 고객들이 더욱 편리하게 쇼핑을 할 수 있도록 하는 것을 강조할 수 있습니다.
 
 # 👍 WBS
+[WBS Link](https://docs.google.com/spreadsheets/d/1R_241JtF-_GycNwjWgMNh7y730_RZhkuIOJwmjfNur4/edit#gid=376896609)
+
+
 
 <details open>
 <summary>view images</summary>
 
 ![alt text](images/wbs/wbsMain.png)
 ![alt text](images/wbs/wbsInput.png)
+![alt text](images/wbs/wbsFunctional Specification.png)
+![alt text](images/wbs/wbsInfomation Architectrue.png)
 </details>
 
 
@@ -157,48 +160,51 @@
 <details open>
 <summary>User Detail View</summary>
 
-### Main Page 
-- HOME
+## 🌈USER
+ 
+### 🌟 HOME Page 🌟
 ![alt text](images/userImages/UserMainPage.png)
 ![alt text](images/userImages/userHomeBody.png)
 
-- Best, Map
+### 🌟 BEST Page 🌟
 ![alt text](images/userImages/userBestPage.png)
+### 🌟 MAP Page 🌟
 ![alt text](images/userImages/shopMapPage.png)
-### Login Page
-- Login, Sign Up
-![alt text](images/userImages/userLoginPage.png) 
+### 🌟 Login Page 🌟
+![alt text](images/userImages/userLoginPage.png)
+### 🌟 Sign UP 🌟
 ![alt text](images/userImages/userKakaoLoginOkPage.png) 
-### UserInfo 
-- Order Page
-![alt text](images/userImages/userOrder.png) 
+ 
+### 🌟 Order Page 🌟
+![alt text](images/userImages/userOrder.png)
+### 🌟 Order Detail Page 🌟
 ![alt text](images/userImages/userOrderDetail.png) 
-- WishList, Review Page
-![alt text](images/userImages/userWishListPage.png) 
+### 🌟 WishList Page 🌟
+![alt text](images/userImages/userWishListPage.png)
+### 🌟 Review Page 🌟
 ![alt text](images/userImages/userReviewPage.png) 
 
-- Coupon, Qna Page
-![alt text](images/userImages/userCoupon.png) 
+### 🌟 Coupon Page 🌟
+![alt text](images/userImages/userCoupon.png)
+### 🌟 Qna Page 🌟
 ![alt text](images/userImages/userQnAPage.png) 
-- UserInfo Change
-![alt text](images/userImages/userCheckPassword.png) 
-![alt text](images/userImages/userChangeInfo.png) 
+
+
+
+### 🌟 Check Password Page 🌟
+![alt text](images/userImages/userCheckPassword.png)
+### 🌟 UserInfo Change 🌟
+![alt text](images/userImages/userChangeInfo.png)
+### 🌟 UserInfo Delete 🌟
 ![alt text](images/userImages/userDelete.png) 
 
-### Item Page
-- ItemDetail(Wish ADD)
+
+### 🌟 ItemDetail Wish Add Page 🌟
 ![alt text](images/userImages/userWishView.png) 
-- ItemSearch
+### 🌟 ItemSearch Page 🌟
 ![alt text](images/userImages/userSearchPage.png) 
-- order ADD
+### 🌟 order Add Page 🌟
 ![alt text](images/userImages/orderAdd.png) 
-
-
-### QnA Page
-- QnA Page
-![alt text](images/userImages/qnaADD.png)
-
-
 
 
 </details>
@@ -206,105 +212,71 @@
 
 <summary>Admin Detail View </summary>
 
-### Login Page
+## ❄️ ADMIN
+
+### ☃️ Login Page ☃️
 ![alt text](images/adminImages/adminLoginPage.png) 
-### Main Page 
+### ☃️ Main Page ☃️
 ![alt text](images/adminImages/AdminMainPage.png) 
-### Chart Click Event
-![alt text](images/adminImages/AdminChartDayClick.png) 
+### ☃️ Chart Day Click ☃️
+![alt text](images/adminImages/AdminChartDayClick.png)
+#### 🌫️ Before 🌫️
 ![alt text](images/adminImages/AdminChartClickEvent.png) 
-### Category Page
+### ☃️ Category Page ☃️
 ![alt text](images/adminImages/AdminCategoryClickEventPage.png) 
-### Item Add Click 
+### ☃️ Item Add Click ☃️ 
 ![alt text](images/adminImages/itemAddPage.png) 
-### UserPush Coupon And Mail Page
+### ☃️ UserPush Coupon And Mail Page ☃️
 ![alt text](images/adminImages/UserPushCouponAndMail.png) 
-### Discount Click
+### ☃️ Discount Click ☃️
 ![alt text](images/adminImages/checkDiscountPage.png) 
-### QnA Page - Reply Page
-![alt text](images/adminImages/qnaPage.png) ![alt text](images/adminImages/replyPage.png) 
-### Datail Click
+### ☃️ QnA Page ☃️
+![alt text](images/adminImages/qnaPage.png)
+### ☃️ Reply Page ☃️
+![alt text](images/adminImages/replyPage.png) 
+### ☃️ Datail Click ☃️ 
 ![alt text](images/adminImages/qnaDatailPage.png) 
 
 
 </details>
 
-hi
 
 
-# 👩🏻‍💻 프로젝트 과정 
+# 👩🏻‍💻 프로젝트 임무분담 
 
 
 <table>
-  <tr>
-    <td>이름</td>
-    <td>Part Table</td>
-    <td>기능</td>
-  </tr>
-  <tr>
-    <td rowspan="20">조민수</td>
-    <td rowspan="5">회원</td>
-    <td>CRUD 구현 </td>
-  </tr>
-  <tr>
-    <td>회원 탈퇴, 아이디/비밀번호 찾기, 정보 변경 및 패스워드 변경  기능구현 </td>
-  </tr>
-  <tr>
-    <td>회원 로그인(Kakao Login) 및 로그아웃, 회원가입, 회원탈퇴 구현   </td>
-  </tr>
-  <tr>
-    <td>주문 내역 조회, 주문상세내역 조회, 쿠폰 조회 구현 </td>
-  </tr>
-  <tr>
-    <td>(ADMIN) 회원 목록에서 쿠폰 발급 및 광고메일 발송 기능구현 </td>
-  </tr>
-  <tr>
-    <td rowspan="3">주문</td>
-  </tr>
-  <tr>
-    <td>CRUD 구현</td>
-  </tr>
-  <tr>
-    <td>카카오 페이 결제 구현 </td>
-  </tr>
-  <tr>
-    <td rowspan="3">장바구니</td>
-  </tr>
-  <tr>
-    <td>CRUD 구현 </td>
-  </tr>
-  <tr>
-    <td>장바구니 페이지 구현, 결제시 해당 장바구니 제거 구현</td>
-  </tr>
-  <tr>
-    <td rowspan="3">재고</td>
-  </tr>
-  <tr>
-    <td>CRUD 기능 구현</td>
-  </tr>
-  <tr>
-    <td>주문 결제 시 갯수 차감 구현 및 더미데이터 생성 </td>
-  </tr>
+  <tr><td>이름</td><td>Part Table</td><td>기능</td></tr>
+  <tr><td rowspan="20">조민수</td><td rowspan="5">회원</td><td>CRUD 구현 </td></tr>
+  <tr><td>회원 탈퇴, 아이디/비밀번호 찾기, 정보 변경 및 패스워드 변경 기능구현 </td></tr>
+  <tr><td>회원 로그인(Kakao Login) 및 로그아웃, 회원가입, 회원탈퇴 구현</td></tr>
+  <tr><td>주문 내역 조회, 주문상세내역 조회, 쿠폰 조회 구현 </td></tr>
+  <tr><td>(ADMIN) 회원 목록에서 쿠폰 발급 및 광고메일 발송 기능구현 </td></tr>
+  <tr><td rowspan="3">주문</td></tr>
+  <tr><td>CRUD 구현</td></tr>
+  <tr><td>카카오 페이 결제 구현 </td></tr>
+  <tr><td rowspan="3">장바구니</td></tr>
+  <tr><td>CRUD 구현 </td></tr>
+  <tr><td>장바구니 페이지 구현, 결제시 해당 장바구니 제거 구현</td></tr>
+  <tr><td rowspan="3">재고</td></tr>
+  <tr><td>CRUD 기능 구현</td></tr>
+  <tr><td>주문 결제 시 갯수 차감 구현 및 더미데이터 생성 </td></tr>
   <tr><td rowspan="3">상품</td></tr>
   <tr><td>CRUD 구현</td></tr>
   <tr><td>BeautifulSoup, Selenium 을 이용한 유니클로 상품 크롤링 -><br>상품데이터 수집 후 상품 자동등록 시스템 구현</td></tr>
   <tr><td>챗봇</td><td>Naver CLOVA ChatBot API 연결로 비동기식 데이터 통신 구현</td></tr>
   <tr><td>날씨</td><td>공공데이터 포털을 이용하여, 온도에 맞는 상품추천 구현</td></tr>
   <tr><td>기타</td><td>우편 번호 API를 이용한 회원등록 및 상품 결제시 제공데이터 구현</td></tr>
-  
 
 </table>
 
 
-# 👀 테스트 과정 
-노션 주소 :
 
-
-# 참고자료
-Intellij Mybatis -  https://kyun2.tistory.com/69 <br>
-Selenium - https://wikidocs.net/177133 <br>
-
-
+# 🔦 참고자료
+[Intellij Mybatis](https://kyun2.tistory.com/69) <br>
+[Selenium](https://wikidocs.net/177133) <br>
+[Putty](https://investechnews.com/2021/06/15/mac-putty-install-error/)<br>
+[war 배포](https://baboototo.tistory.com/m/29)
 # ⚒️트러블 슈팅⚒️ 
 
 - 기획단계 결정 지연
@@ -348,5 +320,5 @@ Selenium - https://wikidocs.net/177133 <br>
   * 문제: 아이디/패스워드 찾기 버그가 발생하였습니다.
   * 해결: 이메일 Service에서 코드가 정상적으로 넘어가지 않는 문제를 발견하여 수정하였고, 이후 정상적으로 처리되었습니다.
 
-# 프로젝트 소감
+# 💡 프로젝트 소감 💡
 - 조민수 : 
