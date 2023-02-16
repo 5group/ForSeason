@@ -5,30 +5,32 @@
 <mapper namespace="com.admin.mapper.ReplyMapper">
 
 
-	<insert id="insert" parameterType="Reply">
-		INSERT INTO reply (qna_no,
-		admin_id, rep_content, rep_date)
-		VALUES (#{qna_no}, #{admin_id},
-		#{rep_content}, now());
-	</insert>
+    <insert id="insert" parameterType="Reply">
+        INSERT INTO reply (qna_no,
+                           admin_id, rep_content, rep_date)
+        VALUES (#{qna_no}, #{admin_id},
+                #{rep_content}, now());
+    </insert>
 
-	<update id="update" parameterType="Reply">
-		UPDATE reply SET
-		rep_content=#{rep_content},
-		rep_date=now()
-		WHERE 
-		rep_no=#{rep_no}
-	</update>
+    <update id="update" parameterType="Reply">
+        UPDATE reply
+        SET rep_content=#{rep_content},
+            rep_date=now()
+        WHERE rep_no = #{rep_no}
+    </update>
 
 
     <select id="select" parameterType="int" resultType="Reply">
-        SELECT * FROM reply WHERE rep_no=#{rep_no}
+        SELECT *
+        FROM reply
+        WHERE rep_no = #{rep_no}
     </select>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM reply WHERE rep_no=#{rep_no}
+        DELETE
+        FROM reply
+        WHERE rep_no = #{rep_no}
     </delete>
-
 
 
 </mapper>

@@ -5,20 +5,27 @@
 <mapper namespace="com.admin.mapper.AdminMapper">
 
     <select id="select" parameterType="String" resultType="Admin">
-        SELECT * FROM admin WHERE admin_id=#{admin_id}
+        SELECT *
+        FROM admin
+        WHERE admin_id = #{admin_id}
     </select>
     <select id="selectAll" resultType="Admin">
-        SELECT * FROM admin
+        SELECT *
+        FROM admin
     </select>
     <insert id="insert" parameterType="Admin">
         INSERT INTO admin
         VALUES (#{admin_id}, #{admin_password})
     </insert>
     <update id="update" parameterType="Admin">
-        UPDATE admin SET admin_password=#{admin_password} WHERE admin_id=#{admin_id}
+        UPDATE admin
+        SET admin_password=#{admin_password}
+        WHERE admin_id = #{admin_id}
     </update>
     <delete id="delete" parameterType="Integer">
-        DELETE FROM admin WHERE admin_id=#{admin_id}
+        DELETE
+        FROM admin
+        WHERE admin_id = #{admin_id}
     </delete>
 
 </mapper>

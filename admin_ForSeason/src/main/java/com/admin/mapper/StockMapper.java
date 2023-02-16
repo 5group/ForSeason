@@ -14,9 +14,13 @@ import java.util.List;
 public interface StockMapper extends MyMapper<Integer, Stock> {
 
     public List<Stock> selectAdminMain();
+
     public List<Stock> selectChart(@Param("start_date") String sm, @Param("end_date") String em);
+
     public List<Stock> selectItemTotal(String item_name);
+
     public List<Stock> selectCateChart(String cate_name);
+
     public List<Stock> selectCateTotal(HashMap<String, Object> map);
 
 }

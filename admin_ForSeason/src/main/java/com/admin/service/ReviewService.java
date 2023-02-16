@@ -38,15 +38,14 @@ public class ReviewService implements MyService<Integer, Review> {
     public List<Review> get() throws Exception {
         return mapper.selectAll();
     }
-    
+
     public List<Review> revselect() throws Exception {
-		return mapper.revselect();
-	}
-    
+        return mapper.revselect();
+    }
+
     public Review revnoselect(int id) throws Exception {
-		return mapper.revnoselect(id);
-	}
-    
-    
-    
+        return mapper.revnoselect(id);
+    }
+
+
 }

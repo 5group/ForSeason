@@ -44,37 +44,30 @@ public class ItemController {
 
     @Autowired
     HttpSession session;
-    // WOMEN, MEN, KIDS 클릭시
+
     @RequestMapping(value = "/cate_no={cate_no}")
     public String topCateList(Model model, @PathVariable("cate_no") int cate_no) throws Exception {
         List<Category> categoryList = categoryService.getTopBySubCategory(cate_no);
         List<Item> itemList = itemService.cateListByItemList(categoryList);
         List<Stock> stockList = new ArrayList<>();
         session.setAttribute("itemList", itemList);
-        for(Item item :itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
-        ////("topstockList:" + stockList);    
+        for (Item item : itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
         model.addAttribute("stockList", stockList);
         model.addAttribute("itemList", itemList);
-        //model.addAttribute("center", dir + "center");
-        model.addAttribute("center", dir+"itemList");
+        model.addAttribute("center", dir + "itemList");
         return "index";
     }
 
-    // 아우터, 상의, 하의 클릭시
     @RequestMapping("/midCate_no={midCate_no}")
-    public String midCateItem(Model model, @PathVariable("midCate_no") int midCate_no) throws Exception{
+    public String midCateItem(Model model, @PathVariable("midCate_no") int midCate_no) throws Exception {
         List<Category> categoryList = categoryService.getMidBySubCategory(midCate_no);
         List<Item> itemList = itemService.cateListByItemList(categoryList);
         List<Stock> stockList = new ArrayList<>();
         session.setAttribute("itemList", itemList);
-        for(Item item :itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
-        //("stockList"+stockList);
+        for (Item item : itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
         model.addAttribute("stockList", stockList);
         model.addAttribute("itemList", itemList);
-        //model.addAttribute("center", dir + "center");
-        model.addAttribute("center", dir+"itemList");
-        //model.addAttribute("center2", "/chartList/cateCenter");
-        //return "main";
+        model.addAttribute("center", dir + "itemList");
         return "index";
     }
 
@@ -83,18 +76,13 @@ public class ItemController {
         List<Item> itemList = itemService.getCateList(cate_no);
         List<Stock> stockList = new ArrayList<Stock>();
         session.setAttribute("itemList", itemList);
-        for(Item item :itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
+        for (Item item : itemList) stockList.addAll(stockService.getItemTotal(item.getItem_name()));
         model.addAttribute("stockList", stockList);
         model.addAttribute("itemList", itemList);
-        //model.addAttribute("center", dir + "center");
-        model.addAttribute("center", dir+"itemList");
-        //model.addAttribute("center2", "/chartList/cateCenter");
-        //return "main";
+        model.addAttribute("center", dir + "itemList");
         return "index";
-        //return "table-datatable-basic";
     }
 
-    // Item Detail (아이템 수정)
     @RequestMapping("/itemNo={item_no}")
     public String itemDetail(@PathVariable int item_no, Model model) throws Exception {
         Item item = itemService.get(item_no);
@@ -103,7 +91,6 @@ public class ItemController {
         return "index";
     }
 
-    // python 크롤링 써서 추출한 사진디렉토리를 넘겨주면 자동 생성
     @RequestMapping("/register")
     public String register(@RequestParam("cateNo") int cateNo,
                            @RequestParam("itemName") String itemName,
@@ -112,17 +99,14 @@ public class ItemController {
                            @RequestParam("img") List<MultipartFile> mpfs,
                            @RequestParam("colorValue") List<Integer> colorValue) throws Exception {
         if (itemService.getName(itemName) != null) {
-            //("이미있는 파일입니다.");
             return "main";
         }
         Item item = new Item(cateNo, itemName, Integer.parseInt(itemPrice), 0, itemInfo, 0, null);
         itemService.register(item);
         int itemNo = item.getItem_no();
-        //("itemNo:" + itemNo);
         for (Integer color_no : colorValue) {
             for (int i = 1; i <= 4; i++) {
                 Stock stock = new Stock(itemNo, color_no, i, 100);
-                //("stock:" + stock);
                 stockService.register(stock);
             }
         }
@@ -130,25 +114,16 @@ public class ItemController {
         return "index";
     }
 
-    // Item ADD
     @RequestMapping("/add")
-    public String add(Model model){
-        model.addAttribute("center", dir+"add");
+    public String add(Model model) {
+        model.addAttribute("center", dir + "add");
         return "main";
     }
 
-    // Update -- 진행완료
     @RequestMapping(value = "/itemUpdate", method = RequestMethod.POST)
     public String itemUpdate(Item item) throws Exception {
         itemService.modify(item);
-        return "redirect:/itemList/itemNo="+item.getItem_no();
-    }
-
-    // Delete -- 나중에 할예정
-    @RequestMapping(value = "/itemDelete", method = RequestMethod.POST)
-    public String itemDelete(){
-
-        return "redirect:/itemList";
+        return "redirect:/itemList/itemNo=" + item.getItem_no();
     }
 }
 

@@ -5,7 +5,6 @@ import com.admin.dto.Qna;
 import com.admin.dto.Reply;
 import com.admin.dto.Review;
 import com.admin.dto.Stock;
-import com.admin.dto.User;
 import com.admin.service.AdminService;
 import com.admin.service.QnaService;
 import com.admin.service.ReplyService;
@@ -39,44 +38,39 @@ public class MainController {
 
     @Autowired
     HttpSession session;
-    
-	@Autowired
-	QnaService qnaservice;
 
-	@Autowired
-	ReplyService replyservice;
+    @Autowired
+    QnaService qnaservice;
 
-	@Autowired
-	ReviewService reviewservice;
-		
-    
-    
+    @Autowired
+    ReplyService replyservice;
+
+    @Autowired
+    ReviewService reviewservice;
+
+
     @RequestMapping("/")
     public String index(Model model) throws Exception {
-        if(session.getAttribute("adminLogin") == null){
+        if (session.getAttribute("adminLogin") == null) {
             return "redirect:/login";
         }
-        //model.addAttribute("center2", "/chartList/center");
-        //List<Stock> stockList = stockService.getAdminMainList();
-        //model.addAttribute("stockList", stockList);
-        //return "main";
         return "index";
     }
-    
+
     @RequestMapping("/orderList")
-    public String blank(Model model) throws Exception{
-    	model.addAttribute("center", "/orderList/orderList");
-    	List<Stock> stockList = stockService.getAdminMainList();
+    public String blank(Model model) throws Exception {
+        model.addAttribute("center", "/orderList/orderList");
+        List<Stock> stockList = stockService.getAdminMainList();
         model.addAttribute("stockList", stockList);
-    	return "index";
+        return "index";
     }
-    
+
     @RequestMapping("/login")
     public String login() {
         //return "admin/login";
         return "admin/index-login";
     }
-    
+
     @RequestMapping(value = "/checkLogin")
     public String checkLogin(String id, String pwd) throws Exception {
         Admin admin = adminService.get(id);
@@ -89,115 +83,76 @@ public class MainController {
     }
 
     @RequestMapping("/logout")
-    public String logout(){
+    public String logout() {
         session.invalidate();
         return "redirect:/";
     }
-    
-	@RequestMapping("/userQuestion")
-	public String userQuestion(Model model) throws Exception {
 
-		List<Qna> qnaList = null;
-		qnaList = qnaservice.userselect();
-		//(qnaList);
-		model.addAttribute("qnalist", qnaList);
-		model.addAttribute("center", "userQuestion/qnaList");
-		return "index";
-	}
+    @RequestMapping("/userQuestion")
+    public String userQuestion(Model model) throws Exception {
 
-	@RequestMapping("/qna/get")
-	@ResponseBody
-	public Qna getQna(@RequestParam("qnaNo") int qnaNo, Model model) {
-		//(qnaNo);
+        List<Qna> qnaList = null;
+        qnaList = qnaservice.userselect();
+        //(qnaList);
+        model.addAttribute("qnalist", qnaList);
+        model.addAttribute("center", "userQuestion/qnaList");
+        return "index";
+    }
 
-		Qna qna = null;
-		try {
-			qna = qnaservice.qnaselect(qnaNo);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//(qna);
+    @RequestMapping("/qna/get")
+    @ResponseBody
+    public Qna getQna(@RequestParam("qnaNo") int qnaNo, Model model) throws Exception {
+        Qna qna = qnaservice.qnaselect(qnaNo);
+        return qna;
+    }
 
-		return qna;
-	}
+    @RequestMapping(value = "/qnaInsert", method = RequestMethod.POST)
+    public String qnaInsert(int qna_no, String rep_content) throws Exception {
+        Reply reply = new Reply(qna_no, "admin01", rep_content, null);
+        replyservice.register(reply);
+        return "index";
+    }
 
-	@RequestMapping(value = "/qnaInsert", method = RequestMethod.POST)
-	public String qnaInsert(int qna_no, String rep_content) throws Exception {
-//        Admin ad = (Admin)session.getAttribute("adminLogin");
-//        if (ad == null) {
-//            //("ad is null");
-//            return 0;
-//        }
-		Reply reply = new Reply(qna_no, "admin01", rep_content, null);
-		//(reply);
-		replyservice.register(reply);
-		return "index";
-	}
+    @RequestMapping(value = "/qna/modify", method = RequestMethod.POST)
+    public String updatereply(Reply reply) throws Exception {
+        reply.setRep_date(new Date());
+        replyservice.modify(reply);
+        return "redirect:/qna";
+    }
 
-	@RequestMapping(value = "/qna/modify", method = RequestMethod.POST)
-	public String updatereply(Reply reply) throws Exception {
-		//("컨트롤러 시작");
+    @RequestMapping(value = "/qna/delete", method = RequestMethod.POST)
+    public String deleteQna(@RequestParam(name = "qnaNo") int qnaNo) {
+        try {
+            qnaservice.remove(qnaNo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/qna";
+    }
 
-		reply.setRep_date(new Date());
 
-		//(reply);
-		replyservice.modify(reply);
-		return "redirect:/qna";
-	}
+    @RequestMapping("/userReview")
+    public String userReview(Model model) throws Exception {
+        List<Review> revList = reviewservice.revselect();
+        model.addAttribute("revlist", revList);
+        model.addAttribute("center", "userReview/revList");
+        return "index";
+    }
 
-	@RequestMapping(value = "/qna/delete", method = RequestMethod.POST)
-	public String deleteQna(@RequestParam(name = "qnaNo") int qnaNo) {
-		//(qnaNo);
-		try {
-			qnaservice.remove(qnaNo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "redirect:/qna";
-	}
-	
-	
-	@RequestMapping("/userReview")
-	public String userReview(Model model) throws Exception {
+    @RequestMapping("/rev/get")
+    @ResponseBody
+    public Review getRev(@RequestParam("revNo") int revNo) throws Exception {
+        Review review = reviewservice.revnoselect(revNo);
+        return review;
+    }
 
-		List<Review> revList = null;
-		revList = reviewservice.revselect();
-		//(revList);
-		model.addAttribute("revlist", revList);
-		model.addAttribute("center", "userReview/revList");
-		return "index";
-	}
+    @RequestMapping(value = "/rev/delete", method = RequestMethod.POST)
+    public String deleteRev(@RequestParam(name = "revNo") int revNo) throws Exception {
+        reviewservice.remove(revNo);
+        return "redirect:/qna";
+    }
 
-	@RequestMapping("/rev/get")
-	@ResponseBody
-	public Review getRev(@RequestParam("revNo") int revNo, Model model) {
-		//(revNo);
 
-		Review review = null;
-		try {
-			review = reviewservice.revnoselect(revNo);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//(review);
-
-		return review;
-	}
-
-	@RequestMapping(value = "/rev/delete", method = RequestMethod.POST)
-	public String deleteRev(@RequestParam(name = "revNo") int revNo) {
-		//(revNo);
-		try {
-			reviewservice.remove(revNo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "redirect:/qna";
-	}
-    
-    
     //main -> index
     @RequestMapping("/main")
     public String main(Model model) throws Exception {

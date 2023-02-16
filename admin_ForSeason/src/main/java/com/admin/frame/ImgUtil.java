@@ -12,8 +12,8 @@ public class ImgUtil {
         byte[] data;
         String imgname = mf.getOriginalFilename();
         int index = imgname.indexOf("/");
-        admindir += "women/아우터/경량패딩/"+imgname.substring(0, index);
-        custdir += "women/아우터/경량패딩/"+imgname.substring(0, index);
+        admindir += "women/아우터/경량패딩/" + imgname.substring(0, index);
+        custdir += "women/아우터/경량패딩/" + imgname.substring(0, index);
         createFile(admindir);
         createFile(custdir);
         String jpg_name = imgname.substring(index);
@@ -33,11 +33,10 @@ public class ImgUtil {
     }
 
     public static void createFile(String dir) {
-        String path = dir; //폴더 경로
+        String path = dir;
         File Folder = new File(path);
-        // 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
         if (!Folder.exists()) {
-            Folder.mkdir(); //폴더 생성합니다.
+            Folder.mkdir();
         }
     }
 

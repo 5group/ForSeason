@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReviewMapper extends MyMapper<Integer, Review> {
 
-	List<Review> revselect();
+    List<Review> revselect();
 
-	Review revnoselect(int id);
+    Review revnoselect(int id);
 
 }

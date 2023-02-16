@@ -2,12 +2,10 @@ package com.admin.service;
 
 import com.admin.dto.Order;
 import com.admin.frame.MyService;
-import com.admin.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class OrderService implements MyService<Integer, Order> {

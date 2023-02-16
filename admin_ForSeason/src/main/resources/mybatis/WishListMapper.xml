@@ -5,20 +5,30 @@
 <mapper namespace="com.admin.mapper.WishListMapper">
 
     <select id="select" parameterType="Integer" resultType="WishList">
-        SELECT * FROM wishlist WHERE wish_no=#{wish_no}
+        SELECT *
+        FROM wishlist
+        WHERE wish_no = #{wish_no}
     </select>
     <select id="selectAll" resultType="WishList">
-        SELECT * FROM wishlist
+        SELECT *
+        FROM wishlist
     </select>
     <insert id="insert" parameterType="WishList">
         INSERT INTO wishlist
         VALUES (#{wish_no}, #{user_no}, #{item_no})
     </insert>
     <update id="update" parameterType="WishList">
-        UPDATE wishlist SET item_price=#{item_price}, item_discnt=#{item_discnt}, item_info=#{item_info}, item_img=#{item_img} WHERE item_no=#{item_no}
+        UPDATE wishlist
+        SET item_price=#{item_price},
+            item_discnt=#{item_discnt},
+            item_info=#{item_info},
+            item_img=#{item_img}
+        WHERE item_no = #{item_no}
     </update>
     <delete id="delete" parameterType="Integer">
-        DELETE FROM wishlist WHERE wish_no=#{wish_no}
+        DELETE
+        FROM wishlist
+        WHERE wish_no = #{wish_no}
     </delete>
 
 </mapper>

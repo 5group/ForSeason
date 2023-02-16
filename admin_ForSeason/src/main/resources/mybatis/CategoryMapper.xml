@@ -5,43 +5,63 @@
 <mapper namespace="com.admin.mapper.CategoryMapper">
 
     <select id="select" parameterType="Integer" resultType="Category">
-        SELECT * FROM category WHERE cate_no=#{cate_no}
+        SELECT *
+        FROM category
+        WHERE cate_no = #{cate_no}
     </select>
     <select id="selectAll" resultType="Category">
-        SELECT * FROM category
+        SELECT *
+        FROM category
     </select>
     <insert id="insert" parameterType="Category">
         INSERT INTO category
-        VALUES (#{cate_no}, #{cate_name},#{cate_no2})
+        VALUES (#{cate_no}, #{cate_name}, #{cate_no2})
     </insert>
     <update id="update" parameterType="Category">
-        UPDATE category SET cate_name=#{cate_name}, cate_no2=#{cate_no2} WHERE cate_no=#{cate_no}
+        UPDATE category
+        SET cate_name=#{cate_name},
+            cate_no2=#{cate_no2}
+        WHERE cate_no = #{cate_no}
     </update>
     <delete id="delete" parameterType="Integer">
-        DELETE FROM category WHERE cate_no=#{cate_no}
+        DELETE
+        FROM category
+        WHERE cate_no = #{cate_no}
     </delete>
 
 
     <select id="getTopCategory" resultType="Category">
-        SELECT * FROM category WHERE cate_no2 IS NULL
+        SELECT *
+        FROM category
+        WHERE cate_no2 IS NULL
     </select>
     <select id="getMiddleCategory" resultType="Category">
-        SELECT * FROM category WHERE cate_no2 IN (SELECT cate_no FROM category WHERE cate_no2 IS NULL)
+        SELECT *
+        FROM category
+        WHERE cate_no2 IN (SELECT cate_no FROM category WHERE cate_no2 IS NULL)
     </select>
     <select id="getSubCategory" parameterType="Integer" resultType="Category">
-        SELECT * FROM category WHERE cate_no NOT IN (SELECT cate_no2 FROM category WHERE cate_no2 IS NOT NULL)
+        SELECT *
+        FROM category
+        WHERE cate_no NOT IN (SELECT cate_no2 FROM category WHERE cate_no2 IS NOT NULL)
     </select>
     <select id="selectCurCategory" parameterType="map" resultType="Category">
-    	select c3.cate_name as 'top_cate_name' from category c3
-		<if test="top != null">
-			where c3.cate_no=#{top};
-		</if>
+        select c3.cate_name as 'top_cate_name' from category c3
+        <if test="top != null">
+            where c3.cate_no=#{top};
+        </if>
     </select>
 
     <select id="selectTopBySubCate" parameterType="Integer" resultType="Category">
-        select * from category where cate_no2 in (select cate_no from category where cate_no in (select cate_no from category where cate_no2 = #{cate_no}));
+        select *
+        from category
+        where cate_no2 in (select cate_no
+                           from category
+                           where cate_no in (select cate_no from category where cate_no2 = #{cate_no}));
     </select>
     <select id="selectMidBySubCate" parameterType="Integer" resultType="Category">
-        select * from category where cate_no2 = #{cate_no};
+        select *
+        from category
+        where cate_no2 = #{cate_no};
     </select>
 </mapper>

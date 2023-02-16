@@ -6,7 +6,6 @@ import com.admin.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -39,9 +38,7 @@ public class CategoryService implements MyService<Integer, Category> {
     public List<Category> get() throws Exception {
         return mapper.selectAll();
     }
-    
-    
-    
+
     public List<Category> getTopCategory() throws Exception{
     	return mapper.getTopCategory();
     }
@@ -52,10 +49,6 @@ public class CategoryService implements MyService<Integer, Category> {
     
     public List<Category> getSubCategory() throws Exception{
     	return mapper.getSubCategory();
-    }
-    
-    public Category getCurCategory(HashMap<String, Integer> curCateMap) throws Exception{
-    	return mapper.selectCurCategory(curCateMap);
     }
 
     public List<Category> getTopBySubCategory(int cate_no) throws Exception {

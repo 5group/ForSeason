@@ -4,55 +4,68 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.admin.mapper.ReviewMapper">
 
-	<select id="select" parameterType="Integer" resultType="Review">
-		SELECT *
-		FROM review WHERE rev_no=#{rev_no}
-	</select>
-	<select id="selectAll" resultType="Review">
-		SELECT * FROM review
-	</select>
-	<insert id="insert" parameterType="Review">
-		INSERT INTO review
-		VALUES
-		(#{rev_no}, #{item_no}, #{user_no}, #{rev_title}, #{rev_content},
-		#{rev_score}, now(), now())
-	</insert>
-	<update id="update" parameterType="Review">
-		UPDATE review SET
-		rev_title=#{rev_title}, rev_content=#{rev_content},
-		rev_rdate=now()
-		WHERE rev_no=#{rev_no}
-	</update>
-	<delete id="delete" parameterType="Integer">
-		DELETE FROM review WHERE
-		rev_no=#{rev_no}
-	</delete>
+    <select id="select" parameterType="Integer" resultType="Review">
+        SELECT *
+        FROM review
+        WHERE rev_no = #{rev_no}
+    </select>
+    <select id="selectAll" resultType="Review">
+        SELECT *
+        FROM review
+    </select>
+    <insert id="insert" parameterType="Review">
+        INSERT INTO review
+        VALUES (#{rev_no}, #{item_no}, #{user_no}, #{rev_title}, #{rev_content},
+                #{rev_score}, now(), now())
+    </insert>
+    <update id="update" parameterType="Review">
+        UPDATE review
+        SET rev_title=#{rev_title},
+            rev_content=#{rev_content},
+            rev_rdate=now()
+        WHERE rev_no = #{rev_no}
+    </update>
+    <delete id="delete" parameterType="Integer">
+        DELETE
+        FROM review
+        WHERE rev_no = #{rev_no}
+    </delete>
 
-	<select id="revselect" parameterType="Integer"
-		resultType="Review">
-		SELECT rev.rev_no, rev.item_no, user.user_no, user.user_id,
-		item.item_name, rev.rev_title, rev.rev_content,
-		rev.rev_score, rev.rev_rdate
-		FROM review rev
-		JOIN user ON rev.user_no = user.user_no
-		JOIN item ON rev.item_no = item.item_no
-		ORDER BY rev.rev_rdate DESC;
-	</select>
+    <select id="revselect" parameterType="Integer"
+            resultType="Review">
+        SELECT rev.rev_no,
+               rev.item_no,
+               user.user_no,
+               user.user_id,
+               item.item_name,
+               rev.rev_title,
+               rev.rev_content,
+               rev.rev_score,
+               rev.rev_rdate
+        FROM review rev
+                 JOIN user ON rev.user_no = user.user_no
+                 JOIN item ON rev.item_no = item.item_no
+        ORDER BY rev.rev_rdate DESC;
+    </select>
 
-	<select id="revnoselect" parameterType="Integer"
-		resultType="Review">
-		SELECT rev.rev_no, rev.item_no, user.user_no, user.user_id,
-		item.item_name, rev.rev_title, rev.rev_content,
-		rev.rev_score, rev.rev_rdate
-		FROM review rev
-		JOIN user ON rev.user_no = user.user_no
-		JOIN item ON rev.item_no = item.item_no
-		Where rev.rev_no = #{rev_no}
-		ORDER BY rev.rev_rdate DESC;
-		
-	</select>
+    <select id="revnoselect" parameterType="Integer"
+            resultType="Review">
+        SELECT rev.rev_no,
+               rev.item_no,
+               user.user_no,
+               user.user_id,
+               item.item_name,
+               rev.rev_title,
+               rev.rev_content,
+               rev.rev_score,
+               rev.rev_rdate
+        FROM review rev
+                 JOIN user ON rev.user_no = user.user_no
+                 JOIN item ON rev.item_no = item.item_no
+        Where rev.rev_no = #{rev_no}
+        ORDER BY rev.rev_rdate DESC;
 
-
+    </select>
 
 
 </mapper>

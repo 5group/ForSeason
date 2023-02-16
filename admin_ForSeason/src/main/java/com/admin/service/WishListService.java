@@ -20,12 +20,12 @@ public class WishListService implements MyService<Integer, WishList> {
 
     @Override
     public void remove(Integer id) throws Exception {
-mapper.delete(id);
+        mapper.delete(id);
     }
 
     @Override
     public void modify(WishList wishList) throws Exception {
-mapper.update(wishList);
+        mapper.update(wishList);
     }
 
     @Override

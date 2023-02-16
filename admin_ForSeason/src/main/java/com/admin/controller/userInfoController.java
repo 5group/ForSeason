@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -38,15 +37,14 @@ public class userInfoController {
     public String main(Model model) throws Exception {
         List<User> userList = userService.get();
         model.addAttribute("userList", userList);
-        //model.addAttribute("center", dir + "center");
         model.addAttribute("center", dir + "centerUser");
         return "index";
     }
 
-    @RequestMapping(value = "/createCoupon" ,method = RequestMethod.POST)
+    @RequestMapping(value = "/createCoupon", method = RequestMethod.POST)
     public String createCoupon(@RequestParam String cou_name, @RequestParam int cou_price, @RequestParam(value = "noList[]") List<Integer> noList) throws Exception {
         Coupon coupon = new Coupon();
-        for(Integer no : noList){
+        for (Integer no : noList) {
             coupon.setCou_name(cou_name);
             coupon.setCou_price(cou_price);
             coupon.setUser_no(no);
@@ -56,7 +54,7 @@ public class userInfoController {
     }
 
     @RequestMapping(value = "/pushMail")
-    public String pushMail(@RequestParam String subMessage, @RequestParam String textMessage, @RequestParam(value = "mailList[]") List<String> mailList){
+    public String pushMail(@RequestParam String subMessage, @RequestParam String textMessage, @RequestParam(value = "mailList[]") List<String> mailList) {
         mailService.sendMailToMultipleRecipients(mailList, subMessage, textMessage);
         return "index";
     }

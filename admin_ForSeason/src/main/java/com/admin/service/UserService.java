@@ -24,21 +24,13 @@ public class UserService implements MyService<Integer, User> {
         mapper.delete(integer);
     }
 
-    public void remove(String string) throws Exception{
+    public void remove(String string) throws Exception {
         mapper.delete(string);
     }
 
     @Override
     public void modify(User user) throws Exception {
         mapper.update(user);
-    }
-
-    public void set_pwd(User user)throws Exception{
-        mapper.pwd_update(user);
-    }
-
-    public User get_id(String id) throws Exception {
-        return mapper.selectId(id);
     }
 
     @Override

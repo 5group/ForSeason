@@ -40,22 +40,19 @@ public class StockService implements MyService<Integer, Stock> {
         return mapper.selectAll();
     }
 
-    public List<Stock> getItemTotal(String item_name){
+    public List<Stock> getItemTotal(String item_name) {
         return mapper.selectItemTotal(item_name);
     }
 
-    public List<Stock> getCateTotal(String cate_name){
-        return mapper.selectCateChart(cate_name);
+    public List<Stock> getChartList(String sm, String em) throws Exception {
+        return mapper.selectChart(sm, em);
     }
 
-    public List<Stock> getChartList(String sm, String em) throws Exception {
-            return mapper.selectChart(sm, em);
-        }
-
-    public List<Stock> getAdminMainList(){
+    public List<Stock> getAdminMainList() {
         return mapper.selectAdminMain();
     }
-    public List<Stock> getCateTotal(HashMap<String, Object> map){
+
+    public List<Stock> getCateTotal(HashMap<String, Object> map) {
         return mapper.selectCateTotal(map);
     }
 }

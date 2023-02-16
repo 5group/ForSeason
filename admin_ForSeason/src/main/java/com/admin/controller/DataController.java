@@ -51,7 +51,6 @@ public class DataController {
         }
         jObject.put("dayDate", dateList);
         jObject.put("dayTotal", totalList);
-        //(jObject);
         return jObject;
     }
 
@@ -61,7 +60,7 @@ public class DataController {
         List<Stock> stockList = new ArrayList<Stock>();
         HashMap<String, Object> map = new HashMap<String, Object>();
         List<Integer> itemNoList = new ArrayList<Integer>();
-        for (Item item :itemList) itemNoList.add(item.getItem_no());
+        for (Item item : itemList) itemNoList.add(item.getItem_no());
         map.put("itemNoList", itemNoList);
         map.put("sm", sm);
         map.put("em", em);
@@ -75,14 +74,13 @@ public class DataController {
         }
         jObject.put("dayDate", dateList);
         jObject.put("dayTotal", totalList);
-        //(jObject);
         return jObject;
     }
 
     @RequestMapping(value = "/itemList/disCntUpdate", method = RequestMethod.POST)
-    public void disCntUpdate(@RequestParam(value = "noList[]") List<Integer> noList,  @RequestParam int item_discnt) throws Exception {
+    public void disCntUpdate(@RequestParam(value = "noList[]") List<Integer> noList, @RequestParam int item_discnt) throws Exception {
         Item item = new Item();
-        for(Integer no:noList){
+        for (Integer no : noList) {
             item.setItem_no(no);
             item.setItem_discnt(item_discnt);
             itemService.modifyDiscnt(item);
@@ -90,7 +88,7 @@ public class DataController {
     }
 
     @RequestMapping("/pieChart")
-    public JSONObject pieChart(){
+    public JSONObject pieChart() {
         JSONObject jObject = new JSONObject();
         List<Integer> allTotalList = new ArrayList<Integer>();
         List<OrderDetail> kidsTotalList = orderDetailService.getTopCateNameByTotalList("KIDS");
@@ -100,12 +98,11 @@ public class DataController {
         totalListAdd(allTotalList, menTotalList);
         totalListAdd(allTotalList, womenTotalList);
         jObject.put("total", allTotalList);
-        //("piechart:"+jObject);
         return jObject;
     }
 
     @RequestMapping("/bubbleChart")
-    public JSONArray bubbleChart(){
+    public JSONArray bubbleChart() {
         String kids = "KIDS";
         String men = "MEN";
         String women = "WOMEN";
@@ -113,19 +110,17 @@ public class DataController {
         jsonArray.add(jsonService.totalListByJSONObject(orderDetailService.getTopCateNameByTotalList(kids), kids, "#FF0000"));
         jsonArray.add(jsonService.totalListByJSONObject(orderDetailService.getTopCateNameByTotalList(men), men, "#00FF00"));
         jsonArray.add(jsonService.totalListByJSONObject(orderDetailService.getTopCateNameByTotalList(women), women, "#0000FF"));
-        //("bubblechart:"+jsonArray);
         return jsonArray;
     }
 
-    public List<Integer> totalListAdd(List<Integer> allTotalList, List<OrderDetail> cateTotalList){
+    public List<Integer> totalListAdd(List<Integer> allTotalList, List<OrderDetail> cateTotalList) {
         int index = 0;
-        for (OrderDetail orderDetail :cateTotalList){
+        for (OrderDetail orderDetail : cateTotalList) {
             index += orderDetail.getOrder_tot();
         }
         allTotalList.add(index);
         return allTotalList;
     }
-
 
     @RequestMapping("/updateAmount")
     public void updateAmount(@ModelAttribute Stock stock) throws Exception {
