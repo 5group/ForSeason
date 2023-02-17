@@ -20,16 +20,16 @@
  3. 상품 데이터가 광범위하게 증가에도, 관리용이한 유저경험 서비스
 
 # 🎩 개발 환경 / 시스템 구성
- | 항목 | 내용                                                                                                                                                             |
- |----------------------------------------------------------------------------------------------------------------------------------------------------------------| ---|
- | 언어 | Java, Python, HTML/CSS, JavaScript                                                                                                                             |
- | 서버 | NaverCloudPlatForm, Apache Tomcat <br>(Windows 9.0.69, Linux 8.5.27)                                                                                           |
- | 프레임워크 | SpirngBoot, Mybatis, Thymeleaf                                                                                                                                 |
- | DB | MySQL                                                                                                                                                          |
- | IDE | Eclipse, Intellij, GitBash, MySQL Workbench                                                                                                                    |
- | 협업 도구 | Git-hub, Notion, Zoom, Discord, KakaoTalk                                                                                                                      |
- | API 또는 라이브러리 | Google :  EMAIL <br>Kakao : Login, Map <br> Naver : Login, Chatbot <br> Iamport : KakaoPay <br> 공공데이터 : Weather <br>                                           |
- | VERSION | Java JDK : 11.0.17 <br> Maven : 2.7.7 <br> Servlet : 3.0.1 <br> Mysql : 8.0.31 <br> Intellij : 2022.3.2 (Ultimate Edition) <br> Eclipse IDE : 2020-12 (4.18.0) |            
+ | 항목 | 내용                                                                                                                   |
+ |----------------------------------------------------------------------------------------------------------------------| ---|
+ | 언어 | Java(11.0.17), Python(3.11.2), HTML/CSS, JavaScript                                                                  |
+ | 서버 | NaverCloudPlatForm,<br> Apache Tomcat (Windows 9.0.69, Linux 8.5.27)                                                 |
+ | 프레임워크 | SpirngBoot(2.7.7), Mybatis(2.3.0), Thymeleaf, Selenium (4.0.0 Alpha), Servlet(3.0.1)                                 |
+ | DB | MySQL Workbench(8.0.31)                                                                                              |
+ | IDE | Eclipse IDE 2020-12 (4.18.0), Intellij 2022.3.2 (Ultimate Edition), GitBash, PyCharm(2022.3)                         |
+ | 협업 도구 | Git-hub, Notion, Zoom, Discord, KakaoTalk                                                                            |
+ | API 또는 라이브러리 | Google :  EMAIL <br>Kakao : Login, Map <br> Naver : Login, Chatbot <br> Iamport : KakaoPay <br> 공공데이터 : Weather <br> |
+                                                                                                               |            
 
 # ERD 구조 
 
