@@ -10,7 +10,7 @@
 <br> 🛒 [ForSeason](http://27.96.130.136:80) <br> 🛒 [Admin_ForSeason](http://27.96.130.136:8181) <br> 💻 [시연 영상](http://youtube.com/) 
 
 # 🗒️ 개발 목적 
-## 기획 목적
+##  기획 목적
 1. 무난히 채택되는 웹쇼핑몰이라는 주제 우리만의 깊이로 담아냄
 2. 백앤드의 영역에서 기술적인 부분에 가장 효과적인 증명을 찾을 것
 
@@ -20,16 +20,16 @@
  3. 상품 데이터가 광범위하게 증가에도, 관리용이한 유저경험 서비스
 
 # 🎩 개발 환경 / 시스템 구성
- | 항목 | 내용 |
- | --- | ---|
- | 언어 | Java, Python, HTML/CSS, JavaScript |
- | 서버 | NaverCloudPlatForm, Apache Tomcat |
- | 프레임워크 | SpirngBoot, Mybatis, Thymeleaf |
- | DB | MySQL |
- | IDE | Eclipse, Intellij, GitBash, MySQL Workbench |
- | 협업 도구 | Git-hub, Notion, Zoom, Discord, KakaoTalk |
- | API 또는 라이브러리 | Google :  EMAIL <br>Kakao : Login, Map <br> Naver : Login, Chatbot <br> Iamport : KakaoPay <br> 공공데이터 : Weather <br> |
- | VERSION | Java JDK : 11.0.17 <br> Maven : 2.7.7 <br> Servlet : 3.0.1 <br> Mysql : 8.0.31 <br> Intellij : 2022.3.2 (Ultimate Edition) <br> Eclipse IDE : 2020-12 (4.18.0)|            
+ | 항목 | 내용                                                                                                                                                             |
+ |----------------------------------------------------------------------------------------------------------------------------------------------------------------| ---|
+ | 언어 | Java, Python, HTML/CSS, JavaScript                                                                                                                             |
+ | 서버 | NaverCloudPlatForm, Apache Tomcat <br>(Windows 9.0.69, Linux 8.5.27)                                                                                           |
+ | 프레임워크 | SpirngBoot, Mybatis, Thymeleaf                                                                                                                                 |
+ | DB | MySQL                                                                                                                                                          |
+ | IDE | Eclipse, Intellij, GitBash, MySQL Workbench                                                                                                                    |
+ | 협업 도구 | Git-hub, Notion, Zoom, Discord, KakaoTalk                                                                                                                      |
+ | API 또는 라이브러리 | Google :  EMAIL <br>Kakao : Login, Map <br> Naver : Login, Chatbot <br> Iamport : KakaoPay <br> 공공데이터 : Weather <br>                                           |
+ | VERSION | Java JDK : 11.0.17 <br> Maven : 2.7.7 <br> Servlet : 3.0.1 <br> Mysql : 8.0.31 <br> Intellij : 2022.3.2 (Ultimate Edition) <br> Eclipse IDE : 2020-12 (4.18.0) |            
 
 # ERD 구조 
 
@@ -60,7 +60,7 @@
 주의 : 꼭 실행전에 해당 라이브러리를 사용하기 위해선 아래 API를 등록 후 발급받은 키와 해당 Redirect URL 를 수정 해주셔야 합니다. <br>
 1. [Kakao API 등록](https://developers.kakao.com/docs/latest/ko/index) 
 2. [Naver API 등록](https://developers.naver.com/docs/common/openapiguide/appconf.md#api-%EC%84%A4%EC%A0%95) 
-3. [Naver CLOVA ChatbotAP](https://www.ncloud.com/product/aiService/chatbot) 
+3. [Naver CLOVA ChatbotAPI](https://www.ncloud.com/product/aiService/chatbot) 
 4. [Google Email API 등록](https://cloud.google.com/appengine/docs/standard/java/mail/sending-mail-with-mail-api?hl=ko) 
 5. [Iamport API 등록](https://portone.gitbook.io/docs/) 
 6. [Weather API 등록](https://blog.codef.io/weather_api/)  
@@ -74,12 +74,14 @@
 <details open>
 <summary>view images</summary>
 
+
+- 위치 : src/main/resources/templates/application.properties <br>
+ * Intellij : mybatis.mapper-locations=classpath:mybatis/*.xml <br>
+ * Eclipse  : mybatis.mapper-locations=com/admin/mybatis/*.xml <br>
 ![alt text](images/API/applicationProperties.png)
 </details>
 
-- 위치 : src/main/resources/templates/application.properties <br>
-   * Intellij : mybatis.mapper-locations=classpath:mybatis/*.xml <br> 
-   * Eclipse  : mybatis.mapper-locations=com/admin/mybatis/*.xml <br> 
+ 
 ## KAKAO Login, Map API
 - 위치 :  /src/main/service/KakaoService.class <br>
 기입사항 : REST KEY<br>
@@ -92,6 +94,7 @@
 
 - 위치 : src/main/resources/templates/main.html <br>
  기입사항 : Javascript KEY <br>
+
 <details open>
 <summary>view images</summary>
 
@@ -311,10 +314,10 @@
     <td>VIEW</td><td>BootStrap 을 이용한 페이징 및 데이터 팝업 - 모달창, User/Admin Reply&Review 구현</td>
   </tr>
   <tr>
-    <td>WBS</td><td>WBS제작</td>
+    <td>WBS</td><td>WBS제작 및 담당 관리</td>
   </tr>
   <tr>
-    <td>NCP</td><td>NCP 서버 제작 및 환경 구축</td>
+    <td>NCP</td><td>NCP 서버 환경 구축</td>
   </tr>
   <tr>
     <td>최종 발표 준비</td><td>PPT 제작, 동영상 편집 & 업로드, Script 작성  </td>
