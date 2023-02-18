@@ -4,27 +4,20 @@
 팀원 : 조민수, 설재경 </br>
 개발 기간 :  2023.01.02 ~ 2023.02.17 (총 46일) </br>
 주제 : EIMS 기능을 도입한 패션 리테일 세일즈 마켓 </br>
-# 우수상👩🏻‍🎓🧑🏻‍🎓👨🏻‍🎓
-### 멀티캠퍼스 국비지원 기간 : 2022.10.11 ~ 2023.02.17
-
-![alt text](images/projectAwardForExcellence.png)
-![alt text](images/projectEvaluation.png)
-
-
 
 # 개요
 서버 오픈 2023.02.01 ~ 2023.02.17
 <br> 🛒 [ForSeason](http://27.96.130.136:80) <br> 🛒 [Admin_ForSeason](http://27.96.130.136:8181) <br> 💻 [홈페이지 시연 영상](https://youtu.be/oJsMnl8CGT0) <br> [PPT 시연 영상](https://www.youtube.com/watch?v=Qggjdsd8aVY&feature=youtu.be)
 
-# 🗒️ 개발 목적
+# 🗒️ 개발 목적 
 ##  기획 목적
 1. 무난히 채택되는 웹쇼핑몰이라는 주제 우리만의 깊이로 담아냄
 2. 백앤드의 영역에서 기술적인 부분에 가장 효과적인 증명을 찾을 것
 
 ## 주제 선정
-1. 성별 > 옷분류 > 세부 옷분류 > 상품 > 색상 > size 카테고리를 단계별 정의, 깊은  multilayer 구현
-2. multilayer 구현으로 통한 광범위한 데이터 재고 시스템 구현(출고, 입고)
-3. 상품 데이터가 광범위하게 증가에도, 관리용이한 유저경험 서비스
+ 1. 성별 > 옷분류 > 세부 옷분류 > 상품 > 색상 > size 카테고리를 단계별 정의, 깊은  multilayer 구현 
+ 2. multilayer 구현으로 통한 광범위한 데이터 재고 시스템 구현(출고, 입고)
+ 3. 상품 데이터가 광범위하게 증가에도, 관리용이한 유저경험 서비스
 
 # 🎩 개발 환경 / 시스템 구성
 | 항목 | 내용                                                                                                                   |
@@ -38,7 +31,7 @@
 | API 또는 라이브러리 | Google :  EMAIL <br>Kakao : Login, Map <br> Naver : Login, Chatbot <br> Iamport : KakaoPay <br> 공공데이터 : Weather <br> |
 |
 
-# ERD 구조
+# ERD 구조 
 
 <details open>
 <summary>view images</summary>
@@ -65,12 +58,12 @@
 
 # 🧐 사용 방법
 주의 : 꼭 실행전에 해당 라이브러리를 사용하기 위해선 아래 API를 등록 후 발급받은 키와 해당 Redirect URL 를 수정 해주셔야 합니다. <br>
-1. [Kakao API 등록](https://developers.kakao.com/docs/latest/ko/index)
-2. [Naver API 등록](https://developers.naver.com/docs/common/openapiguide/appconf.md#api-%EC%84%A4%EC%A0%95)
-3. [Naver CLOVA ChatbotAPI](https://www.ncloud.com/product/aiService/chatbot)
-4. [Google Email API 등록](https://cloud.google.com/appengine/docs/standard/java/mail/sending-mail-with-mail-api?hl=ko)
-5. [Iamport API 등록](https://portone.gitbook.io/docs/)
-6. [Weather API 등록](https://blog.codef.io/weather_api/)
+1. [Kakao API 등록](https://developers.kakao.com/docs/latest/ko/index) 
+2. [Naver API 등록](https://developers.naver.com/docs/common/openapiguide/appconf.md#api-%EC%84%A4%EC%A0%95) 
+3. [Naver CLOVA ChatbotAPI](https://www.ncloud.com/product/aiService/chatbot) 
+4. [Google Email API 등록](https://cloud.google.com/appengine/docs/standard/java/mail/sending-mail-with-mail-api?hl=ko) 
+5. [Iamport API 등록](https://portone.gitbook.io/docs/) 
+6. [Weather API 등록](https://blog.codef.io/weather_api/)  
 
 <details open>
 <summary>View Setting Images</summary>
@@ -83,15 +76,15 @@
 
 
 - 위치 : src/main/resources/templates/application.properties <br>
-* Intellij : mybatis.mapper-locations=classpath:mybatis/*.xml <br>
-* Eclipse  : mybatis.mapper-locations=com/admin/mybatis/*.xml <br>
-  ![alt text](images/API/applicationProperties.png)
+ * Intellij : mybatis.mapper-locations=classpath:mybatis/*.xml <br>
+ * Eclipse  : mybatis.mapper-locations=com/admin/mybatis/*.xml <br>
+![alt text](images/API/applicationProperties.png)
 </details>
 
-
+ 
 ## KAKAO Login, Map API
 - 위치 :  /src/main/service/KakaoService.class <br>
-  기입사항 : REST KEY<br>
+기입사항 : REST KEY<br>
 
 <details open>
 <summary>view images</summary>
@@ -100,18 +93,18 @@
 </details>
 
 - 위치 : src/main/resources/templates/main.html <br>
-  기입사항 : Javascript KEY <br>
+ 기입사항 : Javascript KEY <br>
 
 <details open>
 <summary>view images</summary>
 
-![alt text](images/API/kakaoMapKey.png)
+![alt text](images/API/kakaoMapKey.png) 
 
 </details>
 
 ## NAVER Login API
 - 위치 : /src/main/service/naverService.class <br>
-  기입사항 : REST KEY<br>
+기입사항 : REST KEY<br>
 
 <details open>
 <summary>view images</summary>
@@ -122,7 +115,7 @@
 
 ## NAVER CLOVA CHATBOT API
 - 위치 : /src/main/frame/ChatBotUtil.class <br>
-  기입사항 : REST KEY <br>
+기입사항 : REST KEY <br>
 
 <details open>
 <summary>view images</summary>
@@ -133,7 +126,7 @@
 
 ## Weather API
 - 위치 : /src/main/controller/DataController.class <br>
-  기입사항 : 일반 인증키<br>
+기입사항 : 일반 인증키<br>
 <details open>
 <summary>view images</summary>
 
@@ -171,7 +164,7 @@
 <summary>User Detail View</summary>
 
 ## 🌈USER
-
+ 
 ### 🌟 HOME Page 🌟
 ![alt text](images/userImages/UserMainPage.png)
 ![alt text](images/userImages/userHomeBody.png)
@@ -183,21 +176,21 @@
 ### 🌟 Login Page 🌟
 ![alt text](images/userImages/userLoginPage.png)
 ### 🌟 Sign UP 🌟
-![alt text](images/userImages/userKakaoLoginOkPage.png)
-
+![alt text](images/userImages/userKakaoLoginOkPage.png) 
+ 
 ### 🌟 Order Page 🌟
 ![alt text](images/userImages/userOrder.png)
 ### 🌟 Order Detail Page 🌟
-![alt text](images/userImages/userOrderDetail.png)
+![alt text](images/userImages/userOrderDetail.png) 
 ### 🌟 WishList Page 🌟
 ![alt text](images/userImages/userWishListPage.png)
 ### 🌟 Review Page 🌟
-![alt text](images/userImages/userReviewPage.png)
+![alt text](images/userImages/userReviewPage.png) 
 
 ### 🌟 Coupon Page 🌟
 ![alt text](images/userImages/userCoupon.png)
 ### 🌟 Qna Page 🌟
-![alt text](images/userImages/userQnAPage.png)
+![alt text](images/userImages/userQnAPage.png) 
 
 
 
@@ -206,15 +199,15 @@
 ### 🌟 UserInfo Change 🌟
 ![alt text](images/userImages/userChangeInfo.png)
 ### 🌟 UserInfo Delete 🌟
-![alt text](images/userImages/userDelete.png)
+![alt text](images/userImages/userDelete.png) 
 
 
 ### 🌟 ItemDetail Wish Add Page 🌟
-![alt text](images/userImages/userWishView.png)
+![alt text](images/userImages/userWishView.png) 
 ### 🌟 ItemSearch Page 🌟
-![alt text](images/userImages/userSearchPage.png)
+![alt text](images/userImages/userSearchPage.png) 
 ### 🌟 order Add Page 🌟
-![alt text](images/userImages/orderAdd.png)
+![alt text](images/userImages/orderAdd.png) 
 
 
 </details>
@@ -225,34 +218,34 @@
 ## ❄️ ADMIN
 
 ### ☃️ Login Page ☃️
-![alt text](images/adminImages/adminLoginPage.png)
+![alt text](images/adminImages/adminLoginPage.png) 
 ### ☃️ Main Page ☃️
-![alt text](images/adminImages/AdminMainPage.png)
+![alt text](images/adminImages/AdminMainPage.png) 
 ### ☃️ Chart Day Click ☃️
 ![alt text](images/adminImages/AdminChartDayClick.png)
 #### 🌫️ Before 🌫️
-![alt text](images/adminImages/AdminChartClickEvent.png)
+![alt text](images/adminImages/AdminChartClickEvent.png) 
 ### ☃️ Category Page ☃️
-![alt text](images/adminImages/AdminCategoryClickEventPage.png)
-### ☃️ Item Add Click ☃️
-![alt text](images/adminImages/itemAddPage.png)
+![alt text](images/adminImages/AdminCategoryClickEventPage.png) 
+### ☃️ Item Add Click ☃️ 
+![alt text](images/adminImages/itemAddPage.png) 
 ### ☃️ UserPush Coupon And Mail Page ☃️
-![alt text](images/adminImages/UserPushCouponAndMail.png)
+![alt text](images/adminImages/UserPushCouponAndMail.png) 
 ### ☃️ Discount Click ☃️
-![alt text](images/adminImages/checkDiscountPage.png)
+![alt text](images/adminImages/checkDiscountPage.png) 
 ### ☃️ QnA Page ☃️
 ![alt text](images/adminImages/qnaPage.png)
 ### ☃️ Reply Page ☃️
-![alt text](images/adminImages/replyPage.png)
-### ☃️ Datail Click ☃️
-![alt text](images/adminImages/qnaDatailPage.png)
+![alt text](images/adminImages/replyPage.png) 
+### ☃️ Datail Click ☃️ 
+![alt text](images/adminImages/qnaDatailPage.png) 
 
 
 </details>
 
 
 
-# 👩🏻‍💻 프로젝트 임무분담
+# 👩🏻‍💻 프로젝트 임무분담 
 
 
 <table>
@@ -338,46 +331,46 @@
 [Selenium](https://wikidocs.net/177133) <br>
 [Putty](https://investechnews.com/2021/06/15/mac-putty-install-error/)<br>
 [war 배포](https://baboototo.tistory.com/m/29)
-# ⚒️트러블 슈팅⚒️
+# ⚒️트러블 슈팅⚒️ 
 
 - 기획단계 결정 지연
-    * 문제: 프로젝트 기획 단계에서 결정 지연이 발생하여 개발 일정이 밀렸습니다.
-    * 해결: 프로젝트 관련 회의에서 기획 단계 결정이 우선적으로 이루어지도록 다음과 같은 조치를 취했습니다.
-        * 회의 참석 인원에 대한 사전 안내 및 참석 요청
-        * 회의 일정 및 안건 미리 공지
-        * 회의록 작성 및 공유
+  * 문제: 프로젝트 기획 단계에서 결정 지연이 발생하여 개발 일정이 밀렸습니다.
+  * 해결: 프로젝트 관련 회의에서 기획 단계 결정이 우선적으로 이루어지도록 다음과 같은 조치를 취했습니다.
+     * 회의 참석 인원에 대한 사전 안내 및 참석 요청
+     * 회의 일정 및 안건 미리 공지
+     * 회의록 작성 및 공유
 
 
 - ERD 작업간에 긴 시간에 소요됨
-    * 문제: ERD 작업이 예상보다 오랜 시간이 소요되었습니다.
-    * 해결: ERD 작업을 효율적으로 진행하기 위해 다음과 같은 조치를 취했습니다.
-        * ERD 작업 전 미리 관련 자료 수집 및 정리
-        * 작업을 시작하기 전 관련 인원과 논의하여 작업 방향성 확립
-        * ERD 작업 중 발생한 이슈는 빠르게 공유하여 해결
+  * 문제: ERD 작업이 예상보다 오랜 시간이 소요되었습니다.
+  * 해결: ERD 작업을 효율적으로 진행하기 위해 다음과 같은 조치를 취했습니다.
+    * ERD 작업 전 미리 관련 자료 수집 및 정리
+    * 작업을 시작하기 전 관련 인원과 논의하여 작업 방향성 확립
+    * ERD 작업 중 발생한 이슈는 빠르게 공유하여 해결
 
-
+ 
 - NCP 테스트 오류, 무한로딩 이미지 mapper 오류 발생
-    * 문제: NCP 테스트 시 오류가 발생하였고, 무한로딩 이미지 mapper 오류도 발생하였습니다.
-    * 해결: 롤백 주소로 변환 후 오류가 발생하지 않는 것으로 확인되었으므로, 다음과 같은 조치를 취했습니다.
-        * 롤백 주소로 변환 후 테스트 및 오류 해결 서버 상태 모니터링을 통해 유사한 이슈 발생 시 빠르게 대처
+  * 문제: NCP 테스트 시 오류가 발생하였고, 무한로딩 이미지 mapper 오류도 발생하였습니다.
+  * 해결: 롤백 주소로 변환 후 오류가 발생하지 않는 것으로 확인되었으므로, 다음과 같은 조치를 취했습니다.
+    * 롤백 주소로 변환 후 테스트 및 오류 해결 서버 상태 모니터링을 통해 유사한 이슈 발생 시 빠르게 대처
 
 
 - 깃 충돌 오류 및 프로젝트 공유 오류 발생
-    * 문제: 깃 충돌 오류가 발생하고 프로젝트 공유간의 오류가 발생하여, application.properties와 pom.xml 주소 오류를 확인해야 했습니다.
-    * 해결: Git 충돌 방지를 위해 해당 데이터를 제외한 git push를 시도하였으며, 이후 application.properties와 pom.xml 경로 오류를 확인하여 수정하였습니다.
-
+  * 문제: 깃 충돌 오류가 발생하고 프로젝트 공유간의 오류가 발생하여, application.properties와 pom.xml 주소 오류를 확인해야 했습니다.
+  * 해결: Git 충돌 방지를 위해 해당 데이터를 제외한 git push를 시도하였으며, 이후 application.properties와 pom.xml 경로 오류를 확인하여 수정하였습니다.
+  
 
 - 로그인 API 사용시 Paging Error 발생
-    * 문제: 로그인 API를 사용할 때 Paging Error가 발생하였습니다.
-    * 해결: Redirect URL이 정상적이지 않았기 때문에 해당 주소를 수정하였고, 이후 정상적으로 처리되었습니다.
-
+  * 문제: 로그인 API를 사용할 때 Paging Error가 발생하였습니다.
+  * 해결: Redirect URL이 정상적이지 않았기 때문에 해당 주소를 수정하였고, 이후 정상적으로 처리되었습니다.
+  
 
 - 결제 진행시 할인율이 적용되지 않는 오류 발생
-    * 문제: 결제 진행시 할인율이 적용되지 않는 오류가 발생하였습니다.
-    * 해결: 해당 Database 코드가 잘못되어 있었기 때문에 Mysql을 수정하였고, 이후 정상적으로 처리되었습니다.
+  * 문제: 결제 진행시 할인율이 적용되지 않는 오류가 발생하였습니다.
+  * 해결: 해당 Database 코드가 잘못되어 있었기 때문에 Mysql을 수정하였고, 이후 정상적으로 처리되었습니다. 
 
 
 - 아이디/패스워드 찾기 버그 발생
-    * 문제: 아이디/패스워드 찾기 버그가 발생하였습니다.
-    * 해결: 이메일 Service에서 코드가 정상적으로 넘어가지 않는 문제를 발견하여 수정하였고, 이후 정상적으로 처리되었습니다.
+  * 문제: 아이디/패스워드 찾기 버그가 발생하였습니다.
+  * 해결: 이메일 Service에서 코드가 정상적으로 넘어가지 않는 문제를 발견하여 수정하였고, 이후 정상적으로 처리되었습니다.
 
