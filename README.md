@@ -5,9 +5,16 @@
 개발 기간 :  2023.01.02 ~ 2023.02.17 (총 46일) </br>
 주제 : EIMS 기능을 도입한 패션 리테일 세일즈 마켓 </br>
 
-# 개요
-서버 오픈 2023.02.01 ~ 2023.02.17
-<br> 🛒 [ForSeason](http://27.96.130.136:80) <br> 🛒 [Admin_ForSeason](http://27.96.130.136:8181) <br> 💻 [홈페이지 시연 영상](https://youtu.be/oJsMnl8CGT0) <br> [PPT 시연 영상](https://www.youtube.com/watch?v=Qggjdsd8aVY&feature=youtu.be)
+# 프로젝트 수상
+### 멀티캠퍼스 참여기간: 2022.10.11 ~ 2023.02.17 
+![alt text](images/projectAwardForExcellence.png)
+![alt text](images/projectEvaluation.png)
+
+
+
+# 개요  
+서버 오픈 2023.02.01 ~ 2023.02.17 
+<br> 🛒 [ForSeason](http://27.96.130.136:80) <br> 🛒 [Admin_ForSeason](http://27.96.130.136:8181) <br> 💻 [시연 영상 수정 예정](https://youtu.be/AVjJ-BZVGiw)
 
 # 🗒️ 개발 목적 
 ##  기획 목적
@@ -20,16 +27,16 @@
  3. 상품 데이터가 광범위하게 증가에도, 관리용이한 유저경험 서비스
 
 # 🎩 개발 환경 / 시스템 구성
-| 항목 | 내용                                                                                                                   |
+ | 항목 | 내용                                                                                                                   |
  |----------------------------------------------------------------------------------------------------------------------| ---|
-| 언어 | Java(11.0.17), Python(3.11.2), HTML/CSS, JavaScript                                                                  |
-| 서버 | NaverCloudPlatForm,<br> Apache Tomcat (Windows 9.0.69, Linux 8.5.27)                                                 |
-| 프레임워크 | SpirngBoot(2.7.7), Mybatis(2.3.0), Thymeleaf, Selenium (4.0.0 Alpha), Servlet(3.0.1)                                 |
-| DB | MySQL Workbench(8.0.31)                                                                                              |
-| IDE | Eclipse IDE 2020-12 (4.18.0), Intellij 2022.3.2 (Ultimate Edition), GitBash, PyCharm(2022.3)                         |
-| 협업 도구 | Git-hub, Notion, Zoom, Discord, KakaoTalk                                                                            |
-| API 또는 라이브러리 | Google :  EMAIL <br>Kakao : Login, Map <br> Naver : Login, Chatbot <br> Iamport : KakaoPay <br> 공공데이터 : Weather <br> |
-|
+ | 언어 | Java(11.0.17), Python(3.11.2), HTML/CSS, JavaScript                                                                  |
+ | 서버 | NaverCloudPlatForm,<br> Apache Tomcat (Windows 9.0.69, Linux 8.5.27)                                                 |
+ | 프레임워크 | SpirngBoot(2.7.7), Mybatis(2.3.0), Thymeleaf, Selenium (4.0.0 Alpha), Servlet(3.0.1)                                 |
+ | DB | MySQL Workbench(8.0.31)                                                                                              |
+ | IDE | Eclipse IDE 2020-12 (4.18.0), Intellij 2022.3.2 (Ultimate Edition), GitBash, PyCharm(2022.3)                         |
+ | 협업 도구 | Git-hub, Notion, Zoom, Discord, KakaoTalk                                                                            |
+ | API 또는 라이브러리 | Google :  EMAIL <br>Kakao : Login, Map <br> Naver : Login, Chatbot <br> Iamport : KakaoPay <br> 공공데이터 : Weather <br> |
+                                                                                                               |            
 
 # ERD 구조 
 
