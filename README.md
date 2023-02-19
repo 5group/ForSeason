@@ -16,8 +16,8 @@
 서버 오픈 2023.02.01 ~ 2023.02.17 
 <br> 🛒 [ForSeason](http://27.96.130.136:80) <br> 
 🛒 [Admin_ForSeason](http://27.96.130.136:8181) <br> 
-💻 [홈페이지 시연 영상](https://youtu.be/oJsMnl8CGT0) <br> 
-💻 [PPT 시연 영상](https://youtu.be/q8fjUSNZAcQ)
+💻 [PPT 시연 영상](https://youtu.be/q8fjUSNZAcQ) <br>
+💻 [홈페이지 시연 영상](https://youtu.be/oJsMnl8CGT0) 
 
 # 🗒️ 개발 목적 
 ##  기획 목적
