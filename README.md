@@ -19,8 +19,6 @@
 💻 [홈페이지 시연 영상](https://youtu.be/oJsMnl8CGT0) <br> 
 💻 [PPT 시연 영상](https://youtu.be/q8fjUSNZAcQ)
 
-https://youtu.be/q8fjUSNZAcQ
-
 # 🗒️ 개발 목적 
 ##  기획 목적
 1. 무난히 채택되는 웹쇼핑몰이라는 주제 우리만의 깊이로 담아냄
