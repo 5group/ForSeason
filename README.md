@@ -14,8 +14,8 @@
 
 # 개요  
 포트 포워딩을 이용하여 서버 재오픈 <br> 
-🛒 [ForSeason](http://192.168.219.31:8080) <br> 
-🛒 [Admin_ForSeason](http://192.168.219.31:8181/) <br> 
+🛒 [ForSeason](http://182.221.33.66:8080) <br> 
+🛒 [Admin_ForSeason](http://182.221.33.66:8181/) <br> 
 💻 [PPT 시연 영상](https://youtu.be/q8fjUSNZAcQ) <br>
 💻 [홈페이지 시연 영상](https://youtu.be/oJsMnl8CGT0) 
 
